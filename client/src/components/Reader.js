@@ -1,21 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 
-function Reader( {onAddNewText} ) {
-    const [text, setText] = useState("")
+function Reader( {onAddNewText, isShowReader} ) {
+
+    const initialValues = {
+        text: "",
+        title: ""
+    }
+
+    const [formData, setFormData] = useState(initialValues)
+
+    function handleOnChange(e) {
+        const value = e.targe.value
+        const name = e.targe.name
+        setFormData({...formData, [name]: value})
+    }
+
+
     function handleSubmit(e) {
         e.preventDefault();
+
+        const newArticle = {
+            text: formData.text,
+            title: formData.text,
+        }
+
         fetch('/articles',{
             method: "POST",
             headers: {"Content-Type": 'application/json'},
-            body: JSON.stringify({
-                text: text
-            })
+            body: JSON.stringify(newArticle)
         })
             .then((res) => res.json())
-            .then(newText => {
-                onAddNewText(newText);
-                setText("")
+            .then(newObj => {
+                onAddNewText(newObj);
+                setFormData(initialValues)
             })
 
     }
@@ -23,19 +41,36 @@ function Reader( {onAddNewText} ) {
 
 
     return (
-        <div className='content-container'>
-            <h1>Enter your text: </h1>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    name='content'
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
+        <>
+            {isShowReader ? 
+                <div className='new-article-form'>
+                    <h1>Enter your text: </h1>
+                    <form onSubmit={handleSubmit}>
+                        <textarea
+                            placeholder="Paste your Hawaiian test here..."
+                            name='text'
+                            value={formData.text}
+                            onChange={handleOnChange}
 
-                />
-                <input type="submit" value="Submit" />
-            </form>
+                        />
 
-        </div>
+                        <label>Givet this text a title:</label>
+                        <input 
+                            type="text"
+                            placeholder="Enter title here..."
+                            name="title"
+                            value={formData.title}
+                            onChange={handleOnChange}
+                        />
+                        <input type="submit" value="Submit" />
+                    </form>
+
+                </div>
+                : ""
+            }
+        </>
+        
+        
 
     );
 }

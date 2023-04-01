@@ -1,0 +1,17 @@
+display: flex -> horizontal display, in a row
+flex: 2; -> twice bigger
+justify-content: horizontal display
+align-items: all direct children as a group, in vertical display 
+transition: all 200mx ease-in-out;
+&:not(:last-of-type) -> not :last-of-type ()last element of this type of element
+    -> apply the styling for all button except for the last one
+
+flex-direction: column; -> make it a column, a vertical way
+
+React.createContext
+-> https://legacy.reactjs.org/docs/context.html#reactcreatecontext
+
+
+
+https://cssgradient.io/
+https://flatuicolors.com/
