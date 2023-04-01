@@ -1,7 +1,9 @@
 // put all the navigation links together
 
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+
+import { UserContext } from '../components/UserContext';
 
 const NavLinksContainer = styled.div`
     height: 100%;
@@ -46,14 +48,17 @@ const Link = styled.a`
 
 
 export function NavLinks() {
+
+    const {user} = useContext(UserContext)
+
     return (
         <>
             <NavLinksContainer>
                 <LinksWrapper>
+
                     <LinkItem>
                         <Link href="/">Home</Link>
                     </LinkItem>
-
                     <LinkItem>
                         <Link href="#">Search Article</Link>
                     </LinkItem>
@@ -74,6 +79,7 @@ export function NavLinks() {
                         <Link href="/login">Login</Link>
                     </LinkItem>
 
+                    
                 </LinksWrapper>
             </NavLinksContainer>
         </>

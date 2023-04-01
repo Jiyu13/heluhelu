@@ -19,6 +19,8 @@ class Dictionary(db.Model, SerializerMixin):
     # a dict has many words
     words = db.relationship("Word", backref="dictionary")
 
+    serialize_rules = ("-user", "-words")
+
     def __repr__(self):
         return f'''<Hawaiian {self.id}: title-{self.title}>\n'''
 
@@ -32,6 +34,8 @@ class Word(db.Model, SerializerMixin):
 
     # a word belongs to a dictionary, many to one
     dictionary_id = db.Column(db.Integer, db.ForeignKey("dictionaries.id"))
+
+    serialize_rules = ('-dictionary',)
 
 
 class Article(db.Model, SerializerMixin):
@@ -47,6 +51,8 @@ class Article(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
+    serialize_rules = ('-user',)
+
     def __repr__(self):
         return f'''<Article {self.id} -> {self.title}: text: {self.text}>'''
 
@@ -61,6 +67,8 @@ class User(db.Model, SerializerMixin):
     # a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
     articles = db.relationship("Article", backref="user")
+
+    serialize_rules = ('-dictionaries', "-articles")
 
     # ================= incorporate bcrypt to create a secure password. ====================
     @hybrid_property

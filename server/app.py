@@ -4,12 +4,13 @@ from flask import Flask, make_response, jsonify, request, session
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, Word, Article
+from models import db, Dictionary, Word, Article, User
 
 
-class Dictionary(Resource):
+class Dictionaries(Resource):
+    # rules=("-dictionaries.words", "-dictionaries.user")
     def get(self):
-        dictionaries = Hawaiian.query.all()
+        dictionaries = Dictionary.query.all()
         dictionaries_dict = jsonify([dictionary.to_dict() for dictionary in dictionaries])
         return make_response(dictionaries_dict, 200)
 
@@ -40,7 +41,23 @@ class Dictionary(Resource):
             all_words.append(new_word)
         add.session.add_all(all_words)
         add.session.commit()
-api.add_resource(Dictionary, '/dictionaries', endpoint="dictionary")
+api.add_resource(Dictionaries, '/dictionaries', endpoint="dictionary")
+
+
+class Words(Resource):
+    def get(self):
+        words = Word.query.all()
+        words_dict = jsonify([word.to_dict() for word in words])
+        return make_response(words_dict, 200)
+api.add_resource(Words, '/words', endpoint="words")
+
+
+class Users(Resource):
+    def get(self):
+        users = User.query.all()
+        users_dict = jsonify([user.to_dict() for user in users])
+        return make_response(users_dict, 200)
+api.add_resource(Users, '/users', endpoint="users")
 
 
 class Articles(Resource):
@@ -55,10 +72,10 @@ class Articles(Resource):
             text=request.get_json()['text'],
             title=request.get_json()["title"],
             check_finished=False,
-            current_reading=False,
+            # current_reading=False,
             user_id=session["user_id"]
         )
-        db.session.add(article)
+        db.session.add(new_article)
         db.session.commit()
 
         new_article.user_id = session["user_id"]
@@ -84,11 +101,12 @@ api.add_resource(ArticleByID, '/articles/<int:id>')
 class CheckSession(Resource):
     def get(self):
         # if the user is logged in (if their user_id is in the session object):
-        if session.get("user_id"):
-            user = User.query.filter_by(id=session["user_id"]).first()
+        if session.get('user_id'):
+            user = User.query.filter_by(id=session['user_id']).first()
             if user:
                 return make_response(user.to_dict(), 200)
         return make_response({'message': '401: Not Authorized'}, 401)
+    
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 
@@ -96,7 +114,7 @@ class Login(Resource):
     def post(self):
         username = request.get_json()["username"]
         password = request.get_json()["password"]
-        user = user.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
 
         if user:
             if user.authenticate(password):

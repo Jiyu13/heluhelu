@@ -1,14 +1,13 @@
 import { useState } from "react";
-import Reader from "./Reader";
+import Reader from "./ArticleImporter";
 
-function Home() {
+function Home({onAddNewText}) {
 
     const [isShowReader, setShowReader] = useState(false)
     
     function handleClick() {
         setShowReader(!isShowReader)
-        // console.log(isShowReader)
-      }
+    }
     return (
         <>
             <h1>Hawaiian Reader</h1>
@@ -20,7 +19,7 @@ function Home() {
                 <button className="file">Import Text File</button>
             </div>
             
-            {isShowReader ? <Reader isShowReader={isShowReader}/> : ""}
+            {isShowReader ? <Reader onAddNewText={onAddNewText}/> : ""}
             
 
             

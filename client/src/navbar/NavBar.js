@@ -10,6 +10,8 @@ import { MobileNavLinks } from "./MobileNavLinks";
 import { DeviceSize } from './responsive';
 
 
+
+
 const NavBarContainer = styled.div`
     width: 100%;
     height: 60px;
@@ -37,13 +39,12 @@ const RightSection = styled.div`
     display: flex;
 `;
 
-function NavBar( {setDarkMode} ) {
+function NavBar() {
 
     // useMediaQuery from react responsive
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
 
     
-
     return (
         <>
             {/* <Link to="/login">
@@ -73,7 +74,7 @@ function NavBar( {setDarkMode} ) {
                 {/* call Accessibility component */}
                 <RightSection>
                     {/* hide Accessiblity if isMoble isn't mobile */}
-                    {!isMobile && <Accessibility setDarkMode={setDarkMode}/>}
+                    {!isMobile && <Accessibility/>}
                     
                     {/* show MobileNavLinks if isMoble is mobile */}
                     {isMobile && <MobileNavLinks/>}

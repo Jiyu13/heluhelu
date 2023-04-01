@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { useContext } from 'react';
+import { UserContext } from '../components/UserContext';
 
 const AccessibilityContainer = styled.div`
     display: flex;
@@ -38,8 +40,10 @@ const ToggleModeButton = styled.div`
 
 
 
-export function Accessibility( {setDarkMode} ) {
+export function Accessibility() {
     const [isClick, setClick] = useState(false)
+    
+    const {setDarkMode} = useContext(UserContext)
     
 
     function handleToggleMode() {

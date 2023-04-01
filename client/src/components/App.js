@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 
 import Home from "./Home";
-import Reader from "./Reader";
+import Reader from "./ArticleImporter";
 import ArticleList from "./ArticleList"
 import NavBar from "../navbar/NavBar";
 
@@ -20,7 +20,7 @@ function App() {
   // const [mode, setMode] = useState("dark")
 
   const [isDarkMode, setDarkMode] = useState("dark")
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
 
   // =========== get articles =================================
@@ -38,14 +38,15 @@ function App() {
   }, [])
 
   // =========== check session =================================
+  //user remains logged in
   useEffect(() => {
-    fetch('/check_session')
-    .then(res => {
-      if (res.ok) {
-        res.json().then((user) => setUser(user))
+    fetch("/check_session")
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
       }
-    })
-  }, [])
+    });
+  }, []);
 
 
   function handleNewText(newArticle) {
@@ -61,7 +62,7 @@ function App() {
     <UserContext.Provider value={userContextValue} >
 
     <main className={isDarkMode}>
-        <NavBar setDarkMode={setDarkMode}/>
+        <NavBar/>
         <Routes >
           <Route
             exact
@@ -70,13 +71,6 @@ function App() {
           >
           </Route>
 
-          {/* <Route
-            exact
-            path='/create_account'
-            element={<CreateAccount/>}
-          >
-          </Route> */}
-
           <Route
             exact
             path='/documents'
@@ -84,17 +78,17 @@ function App() {
           >
           </Route>
 
-          <Route
+          {/* <Route
               exact
               path='/reader'
-              element={<Reader onAddNewText={handleNewText} isShowReader={isShowReader}/>}
+              element={<Reader onAddNewText={handleNewText}/>}
           >
-          </Route>
+          </Route> */}
 
           <Route
             exact
             path='/'
-            element={<Home />}
+            element={<Home onAddNewText={handleNewText}/>}
           >
           </Route>
 

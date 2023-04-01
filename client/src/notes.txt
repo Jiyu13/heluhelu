@@ -15,3 +15,11 @@ React.createContext
 
 https://cssgradient.io/
 https://flatuicolors.com/
+
+
+========================================Lānaʻi Story========================================
+Maikaʻi loa! Ua aʻo nui kākou i ka ʻōlelo Hawaiʻi! I kēia manawa, e huakaʻi aku kākou i Lānaʻi, ka mokupuni hope loa o kā kākou huakaʻi.
+
+Aloha kākou. ʻOiai e holo ana a puni nā moku nui ʻeono o Hawaiʻi nei, ua hiki mai i Lānaʻi, ka mokupuni hope o kā kākou huakaʻi mokupuni.
+
+He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. He 8 mile ke kaʻawale mai Maui mai, a he 9 mai Molokaʻi mai hoʻi. ʻO Lānaʻihale ka inoa o ke kuahiwi nui loa o Lānaʻi, a ma kahi o ka 3,400 kapuaʻi kona kiʻekiʻe.

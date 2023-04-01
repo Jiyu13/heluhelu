@@ -6,10 +6,19 @@ import { AccountContext } from "./AccountContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
+import { UserContext } from "../components/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm(props) {
 
     const { switchToSignup } = useContext(AccountContext)
+    const { setUser } = useContext(UserContext)
+
+
+    let navigate = useNavigate()
+    function redirectHome() {
+        navigate('/')
+    }
 
     const initialValue =  {
         username: "",
@@ -20,12 +29,13 @@ export function LoginForm(props) {
 
     function handleInput(e) {
         const value = e.target.value
-        const name = e.targe.name
+        const name = e.target.name
+        console.log(name, value)
         setFormData({...formData, [name]: value})
     }
     
     function handleSubmit(e) {
-        e.preventDefalut()
+        e.preventDefault();
 
         const loginUser = {
             username: formData.username,
@@ -38,18 +48,66 @@ export function LoginForm(props) {
             body: JSON.stringify(loginUser)
         })
         .then((res => {
-            if (res.ok) {res.json().then(loginUser)}
+            if (res.status === 401) {
+                window.alert("Account not Found! Please Sign up first.")
+            } else {
+                redirectHome()
+                res.json().then(user => {
+                setUser(user)
+                })  
+            }
         }))
         
     }
+    // const formSchema = yup.object().shape({
+    //     username: yup.string().required("Must enter username"),
+    //     password: yup.string().required("Must enter a password"),
+    // });
+
+    // const formik = useFormik({
+    //     initialValues: {
+    //         username: "",
+    //         password: ""
+    //     },
+    
+    //     validationSchema: formSchema,
+    //     onSubmit: (values) => {
+    //         fetch("/login", {
+    //             method: "POST",
+    //             headers: {
+    //             "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(values, null, 2),
+    //         })
+    //         .then((res) => {
+    //             if (res.status === 401) {
+    //                 console.log("Account not Found! Please Sign up first.")
+    //             } else {
+    //                 res.json().then(user => {setUser(user)})  
+    //             }
+    //         });
+    //     },
+    // });
 
 
 
     return (
         <BoxContainer>
             <FormContainer id="login-form" onSubmit={handleSubmit}>
-                <Input type='text' placeholder="Username" name="username" value="" onChange=""/>
-                <Input type='text' placeholder="Password" name="password" value="" onChange=""/>
+                <Input 
+                    type='text' 
+                    placeholder="Username" 
+                    name="username" 
+                    value={formData.username} 
+                    onChange={handleInput}
+                />
+                <Input 
+                    type='text' 
+                    placeholder="Password" 
+                    name="password" 
+                    value={formData.password} 
+                    onChange={handleInput}
+                />
             </FormContainer>
 
             <Marginer direction="vertical" margin={10}/>
