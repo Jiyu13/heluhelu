@@ -8,6 +8,8 @@ import { NavLinks } from "./NavLinks";
 import { Accessibility } from "./Accessiblity";
 import { MobileNavLinks } from "./MobileNavLinks";
 import { DeviceSize } from './responsive';
+import { useContext } from 'react';
+import { UserContext } from '../components/UserContext';
 
 
 
@@ -43,43 +45,34 @@ function NavBar() {
 
     // useMediaQuery from react responsive
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
-
+    const {user} = useContext(UserContext)
     
     return (
         <>
-            {/* <Link to="/login">
-                <button>Login</button>
-            </Link>
+            {user ? 
+                <NavBarContainer>
+                    {/* call the Logo component */}
+                    <LeftSection>
+                        <Logo />
+                    </LeftSection>
 
-            <Link to="/create_account">
-                <button>Create Account</button>
-            </Link>
+                    {/* call NavLinks component */}
+                    <MiddleSection>
+                        {/* hide NavLinks if isMoble isn't mobile */}
+                        {!isMobile && <NavLinks/>}
+                    </MiddleSection>
 
-            <Link to="/">
-                <button>Home</button>
-            </Link> */}
-
-            <NavBarContainer>
-                {/* call the Logo component */}
-                <LeftSection>
-                    <Logo />
-                </LeftSection>
-
-                {/* call NavLinks component */}
-                <MiddleSection>
-                    {/* hide NavLinks if isMoble isn't mobile */}
-                    {!isMobile && <NavLinks/>}
-                </MiddleSection>
-
-                {/* call Accessibility component */}
-                <RightSection>
-                    {/* hide Accessiblity if isMoble isn't mobile */}
-                    {!isMobile && <Accessibility/>}
-                    
-                    {/* show MobileNavLinks if isMoble is mobile */}
-                    {isMobile && <MobileNavLinks/>}
-                </RightSection>
-            </NavBarContainer>
+                    {/* call Accessibility component */}
+                    <RightSection>
+                        {/* hide Accessiblity if isMoble isn't mobile */}
+                        {!isMobile && <Accessibility/>}
+                        
+                        {/* show MobileNavLinks if isMoble is mobile */}
+                        {isMobile && <MobileNavLinks/>}
+                    </RightSection>
+                </NavBarContainer>
+                : ""
+            }
         </>
     )
 

@@ -143,6 +143,7 @@ export function AccountBox() {
             setActive("login");
         }, 400);
     };
+    // console.log(active)
     // ======================================================
 
     // create context values
@@ -150,6 +151,7 @@ export function AccountBox() {
 
     return (
         <AppContainer>
+            
             {/* use AccountContext to spread the context value, make the child components below being able to access context values */}
             <AccountContext.Provider value={contextValue}>
                 <BoxContainer>

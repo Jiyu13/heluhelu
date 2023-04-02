@@ -1,10 +1,9 @@
-import React, {useState, useContext } from 'react';
-import { UserContext } from './UserContext';
+import React, {useState} from 'react';
 
 
 function Reader( {onAddNewText } ) {
 
-    const {user} = useContext(UserContext)
+    // const {user} = useContext(UserContext)
 
     const initialValues = {
         text: "",

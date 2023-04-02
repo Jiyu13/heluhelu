@@ -1,4 +1,4 @@
-from models import db, Dictionary, User, Word
+from models import db, Dictionary, User, DictionaryWord
 from app import app
 
 def make_user():
@@ -14,11 +14,29 @@ def make_user():
     new_user.password_hash = password
     db.session.add(new_user)
     db.session.commit()
+    
+# default_users = [
+#         {"username": "ziru", "password": "test"}, 
+#         {"username": "jiyu", "password": "test1"}
+#     ]
+
+#     # create users
+#     users = []
+#     for i in range(len(users)):
+
+#         new_user = User(
+#             username=default_users[i]["username"],
+#         )
+#         new_user.password_hash = default_users[i]["password"]
+#         users.append(new_user)
+
+#     db.session.add_all(users)
+#     db.session.commit()
 
 
 def upload_dictionary():
     Dictionary.query.delete()
-    Word.query.delete()
+    DictionaryWord.query.delete()
 
     user = User.query.filter_by(username="ziru").first()
 
@@ -36,7 +54,7 @@ def upload_dictionary():
         lines = file.readlines()
         for line in lines:
             word_translation = line.split('\t')
-            w_t = Word(
+            w_t = DictionaryWord(
                 hawaiian=word_translation[0], 
                 translation=word_translation[1],
                 dictionary_id=new_dictionary.id

@@ -4,7 +4,7 @@ from flask import Flask, make_response, jsonify, request, session
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, Word, Article, User
+from models import db, Dictionary, DictionaryWord, Article, User
 
 
 class Dictionaries(Resource):
@@ -44,12 +44,12 @@ class Dictionaries(Resource):
 api.add_resource(Dictionaries, '/dictionaries', endpoint="dictionary")
 
 
-class Words(Resource):
+class DictionaryWords(Resource):
     def get(self):
-        words = Word.query.all()
-        words_dict = jsonify([word.to_dict() for word in words])
+        dict_words = DictionaryWord.query.all()
+        words_dict = jsonify([word.to_dict() for word in dict_words])
         return make_response(words_dict, 200)
-api.add_resource(Words, '/words', endpoint="words")
+api.add_resource(DictionaryWords, '/dictionary_words', endpoint="words")
 
 
 class Users(Resource):
@@ -72,13 +72,12 @@ class Articles(Resource):
             text=request.get_json()['text'],
             title=request.get_json()["title"],
             check_finished=False,
-            # current_reading=False,
-            user_id=session["user_id"]
+            # # current_reading=False,
+            # user_id=session["user_id"]
         )
+        new_article.users.id = session["user_id"]
         db.session.add(new_article)
         db.session.commit()
-
-        new_article.user_id = session["user_id"]
 
         return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
@@ -110,6 +109,24 @@ class CheckSession(Resource):
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 
+class Signup(Resource):
+    def post(self): 
+        username = request.get_json()["username"]
+        password = request.get_json()["password"]
+
+        if username and password:
+            new_user = User(username=username)
+            new_user.password_hash = password
+            
+            db.session.add(new_user)
+            db.session.commit()
+
+            session["user_id"] = new_user.id
+            return new_user.to_dict(), 201
+        return {'error': '422 Unprocessable Entity'}, 422
+api.add_resource(Signup, '/signup', endpoint='signup')
+
+
 class Login(Resource):
     def post(self):
         username = request.get_json()["username"]
@@ -122,6 +139,16 @@ class Login(Resource):
                 return make_response(user.to_dict())
         return make_response({"message": "401: Not Authorized"}, 401)
 api.add_resource(Login, '/login', endpoint='login')
+
+
+class Logout(Resource):
+    def delete(self):
+        if session.get("user_id"):
+            session["user_id"] = None
+            return make_response({'message':'204: No Content'}, 204)
+        return make_response({'error': '401: Unauthorized'}, 401)
+api.add_resource(Logout, '/logout', endpoint='logout')
+
 
 
 if __name__ == "__main__":
