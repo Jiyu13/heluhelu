@@ -5,7 +5,6 @@ from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
-
 class Dictionary(db.Model, SerializerMixin):
     __tablename__ = 'dictionaries'
 
@@ -17,16 +16,16 @@ class Dictionary(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     # a dict has many words
-    words = db.relationship("Word", backref="dictionary")
+    dict_words = db.relationship("DictionaryWord", backref="dictionary")
 
-    serialize_rules = ("-user", "-words")
+    serialize_rules = ("-user", "-dict_words")
 
     def __repr__(self):
         return f'''<Hawaiian {self.id}: title-{self.title}>\n'''
 
 
-class Word(db.Model, SerializerMixin):
-    __tablename__ = "words"
+class DictionaryWord(db.Model, SerializerMixin):
+    __tablename__ = "dictionary_words"
 
     id = db.Column(db.Integer, primary_key=True)
     hawaiian = db.Column(db.String, nullable=False)
@@ -40,21 +39,34 @@ class Word(db.Model, SerializerMixin):
 
 class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
+
+    # is_reading = db.Column(db.Boolean)
+    # update_at = db.Column(db.DateTime onupdate=db.func.now())  # sort by last open
+
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
 
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    # is_reading = db.Column(db.Boolean)
-    # update_at = db.Column(db.DateTime onupdate=db.func.now())  # sort by last open
+    
+    # many-to-many
+    user_articles = db.relationship("UserArticle", backref="article")
+    users = association_proxy("user_articles", "user")
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    serialize_rules = ('-user',)
+    serialize_rules = ('-user', "-user_articles.user", '-user_articles.article',)
 
     def __repr__(self):
         return f'''<Article {self.id} -> {self.title}: text: {self.text}>'''
+
+
+class UserArticle(db.Model, SerializerMixin):
+    __tablename__ = "user_articles"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    article_id = db.Column(db.Integer, db.ForeignKey("articles.id"))
+
+    serialize_rules = ('-user.user_articles', '-article.user_articles',)
 
 
 class User(db.Model, SerializerMixin):
@@ -64,11 +76,15 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String)
 
-    # a user has many dictionaries and articles
+    # one-to-manu: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
     articles = db.relationship("Article", backref="user")
 
-    serialize_rules = ('-dictionaries', "-articles")
+    # many-to-manny:
+    user_articles = db.relationship("UserArticle", backref="user")
+    articles = association_proxy("user_articles", 'article')
+
+    serialize_rules = ('-dictionaries', "-articles", "-user_articles.user", '-user_articles.article',)
 
     # ================= incorporate bcrypt to create a secure password. ====================
     @hybrid_property

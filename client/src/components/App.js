@@ -1,25 +1,21 @@
 import {useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
-
-
-import Home from "./Home";
-import Reader from "./ArticleImporter";
-import ArticleList from "./ArticleList"
-import NavBar from "../navbar/NavBar";
-
 import { AccountBox } from "../account/AccountBox";
 import { UserContext } from "./UserContext";
 
+import Home from "./Home";
+import NavBar from "../navbar/NavBar";
+import { Article } from "../articles/Article";
+import { ArticleList } from "../articles/ArticleList";
+import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 
 
 function App() {
 
   const [dictionary, setDictionary]= useState([])
   const [articles, setArticles] = useState([])
-  const [isShowReader, setShowReader] = useState(false)
-  // const [mode, setMode] = useState("dark")
-
-  const [isDarkMode, setDarkMode] = useState("dark")
+  const [article, setArticle] = useState("") // set to empty string
+  
   const [user, setUser] = useState(null);
 
 
@@ -30,15 +26,14 @@ function App() {
         .then(articles => setArticles(articles))
   }, [])
 
-  // =========== get dictioanry =================================
+  // =========== get dictioanry ================================
   useEffect(() => {
     fetch('/dictionaries')
         .then(res => res.json())
         .then(dictionary => setDictionary(dictionary))
   }, [])
 
-  // =========== check session =================================
-  //user remains logged in
+  // =========== check session - user remains logged in ========
   useEffect(() => {
     fetch("/check_session")
     .then((r) => {
@@ -47,56 +42,60 @@ function App() {
       }
     });
   }, []);
-
+  
 
   function handleNewText(newArticle) {
     setArticles([...articles, newArticle])
   }
 
-
   // ======== user context value ===================
-  const userContextValue = {user, setUser, isDarkMode, setDarkMode}
-
+  const userContextValue = {user, setUser, article, setArticle}
+  // console.log(user)
 
   return (
-    <UserContext.Provider value={userContextValue} >
+    <UserContext.Provider value={userContextValue}>
+      {!user ? 
+        <AccountBox/> 
+        :
+        <main>
+            <NavBar/>
+            <Routes >
+              <Route
+                exact
+                path='//upload_dictionary'
+                element={<DictionaryUpload/>}
+              >
+              </Route>
+              <Route
+                exact
+                path='/articles/:id'
+                element={<Article key={article?.id}/>}
+              >
+              </Route>
+              <Route
+                exact
+                path='/articles'
+                element={<ArticleList articles={articles}/>}
+              >
+              </Route>
 
-    <main className={isDarkMode}>
-        <NavBar/>
-        <Routes >
-          <Route
-            exact
-            path='/login'
-            element={<AccountBox/>}
-          >
-          </Route>
+              <Route
+                exact
+                path='/login'
+                element={<AccountBox/>}
+              >
+              </Route>
 
-          <Route
-            exact
-            path='/documents'
-            element={<ArticleList articles={articles}/>}
-          >
-          </Route>
+              <Route
+                exact
+                path='/'
+                element={<Home onAddNewText={handleNewText}/>}
+              >
+              </Route>
+          </Routes>
 
-          {/* <Route
-              exact
-              path='/reader'
-              element={<Reader onAddNewText={handleNewText}/>}
-          >
-          </Route> */}
-
-          <Route
-            exact
-            path='/'
-            element={<Home onAddNewText={handleNewText}/>}
-          >
-          </Route>
-
-            
-      </Routes>
-
-    </main>
-    
+        </main>
+      }
     </UserContext.Provider>
   );
 }

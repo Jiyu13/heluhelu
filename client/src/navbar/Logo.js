@@ -3,8 +3,7 @@
 import React from "react";
 import styled from 'styled-components';
 
-import logo from "../assets/images/logo.jpeg"
-// import logo_black from "../assets/images/logo_black.jpeg"
+import logo from "../assets/images/logo.png"
 
 
 
