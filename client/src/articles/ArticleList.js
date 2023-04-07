@@ -7,6 +7,10 @@ import delete_icon from "../assets/images/delete_icon.svg"
 
 export function ArticleList( {articles} ) {
 
+    function handleClickToEdit() {
+        
+    }
+
     
     return (
     <ArticlesListContainer>
@@ -28,7 +32,7 @@ export function ArticleList( {articles} ) {
 
                     <EditCell>
                         <EditContainer>
-                            <Button>
+                            <Button onClick={handleClickToEdit}>
                                 <ButtonImage src={edit_icon} alt="edit icon"/>
                             </Button>
                             <Button>

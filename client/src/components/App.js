@@ -3,11 +3,12 @@ import { Route, Routes } from "react-router-dom";
 import { AccountBox } from "../account/AccountBox";
 import { UserContext } from "./UserContext";
 
-import Home from "./Home";
+import {Home} from "./Home";
 import NavBar from "../navbar/NavBar";
 import { Article } from "../articles/Article";
 import { ArticleList } from "../articles/ArticleList";
 import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
+import { ArticleEdit } from "../articles/ArticleEdit";
 
 
 function App() {
@@ -62,7 +63,13 @@ function App() {
             <Routes >
               <Route
                 exact
-                path='//upload_dictionary'
+                path='/edit/:id'
+                element={<ArticleEdit/>}
+              >
+              </Route>
+              <Route
+                exact
+                path='/upload_dictionary'
                 element={<DictionaryUpload/>}
               >
               </Route>

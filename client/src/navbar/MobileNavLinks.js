@@ -68,27 +68,27 @@ export function MobileNavLinks() {
                     <LinksWrapper>
                         <LinkItem>
                         <Link href="/">Home</Link>
-                    </LinkItem>
+                        </LinkItem>
 
-                    <LinkItem>
-                        <Link href="#">Search Article</Link>
-                    </LinkItem>
+                        <LinkItem>
+                            <Link href="/articles">Articles</Link>
+                        </LinkItem>
 
-                    <LinkItem>
-                        <Link href="#">My Stats</Link>
-                    </LinkItem>
+                        <LinkItem>
+                            <Link href="#">My Stats</Link>
+                        </LinkItem>
 
-                    <LinkItem>
-                        <Link href="#">Current Reading</Link>
-                    </LinkItem>
+                        <LinkItem>
+                            <Link href="#">Current Reading</Link>
+                        </LinkItem>
 
-                    <LinkItem>
-                        <Link href="#">Upload Dictionary</Link>
-                    </LinkItem>
+                        <LinkItem>
+                            <Link href="#">Upload Dictionary</Link>
+                        </LinkItem>
 
-                    <LinkItem>
-                        <Link href="#">Login</Link>
-                    </LinkItem>
+                        {/* <LinkItem>
+                            <Link href="/login">Login</Link>
+                        </LinkItem> */}
 
                         <Marginer/>
                         <Accessibility/>
