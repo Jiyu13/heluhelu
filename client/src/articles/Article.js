@@ -11,7 +11,6 @@ import { TranslationWord } from "./TranslationWord";
 
 
 
-
 export function Article() {
 
     const {article, setArticle} = useContext(UserContext)
@@ -26,6 +25,7 @@ export function Article() {
         .then(prevArticle => {
             setArticle(prevArticle)
         })
+        // eslint-disable-next-line
     }, [id])
 
     const paragraphs = article?.text?.split("\n\n").map(p => p)

@@ -1,13 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 
 export function ArticleWord({word}) {
 
-    // const [chosen, setChosen] = useState("")
-    // const [error, setError] = useState("")
 
-    const {setChosen, setErrors, target, setTarget} = useContext(UserContext)
+    const {setChosen, setErrors, setTarget} = useContext(UserContext)
 
 
     function handleClick(e) {
