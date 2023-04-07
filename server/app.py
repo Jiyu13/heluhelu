@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, make_response, jsonify, request, session
+from sqlalchemy.sql.expression import func
 
 from config import app, db, api 
 from flask_restful import Resource
@@ -47,9 +48,43 @@ api.add_resource(Dictionaries, '/dictionaries', endpoint="dictionary")
 class DictionaryWords(Resource):
     def get(self):
         dict_words = DictionaryWord.query.all()
-        words_dict = jsonify([word.to_dict() for word in dict_words])
-        return make_response(words_dict, 200)
-api.add_resource(DictionaryWords, '/dictionary_words', endpoint="words")
+        words_to_dict = jsonify([word.to_dict() for word in dict_words])
+        return make_response(words_to_dict, 200)
+api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_words")
+
+
+import re
+class DictionariesWordsByWord(Resource):
+    def get(self, word):
+        clean_word = re.sub(r'[^ \w/-/]', '', word).strip()  # ^ not a space and \w (letter)
+        hawaiians = DictionaryWord.query.filter(
+                DictionaryWord.hawaiian_clean.istartswith(clean_word)
+            ).limit(5)
+
+        results = [word.hawaiian for word in hawaiians]
+        if hawaiians:
+        # .order_by(DictionaryWord.hawaiian_clean.asc())
+        # func.length(DictionaryWord.hawaiian_clean)
+        # print(hawaiians)
+        # chosen = ""
+        # if len(results) > 1:
+        #     printed = False
+        #     for each in results:
+        #         if ", " in each:
+        #             words = each.split(", ")
+        #             for word in words:
+        #                 if clean_word == word:
+        #                     printed = True
+        #                     print(word)
+        #     if not printed:
+        #         print(results[0])
+        # else:
+        #     print(results[0])
+            hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
+            return make_response(jsonify(hawaiian_dict), 200)
+        response = {"message": "This article does not exist in the database, please try again"}
+        return make_response(jsonify(respons), 404)
+api.add_resource(DictionariesWordsByWord, '/search/<string:word>')
 
 
 class Users(Resource):

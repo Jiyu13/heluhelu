@@ -29,6 +29,8 @@ class DictionaryWord(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     hawaiian = db.Column(db.String, nullable=False)
+    hawaiian_clean = db.Column(db.String)
+
     translation = db.Column(db.String)
 
     # a word belongs to a dictionary, many to one

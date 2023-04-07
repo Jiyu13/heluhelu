@@ -12,11 +12,12 @@ import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 
 function App() {
 
-  const [dictionary, setDictionary]= useState([])
   const [articles, setArticles] = useState([])
-  const [article, setArticle] = useState("") // set to empty string
-  
+  const [article, setArticle] = useState("")
   const [user, setUser] = useState(null);
+  const [chosen, setChosen] = useState([])
+  const [target, setTarget] = useState("")
+  const [errors, setErrors] = useState("")
 
 
   // =========== get articles =================================
@@ -26,14 +27,8 @@ function App() {
         .then(articles => setArticles(articles))
   }, [])
 
-  // =========== get dictioanry ================================
-  useEffect(() => {
-    fetch('/dictionaries')
-        .then(res => res.json())
-        .then(dictionary => setDictionary(dictionary))
-  }, [])
-
-  // =========== check session - user remains logged in ========
+  
+  // =========== check session - user remains logged in ==============
   useEffect(() => {
     fetch("/check_session")
     .then((r) => {
@@ -49,8 +44,13 @@ function App() {
   }
 
   // ======== user context value ===================
-  const userContextValue = {user, setUser, article, setArticle}
-  // console.log(user)
+  const userContextValue = {user, setUser, 
+                            article, setArticle, 
+                            chosen, setChosen, 
+                            errors, setErrors,
+                            target, setTarget,
+                          }
+   
 
   return (
     <UserContext.Provider value={userContextValue}>

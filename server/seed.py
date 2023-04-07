@@ -14,24 +14,8 @@ def make_user():
     new_user.password_hash = password
     db.session.add(new_user)
     db.session.commit()
-    
-# default_users = [
-#         {"username": "ziru", "password": "test"}, 
-#         {"username": "jiyu", "password": "test1"}
-#     ]
 
-#     # create users
-#     users = []
-#     for i in range(len(users)):
 
-#         new_user = User(
-#             username=default_users[i]["username"],
-#         )
-#         new_user.password_hash = default_users[i]["password"]
-#         users.append(new_user)
-
-#     db.session.add_all(users)
-#     db.session.commit()
 
 
 def upload_dictionary():
@@ -59,6 +43,7 @@ def upload_dictionary():
                 translation=word_translation[1],
                 dictionary_id=new_dictionary.id
             )
+            w_t.hawaiian_clean = w_t.hawaiian.replace(".","").replace("-", "")
             all_words.append(w_t)
     db.session.add_all(all_words)
     db.session.commit()
@@ -68,6 +53,9 @@ if __name__ == "__main__":
     with app.app_context():
         make_user()
         upload_dictionary()
+
+
+# DictionaryWord.query.filter(DictionaryWord.hawaiian.like("%moseko%")).limit(5)
 
 
 # def get_word_and_translation():
@@ -83,3 +71,22 @@ if __name__ == "__main__":
     #         hawaiians.append(hawaiian)
     # db.session.add_all(hawaiians)
     # db.session.commit()
+
+
+# default_users = [
+#         {"username": "ziru", "password": "test"}, 
+#         {"username": "jiyu", "password": "test1"}
+#     ]
+
+#     # create users
+#     users = []
+#     for i in range(len(users)):
+
+#         new_user = User(
+#             username=default_users[i]["username"],
+#         )
+#         new_user.password_hash = default_users[i]["password"]
+#         users.append(new_user)
+
+#     db.session.add_all(users)
+#     db.session.commit()
