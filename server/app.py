@@ -9,7 +9,6 @@ from models import db, Dictionary, DictionaryWord, Article, User
 
 
 class Dictionaries(Resource):
-    # rules=("-dictionaries.words", "-dictionaries.user")
     def get(self):
         dictionaries = Dictionary.query.all()
         dictionaries_dict = jsonify([dictionary.to_dict() for dictionary in dictionaries])
@@ -63,23 +62,6 @@ class DictionariesWordsByWord(Resource):
 
         results = [word.hawaiian for word in hawaiians]
         if hawaiians:
-        # .order_by(DictionaryWord.hawaiian_clean.asc())
-        # func.length(DictionaryWord.hawaiian_clean)
-        # print(hawaiians)
-        # chosen = ""
-        # if len(results) > 1:
-        #     printed = False
-        #     for each in results:
-        #         if ", " in each:
-        #             words = each.split(", ")
-        #             for word in words:
-        #                 if clean_word == word:
-        #                     printed = True
-        #                     print(word)
-        #     if not printed:
-        #         print(results[0])
-        # else:
-        #     print(results[0])
             hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
             return make_response(jsonify(hawaiian_dict), 200)
         response = {"message": "This article does not exist in the database, please try again"}
