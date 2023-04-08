@@ -32,6 +32,7 @@ export function Article() {
 
     // ========= Search word ==================================
     function handleChange(e) {
+        // console.log(e.target.value)
         fetch(`/search/${e.target.value}`)
         .then(res => {
             if (res.ok) {
@@ -39,7 +40,7 @@ export function Article() {
                     setChosen(data)
                 })
             } else {
-                res.json(err => setErrors(err.errors))
+                res.json().then(err => setErrors(err.errors))
             }
         })
     }

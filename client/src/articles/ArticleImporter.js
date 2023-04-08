@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 
 function ArticleImporter( {onAddNewText } ) {
 
-    // const {user} = useContext(UserContext)
+
+    let navigate = useNavigate()
+    function redirectArticles () {
+        navigate('/articles')
+    }
 
     const initialValues = {
         text: "",
@@ -36,6 +41,7 @@ function ArticleImporter( {onAddNewText } ) {
             .then(newObj => {
                 onAddNewText(newObj);
                 setFormData(initialValues)
+                redirectArticles()
             })
 
     }

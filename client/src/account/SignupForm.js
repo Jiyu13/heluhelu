@@ -26,7 +26,6 @@ export function SignupForm() {
     function handleInput(e) {
         const value = e.target.value
         const name = e.target.name
-        // console.log(name, value)
         setFormData({...formData, [name]: value})
     }
     
@@ -47,11 +46,8 @@ export function SignupForm() {
             if (res.status === 201) {
                 
                 res.json().then(user => {
-                    // console.log(user)
                     setUser(user)
-                    // console.log("logged in1")
                     redirectHome()
-                    // console.log("logged in2")
                 })  
             }
         }))

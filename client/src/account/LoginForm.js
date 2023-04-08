@@ -53,9 +53,7 @@ export function LoginForm(props) {
                 res.json().then(user => {
                     // console.log(user)
                     setUser(user)
-                    // console.log("logged in1")
                     redirectHome()
-                    // console.log("logged in2")
                 })  
             }
         }))
@@ -98,33 +96,3 @@ export function LoginForm(props) {
         </BoxContainer>
     )
 }
-
-// const formSchema = yup.object().shape({
-    //     username: yup.string().required("Must enter username"),
-    //     password: yup.string().required("Must enter a password"),
-    // });
-
-    // const formik = useFormik({
-    //     initialValues: {
-    //         username: "",
-    //         password: ""
-    //     },
-    
-    //     validationSchema: formSchema,
-    //     onSubmit: (values) => {
-    //         fetch("/login", {
-    //             method: "POST",
-    //             headers: {
-    //             "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(values, null, 2),
-    //         })
-    //         .then((res) => {
-    //             if (res.status === 401) {
-    //                 console.log("Account not Found! Please Sign up first.")
-    //             } else {
-    //                 res.json().then(user => {setUser(user)})  
-    //             }
-    //         });
-    //     },
-    // });

@@ -9,6 +9,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         navigate('/articles')
     }
 
+
     // ================ fetch article ===================
     const {id} = useParams()
     const [formData, setFormData] = useState("")
@@ -17,7 +18,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         fetch(`/articles/${id}`)
         .then(res => res.json())
         .then(article => setFormData(article))
-    }, [])
+    }, [id])
     
     // ================= handle editing article ========================== 
     function handleOnchange(e) {
