@@ -3,15 +3,12 @@ import styled from "styled-components"
 
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
+import { useState } from "react";
 
 
 export function ArticleList( {articles} ) {
 
-    function handleClickToEdit() {
-        
-    }
 
-    
     return (
     <ArticlesListContainer>
 
@@ -32,8 +29,11 @@ export function ArticleList( {articles} ) {
 
                     <EditCell>
                         <EditContainer>
-                            <Button onClick={handleClickToEdit}>
-                                <ButtonImage src={edit_icon} alt="edit icon"/>
+                            <Button >
+                                <Link to={`/article/edit/${article.id}`}>
+                                    <ButtonImage src={edit_icon} alt="edit icon"/>
+                                </Link>
+                                
                             </Button>
                             <Button>
                                 <ButtonImage src={delete_icon} alt="delete icon"/>

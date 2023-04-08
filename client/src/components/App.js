@@ -21,7 +21,7 @@ function App() {
   const [errors, setErrors] = useState("")
 
 
-  // =========== get articles =================================
+  // ========= get articles =================================
   useEffect(() => {
     fetch('/articles')
         .then(res => res.json())
@@ -29,7 +29,7 @@ function App() {
   }, [])
 
   
-  // =========== check session - user remains logged in ==============
+  // ========= check session - user remains logged in ========
   useEffect(() => {
     fetch("/check_session")
     .then((r) => {
@@ -40,11 +40,26 @@ function App() {
   }, []);
   
 
+  // ========= add new article ===============================
   function handleNewText(newArticle) {
     setArticles([...articles, newArticle])
   }
 
-  // ======== user context value ===================
+
+  // ========= update article ===============================
+  function onUpdatedArticle(updatedArticle) {
+    // console.log(updatedArticle)
+    const updatedArticles = articles?.map(a => {
+      if (a.id === updatedArticle.id) {
+          return updatedArticle
+      } else {
+        return a
+      }
+    })
+    setArticles(updatedArticles)
+  }
+
+  // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
                             chosen, setChosen, 
@@ -63,8 +78,8 @@ function App() {
             <Routes >
               <Route
                 exact
-                path='/edit/:id'
-                element={<ArticleEdit/>}
+                path='/article/edit/:id'
+                element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
               >
               </Route>
               <Route
