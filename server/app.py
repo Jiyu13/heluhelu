@@ -68,6 +68,16 @@ class DictionariesWordsByWord(Resource):
         return make_response(jsonify(respons), 404)
 api.add_resource(DictionariesWordsByWord, '/search/<string:word>')
 
+class UserArticles(Resource):
+    def get(self):
+        user_articles = UserArticle.query.all()
+        user_articles_dict = [user_article.to_dict() for user_article in user_articles]
+        return make_response(user_articles_dict, 200)
+    
+    def post(self):
+        pass
+api.add_resource(UserArticles, '/user_articles')
+
 
 class Users(Resource):
     def get(self):
