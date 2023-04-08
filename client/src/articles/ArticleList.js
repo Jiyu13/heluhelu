@@ -1,19 +1,16 @@
 import {Link} from "react-router-dom";
 import styled from "styled-components"
 
-import { useContext } from "react";
-import { UserContext } from "../components/UserContext";
-
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
 
 
 export function ArticleList( {articles} ) {
-    const {article, setArticle} = useContext(UserContext)
+
+    
     return (
     <ArticlesListContainer>
 
-       
         <ArticlesListTable>
             <tbody>
             {articles?.map(article =>
@@ -48,6 +45,7 @@ export function ArticleList( {articles} ) {
             </tbody>
 
         </ArticlesListTable>
+
     </ArticlesListContainer> 
     )
 }
@@ -128,7 +126,7 @@ const Button = styled.a`
     text-align: center;
     margin-bottom: 4px;
     margin-right: 4px;
-    user-select: none;
+    user-select: none; // Don't allow user to select text in buttons
     color: #2668ac;
     text-decoration: none;
 `

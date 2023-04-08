@@ -3,12 +3,10 @@ import { ArticleWord } from "./ArticleWord"
 
 export function ArticleParagraph({words}) {
 
-    console.log(words)
     return (
         <ParagraphContainer>
-                {words.map(word => <ArticleWord word={word}/>)}
+                {words.map(word => <ArticleWord key={word.id} word={word}/>)}
         </ParagraphContainer>
-
     )
 }
 
