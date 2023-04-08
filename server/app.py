@@ -6,7 +6,7 @@ from config import app, db, api
 from flask_restful import Resource
 
 from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
-
+import re
 
 class Dictionaries(Resource):
     def get(self):
@@ -52,7 +52,6 @@ class DictionaryWords(Resource):
 api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_words")
 
 
-import re
 class DictionariesWordsByWord(Resource):
     def get(self, word):
         clean_word = re.sub(r'[^ \w/-/]', '', word).strip()  # ^ not a space and \w (letter)
@@ -88,8 +87,12 @@ api.add_resource(Users, '/users', endpoint="users")
 
 
 class Articles(Resource):
+    
     def get(self):
-        articles = Article.query.all()  
+        # show artciles belong to current user
+        user_id = session["user_id"]
+        user = User.query.filter_by(id=user_id).first()
+        articles = user.articles
         articles_dict = [article.to_dict() for article in articles]
         return make_response(articles_dict, 200)
 

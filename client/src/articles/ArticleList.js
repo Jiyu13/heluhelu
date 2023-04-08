@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
+import share_icon from "../assets/images/share_icon.svg"
 
 
 export function ArticleList( {articles} ) {
@@ -36,6 +37,10 @@ export function ArticleList( {articles} ) {
                             </Button>
                             <Button>
                                 <ButtonImage src={delete_icon} alt="delete icon"/>
+                            </Button>
+
+                            <Button>
+                                <ButtonImage src={share_icon} alt="share icon"/>
                             </Button>
 
                         </EditContainer>
