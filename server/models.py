@@ -70,6 +70,9 @@ class UserArticle(db.Model, SerializerMixin):
 
     serialize_rules = ('-user.user_articles', '-article.user_articles',)
 
+    def __repr__(self):
+        return f'''<UserArticle {self.id} -> user_id: {self.user_id}; article_id: {self.article_id}>'''
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
