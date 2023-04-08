@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User
+from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
 
 
 class Dictionaries(Resource):
@@ -105,6 +105,16 @@ class Articles(Resource):
         new_article.users.id = session["user_id"]
         db.session.add(new_article)
         db.session.commit()
+
+        # ======= user_articles table ===========================
+        user_article = UserArticle(
+            user_id=session['user_id'],
+            article_id=new_article.id
+        )
+        db.session.add(user_article)
+        db.session.commit()
+        print(user_article)
+        # =======================================================
 
         return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
