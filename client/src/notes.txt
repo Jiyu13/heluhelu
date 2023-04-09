@@ -8,6 +8,13 @@ transition: all 200mx ease-in-out;
 
 flex-direction: column; -> make it a column, a vertical way
 
+// ================================================
+margin-block-start property specifies the margin at the start in the block direction.
+display: block;
+margin-block-start: 0.67em -> em relative to the text size
+
+// ================================================
+
 React.createContext
 -> https://legacy.reactjs.org/docs/context.html#reactcreatecontext
 
