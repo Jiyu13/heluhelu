@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
-import { useState } from "react";
 
 
 export function ArticleList( {articles} ) {

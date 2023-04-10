@@ -10,15 +10,17 @@ import { ArticleList } from "../articles/ArticleList";
 import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 import { ArticleEdit } from "../articles/ArticleEdit";
 
+const USER_NOT_SET = -1;
 
 function App() {
 
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
   const [target, setTarget] = useState("")
   const [errors, setErrors] = useState("")
+  const [isLoading, setLoading] = useState(false)
 
 
   // ========= get articles =================================
@@ -34,7 +36,10 @@ function App() {
     fetch("/check_session")
     .then((r) => {
       if (r.ok) {
+        console.log(r)
         r.json().then((user) => setUser(user));
+      } else {
+        setUser(null)
       }
     });
   }, []);
@@ -65,8 +70,11 @@ function App() {
                             chosen, setChosen, 
                             errors, setErrors,
                             target, setTarget,
+                            isLoading, setLoading,
                           }
    
+
+  if(user === USER_NOT_SET) return;
 
   return (
     <UserContext.Provider value={userContextValue}>

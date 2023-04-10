@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ArticleImporter from "../articles/ArticleImporter";
 import styled from "styled-components";
+import { UserContext } from "./UserContext";
 
 export function Home({onAddNewText}) {
+
+    const {isLoading, setLoading} = useContext(UserContext)
 
     const [isShowReader, setShowReader] = useState(false)
     
