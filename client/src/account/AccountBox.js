@@ -6,6 +6,81 @@ import { useState } from "react";
 import { AccountContext } from "./AccountContext";
 
 
+
+export function AccountBox() {
+    const [isExpanded, setExpanded] = useState(false)
+    const [active, setActive] = useState("login")
+
+    // change and toggle the animation
+    const playExpandingAnimation = () => {
+        setExpanded(true);
+        // set isExpanded to false 2.3s after
+        setTimeout(() => {
+            setExpanded(false);
+          }, expandingTransition.duration * 1000 - 1500);
+    }
+
+    // == create functions to switch to login and signup ====
+    const switchToSignup = () => {
+        playExpandingAnimation();
+        setTimeout(() => {
+          setActive("signup");
+        }, 400);
+    };
+    
+    const switchToLogin = () => {
+        playExpandingAnimation();
+        setTimeout(() => {
+            setActive("login");
+        }, 400);
+    };
+    // console.log(active)
+    // ======================================================
+
+    // create context values
+    const contextValue = {switchToSignup, switchToLogin}
+
+    return (
+        <AppContainer>
+            
+            {/* use AccountContext to spread the context value, make the child components below being able to access context values */}
+            <AccountContext.Provider value={contextValue}>
+                <BoxContainer>
+                    <TopContainer>
+                        <BackDrop
+                            // initial -> play animation only when a style/state is changed
+                            initial={false}
+                            animate={isExpanded ? "expanded" : "collapsed"}
+                            variants={backdropVariants}
+                            transition={expandingTransition}
+                        />
+                        {active === "login" && (
+                            <HeaderContainer>
+                                <HeaderText>Welcome</HeaderText>
+                                <HeaderText>Back</HeaderText>
+                                <SmallText>Please sign-in to continue!</SmallText>
+                            </HeaderContainer>
+                        )}
+
+                        {active === "signup" && (
+                            <HeaderContainer>
+                                <HeaderText>Create</HeaderText>
+                                <HeaderText>Account</HeaderText>
+                                <SmallText>Please sign-up to continue!</SmallText>
+                            </HeaderContainer>
+                        )}
+                    </TopContainer>
+
+                    <InnerContainer>
+                        {active === "login" && <LoginForm/>}
+                        {active === "signup" && <SignupForm/>}
+                    </InnerContainer>
+                </BoxContainer>
+            </AccountContext.Provider>
+        </AppContainer>
+    )
+}
+
 const AppContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -115,77 +190,3 @@ const expandingTransition = {
     duration: 2.3,
     stiffness: 30,
   };
-
-export function AccountBox() {
-    const [isExpanded, setExpanded] = useState(false)
-    const [active, setActive] = useState("login")
-
-    // change and toggle the animation
-    const playExpandingAnimation = () => {
-        setExpanded(true);
-        // set isExpanded to false 2.3s after
-        setTimeout(() => {
-            setExpanded(false);
-          }, expandingTransition.duration * 1000 - 1500);
-    }
-
-    // == create functions to switch to login and signup ====
-    const switchToSignup = () => {
-        playExpandingAnimation();
-        setTimeout(() => {
-          setActive("signup");
-        }, 400);
-    };
-    
-    const switchToLogin = () => {
-        playExpandingAnimation();
-        setTimeout(() => {
-            setActive("login");
-        }, 400);
-    };
-    // console.log(active)
-    // ======================================================
-
-    // create context values
-    const contextValue = {switchToSignup, switchToLogin}
-
-    return (
-        <AppContainer>
-            
-            {/* use AccountContext to spread the context value, make the child components below being able to access context values */}
-            <AccountContext.Provider value={contextValue}>
-                <BoxContainer>
-                    <TopContainer>
-                        <BackDrop
-                            // initial -> play animation only when a style/state is changed
-                            initial={false}
-                            animate={isExpanded ? "expanded" : "collapsed"}
-                            variants={backdropVariants}
-                            transition={expandingTransition}
-                        />
-                        {active === "login" && (
-                            <HeaderContainer>
-                                <HeaderText>Welcome</HeaderText>
-                                <HeaderText>Back</HeaderText>
-                                <SmallText>Please sign-in to continue!</SmallText>
-                            </HeaderContainer>
-                        )}
-
-                        {active === "signup" && (
-                            <HeaderContainer>
-                                <HeaderText>Create</HeaderText>
-                                <HeaderText>Account</HeaderText>
-                                <SmallText>Please sign-up to continue!</SmallText>
-                            </HeaderContainer>
-                        )}
-                    </TopContainer>
-
-                    <InnerContainer>
-                        {active === "login" && <LoginForm/>}
-                        {active === "signup" && <SignupForm/>}
-                    </InnerContainer>
-                </BoxContainer>
-            </AccountContext.Provider>
-        </AppContainer>
-    )
-}

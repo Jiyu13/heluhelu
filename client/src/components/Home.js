@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ArticleImporter from "./ArticleImporter";
+import ArticleImporter from "../articles/ArticleImporter";
 import styled from "styled-components";
 
 export function Home({onAddNewText}) {

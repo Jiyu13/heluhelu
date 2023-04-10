@@ -132,6 +132,21 @@ class ArticleByID(Resource):
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
 
+class ArticleEdit(Resource):
+    def patch(self, id):
+        try:
+            article = Article.query.filter_by(id=id).first() 
+            for attr in request.get_json():
+                setattr(article, attr, request.get_json()[attr])
+            db.session.add(article)
+            db.session.commit()
+            response = make_response(article.to_dict(), 200)
+        except:
+            response = make_response({"error": "article not found"}, 404)
+        return response
+api.add_resource(ArticleEdit, '/article/edit/<int:id>')
+
+
 class CheckSession(Resource):
     def get(self):
         # if the user is logged in (if their user_id is in the session object):
