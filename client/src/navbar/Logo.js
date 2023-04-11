@@ -4,6 +4,8 @@ import React from "react";
 import styled from 'styled-components';
 
 import logo from "../assets/images/logo.png"
+import { Link } from "react-router-dom";
+// from "../public/assets/images/logo.png"
 
 // Logo Wrapper
 const LogoWrapper = styled.div`
@@ -32,12 +34,14 @@ const LogoText = styled.h2`
 
 export function Logo() {
     return (
-        <LogoWrapper>
-            <LogoImg>
-                <img src={logo} alt="Hawaiian Reader Logo"/>
-            </LogoImg>
+        <Link to ="/" style={{textDecoration:'none'}}>
+            <LogoWrapper>
+                <LogoImg>
+                    <img src={logo} alt="Hawaiian Reader Logo"/>
+                </LogoImg>
 
-            <LogoText>Hawaiian Reader</LogoText>
-        </LogoWrapper>
+                <LogoText>Hawaiian Reader</LogoText>
+            </LogoWrapper>
+        </Link>
     )
 }
