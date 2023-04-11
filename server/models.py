@@ -10,7 +10,7 @@ class Dictionary(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False, unique=True)
-    # is_enabled = db.Column(db.Boolean)  # check whether a dictionary is active or not 
+    # is_enabled = db.Column(db.Boolean)  # check whether a dictionary is active or not
 
     # a dictionary belongs to a user, many to one
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -46,9 +46,9 @@ class Article(db.Model, SerializerMixin):
     # update_at = db.Column(db.DateTime onupdate=db.func.now())  # sort by last open
 
     id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String, unique=True, nullable=False)
     text = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
-
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     
@@ -59,7 +59,7 @@ class Article(db.Model, SerializerMixin):
     serialize_rules = ('-user', "-user_articles.user", '-user_articles.article',)
 
     def __repr__(self):
-        return f'''<Article {self.id} -> {self.title}: text: {self.text}>'''
+        return f'''<Article {self.id - self.uuid} -> {self.title}: text: {self.text}>'''
 
 
 class UserArticle(db.Model, SerializerMixin):
