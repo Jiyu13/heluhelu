@@ -82,11 +82,12 @@ class Articles(Resource):
     def get(self):
         # show artciles belong to current user
         user_id = session["user_id"]
-        user = User.query.filter_by(id=user_id).first()
+        if user_id:
+            user = User.query.filter_by(id=user_id).first()
 
-        articles = user.articles
-        articles_dict = [article.to_dict() for article in articles]
-        return make_response(articles_dict, 200)
+            articles = user.articles
+            articles_dict = [article.to_dict() for article in articles]
+            return make_response(articles_dict, 200)
 
     # create Article
     def post(self):
@@ -248,15 +249,35 @@ class Signup(Resource):
         password = request.get_json()["password"]
 
         if username and password:
-            new_user = User(username=username)
-            new_user.password_hash = password
-            
-            db.session.add(new_user)
-            db.session.commit()
+            user = User.query.filter_by(username=username).first()
+            # check if user already exists in db
+            if not user:
+                
+                # error_msg = User.is_valid_password(password)
+                # if error_msg:
+                #     return make_response({'message': error_msg}, 422)
+                # new_user = User(username=username)
+                # print(new_user._password_hash)
+                # new_user.password_hash = password
+                # print(new_user._password_hash)
+                # db.session.add(new_user)
+                # db.session.commit()
+                # session["user_id"] = new_user.id
+                # return new_user.to_dict(), 201 
 
-            session["user_id"] = new_user.id
-            return new_user.to_dict(), 201
-        return {'error': '422 Unprocessable Entity'}, 422
+                try:
+                    new_user = User(username=username, _password_hash=password)
+                    new_user.password_hash = password
+                    db.session.add(new_user)
+                    db.session.commit()
+
+                    session["user_id"] = new_user.id
+                    return new_user.to_dict(), 201 
+                except ValueError as e:
+                    return make_response({"message": [e.__str__()]}, 422)
+                    
+
+        return make_response({'message': 'Username already exists, please try again!'}, 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
 

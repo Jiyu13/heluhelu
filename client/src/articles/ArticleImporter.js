@@ -54,6 +54,7 @@ function ArticleImporter( {onAddNewText } ) {
             {/* <h1>Enter your text: </h1> */}
             <FormContainer onSubmit={handleSubmit}>
                 <FormTextarea
+                    required
                     placeholder="Paste your Hawaiian text here..."
                     name='text'
                     value={formData.text}
@@ -65,6 +66,7 @@ function ArticleImporter( {onAddNewText } ) {
                     Give this text a title:
                 </TitleText>
                 <ArticleTitle 
+                    required
                     type="text"
                     placeholder="Enter title here..."
                     name="title"

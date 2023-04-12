@@ -56,7 +56,8 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         <EditContainer>
             <EditForm onSubmit={handleSubmit}>
                 <LabelTag>Title:</LabelTag>
-                <TitleInput 
+                <TitleInput
+                    required
                     type="text" 
                     name="title"
                     value={formData.title}
@@ -66,6 +67,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
                 <LabelTag>Content:</LabelTag>
                 <ContentTextarea
+                    required
                     name="text"
                     value={formData.text}
                     onChange={handleOnchange}

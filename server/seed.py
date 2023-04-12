@@ -8,7 +8,7 @@ def make_user():
     UserArticle.query.delete()
 
     username = "ziru"
-    password = "test"
+    password = "Test12345!"
 
     # create a user
     new_user = User(

@@ -4,6 +4,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 
 from config import db, bcrypt
+import string
 
 class Dictionary(db.Model, SerializerMixin):
     __tablename__ = 'dictionaries'
@@ -79,7 +80,7 @@ class User(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)
-    _password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String, nullable=False)
 
     # one-to-manu: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
@@ -90,6 +91,32 @@ class User(db.Model, SerializerMixin):
     articles = association_proxy("user_articles", 'article')
 
     serialize_rules = ('-dictionaries', "-articles", "-user_articles.user", '-user_articles.article',)
+
+    # ================= password validation ==========================================
+    @validates('_password_hash')
+    def validate_password(self, key, _password_hash):
+        cap_alphabets = list(string.ascii_uppercase)
+        special_characters = list(string.punctuation)
+        if not len(_password_hash) >= 8: 
+            raise ValueError("Password must be at least 8 characters long.")
+        if not any(each in cap_alphabets for each in _password_hash):
+            raise ValueError("Password must contain at least one capitalised character.")
+        if not any(each in special_characters for each in _password_hash):
+            raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
+        return _password_hash
+    # @classmethod
+    # def is_valid_password(cls, password):
+        # cap_alphabets = list(string.ascii_uppercase)
+        # special_characters = list(string.punctuation)
+        # if not len(password) >= 8: 
+        #     return "Password must be at least 8 characters long."
+        # if not any(each in cap_alphabets for each in password):
+        #     return "Password must contain at least one capitalised character."
+        # if not any(each in special_characters for each in password):
+        #     return "Password must contain at least one of these characters: " + string.punctuation
+        
+        # return ""
+        
 
     # ================= incorporate bcrypt to create a secure password. ====================
     @hybrid_property

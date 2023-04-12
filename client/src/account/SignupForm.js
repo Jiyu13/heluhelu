@@ -44,11 +44,13 @@ export function SignupForm() {
         })
         .then((res => {
             if (res.status === 201) {
-                
                 res.json().then(user => {
                     setUser(user)
                     redirectHome()
-                })  
+                }) 
+            } else if (res.status === 422) {
+                res.json().then(error => window.alert(error["message"]))
+                
             }
         }))
         
@@ -57,7 +59,8 @@ export function SignupForm() {
     return (
         <BoxContainer>
             <FormContainer id="signup-form" onSubmit={handleSubmit}>
-                <Input 
+                <Input
+                    required   
                     type='text' 
                     placeholder="Username" 
                     name="username" 
@@ -65,6 +68,7 @@ export function SignupForm() {
                     onChange={handleInput}
                 />
                 <Input 
+                    required
                     type='text' 
                     placeholder="Password" 
                     name="password" 

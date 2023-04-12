@@ -64,6 +64,7 @@ export function LoginForm(props) {
         <BoxContainer>
             <FormContainer id="login-form" onSubmit={handleSubmit}>
                 <Input 
+                    required
                     type='text' 
                     placeholder="Username" 
                     name="username" 
@@ -71,6 +72,7 @@ export function LoginForm(props) {
                     onChange={handleInput}
                 />
                 <Input 
+                    required
                     type='text' 
                     placeholder="Password" 
                     name="password" 
