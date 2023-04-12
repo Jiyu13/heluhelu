@@ -24,7 +24,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         <ArticlesListTable>
             <tbody>
             {articles?.map(article =>
-                // console.log(article)
                 <tr key={article.id}>
                     {/* td */}
                     <ArticleTitleCell>  

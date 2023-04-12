@@ -104,19 +104,6 @@ class User(db.Model, SerializerMixin):
         if not any(each in special_characters for each in _password_hash):
             raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
         return _password_hash
-    # @classmethod
-    # def is_valid_password(cls, password):
-        # cap_alphabets = list(string.ascii_uppercase)
-        # special_characters = list(string.punctuation)
-        # if not len(password) >= 8: 
-        #     return "Password must be at least 8 characters long."
-        # if not any(each in cap_alphabets for each in password):
-        #     return "Password must contain at least one capitalised character."
-        # if not any(each in special_characters for each in password):
-        #     return "Password must contain at least one of these characters: " + string.punctuation
-        
-        # return ""
-        
 
     # ================= incorporate bcrypt to create a secure password. ====================
     @hybrid_property

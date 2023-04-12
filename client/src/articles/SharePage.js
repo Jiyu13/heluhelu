@@ -24,14 +24,11 @@ export function SharePage() {
         .then(res => res.json())
         .then(data => setSharedArticle(data))
     }, [uuid])
-
-    // console.log(sharedArticle)
     
     const userArticle = {
         user_id: user.id,
         article: sharedArticle.id,
     }
-    // console.log(userArticle)
 
 
     function handleAddUserArticle(e) {

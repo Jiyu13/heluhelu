@@ -10,7 +10,6 @@ export function ArticleWord({word}) {
 
     function handleClick(e) {
         setTarget(e.target.id)
-        // console.log("clicked")
         
         fetch(`/search/${e.target.id}`)
         .then(res => {

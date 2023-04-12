@@ -96,8 +96,7 @@ class Articles(Resource):
             text=request.get_json()['text'],
             title=request.get_json()["title"],
             check_finished=False,
-            # # current_reading=False,
-            # user_id=session["user_id"]
+            # current_reading=False,
         )
         new_article.users.id = session["user_id"]
         db.session.add(new_article)
@@ -154,12 +153,10 @@ class UserArticles(Resource):
 api.add_resource(UserArticles, '/user_article/<string:uuid>')
 
 
-# havent finished???????
 class UserArticleById(Resource):
     def delete(self, article_id):
         current_user = session["user_id"]
         user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
-        # print(user_article)
         db.session.delete(user_article)
         db.session.commit()
         return make_response()
@@ -204,15 +201,6 @@ class ArticleByID(Resource):
             return make_response(jsonify(response_body), 404)
 
         return make_response(article.to_dict(), 200)
-    
-    # ========== need frontend delete request========================
-    # def delete(self, id):
-    #     check_user_article = UserArticle.query.filter_by(article_id=id).first()
-    #     if not check_user_article:
-    #         article = Article.query.filter_by(id=article_id).first()
-    #         db.session.delete(article)
-    #         db.session.commit()
-    #         return make_response()
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
 
@@ -252,19 +240,6 @@ class Signup(Resource):
             user = User.query.filter_by(username=username).first()
             # check if user already exists in db
             if not user:
-                
-                # error_msg = User.is_valid_password(password)
-                # if error_msg:
-                #     return make_response({'message': error_msg}, 422)
-                # new_user = User(username=username)
-                # print(new_user._password_hash)
-                # new_user.password_hash = password
-                # print(new_user._password_hash)
-                # db.session.add(new_user)
-                # db.session.commit()
-                # session["user_id"] = new_user.id
-                # return new_user.to_dict(), 201 
-
                 try:
                     new_user = User(username=username, _password_hash=password)
                     new_user.password_hash = password
@@ -275,8 +250,6 @@ class Signup(Resource):
                     return new_user.to_dict(), 201 
                 except ValueError as e:
                     return make_response({"message": [e.__str__()]}, 422)
-                    
-
         return make_response({'message': 'Username already exists, please try again!'}, 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 

@@ -38,7 +38,6 @@ function App() {
     fetch("/check_session")
     .then((r) => {
       if (r.ok) {
-        // console.log(r)
         r.json().then((user) => setUser(user));
       } else {
         setUser(null)
@@ -55,7 +54,6 @@ function App() {
 
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {
-    // console.log(updatedArticle)
     const updatedArticles = articles?.map(a => {
       if (a.id === updatedArticle.id) {
           return updatedArticle

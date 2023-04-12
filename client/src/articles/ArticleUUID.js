@@ -9,7 +9,6 @@ export function ArticleUUID() {
     const [sharedArticle, setSharedArticle] = useState("")
 
     useEffect(() => {
-        // /article/share/<int:id>/<string:uuid>
         fetch(`/article/share/${id}`)
         .then(res => res.json())
         .then(data => setSharedArticle(data))

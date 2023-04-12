@@ -51,7 +51,6 @@ export function LoginForm(props) {
                 window.alert("Account not Found! Please Sign up first.")
             } else {
                 res.json().then(user => {
-                    // console.log(user)
                     setUser(user)
                     redirectHome()
                 })  
