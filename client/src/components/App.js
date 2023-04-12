@@ -9,6 +9,8 @@ import { Article } from "../articles/Article";
 import { ArticleList } from "../articles/ArticleList";
 import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 import { ArticleEdit } from "../articles/ArticleEdit";
+import { ArticleUUID } from "../articles/ArticleUUID";
+import { SharePage } from "../articles/SharePage";
 
 const USER_NOT_SET = -1;
 
@@ -36,7 +38,7 @@ function App() {
     fetch("/check_session")
     .then((r) => {
       if (r.ok) {
-        console.log(r)
+        // console.log(r)
         r.json().then((user) => setUser(user));
       } else {
         setUser(null)
@@ -64,9 +66,20 @@ function App() {
     setArticles(updatedArticles)
   }
 
+  // ========= delete current user article from dom ===========
+  function onDeleteArticle(article_id) {
+
+    const updatedArticles = articles.filter(a => {
+      return a.id !== article_id
+    })
+    setArticles(updatedArticles)
+  }
+
+
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
+                            articles, setArticles,
                             chosen, setChosen, 
                             errors, setErrors,
                             target, setTarget,
@@ -86,26 +99,43 @@ function App() {
             <Routes >
               <Route
                 exact
+                path='/article/share_receive/:uuid'
+                element={<SharePage/>}
+              >
+              </Route>
+
+              <Route
+                exact
+                path='/article/share/:id'
+                element={<ArticleUUID/>}
+              >
+              </Route>
+
+              <Route
+                exact
                 path='/article/edit/:id'
                 element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
               >
               </Route>
-              <Route
-                exact
-                path='/upload_dictionary'
-                element={<DictionaryUpload/>}
-              >
-              </Route>
+              
               <Route
                 exact
                 path='/articles/:id'
                 element={<Article key={article?.id}/>}
               >
               </Route>
+
               <Route
                 exact
                 path='/articles'
-                element={<ArticleList articles={articles}/>}
+                element={<ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>}
+              >
+              </Route>
+
+              <Route
+                exact
+                path='/upload_dictionary'
+                element={<DictionaryUpload/>}
               >
               </Route>
 

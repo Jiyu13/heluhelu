@@ -6,7 +6,8 @@ from config import app, db, api
 from flask_restful import Resource
 
 from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
-
+import re
+import uuid
 
 class Dictionaries(Resource):
     def get(self):
@@ -52,7 +53,6 @@ class DictionaryWords(Resource):
 api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_words")
 
 
-import re
 class DictionariesWordsByWord(Resource):
     def get(self, word):
         clean_word = re.sub(r'[^ \w/-/]', '', word).strip()  # ^ not a space and \w (letter)
@@ -68,16 +68,6 @@ class DictionariesWordsByWord(Resource):
         return make_response(jsonify(respons), 404)
 api.add_resource(DictionariesWordsByWord, '/search/<string:word>')
 
-class UserArticles(Resource):
-    def get(self):
-        user_articles = UserArticle.query.all()
-        user_articles_dict = [user_article.to_dict() for user_article in user_articles]
-        return make_response(user_articles_dict, 200)
-    
-    def post(self):
-        pass
-api.add_resource(UserArticles, '/user_articles')
-
 
 class Users(Resource):
     def get(self):
@@ -88,14 +78,20 @@ api.add_resource(Users, '/users', endpoint="users")
 
 
 class Articles(Resource):
+    
     def get(self):
-        articles = Article.query.all()  
+        # show artciles belong to current user
+        user_id = session["user_id"]
+        user = User.query.filter_by(id=user_id).first()
+
+        articles = user.articles
         articles_dict = [article.to_dict() for article in articles]
         return make_response(articles_dict, 200)
 
     # create Article
     def post(self):
         new_article = Article(
+            uuid=str(uuid.uuid4()),
             text=request.get_json()['text'],
             title=request.get_json()["title"],
             check_finished=False,
@@ -119,6 +115,75 @@ class Articles(Resource):
         return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
+
+class ArticleSharedByID(Resource):
+    def get(self, id):
+        article = Article.query.filter_by(id=id).first()
+        if not article:
+            response_body = {
+                "message": "This article does not exist in the database, please try again"
+            }
+            return make_response(jsonify(response_body), 404)
+
+        return make_response(article.to_dict(), 200)
+api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
+
+
+# deal with adding new user to an article when an article is shared
+class UserArticles(Resource):
+    def get(self):
+        user_articles = UserArticle.query.all()
+        user_articles_dict = [user_article.to_dict() for user_article in user_articles]
+        return make_response(user_articles_dict, 200)
+    
+    def post(self, uuid):
+        article = Article.query.filter_by(uuid=uuid).first()
+        current_user = session["user_id"]
+        user_article = UserArticle(
+            article_id=article.id,
+            user_id=current_user
+        )
+
+        db.session.add(user_article)
+        db.session.commit()
+        return make_response(user_article.to_dict(), 201)
+api.add_resource(UserArticles, '/user_article/<string:uuid>')
+
+
+# havent finished???????
+class UserArticleById(Resource):
+    def delete(self, article_id):
+        current_user = session["user_id"]
+        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
+        # print(user_article)
+        db.session.delete(user_article)
+        db.session.commit()
+        return make_response()
+api.add_resource(UserArticleById, '/user_article/<int:article_id>')
+
+
+class ArticleShared(Resource):
+    def get(self, uuid):
+        article = Article.query.filter_by(uuid=uuid).first()
+
+        if not article: 
+            response_body = {
+                "message": "This article does not exist in the database, please try again"
+            }
+            return make_response(jsonify(response_body), 404)
+        return make_response(user_article.to_dict(), 200)
+api.add_resource(ArticleShared, '/article/share_receive/<string:uuid>')
+
+class ArticleByUUID(Resource):
+    def get(self, uuid):
+        article = Article.query.filter_by(uuid=uuid).first()
+        if not article: 
+            response_body = {
+                "message": "This article does not exist in the database, please try again"
+            }
+            return make_response(jsonify(response_body), 404)
+        return make_response(article.to_dict(), 200)
+api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 
 class ArticleByID(Resource):
     def get(self, id):

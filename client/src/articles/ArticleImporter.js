@@ -37,12 +37,12 @@ function ArticleImporter( {onAddNewText } ) {
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newArticle)
         })
-            .then((res) => res.json())
-            .then(newObj => {
-                onAddNewText(newObj);
-                setFormData(initialValues)
-                redirectArticles()
-            })
+        .then((res) => res.json())
+        .then(newObj => {
+            onAddNewText(newObj);
+            setFormData(initialValues)
+            redirectArticles()
+        })
 
     }
 

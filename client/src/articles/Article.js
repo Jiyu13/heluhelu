@@ -10,7 +10,6 @@ import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
 
 
-
 export function Article() {
 
     const {article, setArticle} = useContext(UserContext)

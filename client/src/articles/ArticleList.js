@@ -3,9 +3,19 @@ import styled from "styled-components"
 
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
+import share_icon from "../assets/images/share_icon.svg"
 
 
-export function ArticleList( {articles} ) {
+export function ArticleList( {articles, onDeleteArticle} ) {
+
+    function handleDelete(e) {
+        const article_id = parseInt(e.target.id)
+        fetch(`/user_article/${article_id}`, {
+            method: "DELETE",
+        })
+        .then(() => {
+            onDeleteArticle(article_id)})
+    }
 
 
     return (
@@ -34,8 +44,15 @@ export function ArticleList( {articles} ) {
                                 </Link>
                                 
                             </Button>
+                            <Button >
+                                <ButtonImage src={delete_icon} alt="delete icon" id={article.id} onClick={handleDelete}/>
+                            </Button>
+
                             <Button>
-                                <ButtonImage src={delete_icon} alt="delete icon"/>
+                                <Link to={`/article/share/${article.id}`}>
+                                    <ButtonImage src={share_icon} alt="share icon"/>
+                                </Link>
+                                
                             </Button>
 
                         </EditContainer>

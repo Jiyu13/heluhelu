@@ -1,11 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ArticleImporter from "../articles/ArticleImporter";
 import styled from "styled-components";
-import { UserContext } from "./UserContext";
 
 export function Home({onAddNewText}) {
-
-    const {isLoading, setLoading} = useContext(UserContext)
 
     const [isShowReader, setShowReader] = useState(false)
     
@@ -35,18 +32,18 @@ const HomepageContainer = styled.div`
 `
 
 const HomepageTitle = styled.h1`
-    color: #222;
     margin-top: 72px;
-    margin-bottom: 36px;
-    font-family: readex prox, arial, sans-serif;
-    font-size: 48px;
-    text-align: center;
-    display: block;
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+    // color: #222;
+    // margin-bottom: 36px;
+    // font-family: readex prox, arial, sans-serif;
+    // font-size: 48px;
+    // text-align: center;
+    // display: block;
 `
 
 const HomepageText = styled.div`
