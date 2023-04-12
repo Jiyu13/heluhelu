@@ -43,11 +43,17 @@ export function SharePage() {
                 headers: {"Content-Type": 'application/json'},
                 body: JSON.stringify(userArticle)
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data, "added to user_articles table!")
-                setArticles([...articles, sharedArticle])
-                redirectArticles()
+            .then(res => {
+                if (res.ok) {res.json().then(data => {
+                    setArticles([...articles, sharedArticle])
+                    redirectArticles()
+                })} else  {
+                    if (res.status === 404) {
+                        window.alert("This article does not exist in the database, please try again")
+                    } else if (res.status === 409) {
+                        window.alert("Article already exists.")
+                    }
+                }
             })
         } else {
             redirectHomePage()

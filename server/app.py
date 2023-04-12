@@ -109,7 +109,6 @@ class Articles(Resource):
         )
         db.session.add(user_article)
         db.session.commit()
-        print(user_article)
         # =======================================================
 
         return make_response(new_article.to_dict(), 201)
@@ -139,14 +138,18 @@ class UserArticles(Resource):
     def post(self, uuid):
         article = Article.query.filter_by(uuid=uuid).first()
         current_user = session["user_id"]
-        user_article = UserArticle(
-            article_id=article.id,
-            user_id=current_user
-        )
 
-        db.session.add(user_article)
-        db.session.commit()
-        return make_response(user_article.to_dict(), 201)
+        user_article = UserArticle.query.filter_by(user_id=session["user_id"], article_id=article.id).first()
+        if user_article:
+            return make_response({"message": "article already exists"}, 409)
+        else:
+            new_user_article = UserArticle(
+                article_id=article.id,
+                user_id=current_user
+            )
+            db.session.add(new_user_article)
+            db.session.commit()
+            return make_response(new_user_article.to_dict(), 201)
 api.add_resource(UserArticles, '/user_article/<string:uuid>')
 
 
@@ -171,8 +174,10 @@ class ArticleShared(Resource):
                 "message": "This article does not exist in the database, please try again"
             }
             return make_response(jsonify(response_body), 404)
+
         return make_response(user_article.to_dict(), 200)
 api.add_resource(ArticleShared, '/article/share_receive/<string:uuid>')
+
 
 class ArticleByUUID(Resource):
     def get(self, uuid):
@@ -182,8 +187,10 @@ class ArticleByUUID(Resource):
                 "message": "This article does not exist in the database, please try again"
             }
             return make_response(jsonify(response_body), 404)
+
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
+
 
 class ArticleByID(Resource):
     def get(self, id):
@@ -196,6 +203,15 @@ class ArticleByID(Resource):
             return make_response(jsonify(response_body), 404)
 
         return make_response(article.to_dict(), 200)
+    
+    # ========== need frontend delete request========================
+    # def delete(self, id):
+    #     check_user_article = UserArticle.query.filter_by(article_id=id).first()
+    #     if not check_user_article:
+    #         article = Article.query.filter_by(id=article_id).first()
+    #         db.session.delete(article)
+    #         db.session.commit()
+    #         return make_response()
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
 
