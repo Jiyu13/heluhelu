@@ -8,6 +8,7 @@ from flask_restful import Resource
 from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
 import re
 import uuid
+from datetime import datetime
 
 class Dictionaries(Resource):
     def get(self):
@@ -85,7 +86,10 @@ class Articles(Resource):
         if user_id:
             user = User.query.filter_by(id=user_id).first()
 
-            articles = user.articles
+            # cannot use sort(key=...)????
+            articles = sorted(user.articles, key=lambda x: x.update_at,  reverse=True)
+            # articles = user.articles
+            # print(articles)
             articles_dict = [article.to_dict() for article in articles]
             return make_response(articles_dict, 200)
 
@@ -199,7 +203,9 @@ class ArticleByID(Resource):
                 "message": "This article does not exist in the database, please try again"
             }
             return make_response(jsonify(response_body), 404)
-
+            
+        article.update_at = datetime.utcnow()
+        db.session.commit()
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
@@ -210,6 +216,7 @@ class ArticleEdit(Resource):
             article = Article.query.filter_by(id=id).first() 
             for attr in request.get_json():
                 setattr(article, attr, request.get_json()[attr])
+            article.update_at = datetime.utcnow()
             db.session.add(article)
             db.session.commit()
             response = make_response(article.to_dict(), 200)

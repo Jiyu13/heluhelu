@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: c329996dde1e
+Revision ID: 196945eb8bdd
 Revises: 
-Create Date: 2023-04-12 10:25:36.005332
+Create Date: 2023-04-12 19:06:04.000287
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c329996dde1e'
+revision = '196945eb8bdd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,17 +21,18 @@ def upgrade():
     op.create_table('articles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('uuid', sa.String(), nullable=False),
-    sa.Column('text', sa.String(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
+    sa.Column('text', sa.String(), nullable=False),
     sa.Column('check_finished', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('update_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('uuid')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
-    sa.Column('_password_hash', sa.String(), nullable=True),
+    sa.Column('_password_hash', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
     )

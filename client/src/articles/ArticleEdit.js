@@ -33,10 +33,8 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
         const updated = {
             text: formData.text,
-            title: formData.title
+            title: formData.title,
         }
-
-        // console.log(updated)
 
         fetch(`/article/edit/${id}`, {
             method: "PATCH",
@@ -45,6 +43,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         })
         .then(res => res.json())
         .then(updatedArticle => {
+            console.log(updatedArticle)
             onUpdatedArticle(updatedArticle)
             redirectArticles()
         })

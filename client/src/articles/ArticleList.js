@@ -4,9 +4,13 @@ import styled from "styled-components"
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
 import share_icon from "../assets/images/share_icon.svg"
+import { useContext } from "react";
+import { UserContext } from "../components/UserContext";
 
 
 export function ArticleList( {articles, onDeleteArticle} ) {
+
+    const {setArticles} = useContext(UserContext)
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
@@ -17,19 +21,19 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             onDeleteArticle(article_id)})
     }
 
-
     return (
     <ArticlesListContainer>
-
+        {articles.length ?  
         <ArticlesListTable>
             <tbody>
-            {articles?.map(article =>
+            {articles.map(article =>
                 <tr key={article.id}>
                     {/* td */}
                     <ArticleTitleCell>  
                         <ArticleTitle>
-                            <Link to={`/articles/${article.id}`} style={{textDecoration: 'none'}}>
-                                {article.id}. {article.title}
+                            <Link to={`/articles/${article.id}`} style={{textDecoration: 'none'}} id={article.id}>
+                                {/* {article.id}. {article.title} */}
+                                {article.title}
                             </Link>
 
                         </ArticleTitle>
@@ -38,7 +42,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                     <EditCell>
                         <EditContainer>
                             <Button >
-                                <Link to={`/article/edit/${article.id}`}>
+                                <Link to={`/article/edit/${article.id}`} style={{"color": "inherit"}}>
                                     <ButtonImage src={edit_icon} alt="edit icon"/>
                                 </Link>
                                 
@@ -64,6 +68,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             </tbody>
 
         </ArticlesListTable>
+        : <h2>You don't have any articles.</h2> }
 
     </ArticlesListContainer> 
     )
@@ -71,6 +76,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 
 const ArticlesListContainer = styled.div`
     margin: 0 auto;
+    margin-top: 72px;
     max-width: 750px;
     text-align: center;
     font-size: 20px;
@@ -101,9 +107,13 @@ const ArticleTitleCell = styled.td`
     vertical-align: inherit;
     background: grey;
     border-radius: 8px;
+
+    &:hover {
+        background: #575757;
+    }
 `
 const ArticleTitle = styled.div`
-    background-color: rgba(255,255,255,.2)!important;
+    // background-color: rgba(255,255,255,.2)!important;
     color: #ccc;
     display: block;
     padding: 12px 18px;
@@ -119,7 +129,7 @@ const ArticleTitle = styled.div`
 const EditCell = styled.td`
     vertical-align: top;
     width: 100px;
-    background: grey;
+    // background: grey;
     border-radius: 8px;
 `
 
@@ -132,7 +142,7 @@ const EditContainer = styled.div`
 `
 
 const Button = styled.a`
-    background-color: rgba(255,255,255,.2);
+    background-color: grey;
     z-index: 100;
     display: inline-block;
     position: relative;
@@ -146,8 +156,10 @@ const Button = styled.a`
     margin-bottom: 4px;
     margin-right: 4px;
     user-select: none; // Don't allow user to select text in buttons
-    color: #2668ac;
-    text-decoration: none;
+
+    &:hover {
+        background: #575757;
+    }
 `
 
 const ButtonImage = styled.img`

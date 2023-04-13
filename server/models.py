@@ -44,14 +44,15 @@ class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
 
     # is_reading = db.Column(db.Boolean)
-    # update_at = db.Column(db.DateTime onupdate=db.func.now())  # sort by last open
+    
 
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, unique=True, nullable=False)
-    text = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
+    text = db.Column(db.String, nullable=False)
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    update_at = db.Column(db.DateTime, server_default=db.func.now())
     
     # many-to-many
     user_articles = db.relationship("UserArticle", backref="article")
@@ -60,7 +61,7 @@ class Article(db.Model, SerializerMixin):
     serialize_rules = ('-user', "-user_articles.user", '-user_articles.article',)
 
     def __repr__(self):
-        return f'''<Article {self.id - self.uuid} -> {self.title}: text: {self.text}>'''
+        return f'''<Article {self.id, self.uuid} -> {self.title}; <{self.update_at}>\n'''
 
 
 class UserArticle(db.Model, SerializerMixin):
