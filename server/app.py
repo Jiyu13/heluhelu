@@ -89,7 +89,6 @@ class Articles(Resource):
             # cannot use sort(key=...)????
             articles = sorted(user.articles, key=lambda x: x.update_at,  reverse=True)
             # articles = user.articles
-            # print(articles)
             articles_dict = [article.to_dict() for article in articles]
             return make_response(articles_dict, 200)
 
@@ -203,7 +202,7 @@ class ArticleByID(Resource):
                 "message": "This article does not exist in the database, please try again"
             }
             return make_response(jsonify(response_body), 404)
-            
+
         article.update_at = datetime.utcnow()
         db.session.commit()
         return make_response(article.to_dict(), 200)

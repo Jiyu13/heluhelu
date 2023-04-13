@@ -10,8 +10,6 @@ import { UserContext } from "../components/UserContext";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {setArticles} = useContext(UserContext)
-
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
         fetch(`/user_article/${article_id}`, {

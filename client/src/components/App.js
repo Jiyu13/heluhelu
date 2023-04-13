@@ -47,9 +47,9 @@ function App() {
   
 
   // ========= add new article ===============================
-  function handleNewText(newArticle) {
-    setArticles([...articles, newArticle])
-  }
+  // function handleNewArticle(newArticle) {
+  //   setArticles([...articles, newArticle])
+  // }
 
 
   // ========= update article ===============================
@@ -85,7 +85,7 @@ function App() {
                             target, setTarget,
                             isLoading, setLoading,
                           }
-   
+  console.log(articles[0])
 
   if(user === USER_NOT_SET) return;
 
@@ -149,7 +149,7 @@ function App() {
               <Route
                 exact
                 path='/'
-                element={<Home onAddNewText={handleNewText}/>}
+                element={<Home/>}
               >
               </Route>
           </Routes>
