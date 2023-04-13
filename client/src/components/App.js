@@ -44,12 +44,6 @@ function App() {
       }
     });
   }, []);
-  
-
-  // ========= add new article ===============================
-  // function handleNewArticle(newArticle) {
-  //   setArticles([...articles, newArticle])
-  // }
 
 
   // ========= update article ===============================
@@ -73,9 +67,6 @@ function App() {
     setArticles(updatedArticles)
   }
 
-  // ======== sort articles by update_at ====================
-  // let sortedArticles = articles?.sort((a, b) => b.updated_at.localeCompare(a.updated_at))
-  // console.log(sortedArticles)
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 

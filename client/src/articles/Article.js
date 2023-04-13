@@ -12,7 +12,7 @@ import { TranslationWord } from "./TranslationWord";
 
 export function Article() {
 
-    const {article, setArticle} = useContext(UserContext)
+    const {article, setArticle, articles, setArticles} = useContext(UserContext)
     const {chosen, setChosen, target, setErrors} = useContext(UserContext)
     
     
@@ -23,6 +23,7 @@ export function Article() {
         .then(res => res.json())
         .then(prevArticle => {
             setArticle(prevArticle)
+            setArticles([prevArticle, ...articles])
         })
         // eslint-disable-next-line
     }, [id])

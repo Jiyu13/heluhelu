@@ -1,10 +1,15 @@
 // put all the navigation links together
 
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../components/UserContext";
 
 
 export function NavLinks() {
+
+    const {articles} = useContext(UserContext)
+    const lastOpen = articles[0]
+    // console.log(articles)
 
     return (
         <>
@@ -21,9 +26,10 @@ export function NavLinks() {
                     <LinkItem>
                         <Link href="#">My Stats</Link>
                     </LinkItem>
-
+                    
                     <LinkItem>
-                        <Link href="#">Current Reading</Link>
+                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Recent Reading</Link>
+                        <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                     </LinkItem>
 
                     <LinkItem>
@@ -35,6 +41,10 @@ export function NavLinks() {
         </>
     )
 }
+
+const HideTitle = styled.div`
+    display: none;
+`
 
 const NavLinksContainer = styled.div`
     height: 100%;
@@ -60,6 +70,7 @@ const LinkItem = styled.li`
     align-items: center;
     justify-content: center;
     display: flex;
+    flex-direction: column;
 
     // avoid link goes down when hover
     border-top: 2px solid transparent;
@@ -76,3 +87,4 @@ const Link = styled.a`
     color: inherit;
     font-size: inherit;
 `;
+

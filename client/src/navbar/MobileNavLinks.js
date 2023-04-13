@@ -2,15 +2,21 @@
 
 // framer motion
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { MenuToggle } from "./MenuToggle";
 import { Accessibility } from "./Accessiblity";
+import { UserContext } from "../components/UserContext";
+
+const HideTitle = styled.div`
+    display: none;
+`
 
 const NavLinksContainer = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
+    z-index: 1;
 `;
 
 const LinksWrapper = styled.ul`
@@ -40,6 +46,7 @@ const LinkItem = styled.li`
     // align-items: center;
     // justify-content: center;
     display: flex;
+    flex-direction: column;
 
     margin-bottom: 10px;
 `;
@@ -57,6 +64,10 @@ const Marginer = styled.div`
 export function MobileNavLinks() {
     // state to toggle the changes, when click show the actual ul menu, otherwise hidden by default
     const [isOpen, setOpen] = useState(false)
+
+    const {articles} = useContext(UserContext)
+    const lastOpen = articles[0]
+    // console.log(lastOpen)
 
     return (
         <>
@@ -79,16 +90,13 @@ export function MobileNavLinks() {
                         </LinkItem>
 
                         <LinkItem>
-                            <Link href="#">Current Reading</Link>
+                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Recent Reading</Link>
+                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                         </LinkItem>
 
                         <LinkItem>
                             <Link href="#">Upload Dictionary</Link>
                         </LinkItem>
-
-                        {/* <LinkItem>
-                            <Link href="/login">Login</Link>
-                        </LinkItem> */}
 
                         <Marginer/>
                         <Accessibility/>
