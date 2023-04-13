@@ -3,6 +3,39 @@
 import React from "react";
 import styled from "styled-components";
 
+
+export function NavLinks() {
+
+    return (
+        <>
+            <NavLinksContainer>
+                <LinksWrapper>
+
+                    <LinkItem>
+                        <Link href="/">Home</Link>
+                    </LinkItem>
+                    <LinkItem>
+                        <Link href="/articles">Articles</Link>
+                    </LinkItem>
+
+                    <LinkItem>
+                        <Link href="#">My Stats</Link>
+                    </LinkItem>
+
+                    <LinkItem>
+                        <Link href="#">Current Reading</Link>
+                    </LinkItem>
+
+                    <LinkItem>
+                        <Link href="/upload_dictionary">Upload Dictionary</Link>
+                    </LinkItem>
+
+                </LinksWrapper>
+            </NavLinksContainer>
+        </>
+    )
+}
+
 const NavLinksContainer = styled.div`
     height: 100%;
     display: flex;
@@ -43,37 +76,3 @@ const Link = styled.a`
     color: inherit;
     font-size: inherit;
 `;
-
-
-export function NavLinks() {
-
-    return (
-        <>
-            <NavLinksContainer>
-                <LinksWrapper>
-
-                    <LinkItem>
-                        <Link href="/">Home</Link>
-                    </LinkItem>
-                    <LinkItem>
-                        <Link href="/articles">Articles</Link>
-                    </LinkItem>
-
-                    <LinkItem>
-                        <Link href="#">My Stats</Link>
-                    </LinkItem>
-
-                    <LinkItem>
-                        <Link href="#">Current Reading</Link>
-                    </LinkItem>
-
-                    <LinkItem>
-                        <Link href="/upload_dictionary">Upload Dictionary</Link>
-                    </LinkItem>
-
-                </LinksWrapper>
-            </NavLinksContainer>
-        </>
-    )
-}
-

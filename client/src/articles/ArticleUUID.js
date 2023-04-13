@@ -4,8 +4,9 @@ import styled from "styled-components"
 
 export function ArticleUUID() {
 
+    const [copied, setCopied] = useState(false)
 
-    let { id} = useParams()
+    let { id } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
 
     useEffect(() => {
@@ -14,6 +15,16 @@ export function ArticleUUID() {
         .then(data => setSharedArticle(data))
     }, [id])
     
+    const url = `http://localhost:3000/article/share_receive/${sharedArticle.uuid}`
+
+    const handleFocus = (e) => {
+        e.target.select();
+        navigator.clipboard.writeText(url)
+        setCopied(true)
+        setTimeout(function() {
+            setCopied(false)
+        }, 1000)
+    }
     
     return(
         <ShareContainer>
@@ -25,7 +36,8 @@ export function ArticleUUID() {
             <ShareOption></ShareOption>
             <>Send direct link to share:</>
             <br/>
-            <SharedLink type="text" value={`http://localhost:3000/article/share_receive/${sharedArticle.uuid}`}/>
+            <SharedLink type="text" value={url} onFocus={ handleFocus} readOnly/>
+            <>{copied ? "Copied!" : ""}</>
 
         </ShareContainer>
     )

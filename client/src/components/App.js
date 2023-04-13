@@ -85,7 +85,6 @@ function App() {
                             target, setTarget,
                             isLoading, setLoading,
                           }
-  console.log(articles[0])
 
   if(user === USER_NOT_SET) return;
 
