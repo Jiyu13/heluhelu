@@ -69,11 +69,12 @@ class UserArticle(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     article_id = db.Column(db.Integer, db.ForeignKey("articles.id"))
+    current_page = db.Column(db.Integer, default=0)
 
     serialize_rules = ('-user.user_articles', '-article.user_articles',)
 
     def __repr__(self):
-        return f'''<UserArticle {self.id} -> user_id: {self.user_id}; article_id: {self.article_id}>'''
+        return f'''<UserArticle {self.id} -> user_id: {self.user_id}; article_id: {self.article_id}; current_page: {self.current_page}>'''
 
 
 class User(db.Model, SerializerMixin):

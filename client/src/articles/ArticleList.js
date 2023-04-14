@@ -8,7 +8,10 @@ import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 
 
+
 export function ArticleList( {articles, onDeleteArticle} ) {
+
+    const {user, calculatePages} = useContext(UserContext)
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
@@ -19,6 +22,17 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             onDeleteArticle(article_id)})
     }
 
+    // ============== check how many pages has been read ==============
+    function getCurrentPage(article) {
+        const currPage = article?.user_articles?.filter(u_r => {
+            if (u_r) {return u_r.user_id === user?.id}})
+        
+        if (currPage) {
+            return parseInt(currPage[0]["current_page"]) / calculatePages(article)
+        }
+    }
+    // ===============================================================
+
     return (
     <ArticlesListContainer>
         {articles.length ?  
@@ -28,13 +42,26 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                 <tr key={article.id}>
                     {/* td */}
                     <ArticleTitleCell>  
+
                         <ArticleTitle>
                             <Link to={`/articles/${article.id}`} style={{textDecoration: 'none'}} id={article.id}>
                                 {/* {article.id}. {article.title} */}
                                 {article.title}
                             </Link>
+                            <br/>
+                            {/* ============== process bar ========================= */}
+                            <CompletionBar>
+                                <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
+                            </CompletionBar>
+                            <CompletionText>
+                                {Math.ceil(calculatePages(article))} pgs
+                            </CompletionText>
+                            {/* ============== process bar ========================= */}
+                    
 
                         </ArticleTitle>
+
+                        
                     </ArticleTitleCell>
 
                     <EditCell>
@@ -87,22 +114,13 @@ const ArticlesListTable = styled.table`
     max-width: 750px;
     margin: 0 auto;
     display: table;
-    border-collapse: separate;
     box-sizing: border-box;
-    text-indent: initial;
-    border-spacing: 2px;
     border-color: gray;
     text-align: center;
-    font-size: 20px;
-    line-height: 1.6;
-    
 `
 
 const ArticleTitleCell = styled.td`
     vertical-align: top;
-    font-family: readex pro,arial,sans-serif;
-    display: table-cell;
-    vertical-align: inherit;
     background: grey;
     border-radius: 8px;
 
@@ -121,7 +139,37 @@ const ArticleTitle = styled.div`
     text-align: left;
     vertical-align: top;
     margin-bottom: 10px;
-    line-height: 1.6;
+`
+
+const CompletionBar = styled.div`
+    display: inline-block;
+    backgoround-color: rgba(0,0,0,.2);
+    border: 1px solid #aaa;
+
+    // control the length of the bar
+    width: 100%;
+    max-width: 150px;
+    padding: 0;
+    margin: 8px 0 0;
+    border-radius: 5px;
+`
+
+const CompletionBarProgress = styled.div`
+    width: 1%;
+    background-color: rgba(255,255,255,.4);
+    max-width: 150px;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    height: 5px;
+`
+
+const CompletionText = styled.span`
+    font-size: 14px;
+    font-weight: bold;
+    color: #aaa!important;
+    line-weight: 1.6;
+    margin: 0 15px;
 `
 
 const EditCell = styled.td`
@@ -169,3 +217,4 @@ const ButtonImage = styled.img`
     overflow-clip-margin: content-box;
     overflow: clip;
 `
+

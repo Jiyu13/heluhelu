@@ -42,7 +42,7 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
     # user-article
     user_article = UserArticle(
         user_id=new_user.id,
-        article_id=new_article.id
+        article_id=new_article.id,
     )
     db.session.add(user_article)
     db.session.commit()

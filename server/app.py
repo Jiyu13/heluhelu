@@ -130,7 +130,6 @@ class ArticleSharedByID(Resource):
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
 
-
 # deal with adding new user to an article when an article is shared
 class UserArticles(Resource):
     def get(self):
@@ -156,14 +155,22 @@ class UserArticles(Resource):
 api.add_resource(UserArticles, '/user_article/<string:uuid>')
 
 
-class UserArticleById(Resource):
+class UserArticleByArticleId(Resource):
+    def patch(self, article_id):
+        current_user = session["user_id"]
+        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
+        user_article.current_page = request.get_json()["current_page"]
+        print(user_article)
+        db.session.commit()
+        return make_response(user_article.to_dict(), 200)
+
     def delete(self, article_id):
         current_user = session["user_id"]
         user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
         db.session.delete(user_article)
         db.session.commit()
         return make_response()
-api.add_resource(UserArticleById, '/user_article/<int:article_id>')
+api.add_resource(UserArticleByArticleId, '/user_article/<int:article_id>')
 
 
 class ArticleShared(Resource):

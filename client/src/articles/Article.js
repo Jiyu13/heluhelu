@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../components/UserContext"
 
@@ -15,11 +15,10 @@ const PAGE_SIZE = 250;
 
 export function Article() {
 
-    const {article, setArticle, articles, setArticles} = useContext(UserContext)
+    const {article, setArticle, articles, setArticles, user} = useContext(UserContext)
     const {chosen, setChosen, targetWord, setErrors} = useContext(UserContext)
     
     const {page, setPage} = useContext(UserContext)
-    
     const { id } = useParams()
 
     useEffect(() => {
@@ -39,25 +38,44 @@ export function Article() {
     const textInPages = article?.text?.split(" ")                               // get all words
                         .flatMap(word => word.replace("\n\n", "##\n\n")         // replace "\n\n" to "##\n\n"
                         .split("\n\n"))                                         // split by \n\n
-                        .slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)  // slice, get words from [0-250], page increases/decreases by 1
+                        .slice(
+                            (page-1) * PAGE_SIZE, 
+                            (page-1) * PAGE_SIZE + PAGE_SIZE)                   // slice, get words from [0-250], page increases/decreases by 1
                         .join(' ')                                              // join 250 words with space to make it a paragraph
                         .replaceAll("##", "\n\n") // 
     const paragraphs = textInPages?.split("\n\n").map(p => p)                   // split the formatted paragraph by \n\n
     // ==========================================================================
-    // const paragraphs = article?.text?.split("\n\n").map(p => p)
 
+    // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
-        const prevPage = page - 1 >= 0 ? page -1 : 0
+        const prevPage = page - 1 > 0 ? page - 1  : page
         setPage(prevPage)
+        handleCurrentPage(prevPage)
     }
-
 
     function handleNextPage() {
-        const nextPage = page + 1 < pages ? page + 1 : pages - 1
+        const nextPage = page + 1 < pages ? page + 1 : pages
         setPage(nextPage)
+        handleCurrentPage(nextPage)
     }
 
-    // ========= Search word ==================================
+    function handleCurrentPage(curr_page) {
+        fetch(`/user_article/${article.id}`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: user.id,
+                article_id: article.id,
+                current_page: curr_page,
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+    }
+    // ==========================================================================
+
+
+    // ========= Search word ====================================================
     function handleChange(e) {
         fetch(`/search/${e.target.value}`)
         .then(res => {
@@ -87,11 +105,11 @@ export function Article() {
             </ReadableArea>
             
             <DictionaryArea>
-                {/* <>words: {words_length}</>
-                <br/> */}
+                <>words: {words_length}</>
+                <br/>
                 <PagesContainer>
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                    <PageDisplay>pg: {page+1} of {pages}</PageDisplay>
+                    <PageDisplay>pg: {page} of {pages}</PageDisplay>
                 </PagesContainer>
                 {/* <br/> */}
                 <SearchArea 
