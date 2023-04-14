@@ -20,9 +20,10 @@ function App() {
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
-  const [target, setTarget] = useState("")
+  const [targetWord, setTargetWord] = useState("")
   const [errors, setErrors] = useState("")
   const [isLoading, setLoading] = useState(false)
+  const [page, setPage] = useState(0)
 
 
   // ========= get articles =================================
@@ -73,8 +74,9 @@ function App() {
                             articles, setArticles,
                             chosen, setChosen, 
                             errors, setErrors,
-                            target, setTarget,
+                            targetWord, setTargetWord,
                             isLoading, setLoading,
+                            page, setPage
                           }
 
   if(user === USER_NOT_SET) return;

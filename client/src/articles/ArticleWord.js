@@ -5,11 +5,11 @@ import { UserContext } from "../components/UserContext"
 export function ArticleWord({word}) {
 
 
-    const {setChosen, setErrors, setTarget} = useContext(UserContext)
+    const {setChosen, setErrors, setTargetWord} = useContext(UserContext)
 
 
     function handleClick(e) {
-        setTarget(e.target.id)
+        setTargetWord(e.target.id)
         
         fetch(`/search/${e.target.id}`)
         .then(res => {

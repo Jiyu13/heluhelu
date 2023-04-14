@@ -16,9 +16,9 @@ const PAGE_SIZE = 250;
 export function Article() {
 
     const {article, setArticle, articles, setArticles} = useContext(UserContext)
-    const {chosen, setChosen, target, setErrors} = useContext(UserContext)
+    const {chosen, setChosen, targetWord, setErrors} = useContext(UserContext)
     
-    const [page, setPage] = useState(0)
+    const {page, setPage} = useContext(UserContext)
     
     const { id } = useParams()
 
@@ -96,7 +96,7 @@ export function Article() {
                 {/* <br/> */}
                 <SearchArea 
                     type="text"
-                    placeholder={target.replace(/!?.:,/g, "")}
+                    placeholder={targetWord.replace(/!?.:,/g, "")}
                     onChange={handleChange} />
 
                 <TranslationArea>
