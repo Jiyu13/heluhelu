@@ -23,7 +23,7 @@ function App() {
   const [targetWord, setTargetWord] = useState("")
   const [errors, setErrors] = useState("")
   const [isLoading, setLoading] = useState(false)
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
 
 
   // ========= get articles =================================
@@ -68,6 +68,11 @@ function App() {
     setArticles(updatedArticles)
   }
 
+  // ========= calculate pages for an article ================
+  function calculatePages(article) {
+    return Math.ceil((article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length)/250)
+  }
+
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
@@ -76,7 +81,8 @@ function App() {
                             errors, setErrors,
                             targetWord, setTargetWord,
                             isLoading, setLoading,
-                            page, setPage
+                            page, setPage,
+                            calculatePages
                           }
 
   if(user === USER_NOT_SET) return;
