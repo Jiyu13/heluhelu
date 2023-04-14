@@ -1,20 +1,24 @@
 import styled from "styled-components"
-
-
-import left_arrow_icon from "../assets/images/arrowleft.svg"
-import right_arrow_icon from "../assets/images/arrowright.svg"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../components/UserContext"
+
+import book_material_icon from "../assets/images/book_material_icon.svg"
+import left_arrow_icon from "../assets/images/arrowleft.svg"
+import right_arrow_icon from "../assets/images/arrowright.svg"
+
+
 import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
 
+const PAGE_SIZE = 250;
 
 export function Article() {
 
     const {article, setArticle, articles, setArticles} = useContext(UserContext)
     const {chosen, setChosen, target, setErrors} = useContext(UserContext)
     
+    const [page, setPage] = useState(0)
     
     const { id } = useParams()
 
@@ -25,14 +29,36 @@ export function Article() {
             setArticle(prevArticle)
             setArticles([prevArticle, ...articles])
         })
-        // eslint-disable-next-line
-    }, [id])
+    }, [id]) // [id] eslint-disable-next-line
 
-    const paragraphs = article?.text?.split("\n\n").map(p => p)
+    // ==========================================================================
+    const words_length = article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length
+    const pages = Math.ceil(words_length / 250)
+
+    // ==========================================================================
+    const textInPages = article?.text?.split(" ")                               // get all words
+                        .flatMap(word => word.replace("\n\n", "##\n\n")         // replace "\n\n" to "##\n\n"
+                        .split("\n\n"))                                         // split by \n\n
+                        .slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE)  // slice, get words from [0-250], page increases/decreases by 1
+                        .join(' ')                                              // join 250 words with space to make it a paragraph
+                        .replaceAll("##", "\n\n") // 
+    const paragraphs = textInPages?.split("\n\n").map(p => p)                   // split the formatted paragraph by \n\n
+    // ==========================================================================
+    // const paragraphs = article?.text?.split("\n\n").map(p => p)
+
+    function handlePrevPage() {
+        const prevPage = page - 1 >= 0 ? page -1 : 0
+        setPage(prevPage)
+    }
+
+
+    function handleNextPage() {
+        const nextPage = page + 1 < pages ? page + 1 : pages - 1
+        setPage(nextPage)
+    }
 
     // ========= Search word ==================================
     function handleChange(e) {
-        // console.log(e.target.value)
         fetch(`/search/${e.target.value}`)
         .then(res => {
             if (res.ok) {
@@ -48,7 +74,7 @@ export function Article() {
     return (
         <ArticleContainer>
             
-            <SideBar >
+            <SideBar onClick={handlePrevPage}>
                 <SideBarImage>
                     <img src={left_arrow_icon} alt="left arrow icon"/>
                 </SideBarImage>
@@ -61,7 +87,13 @@ export function Article() {
             </ReadableArea>
             
             <DictionaryArea>
-                {/* <TranslationContent/> */}
+                {/* <>words: {words_length}</>
+                <br/> */}
+                <PagesContainer>
+                    <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                    <PageDisplay>pg: {page+1} of {pages}</PageDisplay>
+                </PagesContainer>
+                {/* <br/> */}
                 <SearchArea 
                     type="text"
                     placeholder={target.replace(/!?.:,/g, "")}
@@ -72,7 +104,7 @@ export function Article() {
                 </TranslationArea>
             </DictionaryArea>
             
-            <SideBar>
+            <SideBar onClick={handleNextPage}>
                 <SideBarImage>
                     <img src={right_arrow_icon} alt="right arrow icon"/>
                 </SideBarImage>
@@ -123,6 +155,7 @@ const ReadableArea = styled.div`
     color: #ddd;
     background-color: #333;
     color: #ddd;
+    overflow: auto;
 `
 
 const ReadableContent = styled.div`
@@ -137,7 +170,8 @@ const DictionaryArea = styled.div`
     min-width: 250px;
     flex-basis: 25%;
     box-sizing: border-box;
-    padding: 12px;
+    // padding: 12px;
+    padding: 0 12px 12px 12px;
     line-height: 1.6;
 
     overflow: auto;
@@ -151,3 +185,28 @@ const SearchArea = styled.input`
 ` 
 
 const TranslationArea = styled.div``
+
+const PagesContainer = styled.div`
+    font-size: 20px;
+    line-weight: 1.6;
+    display: block;
+`
+
+const PageDisplay = styled.div`
+    font-size: 12px;
+    font-weight: 700;
+    line-weight: 1;
+    display: inline-block;
+    vertical-align: top;
+    padding-top:8px;
+    padding-bottom: 10px;
+    margin-left: 8px;
+`
+
+const BookIcon = styled.div`
+    margin-top: 6px;
+    display: inline-block;
+    vertical-align: top;
+    width: 30xpx;
+    height: 25px;
+`

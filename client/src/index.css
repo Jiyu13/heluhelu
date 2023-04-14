@@ -96,7 +96,7 @@ input[type=submit], input[type=button] {
 	margin: 24px 50px 12px;
 }
 
-.recent-reading:hover + .last-open-title {
+li:hover .recent-reading + .last-open-title {
 	display: block;
 	color: grey;
 }
