@@ -77,3 +77,8 @@ export const SubmitButton = styled.button`
     filter: brightness(1.03);
   }
 `;
+
+export const ErrorContainer = styled.div`
+    color: red;
+    text-align:center;
+`

@@ -24,7 +24,9 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 
     // ============== check how many pages has been read ==============
     function getCurrentPage(article) {
+        // eslint-disable-next-line
         const currPage = article?.user_articles?.filter(u_r => {
+            
             if (u_r) {return u_r.user_id === user?.id}})
         
         if (currPage) {

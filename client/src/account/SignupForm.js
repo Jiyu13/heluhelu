@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { AccountContext } from "./AccountContext";
 import { Marginer } from "./Marginer";
-import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink } from "./formStylings";
+import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink, ErrorContainer } from "./formStylings";
 import { UserContext } from "../components/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export function SignupForm() {
 
     const { switchToLogin } = useContext(AccountContext)
-    const { setUser } = useContext(UserContext)
+    const { setUser , errors, setErrors } = useContext(UserContext)
 
 
     let navigate = useNavigate()
@@ -49,7 +49,13 @@ export function SignupForm() {
                     redirectHome()
                 }) 
             } else if (res.status === 422) {
-                res.json().then(error => window.alert(error["message"]))
+                res.json().then(error => {
+                    // window.alert(error["message"])
+                    setErrors(error["message"])
+                })
+                setTimeout(function() {
+                    setErrors(null)
+                }, 5000)
                 
             }
         }))
@@ -75,6 +81,8 @@ export function SignupForm() {
                     value={formData.password} 
                     onChange={handleInput}
                 />
+
+                {errors && (<ErrorContainer>{errors}</ErrorContainer>)}
             </FormContainer>
 
             <Marginer direction="vertical" margin={10}/>

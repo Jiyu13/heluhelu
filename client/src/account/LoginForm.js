@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Marginer } from "./Marginer";
-import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink } from "./formStylings";
+import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink, ErrorContainer } from "./formStylings";
 import { AccountContext } from "./AccountContext";
 
 
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 export function LoginForm(props) {
 
     const { switchToSignup } = useContext(AccountContext)
-    const { setUser } = useContext(UserContext)
+    const { setUser, errors, setErrors } = useContext(UserContext)
 
 
     let navigate = useNavigate()
@@ -29,7 +29,6 @@ export function LoginForm(props) {
     function handleInput(e) {
         const value = e.target.value
         const name = e.target.name
-        // console.log(name, value)
         setFormData({...formData, [name]: value})
     }
     
@@ -48,7 +47,14 @@ export function LoginForm(props) {
         })
         .then((res => {
             if (res.status === 401) {
-                window.alert("Account not Found! Please Sign up first.")
+                res.json().then(error => 
+                    // window.alert(error['message'])
+                    setErrors(error["message"])
+                )
+                setTimeout(function() {
+                    setErrors(null)
+                }, 5000)
+                
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -58,6 +64,8 @@ export function LoginForm(props) {
         }))
         
     }
+
+    console.log(errors)
 
     return (
         <BoxContainer>
@@ -78,6 +86,9 @@ export function LoginForm(props) {
                     value={formData.password} 
                     onChange={handleInput}
                 />
+
+                {errors && (<ErrorContainer>{errors}</ErrorContainer>)}
+
             </FormContainer>
 
             <Marginer direction="vertical" margin={10}/>
@@ -97,3 +108,9 @@ export function LoginForm(props) {
         </BoxContainer>
     )
 }
+
+
+// const ErrorContainer = styled.div`
+//     color: red;
+//     text-align:center;
+// `

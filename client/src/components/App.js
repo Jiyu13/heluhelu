@@ -11,6 +11,8 @@ import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 import { ArticleEdit } from "../articles/ArticleEdit";
 import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
+import { LoginForm } from "../account/LoginForm";
+import { SignupForm } from "../account/SignupForm";
 
 const USER_NOT_SET = -1;
 
@@ -21,7 +23,7 @@ function App() {
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
   const [targetWord, setTargetWord] = useState("")
-  const [errors, setErrors] = useState("")
+  const [errors, setErrors] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
 
@@ -137,10 +139,24 @@ function App() {
               >
               </Route>
 
-              <Route
+              {/* <Route
                 exact
                 path='/login'
                 element={<AccountBox/>}
+              >
+              </Route> */}
+
+              <Route
+                exact
+                path='/login'
+                element={<LoginForm/>}
+              >
+              </Route>
+
+              <Route
+                exact
+                path='/signup'
+                element={<SignupForm/>}
               >
               </Route>
 

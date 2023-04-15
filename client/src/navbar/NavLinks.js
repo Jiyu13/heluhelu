@@ -8,8 +8,10 @@ import { UserContext } from "../components/UserContext";
 export function NavLinks() {
 
     const {articles} = useContext(UserContext)
-    const lastOpen = articles[0]
-    // console.log(articles)
+    let lastOpen
+    if (articles) {
+        lastOpen = articles[0]
+    }
 
     return (
         <>

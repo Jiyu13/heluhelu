@@ -276,8 +276,9 @@ class Login(Resource):
         if user:
             if user.authenticate(password):
                 session["user_id"] = user.id
-                return make_response(user.to_dict())
-        return make_response({"message": "401: Not Authorized"}, 401)
+                return make_response(user.to_dict(), 201)
+            return make_response({"message": "Invalid username or password"}, 401)
+        return make_response({"message": "Invalid username or password"}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
 
