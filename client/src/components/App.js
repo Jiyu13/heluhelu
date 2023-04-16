@@ -13,11 +13,13 @@ import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
 import { LoginForm } from "../account/LoginForm";
 import { SignupForm } from "../account/SignupForm";
+import { MyStats } from "../stats/MyStats";
 
 const USER_NOT_SET = -1;
 
 function App() {
 
+  const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
@@ -48,6 +50,12 @@ function App() {
     });
   }, []);
 
+  // ========= get user_articles ============================
+  useEffect (() => {
+    fetch('/user_articles')
+    .then(res => res.json())
+    .then(data => setUserArticles(data))
+  }, [])
 
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {
@@ -70,6 +78,7 @@ function App() {
     setArticles(updatedArticles)
   }
 
+  
   // ========= calculate pages for an article ================
   function calculatePages(article) {
     return Math.ceil((article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length)/250)
@@ -77,6 +86,7 @@ function App() {
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
+                            userArticles, setUserArticles,
                             article, setArticle, 
                             articles, setArticles,
                             chosen, setChosen, 
@@ -97,6 +107,12 @@ function App() {
         <main>
             <NavBar/>
             <Routes >
+              <Route
+                exact
+                path='/stats'
+                element={<MyStats/>}
+              >
+              </Route>
               <Route
                 exact
                 path='/article/share_receive/:uuid'

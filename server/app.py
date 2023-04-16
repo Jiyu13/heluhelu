@@ -130,13 +130,16 @@ class ArticleSharedByID(Resource):
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
 
-# deal with adding new user to an article when an article is shared
 class UserArticles(Resource):
     def get(self):
         user_articles = UserArticle.query.all()
         user_articles_dict = [user_article.to_dict() for user_article in user_articles]
         return make_response(user_articles_dict, 200)
+api.add_resource(UserArticles, '/user_articles', endpoint="user_articles")
     
+
+# deal with adding new user to an article when an article is shared
+class UserArticlesByUUID(Resource):
     def post(self, uuid):
         article = Article.query.filter_by(uuid=uuid).first()
         current_user = session["user_id"]
@@ -152,7 +155,7 @@ class UserArticles(Resource):
             db.session.add(new_user_article)
             db.session.commit()
             return make_response(new_user_article.to_dict(), 201)
-api.add_resource(UserArticles, '/user_article/<string:uuid>')
+api.add_resource(UserArticlesByUUID, '/user_article/<string:uuid>')
 
 
 class UserArticleByArticleId(Resource):

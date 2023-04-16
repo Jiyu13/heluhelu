@@ -65,8 +65,6 @@ export function LoginForm(props) {
         
     }
 
-    console.log(errors)
-
     return (
         <BoxContainer>
             <FormContainer id="login-form" onSubmit={handleSubmit}>

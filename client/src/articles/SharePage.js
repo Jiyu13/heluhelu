@@ -5,7 +5,7 @@ import { UserContext } from "../components/UserContext"
 
 export function SharePage() {
 
-    const { user, articles, setArticles } = useContext(UserContext)
+    const { user, articles, setArticles, userArticles, setUserArticles } = useContext(UserContext)
     const { uuid } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
 
@@ -18,7 +18,8 @@ export function SharePage() {
     function redirectArticles(article_id){
         // if navigate to /articles, articles state doesn't got updated
         // causes ArticleList getCurrentPage() userArticle undefined
-        navigate(`/articles/${article_id}`)
+        // navigate(`/articles/${article_id}`)
+        navigate(`/articles`)
     }
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export function SharePage() {
             .then(res => {
                 if (res.ok) {res.json().then(data => {
                     setArticles([...articles, sharedArticle])
+                    setUserArticles([...userArticles, data])
                     redirectArticles(data.article_id)
                 })} else  {
                     if (res.status === 404) {

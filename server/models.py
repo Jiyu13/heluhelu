@@ -44,8 +44,6 @@ class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
 
     # is_reading = db.Column(db.Boolean)
-    
-
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, unique=True, nullable=False)
     title = db.Column(db.String, nullable=False)

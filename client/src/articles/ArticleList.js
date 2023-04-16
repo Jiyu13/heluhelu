@@ -6,12 +6,13 @@ import delete_icon from "../assets/images/delete_icon.svg"
 import share_icon from "../assets/images/share_icon.svg"
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
+import { useState } from "react";
 
 
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, calculatePages} = useContext(UserContext)
+    const {user, calculatePages, userArticles, setUserArticles} = useContext(UserContext)
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
@@ -25,13 +26,17 @@ export function ArticleList( {articles, onDeleteArticle} ) {
     // ============== check how many pages has been read ==============
     function getCurrentPage(article) {
         // eslint-disable-next-line
+        // console.log(article) // shared article will not be shown in user_articles at this moment
         const userArticle = article?.user_articles?.filter(u_r => {
-            
-            if (u_r) {return u_r.user_id === user?.id}})
+            if (u_r) {return u_r.user_id === user?.id}
+        })
         
-        if (userArticle) {
-            return parseInt(userArticle[0]["current_page"]) / calculatePages(article)
+        if (userArticle.length === 0) {
+            console.log("not exists")
+            const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
+            return parseInt(newAddedUserArticle[0]["current_page"]) / calculatePages(article)
         }
+        return parseInt(userArticle[0]["current_page"]) / calculatePages(article)
     }
     // ===============================================================
 

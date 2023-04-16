@@ -1,14 +1,31 @@
 import { useState } from "react";
 import ArticleImporter from "../articles/ArticleImporter";
 import styled from "styled-components";
+import { FileImport } from "../articles/FileImporter";
 
 export function Home({onAddNewText}) {
 
     const [isShowReader, setShowReader] = useState(false)
+
+    const [showTxtImport, setShowTxtImport] = useState(false)
+    const [showFileImport, setShowFileImport] = useState(false)
+
+    // console.log("showTxtImport", showTxtImport, "showFileImport", showFileImport)
     
-    function handleClick() {
+    function handleClick(e) {
         setShowReader(!isShowReader)
     }
+
+    function handleTxTClick(e) {
+        setShowTxtImport(!showTxtImport)
+        setShowFileImport(false)
+    }
+
+    function handleFileClick(e) {
+        setShowFileImport(!showFileImport)
+        setShowTxtImport(false)
+    }
+
     return (
         <HomepageContainer>
             <HomepageTitle>Hawaiian Reader</HomepageTitle>
@@ -16,12 +33,14 @@ export function Home({onAddNewText}) {
             
 
             <HomepageButtonContainer className="upload-buttons">
-                <EnterTextButton className="text" onClick={handleClick}>Enter Text</EnterTextButton>
-                <ImportFileButton className="file">Import Text File</ImportFileButton>
+                <EnterTextButton className="text" value="text" onClick={handleTxTClick}>Enter Text</EnterTextButton>
+                <ImportFileButton className="file" value="file" onClick={handleFileClick}>Import Text File</ImportFileButton>
             </HomepageButtonContainer>
             
-            {isShowReader ? <ArticleImporter onAddNewText={onAddNewText}/> : ""}
+            {/* <ArticleImporter onAddNewText={onAddNewText}/> */}
             
+            {showTxtImport ? <ArticleImporter onAddNewText={onAddNewText}/> : ""}
+            {showFileImport ? <FileImport/> : ""}
 
             
         </HomepageContainer>

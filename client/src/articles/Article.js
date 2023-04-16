@@ -42,7 +42,7 @@ export function Article() {
                             (page-1) * PAGE_SIZE, 
                             (page-1) * PAGE_SIZE + PAGE_SIZE)                   // slice, get words from [0-250], page increases/decreases by 1
                         .join(' ')                                              // join 250 words with space to make it a paragraph
-                        .replaceAll("##", "\n\n") // 
+                        .replaceAll("##", "\n\n")                               // 
     const paragraphs = textInPages?.split("\n\n").map(p => p)                   // split the formatted paragraph by \n\n
     // ==========================================================================
 

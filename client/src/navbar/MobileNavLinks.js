@@ -86,7 +86,7 @@ export function MobileNavLinks() {
                         </LinkItem>
 
                         <LinkItem>
-                            <Link href="#">My Stats</Link>
+                            <Link href="/stats">My Stats</Link>
                         </LinkItem>
 
                         <LinkItem>
