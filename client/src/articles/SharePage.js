@@ -15,8 +15,8 @@ export function SharePage() {
         navigate('/')
     }
 
-    function redirectArticles(){
-        navigate('/articles')
+    function redirectArticles(article_id){
+        navigate(`/articles/${article_id}`)
     }
 
     useEffect(() => {
@@ -32,7 +32,6 @@ export function SharePage() {
 
 
     function handleAddUserArticle(e) {
-        console.log(e.target.value)
 
         if (e.target.value === "yes") {
              fetch(`/user_article/${uuid}`, {
@@ -43,7 +42,7 @@ export function SharePage() {
             .then(res => {
                 if (res.ok) {res.json().then(data => {
                     setArticles([...articles, sharedArticle])
-                    redirectArticles()
+                    redirectArticles(data.article_id)
                 })} else  {
                     if (res.status === 404) {
                         window.alert("This article does not exist in the database, please try again")

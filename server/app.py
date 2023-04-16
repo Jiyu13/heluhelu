@@ -160,7 +160,6 @@ class UserArticleByArticleId(Resource):
         current_user = session["user_id"]
         user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
         user_article.current_page = request.get_json()["current_page"]
-        print(user_article)
         db.session.commit()
         return make_response(user_article.to_dict(), 200)
 
