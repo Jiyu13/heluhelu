@@ -1,6 +1,7 @@
 from models import db, Dictionary, User, DictionaryWord, Article, UserArticle
 from app import app
 import uuid
+import math
 
 def make_user():
     User.query.delete()
@@ -30,9 +31,6 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
             text=text,
             title=title,
             check_finished=False,
-            # text=request.get_json()['text'],
-            # title=request.get_json()["title"],
-            # # current_reading=False,
     )
     
     new_article.users.id = new_user.id
@@ -43,6 +41,7 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
     user_article = UserArticle(
         user_id=new_user.id,
         article_id=new_article.id,
+        total_pages=math.ceil(len(new_article.text.split())/250)
     )
     db.session.add(user_article)
     db.session.commit()

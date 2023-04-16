@@ -69,6 +69,11 @@ class UserArticle(db.Model, SerializerMixin):
     article_id = db.Column(db.Integer, db.ForeignKey("articles.id"))
     current_page = db.Column(db.Integer, default=0)
 
+    total_pages = db.Column(db.Integer)
+    check_finished = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    update_at = db.Column(db.DateTime, server_default=db.func.now())
+
     serialize_rules = ('-user.user_articles', '-article.user_articles',)
 
     def __repr__(self):

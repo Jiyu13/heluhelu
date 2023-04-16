@@ -9,6 +9,7 @@ from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
 import re
 import uuid
 from datetime import datetime
+import math
 
 class Dictionaries(Resource):
     def get(self):
@@ -108,7 +109,8 @@ class Articles(Resource):
         # ======= user_articles table ===========================
         user_article = UserArticle(
             user_id=session['user_id'],
-            article_id=new_article.id
+            article_id=new_article.id,
+            total_pages=math.ceil(len(new_article.text.split())/250)
         )
         db.session.add(user_article)
         db.session.commit()
