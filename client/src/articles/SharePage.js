@@ -44,7 +44,7 @@ export function SharePage() {
             })
             .then(res => {
                 if (res.ok) {res.json().then(data => {
-                    setArticles([...articles, sharedArticle])
+                    setArticles([sharedArticle, ...articles])
                     setUserArticles([...userArticles, data])
                     redirectArticles(data.article_id)
                 })} else  {
