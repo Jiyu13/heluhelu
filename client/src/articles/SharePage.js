@@ -16,6 +16,8 @@ export function SharePage() {
     }
 
     function redirectArticles(article_id){
+        // if navigate to /articles, articles state doesn't got updated
+        // causes ArticleList getCurrentPage() userArticle undefined
         navigate(`/articles/${article_id}`)
     }
 
