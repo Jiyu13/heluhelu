@@ -45,15 +45,15 @@ export function Article() {
     const pages = Math.ceil(words_length / 250)
 
     // ==========================================================================
-    const textInPages = article?.text?.split(" ")                               // get all words
-                        .flatMap(word => word.replace("\n\n", "##\n\n")         // replace "\n\n" to "##\n\n"
-                        .split("\n\n"))                                         // split by \n\n
+    const textInPages = article?.text?.split(" ")                                      // get all words
+                        .map(word => word.replaceAll("\n\n", "\n"))
+                        .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))    // replace "\n\n" to "##\n\n" then split by \n\n
                         .slice(
                             (page-1) * PAGE_SIZE, 
-                            (page-1) * PAGE_SIZE + PAGE_SIZE)                   // slice, get words from [0-250], page increases/decreases by 1
-                        .join(' ')                                              // join 250 words with space to make it a paragraph
-                        .replaceAll("##", "\n\n")                               // 
-    const paragraphs = textInPages?.split("\n\n").map(p => p)                   // split the formatted paragraph by \n\n
+                            (page-1) * PAGE_SIZE + PAGE_SIZE)                          // slice, get words from [0-250], page increases/decreases by 1
+                        .join(' ')                                                     // join 250 words with space to make it a paragraph
+                        .replaceAll("##", "\n\n")                                       
+    const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
     // ==========================================================================
 
     // ===== handle show next/prev page container & update current_page =========
