@@ -6,7 +6,6 @@ import delete_icon from "../assets/images/delete_icon.svg"
 import share_icon from "../assets/images/share_icon.svg"
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
-import { useState } from "react";
 
 
 

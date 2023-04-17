@@ -5,7 +5,7 @@ import { UserContext } from "../components/UserContext"
 export function ArticleWord({word}) {
 
 
-    const {setChosen, setErrors, setTargetWord} = useContext(UserContext)
+    const {setChosen, setErrors, setTargetWord, checkAvaliable} = useContext(UserContext)
 
 
     function handleClick(e) {
@@ -16,6 +16,7 @@ export function ArticleWord({word}) {
             if (res.ok) {
                 res.json().then(data => {
                     setChosen(data)
+                    checkAvaliable(data)
                 })
             } else {
                 res.json(err => setErrors(err.errors))

@@ -19,11 +19,13 @@ const USER_NOT_SET = -1;
 
 function App() {
 
+  const [showCustomForm, setCustomForm] = useState(false)
   const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
+  const [showAddBtn, setAddBtn] = useState(false)
   const [targetWord, setTargetWord] = useState("")
   const [errors, setErrors] = useState(null)
   const [isLoading, setLoading] = useState(false)
@@ -68,6 +70,16 @@ function App() {
     })
     setArticles(updatedArticles)
   }
+  
+  // ========= check word avaliability ========================
+  function checkAvaliable(word) {
+    if (word.length === 0) {
+        setAddBtn(true)
+    } else {
+        setAddBtn(false)
+        setCustomForm(!showCustomForm)
+    }
+  }
 
   // ========= delete current user article from dom ===========
   function onDeleteArticle(article_id) {
@@ -94,7 +106,9 @@ function App() {
                             targetWord, setTargetWord,
                             isLoading, setLoading,
                             page, setPage,
-                            calculatePages
+                            calculatePages, checkAvaliable,
+                            showAddBtn, setAddBtn,
+                            showCustomForm, setCustomForm
                           }
 
   if(user === USER_NOT_SET) return;

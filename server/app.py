@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
+from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord
 import re
 import uuid
 from datetime import datetime
@@ -234,6 +234,21 @@ class ArticleEdit(Resource):
 api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 
 
+# =============================== user words ============================================
+class UserWords(Resource):
+    def post(self):
+        new_user_word = UserWord(
+            word=request.get_json()["word"],
+            translation=request.get_json()["translation"],
+            user_id=session["user_id"]
+        )
+        db.session.add(new_user_word)
+        db.session.commit()
+        return make_response(new_user_word.to_dict(), 201)
+api.add_resource(UserWords, '/user_words', endpoint="user_words")
+
+
+# =============================== account ===============================================
 class CheckSession(Resource):
     def get(self):
         # if the user is logged in (if their user_id is in the session object):

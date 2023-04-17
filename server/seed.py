@@ -1,4 +1,4 @@
-from models import db, Dictionary, User, DictionaryWord, Article, UserArticle
+from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord
 from app import app
 import uuid
 
@@ -6,6 +6,7 @@ def make_user():
     User.query.delete()
     Article.query.delete()
     UserArticle.query.delete()
+    UserWord.query.delete()
 
     username = "ziru"
     password = "Test12345!"

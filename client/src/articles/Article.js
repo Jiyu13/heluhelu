@@ -6,19 +6,29 @@ import { UserContext } from "../components/UserContext"
 import book_material_icon from "../assets/images/book_material_icon.svg"
 import left_arrow_icon from "../assets/images/arrowleft.svg"
 import right_arrow_icon from "../assets/images/arrowright.svg"
+import add_icon from "../assets/images/add_icon.svg"
 
 
 import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
+import { useState } from "react"
 
 const PAGE_SIZE = 250;
 
 export function Article() {
 
-    const {article, setArticle, articles, setArticles, user} = useContext(UserContext)
-    const {chosen, setChosen, targetWord, setErrors} = useContext(UserContext)
+
+    const {article, setArticle, 
+           articles, setArticles, 
+           user, chosen, setChosen, 
+           targetWord, setTargetWord,
+           setErrors, 
+           page, setPage,
+           showAddBtn, setAddBtn,
+           checkAvaliable,
+           showCustomForm, setCustomForm
+        } = useContext(UserContext)
     
-    const {page, setPage} = useContext(UserContext)
     const { id } = useParams()
 
     useEffect(() => {
@@ -72,22 +82,68 @@ export function Article() {
         .then(res => res.json())
         .then(data => console.log(data))
     }
-    // ==========================================================================
+    // ========= handle adding custom translation for word ======================
+    function handleAddBtn(e) {
+        const word = e.target.id
+        setCustomForm(!showCustomForm)
+    }
 
+
+    const initialValues = {
+        word: "",
+        translation: ""
+    }
+
+    const [formData, setFormData] = useState(initialValues)
+
+    function handleCustomWord(e) {
+        const value = e.target.value
+        const name = e.target.name
+        console.log(name, value)
+        setFormData({...formData, [name]: value})
+    }
+    
+    function handleCustomSubmit(e) {
+        e.preventDefault()
+        
+        const newCustomWord = {
+            word: formData.word,
+            translation: formData.translation,
+            user_id: user.id
+        }
+
+        fetch('/user_words', {
+            method: "POST",
+            headers: {"Content-Type": 'application/json'},
+            body: JSON.stringify(newCustomWord)
+        })
+        .then(res => res.json())
+        .then(newWord => {
+            console.log(newWord)
+        })
+    }
 
     // ========= Search word ====================================================
-    function handleChange(e) {
-        fetch(`/search/${e.target.value}`)
+    function handleSearchChange(e) {
+        const newWord = e.target.value 
+        setTargetWord(newWord)
+        if (newWord === "") {
+            setChosen(null)
+            setAddBtn(false)
+        }
+        fetch(`/search/${newWord}`)
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
                     setChosen(data)
+                    checkAvaliable(data)
                 })
             } else {
                 res.json().then(err => setErrors(err.errors))
             }
         })
     }
+
 
     return (
         <ArticleContainer>
@@ -114,11 +170,55 @@ export function Article() {
                 {/* <br/> */}
                 <SearchArea 
                     type="text"
-                    placeholder={targetWord.replace(/!?.:,/g, "")}
-                    onChange={handleChange} />
+                    placeholder={targetWord}
+                    onChange={handleSearchChange} />
+
+                {showAddBtn && (
+                    <NotFound>
+                        No results found for '{targetWord}'.
+                        <AddImage 
+                            src={add_icon} 
+                            alt="add translation for word button" 
+                            onClick={handleAddBtn} 
+                            id={targetWord}
+                        />
+                        
+                        {showCustomForm && ( 
+                            <CustomWordForm onSubmit={handleCustomSubmit}>
+                                <Label>Hawaiian:
+                                    <WordInput
+                                        required
+                                        type="text"
+                                        name="word"
+                                        placeholder={targetWord}
+                                        value={formData.word}
+                                        onChange={handleCustomWord}
+                                    />
+                                </Label>
+                                
+                                <Label>Translation:
+                                    <TranslationInput
+                                        required
+                                         type="text"
+                                         name="translation"
+                                         value={formData.translation}
+                                         onChange={handleCustomWord}
+                                    />
+                                    <br/>
+                                </Label>
+                                <br/>
+                                <SaveButton type="submit" value="Save"/>
+                                
+                            
+                            </CustomWordForm>
+                        )}
+                        
+                    </NotFound>
+                )}
 
                 <TranslationArea>
                     {chosen?.map(word => <TranslationWord word={word}/>)}
+                    
                 </TranslationArea>
             </DictionaryArea>
             
@@ -130,6 +230,41 @@ export function Article() {
         </ArticleContainer>
     )
 }
+
+
+const SaveButton = styled.input`
+    min-width: 235px !important;
+    width: 0.1em; 
+    height: 2em;
+`
+
+const TranslationInput = styled.input``
+
+const WordInput = styled.input``
+
+const Label = styled.label`
+    font-size: 15px;
+    font-weight: bold;
+`
+
+const CustomWordForm = styled.form`
+    border: 1px solid #eee;
+    margin-top: 35px;
+    padding: 10px;
+
+`
+
+const NotFound = styled.div`
+    margin: 45px 0;
+    font-size: 25px;
+`
+
+const AddImage = styled.img`
+    width: 25px;
+    height: 25px;
+    margin: 0 12px;
+    cursor: pointer;
+`
 
 const ArticleContainer = styled.div`
     display: flex;
