@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 2d8567788612
+Revision ID: 22740da7ef64
 Revises: 
-Create Date: 2023-04-16 20:50:17.836082
+Create Date: 2023-04-17 16:57:56.216509
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2d8567788612'
+revision = '22740da7ef64'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,12 +55,11 @@ def upgrade():
     )
     op.create_table('user_words',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('word', sa.String(), nullable=False),
     sa.Column('translation', sa.String(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_words_user_id_users')),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('word')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('dictionary_words',
     sa.Column('id', sa.Integer(), nullable=False),

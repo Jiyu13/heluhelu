@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { ArticleWord } from "./ArticleWord"
 
-export function ArticleParagraph({words}) {
+export function ArticleParagraph({words, onWordClicked}) {
 
     return (
         <ParagraphContainer>
-                {words.map(word => <ArticleWord key={word.id} word={word}/>)}
+                {words.map(word => <ArticleWord key={word.id} word={word} onWordClicked={onWordClicked}/>)}
         </ParagraphContainer>
     )
 }

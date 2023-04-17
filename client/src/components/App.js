@@ -26,7 +26,6 @@ function App() {
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
   const [showAddBtn, setAddBtn] = useState(false)
-  const [targetWord, setTargetWord] = useState("")
   const [errors, setErrors] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
@@ -77,7 +76,7 @@ function App() {
         setAddBtn(true)
     } else {
         setAddBtn(false)
-        setCustomForm(!showCustomForm)
+        setCustomForm(false)
     }
   }
 
@@ -103,7 +102,6 @@ function App() {
                             articles, setArticles,
                             chosen, setChosen, 
                             errors, setErrors,
-                            targetWord, setTargetWord,
                             isLoading, setLoading,
                             page, setPage,
                             calculatePages, checkAvaliable,

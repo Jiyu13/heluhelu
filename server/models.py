@@ -134,12 +134,13 @@ class UserWord(db.Model, SerializerMixin):
     __tablename__ = "user_words"
 
     id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.String, unique=True, nullable=False)
-    translation = db.Column(db.String, nullable=False)
 
-    # a user has many saved words
+     # a user has many saved words
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     
+    word = db.Column(db.String, nullable=False)
+    translation = db.Column(db.String, nullable=False)
+
     serialize_rules = ('-user',)
 
     def __repr__(self):

@@ -56,17 +56,29 @@ api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_wor
 
 class DictionariesWordsByWord(Resource):
     def get(self, word):
-        clean_word = re.sub(r'[^ \w/-/]', '', word).strip()  # ^ not a space and \w (letter)
+        # clean_word = ''.join(filter(str.isalpha, word.strip())).lower()
+        clean_word = ''.join(filter(str.isalpha, word.strip()))
+        # get translation from dictionary_words
         hawaiians = DictionaryWord.query.filter(
                 DictionaryWord.hawaiian_clean.istartswith(clean_word)
             ).limit(5)
 
-        results = [word.hawaiian for word in hawaiians]
+        # get tranlastion from user_words
+        custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
+
+        if custom_word:
+            custom_word = custom_word.to_dict()
+        
         if hawaiians:
             hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
-            return make_response(jsonify(hawaiian_dict), 200)
-        response = {"message": "This article does not exist in the database, please try again"}
-        return make_response(jsonify(respons), 404)
+            return make_response(jsonify({
+                "dictionary": hawaiian_dict,
+                "custom": custom_word
+                }
+                ), 200)
+        
+        response = {"message": "This word does not exist in the database, please try again"}
+        return make_response(jsonify(response), 404)
 api.add_resource(DictionariesWordsByWord, '/search/<string:word>')
 
 

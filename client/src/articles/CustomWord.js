@@ -1,11 +1,11 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-
-export function TranslationWord( {word, translation} ) {
+export function CustomWord({word, translation}) {
 
     const [isReadMore, setReadMore] = useState(false)
 
+    
     
     return (
         <WordItem key={word.id}>
@@ -40,8 +40,9 @@ const ReadOrHidebutton = styled.button`
 const WordItem = styled.div``
 
 const Word = styled.div`
+    color: #27ae60;
     font-weight: bold;
-    color: rgb(255, 255, 255);
+    // color: rgb(255, 255, 255);
 `
 
 const Translation = styled.div`

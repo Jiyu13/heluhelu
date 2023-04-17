@@ -12,16 +12,19 @@ import add_icon from "../assets/images/add_icon.svg"
 import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
 import { useState } from "react"
+import { CustomWord } from "./CustomWord"
 
 const PAGE_SIZE = 250;
 
 export function Article() {
 
+    const [customWord, setCustomWord] = useState(null)
+    
+    const [targetWord, setTargetWord] = useState("")
 
     const {article, setArticle, 
            articles, setArticles, 
            user, chosen, setChosen, 
-           targetWord, setTargetWord,
            setErrors, 
            page, setPage,
            showAddBtn, setAddBtn,
@@ -88,14 +91,13 @@ export function Article() {
         setCustomForm(!showCustomForm)
     }
 
-
     const initialValues = {
         word: "",
         translation: ""
     }
-
+    
     const [formData, setFormData] = useState(initialValues)
-
+    
     function handleCustomWord(e) {
         const value = e.target.value
         const name = e.target.name
@@ -119,23 +121,28 @@ export function Article() {
         })
         .then(res => res.json())
         .then(newWord => {
-            console.log(newWord)
+            setCustomWord(newWord)
+            setCustomForm(!showCustomForm)
+            setFormData(initialValues)
         })
     }
 
     // ========= Search word ====================================================
-    function handleSearchChange(e) {
-        const newWord = e.target.value 
+    function updateDictionaryWord(newWord) {
+        
         setTargetWord(newWord)
+        console.log(targetWord)
         if (newWord === "") {
             setChosen(null)
             setAddBtn(false)
         }
+
         fetch(`/search/${newWord}`)
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    setChosen(data)
+                    setCustomWord(data["custom"])
+                    setChosen(data["dictionary"])
                     checkAvaliable(data)
                 })
             } else {
@@ -144,6 +151,10 @@ export function Article() {
         })
     }
 
+    function handleSearchChange(e) {
+        const newWord = e.target.value 
+        updateDictionaryWord(newWord)
+    }
 
     return (
         <ArticleContainer>
@@ -156,7 +167,7 @@ export function Article() {
            
             <ReadableArea>
                 <ReadableContent>
-                {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")}/>)}
+                {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")} onWordClicked={updateDictionaryWord}/>)}
                 </ReadableContent>
             </ReadableArea>
             
@@ -170,54 +181,56 @@ export function Article() {
                 {/* <br/> */}
                 <SearchArea 
                     type="text"
-                    placeholder={targetWord}
-                    onChange={handleSearchChange} />
+                    value={targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}
+                    onChange={handleSearchChange} 
+                />
 
-                {showAddBtn && (
+                <AddImage 
+                    src={add_icon} 
+                    alt="add translation for word button" 
+                    onClick={handleAddBtn} 
+                    id={targetWord}
+                />
+
+                {customWord === null && chosen.length === 0 && (
                     <NotFound>
-                        No results found for '{targetWord}'.
-                        <AddImage 
-                            src={add_icon} 
-                            alt="add translation for word button" 
-                            onClick={handleAddBtn} 
-                            id={targetWord}
-                        />
-                        
-                        {showCustomForm && ( 
-                            <CustomWordForm onSubmit={handleCustomSubmit}>
-                                <Label>Hawaiian:
-                                    <WordInput
-                                        required
-                                        type="text"
-                                        name="word"
-                                        placeholder={targetWord}
-                                        value={formData.word}
-                                        onChange={handleCustomWord}
-                                    />
-                                </Label>
-                                
-                                <Label>Translation:
-                                    <TranslationInput
-                                        required
-                                         type="text"
-                                         name="translation"
-                                         value={formData.translation}
-                                         onChange={handleCustomWord}
-                                    />
-                                    <br/>
-                                </Label>
-                                <br/>
-                                <SaveButton type="submit" value="Save"/>
-                                
-                            
-                            </CustomWordForm>
-                        )}
-                        
+                        No results found for '{targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}'.
                     </NotFound>
                 )}
-
+                {showCustomForm && ( 
+                    <CustomWordForm onSubmit={handleCustomSubmit}>
+                        <Label>Hawaiian:
+                            <br/>
+                            <WordInput
+                                required
+                                type="text"
+                                name="word"
+                                placeholder={targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}
+                                value={formData.word}
+                                onChange={handleCustomWord}
+                            />
+                        </Label>
+                        <br/>
+                        <Label>Translation:
+                            <br/>
+                            <TranslationInput
+                                required
+                                    type="text"
+                                    name="translation"
+                                    value={formData.translation}
+                                    onChange={handleCustomWord}
+                            />
+                            <br/>
+                        </Label>
+                        <br/>
+                        <SaveButton type="submit" value="Save"/>
+                        
+                    
+                    </CustomWordForm>
+                )}
                 <TranslationArea>
-                    {chosen?.map(word => <TranslationWord word={word}/>)}
+                    {customWord && (<CustomWord word={customWord.word} translation={customWord.translation }/>)}
+                    {chosen?.map(word => <TranslationWord word={word.hawaiian} translation={word.translation }/>)}
                     
                 </TranslationArea>
             </DictionaryArea>
@@ -248,6 +261,7 @@ const Label = styled.label`
 `
 
 const CustomWordForm = styled.form`
+    max-width: 265px;
     border: 1px solid #eee;
     margin-top: 35px;
     padding: 10px;
@@ -262,7 +276,7 @@ const NotFound = styled.div`
 const AddImage = styled.img`
     width: 25px;
     height: 25px;
-    margin: 0 12px;
+    margin-left: 12px;
     cursor: pointer;
 `
 
@@ -335,6 +349,7 @@ const SearchArea = styled.input`
     height: 40px;
     width: 180px;
     font-size: 25px;
+    max-width: 165px;
 ` 
 
 const TranslationArea = styled.div``
