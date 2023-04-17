@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User, UserArticle
+from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord
 import re
 import uuid
 from datetime import datetime
@@ -56,17 +56,29 @@ api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_wor
 
 class DictionariesWordsByWord(Resource):
     def get(self, word):
-        clean_word = re.sub(r'[^ \w/-/]', '', word).strip()  # ^ not a space and \w (letter)
+        # clean_word = ''.join(filter(str.isalpha, word.strip())).lower()
+        clean_word = ''.join(filter(str.isalpha, word.strip()))
+        # get translation from dictionary_words
         hawaiians = DictionaryWord.query.filter(
                 DictionaryWord.hawaiian_clean.istartswith(clean_word)
             ).limit(5)
 
-        results = [word.hawaiian for word in hawaiians]
+        # get tranlastion from user_words
+        custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
+
+        if custom_word:
+            custom_word = custom_word.to_dict()
+        
         if hawaiians:
             hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
-            return make_response(jsonify(hawaiian_dict), 200)
-        response = {"message": "This article does not exist in the database, please try again"}
-        return make_response(jsonify(respons), 404)
+            return make_response(jsonify({
+                "dictionary": hawaiian_dict,
+                "custom": custom_word
+                }
+                ), 200)
+        
+        response = {"message": "This word does not exist in the database, please try again"}
+        return make_response(jsonify(response), 404)
 api.add_resource(DictionariesWordsByWord, '/search/<string:word>')
 
 
@@ -234,6 +246,21 @@ class ArticleEdit(Resource):
 api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 
 
+# =============================== user words ============================================
+class UserWords(Resource):
+    def post(self):
+        new_user_word = UserWord(
+            word=request.get_json()["word"],
+            translation=request.get_json()["translation"],
+            user_id=session["user_id"]
+        )
+        db.session.add(new_user_word)
+        db.session.commit()
+        return make_response(new_user_word.to_dict(), 201)
+api.add_resource(UserWords, '/user_words', endpoint="user_words")
+
+
+# =============================== account ===============================================
 class CheckSession(Resource):
     def get(self):
         # if the user is logged in (if their user_id is in the session object):

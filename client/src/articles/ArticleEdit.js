@@ -12,7 +12,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
     // ================ fetch article ===================
     const {id} = useParams()
-    const [formData, setFormData] = useState("")
+    const [formData, setFormData] = useState({})
 
     useEffect(() => {
         fetch(`/articles/${id}`)

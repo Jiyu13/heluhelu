@@ -1,31 +1,15 @@
-import { useContext } from "react"
 import styled from "styled-components"
-import { UserContext } from "../components/UserContext"
 
-export function ArticleWord({word}) {
-
-
-    const {setChosen, setErrors, setTargetWord} = useContext(UserContext)
+export function ArticleWord({word, onWordClicked}) {
 
 
     function handleClick(e) {
-        setTargetWord(e.target.id)
-        
-        fetch(`/search/${e.target.id}`)
-        .then(res => {
-            if (res.ok) {
-                res.json().then(data => {
-                    setChosen(data)
-                })
-            } else {
-                res.json(err => setErrors(err.errors))
-            }
-        })
-        
+        onWordClicked(e.target.id)
     }    
+
     return (
         <WordContainer id={word} onClick={handleClick}>
-            {word}            
+            {word}
         </WordContainer>
 
     )

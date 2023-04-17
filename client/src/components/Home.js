@@ -5,16 +5,14 @@ import { FileImport } from "../articles/FileImporter";
 
 export function Home({onAddNewText}) {
 
-    const [isShowReader, setShowReader] = useState(false)
-
     const [showTxtImport, setShowTxtImport] = useState(false)
     const [showFileImport, setShowFileImport] = useState(false)
 
     // console.log("showTxtImport", showTxtImport, "showFileImport", showFileImport)
     
-    function handleClick(e) {
-        setShowReader(!isShowReader)
-    }
+    // function handleClick(e) {
+    //     setShowReader(!isShowReader)
+    // }
 
     function handleTxTClick(e) {
         setShowTxtImport(!showTxtImport)

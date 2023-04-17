@@ -82,9 +82,12 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
 
-    # one-to-manu: a user has many dictionaries and articles
+    # one-to-many: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
     articles = db.relationship("Article", backref="user")
+
+    # one-to-many: a user has many saved words
+    words = db.relationship("UserWord", backref="user")
 
     # many-to-manny:
     user_articles = db.relationship("UserArticle", backref="user")
@@ -125,3 +128,20 @@ class User(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"""<User {self.id}; Username: {self.username}.>"""   
+
+
+class UserWord(db.Model, SerializerMixin):
+    __tablename__ = "user_words"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+     # a user has many saved words
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    
+    word = db.Column(db.String, nullable=False)
+    translation = db.Column(db.String, nullable=False)
+
+    serialize_rules = ('-user',)
+
+    def __repr__(self):
+            return f'''<Word {self.id}: word-{self.word}>; user-{self.user_id}\n'''
