@@ -83,12 +83,12 @@ export function Article() {
         .then(data => console.log(data))
     }
     // ========= check word avaliability ========================
-    function checkAvaliable(word) {
+    function checkCanAddTranslation(word) {
         if (word.length === 0) {
             setAddBtn(true)
         } else {
             setAddBtn(false)
-            setCustomForm(false)
+            handleCancel()
         }
     }
 
@@ -159,7 +159,7 @@ export function Article() {
                 res.json().then(data => {
                     setCustomWord(data["custom"])
                     setChosen(data["dictionary"])
-                    checkAvaliable(data)
+                    checkCanAddTranslation(data)
                 })
             } else {
                 res.json().then(err => setErrors(err.errors))
@@ -172,6 +172,10 @@ export function Article() {
         updateDictionaryWord(newWord)
     }
 
+    function handleCancel() {
+        setCustomForm(false)
+        setFormData(initialValues)
+    }
     
     return (
         <ArticleContainer>
@@ -189,7 +193,7 @@ export function Article() {
             </ReadableArea>
             
             <DictionaryArea>
-                <>words: {words_length}</>
+                <span style={{"font-size":"12px"}}>Total words: {words_length}</span>
                 <br/>
                 <PagesContainer>
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
@@ -250,7 +254,7 @@ export function Article() {
                         {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
                         <br/>
                         <SaveButton type="submit" value="Save" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
-                        <CancelButton type="button" value="Cancel" onClick={() => setCustomForm(!showCustomForm)}/>
+                        <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                     </CustomForm>
                 )}
                 <TranslationArea>

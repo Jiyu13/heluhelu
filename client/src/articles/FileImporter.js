@@ -1,19 +1,78 @@
+import { useContext } from "react"
+import { useState } from "react"
 import styled from "styled-components"
+import { UserContext } from "../components/UserContext"
+import { useNavigate } from "react-router-dom"
 
 export function FileImport() {
+
+    const [importText, setImportText] = useState(null)
+    const [fileName, setFileName] = useState(null)
+
+    const {user, articles, setArticles} = useContext(UserContext)
+
+    let navigate = useNavigate()
+    function redirectArticles () {
+        navigate('/articles')
+    }
+
+    function handleTitleChange(e) {
+        setFileName(e.target.value)
+    }
+        
+    function handleOnChange(e) {
+        if (e.target.files.length === 0) return
+
+        const filename = e.target.files[0]
+        setFileName(filename.name.replace(".txt",""))
+
+        const reader = new FileReader()
+
+        // async() -> run in the background
+        // onload -> what to do after the file is opened
+        reader.onload = async (e) => { 
+          const text = (e.target.result)
+          setImportText(text)
+        }
+
+        // start to open file as a txt file
+        reader.readAsText(filename)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        const newArticle = {
+            title: fileName,
+            text: importText,
+        }
+
+        fetch('/articles',{
+            method: "POST",
+            headers: {"Content-Type": 'application/json'},
+            body: JSON.stringify(newArticle)
+        })
+        .then((res) => res.json())
+        .then(newObj => {
+            setArticles([newObj, ...articles]);
+            // setFormData(initialValues)
+            redirectArticles()
+        })
+    }
+
     return (
         <FileBox>
             <b>Accepted file types: .txt.</b>
             <br/>
             <br/>
-            <FormContainer >
-            {/* onSubmit={handleSubmit} */}
+            <FormContainer onSubmit={handleSubmit}>
+            {/*  */}
                 <ImportFileInput
                     required
                     type="file"
                     accept='.txt'
                     name='filename'
-                    // onChange='{handleOnChange}'
+                    onChange={handleOnChange}
                 />
                 <br/>
                 <TitleText>
@@ -24,7 +83,8 @@ export function FileImport() {
                     type="text"
                     placeholder="Enter title here..."
                     name="title"
-                    // onChange="{handleOnChange}"
+                    value={fileName}
+                    onChange={handleTitleChange}
                 />
                 <br/>
                 <SubmitButton type="submit" value="Import" />

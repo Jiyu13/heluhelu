@@ -136,4 +136,11 @@ const ArticleTitle = styled.input`
 
 const SubmitButton = styled.input`
     margin-top: 12px;
+    width: 100px;
+    padding: 8px;
+
+    &:hover {
+        background: rgb(8, 61, 116) !important;
+        color: white;
+      }
 `
