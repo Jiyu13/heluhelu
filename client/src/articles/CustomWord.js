@@ -4,29 +4,11 @@ import styled from "styled-components"
 export function CustomWord({word, translation}) {
 
     const [isReadMore, setReadMore] = useState(false)
-
-    
     
     return (
         <WordItem key={word.id}>
-            <Word>{word} :</Word>
-            {/* <Translation>{word.translation}</Translation> */}
-            <Translation>
-                {translation?.length > 50 ? translation?.substring(0, 50) : translation}
-
-                {isReadMore ?  translation : translation?.substring(0, 50)}
-
-                {translation?.length > 50 ? 
-                
-                    <ReadOrHidebutton onClick={() => setReadMore(!isReadMore)}>
-                        {isReadMore ? " Show Less" : "Show More"}
-                    </ReadOrHidebutton> 
-                    : null
-                }
-                
-
-                
-            </Translation>
+            <Word>{word}:</Word>
+            <Translation>{word.translation}</Translation>
             <hr/>
         </WordItem>
     )

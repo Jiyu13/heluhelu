@@ -1,9 +1,10 @@
 import styled from "styled-components"
 
-export function ArticleWord({word, onWordClicked}) {
+export function ArticleWord({ word, onWordClicked, setWordExistError }) {
 
 
     function handleClick(e) {
+        setWordExistError(null)
         onWordClicked(e.target.id)
     }    
 

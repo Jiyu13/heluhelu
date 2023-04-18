@@ -18,16 +18,16 @@ const PAGE_SIZE = 250;
 
 export function Article() {
 
+    const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
-    
-    const [targetWord, setTargetWord] = useState("")
+    const [targetWord, setTargetWord] = useState(null)
 
     const {article, setArticle, 
            articles, setArticles, 
            user, chosen, setChosen, 
            setErrors, 
            page, setPage,
-           showAddBtn, setAddBtn,
+           setAddBtn,
            checkAvaliable,
            showCustomForm, setCustomForm
         } = useContext(UserContext)
@@ -88,6 +88,7 @@ export function Article() {
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
         const word = e.target.id
+        setFormData({...formData, word: targetWord})
         setCustomForm(!showCustomForm)
     }
 
@@ -101,7 +102,6 @@ export function Article() {
     function handleCustomWord(e) {
         const value = e.target.value
         const name = e.target.name
-        console.log(name, value)
         setFormData({...formData, [name]: value})
     }
     
@@ -119,19 +119,38 @@ export function Article() {
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newCustomWord)
         })
-        .then(res => res.json())
-        .then(newWord => {
-            setCustomWord(newWord)
-            setCustomForm(!showCustomForm)
-            setFormData(initialValues)
+        // .then(res => res.json())
+        // .then(newWord => {        
+        //     console.log(newWord)
+        //     setCustomWord(newWord)
+        //     setCustomForm(!showCustomForm)
+        //     setFormData(initialValues)
+        // })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(newWord => {
+                    setCustomWord(newWord)
+                    setCustomForm(!showCustomForm)
+                    setFormData(initialValues)
+                })
+            } else {
+                if (res.status === 422) {
+                    res.json().then(error => {
+                        console.log(error)
+                        setWordExistError(error)
+                        
+                    })
+                }
+                console.log(wordExistError)
+                // window.alert("This word already exists in your word decks.")
+                
+            }
         })
     }
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
-        
-        setTargetWord(newWord)
-        console.log(targetWord)
+        setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))
         if (newWord === "") {
             setChosen(null)
             setAddBtn(false)
@@ -167,7 +186,7 @@ export function Article() {
            
             <ReadableArea>
                 <ReadableContent>
-                {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")} onWordClicked={updateDictionaryWord}/>)}
+                {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")} onWordClicked={updateDictionaryWord} setWordExistError={setWordExistError}/>)}
                 </ReadableContent>
             </ReadableArea>
             
@@ -181,7 +200,7 @@ export function Article() {
                 {/* <br/> */}
                 <SearchArea 
                     type="text"
-                    value={targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}
+                    value={targetWord}
                     onChange={handleSearchChange} 
                 />
 
@@ -192,9 +211,9 @@ export function Article() {
                     id={targetWord}
                 />
 
-                {customWord === null && chosen.length === 0 && (
+                {customWord === null && targetWord !== null && chosen?.length === 0 && (
                     <NotFound>
-                        No results found for '{targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}'.
+                        No results found for '{targetWord}'.
                     </NotFound>
                 )}
                 {showCustomForm && ( 
@@ -203,11 +222,11 @@ export function Article() {
                             <br/>
                             <WordInput
                                 required
+                                disabled
                                 type="text"
                                 name="word"
-                                placeholder={targetWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}
                                 value={formData.word}
-                                onChange={handleCustomWord}
+                                // onChange={handleCustomWord}
                             />
                         </Label>
                         <br/>
@@ -215,17 +234,16 @@ export function Article() {
                             <br/>
                             <TranslationInput
                                 required
-                                    type="text"
-                                    name="translation"
-                                    value={formData.translation}
-                                    onChange={handleCustomWord}
+                                type="text"
+                                name="translation"
+                                value={formData.translation}
+                                onChange={handleCustomWord}
                             />
                             <br/>
                         </Label>
+                        {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
                         <br/>
                         <SaveButton type="submit" value="Save"/>
-                        
-                    
                     </CustomWordForm>
                 )}
                 <TranslationArea>
@@ -244,6 +262,11 @@ export function Article() {
     )
 }
 
+
+const ExistWarning = styled.span`
+    color: red;
+    font-size: 12px;
+`
 
 const SaveButton = styled.input`
     min-width: 235px !important;

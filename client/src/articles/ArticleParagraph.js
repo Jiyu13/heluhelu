@@ -1,11 +1,18 @@
 import styled from "styled-components"
 import { ArticleWord } from "./ArticleWord"
 
-export function ArticleParagraph({words, onWordClicked}) {
+export function ArticleParagraph({words, onWordClicked, setWordExistError}) {
 
     return (
         <ParagraphContainer>
-                {words.map(word => <ArticleWord key={word.id} word={word} onWordClicked={onWordClicked}/>)}
+                {words.map(word => 
+                    <ArticleWord 
+                        key={word.id} 
+                        word={word} 
+                        onWordClicked={onWordClicked}
+                        setWordExistError={setWordExistError}
+                    />
+                )}
         </ParagraphContainer>
     )
 }

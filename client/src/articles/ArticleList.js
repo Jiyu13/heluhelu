@@ -11,7 +11,7 @@ import { UserContext } from "../components/UserContext";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, calculatePages, userArticles, setUserArticles} = useContext(UserContext)
+    const {user, calculatePages, userArticles} = useContext(UserContext)
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
@@ -27,9 +27,13 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         // eslint-disable-next-line
         // console.log(article) // shared article will not be shown in user_articles at this moment
         const userArticle = article?.user_articles?.filter(u_r => {
-            if (u_r) {return u_r.user_id === user?.id}
+            if (u_r && u_r.user_id === user?.id) {
+                return u_r
+            }
         })
         
+        console.log(userArticle)
+
         if (userArticle.length === 0) {
             console.log("not exists")
             const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)

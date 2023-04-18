@@ -43,7 +43,6 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         })
         .then(res => res.json())
         .then(updatedArticle => {
-            console.log(updatedArticle)
             onUpdatedArticle(updatedArticle)
             redirectArticles()
         })

@@ -249,9 +249,17 @@ api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 # =============================== user words ============================================
 class UserWords(Resource):
     def post(self):
+        word = request.get_json()["word"]
+        translation=request.get_json()["translation"]
+        user_id=session["user_id"]
+
+        check_exist = UserWord.query.filter_by(word=word, user_id=user_id).first()
+        if check_exist: 
+            return make_response({"message": "Custom word already exists."}, 422)
+
         new_user_word = UserWord(
-            word=request.get_json()["word"],
-            translation=request.get_json()["translation"],
+            word=word,
+            translation=translation,
             user_id=session["user_id"]
         )
         db.session.add(new_user_word)

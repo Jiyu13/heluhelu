@@ -9,7 +9,7 @@ export function TranslationWord( {word, translation} ) {
     
     return (
         <WordItem key={word.id}>
-            <Word>{word} :</Word>
+            <Word>{word}:</Word>
             {/* <Translation>{word.translation}</Translation> */}
             <Translation>
                 {translation?.length > 50 ? translation?.substring(0, 50) : translation}
