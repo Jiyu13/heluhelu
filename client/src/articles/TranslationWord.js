@@ -46,5 +46,5 @@ const Word = styled.div`
 
 const Translation = styled.div`
     display: inline;
-  width: 100%;
+    width: 100%;
 `

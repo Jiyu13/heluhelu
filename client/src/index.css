@@ -18,21 +18,23 @@ body {
 }
 
 input[type="submit"] {
-	border: 2px solid #ccc;
+	/* border: 2px solid #ccc; */
+	border: 0;
 	background-color: #ebe8e5;
 	color: #555;
 	display: inline-block;
-	font-size: 19px;
+	font-size: 15px;
 	font-weight: 700;
-	padding: 10px 10px 9px;
-	min-width: 260px;
+	/* padding: 10px 10px 9px; */
+	/* min-width: 250px; */
 	text-align: center;
-	border-radius: 16px;
+	border-radius: 8px;
 	margin-bottom: 12px;
 	cursor: pointer;
 	box-sizing: border-box;
 	outline: none;
 }
+
 input[type="text"], textarea {
 	padding: 8px; 
 	margin-bottom: 8px;
@@ -77,3 +79,9 @@ li:hover .recent-reading + .last-open-title {
 }
 
 
+/* @media screen and (max-width: 600px) {
+	input[type=text], input[type=submit], textarea {
+	  width: 100%;
+	  margin-top: 0;
+	}
+  } */

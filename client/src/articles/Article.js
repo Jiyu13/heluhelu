@@ -13,11 +13,13 @@ import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
 import { useState } from "react"
 import { CustomWord } from "./CustomWord"
+// import { CustomeWordForm } from "./CustomWordForm"
 
 const PAGE_SIZE = 250;
 
 export function Article() {
-
+    const [showAddBtn, setAddBtn] = useState(false)
+    const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
@@ -27,13 +29,9 @@ export function Article() {
            user, chosen, setChosen, 
            setErrors, 
            page, setPage,
-           setAddBtn,
-           checkAvaliable,
-           showCustomForm, setCustomForm
         } = useContext(UserContext)
     
     const { id } = useParams()
-
     useEffect(() => {
         fetch(`/articles/${id}`)
         .then(res => res.json())
@@ -85,6 +83,16 @@ export function Article() {
         .then(res => res.json())
         .then(data => console.log(data))
     }
+    // ========= check word avaliability ========================
+    function checkAvaliable(word) {
+        if (word.length === 0) {
+            setAddBtn(true)
+        } else {
+            setAddBtn(false)
+            setCustomForm(false)
+        }
+    }
+
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
         const word = e.target.id
@@ -175,6 +183,7 @@ export function Article() {
         updateDictionaryWord(newWord)
     }
 
+    
     return (
         <ArticleContainer>
             
@@ -197,19 +206,28 @@ export function Article() {
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
                     <PageDisplay>pg: {page} of {pages}</PageDisplay>
                 </PagesContainer>
-                {/* <br/> */}
+
                 <SearchArea 
                     type="text"
                     value={targetWord}
                     onChange={handleSearchChange} 
                 />
 
-                <AddImage 
+                {customWord ? "" :
+                    <AddImage 
+                        src={add_icon} 
+                        alt="add translation for word button" 
+                        onClick={handleAddBtn} 
+                        id={targetWord}
+                    />
+                }
+
+                {/* <AddImage 
                     src={add_icon} 
                     alt="add translation for word button" 
                     onClick={handleAddBtn} 
                     id={targetWord}
-                />
+                /> */}
 
                 {customWord === null && targetWord !== null && chosen?.length === 0 && (
                     <NotFound>
@@ -217,7 +235,7 @@ export function Article() {
                     </NotFound>
                 )}
                 {showCustomForm && ( 
-                    <CustomWordForm onSubmit={handleCustomSubmit}>
+                    <CustomForm onSubmit={handleCustomSubmit}>
                         <Label>Hawaiian:
                             <br/>
                             <WordInput
@@ -226,7 +244,6 @@ export function Article() {
                                 type="text"
                                 name="word"
                                 value={formData.word}
-                                // onChange={handleCustomWord}
                             />
                         </Label>
                         <br/>
@@ -243,11 +260,13 @@ export function Article() {
                         </Label>
                         {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
                         <br/>
-                        <SaveButton type="submit" value="Save"/>
-                    </CustomWordForm>
+                        <SaveButton type="submit" value="Save" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
+                        <CancelButton type="button" value="Cancel" onClick={() => setCustomForm(!showCustomForm)}/>
+                    </CustomForm>
+                    // <CustomeWordForm />
                 )}
                 <TranslationArea>
-                    {customWord && (<CustomWord word={customWord.word} translation={customWord.translation }/>)}
+                    {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
                     {chosen?.map(word => <TranslationWord word={word.hawaiian} translation={word.translation }/>)}
                     
                 </TranslationArea>
@@ -268,27 +287,51 @@ const ExistWarning = styled.span`
     font-size: 12px;
 `
 
-const SaveButton = styled.input`
-    min-width: 235px !important;
+const CancelButton = styled.input`
+    width: 90%;
+    min-width: 90px !important;
+    max-width: 120px;  
     width: 0.1em; 
     height: 2em;
+    margin-right: 15px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
 `
 
-const TranslationInput = styled.input``
+const SaveButton = styled.input`
+    width: 90%;
+    min-width: 90px !important;
+    max-width: 120px;  
+    width: 0.1em; 
+    height: 2em;
+    margin-right: 15px;
+    border: 0;
+`
 
-const WordInput = styled.input``
+const TranslationInput = styled.input`
+    width: 90%;
+    max-width: 235px;
+`
+
+const WordInput = styled.input`
+    width: 90%;
+    max-width: 235px;   
+`
 
 const Label = styled.label`
     font-size: 15px;
     font-weight: bold;
 `
 
-const CustomWordForm = styled.form`
-    max-width: 265px;
+const CustomForm = styled.form`
+    // max-width: 265px;
     border: 1px solid #eee;
     margin-top: 35px;
     padding: 10px;
-
+    text-align: center;
 `
 
 const NotFound = styled.div`
@@ -299,7 +342,7 @@ const NotFound = styled.div`
 const AddImage = styled.img`
     width: 25px;
     height: 25px;
-    margin-left: 12px;
+    margin-left: 6px;
     cursor: pointer;
 `
 
@@ -357,7 +400,7 @@ const ReadableContent = styled.div`
 const DictionaryArea = styled.div`
     background-color: #282828;
     color: #bbb;
-    min-width: 250px;
+    max-width: 300px;
     flex-basis: 25%;
     box-sizing: border-box;
     // padding: 12px;
@@ -369,10 +412,10 @@ const DictionaryArea = styled.div`
 
 const SearchArea = styled.input`
     border-radius: 8px;
-    height: 40px;
+    height: 20px;
     width: 180px;
     font-size: 25px;
-    max-width: 165px;
+    max-width: 150px;
 ` 
 
 const TranslationArea = styled.div``
