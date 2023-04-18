@@ -54,8 +54,6 @@ function ArticleImporter() {
 
     return (
         <PasteBox>
-            
-            {/* <h1>Enter your text: </h1> */}
             <FormContainer onSubmit={handleSubmit}>
                 <FormTextarea
                     required

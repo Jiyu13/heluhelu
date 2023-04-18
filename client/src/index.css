@@ -66,6 +66,12 @@ h2 {
     font-weight: bold;
 }
 
+hr {
+	border: none;
+	height: 1px;
+	color: #eee;
+	background-color: #eee;
+}
 
 /*Class */
 .content-container {

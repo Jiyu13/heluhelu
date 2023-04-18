@@ -13,7 +13,6 @@ import { ArticleParagraph } from "./ArticleParagraph"
 import { TranslationWord } from "./TranslationWord";
 import { useState } from "react"
 import { CustomWord } from "./CustomWord"
-// import { CustomeWordForm } from "./CustomWordForm"
 
 const PAGE_SIZE = 250;
 
@@ -127,13 +126,6 @@ export function Article() {
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newCustomWord)
         })
-        // .then(res => res.json())
-        // .then(newWord => {        
-        //     console.log(newWord)
-        //     setCustomWord(newWord)
-        //     setCustomForm(!showCustomForm)
-        //     setFormData(initialValues)
-        // })
         .then(res => {
             if (res.ok) {
                 res.json().then(newWord => {
@@ -144,13 +136,10 @@ export function Article() {
             } else {
                 if (res.status === 422) {
                     res.json().then(error => {
-                        console.log(error)
                         setWordExistError(error)
                         
                     })
                 }
-                console.log(wordExistError)
-                // window.alert("This word already exists in your word decks.")
                 
             }
         })
@@ -263,7 +252,6 @@ export function Article() {
                         <SaveButton type="submit" value="Save" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
                         <CancelButton type="button" value="Cancel" onClick={() => setCustomForm(!showCustomForm)}/>
                     </CustomForm>
-                    // <CustomeWordForm />
                 )}
                 <TranslationArea>
                     {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
@@ -327,7 +315,6 @@ const Label = styled.label`
 `
 
 const CustomForm = styled.form`
-    // max-width: 265px;
     border: 1px solid #eee;
     margin-top: 35px;
     padding: 10px;
@@ -367,7 +354,6 @@ const SideBar = styled.div`
     box-sizing: border-box;
     font-size: 19px;
     flex-shrink: 1;
-    // min-width: 40px;
     width: 10%;
     cursor: pointer;
     text-align: center!important;
@@ -403,7 +389,6 @@ const DictionaryArea = styled.div`
     max-width: 300px;
     flex-basis: 25%;
     box-sizing: border-box;
-    // padding: 12px;
     padding: 0 12px 12px 12px;
     line-height: 1.6;
 
@@ -411,9 +396,9 @@ const DictionaryArea = styled.div`
 `
 
 const SearchArea = styled.input`
+    width: 90%;
     border-radius: 8px;
     height: 20px;
-    width: 180px;
     font-size: 25px;
     max-width: 150px;
 ` 

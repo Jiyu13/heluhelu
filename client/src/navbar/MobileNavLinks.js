@@ -94,9 +94,9 @@ export function MobileNavLinks() {
                             <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                         </LinkItem>
 
-                        <LinkItem>
+                        {/* <LinkItem>
                             <Link href="#">Upload Dictionary</Link>
-                        </LinkItem>
+                        </LinkItem> */}
 
                         <Marginer/>
                         <Accessibility/>

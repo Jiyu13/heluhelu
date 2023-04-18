@@ -10,7 +10,6 @@ export function TranslationWord( {word, translation} ) {
     return (
         <WordItem key={word.id}>
             <Word>{word}:</Word>
-            {/* <Translation>{word.translation}</Translation> */}
             <Translation>
                 {translation?.length > 50 ? translation?.substring(0, 50) : translation}
 
@@ -19,7 +18,7 @@ export function TranslationWord( {word, translation} ) {
                 {translation?.length > 50 ? 
                 
                     <ReadOrHidebutton onClick={() => setReadMore(!isReadMore)}>
-                        {isReadMore ? " Show Less" : "Show More"}
+                        {isReadMore ? "Show Less" : "...Show More"}
                     </ReadOrHidebutton> 
                     : null
                 }
@@ -33,8 +32,11 @@ export function TranslationWord( {word, translation} ) {
 }
 
 const ReadOrHidebutton = styled.button`
-    // color: rgb(192,192,192);
+    color: rgb(41, 128, 185);
     cursor: pointer;
+    padding-left: 8px;
+    border: none;
+    background: none;
 `
 
 const WordItem = styled.div``

@@ -10,15 +10,10 @@ const api = axios.create({
 
 export function CustomWord({word, setCustomWord}) {
 
-    // const initialValues = {
-    //     word: word.word,
-    //     translation: word.translation
-    // }
+
     const {user} = useContext(UserContext)
     const [isEdit, setIsEdit] = useState(false)
-    const [showEditForm, setEditForm] = useState(false)
     const [formData, setFormData] = useState(word)
-    // console.log(formData)
 
     function handleEditClick() {
         setIsEdit(!isEdit)
@@ -33,11 +28,9 @@ export function CustomWord({word, setCustomWord}) {
     }
 
     function handleOnchange(e) {
-        // console.log(e.target.name,  e.target.value)
         setFormData({...formData, [e.target.name]: e.target.value})
     }
-    // console.log(formData)
-    // console.log(word)     the same result
+
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -101,7 +94,6 @@ export function CustomWord({word, setCustomWord}) {
                     />
                     <br/>
                     </Label>
-                    {/* {wordExistError ? <ExistWarning>"{wordExistError.message}"</ExistWarning> : ""} */}
                     <UpdateButton type="submit" value="Update" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
                     <CancelButton type="button" value="Cancel" onClick={() => setCustomWord(!isEdit)}/>
                 </EditForm>

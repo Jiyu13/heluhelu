@@ -69,15 +69,6 @@ function App() {
     setArticles(updatedArticles)
   }
   
-  // // ========= check word avaliability ========================
-  // function checkAvaliable(word) {
-  //   if (word.length === 0) {
-  //       setAddBtn(true)
-  //   } else {
-  //       setAddBtn(false)
-  //       setCustomForm(false)
-  //   }
-  // }
 
   // ========= delete current user article from dom ===========
   function onDeleteArticle(article_id) {
@@ -157,12 +148,12 @@ function App() {
               >
               </Route>
 
-              <Route
+              {/* <Route
                 exact
                 path='/upload_dictionary'
                 element={<DictionaryUpload/>}
               >
-              </Route>
+              </Route> */}
 
               {/* <Route
                 exact

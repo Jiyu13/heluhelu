@@ -50,12 +50,10 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             <tbody>
             {articles.map(article =>
                 <tr key={article.id}>
-                    {/* td */}
                     <ArticleTitleCell>  
 
                         <ArticleTitle>
                             <Link to={`/articles/${article.id}`} style={{textDecoration: 'none'}} id={article.id}>
-                                {/* {article.id}. {article.title} */}
                                 {article.title}
                             </Link>
                             <br/>

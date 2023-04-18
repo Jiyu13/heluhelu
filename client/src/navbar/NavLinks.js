@@ -34,9 +34,9 @@ export function NavLinks() {
                         <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                     </LinkItem>
 
-                    <LinkItem>
+                    {/* <LinkItem>
                         <Link href="/upload_dictionary">Upload Dictionary</Link>
-                    </LinkItem>
+                    </LinkItem> */}
 
                 </LinksWrapper>
             </NavLinksContainer>
