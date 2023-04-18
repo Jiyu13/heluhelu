@@ -144,4 +144,4 @@ class UserWord(db.Model, SerializerMixin):
     serialize_rules = ('-user',)
 
     def __repr__(self):
-            return f'''<Word {self.id}: word-{self.word}>; user-{self.user_id}\n'''
+            return f'''<Word {self.id}: word-{self.word}>, {self.translation}; user-{self.user_id}\n'''

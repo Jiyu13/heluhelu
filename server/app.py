@@ -268,6 +268,23 @@ class UserWords(Resource):
 api.add_resource(UserWords, '/user_words', endpoint="user_words")
 
 
+class UserWordByID(Resource):
+    def patch(self, id):
+        custom_word = UserWord.query.filter_by(id=id, user_id=session["user_id"]).first()
+        for attr in request.get_json():
+            setattr(custom_word, attr, request.get_json()[attr])
+        db.session.add(custom_word)
+        db.session.commit()
+        response = make_response(custom_word.to_dict(), 200)
+        return response
+    
+    def delete(self, id):
+        custom_word = UserWord.query.filter_by(id=id, user_id=session["user_id"]).first()
+        db.session.delete(custom_word)
+        db.session.commit()
+        return make_response()
+api.add_resource(UserWordByID, "/user_word/<int:id>")
+
 # =============================== account ===============================================
 class CheckSession(Resource):
     def get(self):
