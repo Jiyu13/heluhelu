@@ -27,7 +27,7 @@ export function Article() {
     const {article, setArticle, 
            articles, setArticles, 
            user, chosen, setChosen, 
-           setErrors,
+           setErrors, splitText, calculatePages
         } = useContext(UserContext)
     
     const { id } = useParams()
@@ -43,16 +43,13 @@ export function Article() {
     }, [id]) // [id] eslint-disable-next-line
 
     // ==========================================================================
-    const articleWords = article?.text?.split(" ")                                      // get all words
-            .map(word => word.replaceAll("\n\n", "\n"))
-            .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))                 // replace "\n\n" to "##\n\n" then split by \n\n
-    const words_length = articleWords?.length
-    const pages = Math.ceil(words_length / 250)
+    const articleWords = splitText(article)
+    const pages = calculatePages(articleWords)
 
     // ==========================================================================
     const textInPages = articleWords?.slice(
                             (currentPage) * PAGE_SIZE, 
-                            (currentPage) * PAGE_SIZE + PAGE_SIZE)                          // slice, get words from [0-250], page increases/decreases by 1
+                            (currentPage) * PAGE_SIZE + PAGE_SIZE)                     // slice, get words from [0-250], page increases/decreases by 1
                         .join(' ')                                                     // join 250 words with space to make it a paragraph
                         .replaceAll("##", "\n\n")                                       
     const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
@@ -63,27 +60,22 @@ export function Article() {
         console.log("current", currentPage)
         
         const prevPage = Math.max(currentPage - 1, 0)
-        console.log("prevPage", prevPage)
         setCurrentPage(prevPage)
         handleCurrentPage(prevPage)
     }
 
     function handleNextPage() {
         const nextPage = Math.min(currentPage + 1, pages - 1)
-        console.log("nextPage", nextPage)
         handleCurrentPage(nextPage)
-
         setCurrentPage(nextPage)
-        console.log("current", currentPage)
-
         let words_read
         if (currentPage < pages - 1) {
             words_read = 250
         } else if (currentPage === pages - 1) {
-            words_read = words_length - (pages - 1)*250
+            words_read = articleWords?.length - (pages - 1)*250
         }
 
-        console.log(words_length, pages, words_read)
+        // console.log(words_length, pages, words_read)
 
         fetch('/stats', {
             method: "POST",
@@ -217,7 +209,7 @@ export function Article() {
             </ReadableArea>
             
             <DictionaryArea>
-                <span style={{"font-size":"12px"}}>Total words: {words_length}</span>
+                <span style={{"font-size":"12px"}}>Total words: {articleWords?.length}</span>
                 <br/>
                 <PagesContainer>
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>

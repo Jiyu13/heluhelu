@@ -11,7 +11,7 @@ import { UserContext } from "../components/UserContext";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, userArticles} = useContext(UserContext)
+    const {user, userArticles, splitText, calculatePages} = useContext(UserContext)
     
 
     function handleDelete(e) {
@@ -23,13 +23,11 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             onDeleteArticle(article_id)})
     }
 
-    // ========= calculate pages for an article ================
-    function calculatePages(article) {
-        return Math.ceil((article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length)/250)
-    }
-
+    
     // ============== check how many pages has been read ==============
     function getCurrentPage(article) {
+        const words = splitText(article)
+        const total_pages = calculatePages(words)
         // eslint-disable-next-line
         // console.log(article) // shared article will not be shown in user_articles at this moment
         const userArticle = article?.user_articles?.filter(u_r => {
@@ -42,15 +40,15 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             // console.log("not exists")
             const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
             const curr_page = newAddedUserArticle[0]["current_page"]
-            const total_pages = calculatePages(article)
+            const total_pages = Math.ceil(splitText(article).length/250)
 
             if (curr_page === total_pages) {
-                return (parseInt(newAddedUserArticle[0]["current_page"]) + 1) / calculatePages(article)
+                return (parseInt(newAddedUserArticle[0]["current_page"]) + 1) / total_pages
             }
 
-            return parseInt(newAddedUserArticle[0]["current_page"]) / calculatePages(article)
+            return parseInt(newAddedUserArticle[0]["current_page"]) / total_pages
         }
-        return parseInt(userArticle[0]["current_page"]) / calculatePages(article)
+        return parseInt(userArticle[0]["current_page"]) / total_pages
     }
     // ===============================================================
 
@@ -73,7 +71,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
                             </CompletionBar>
                             <CompletionText>
-                                {Math.ceil(calculatePages(article))} pgs
+                                {calculatePages(splitText(article))} pgs
                             </CompletionText>
                             {/* ============== process bar ========================= */}
                     

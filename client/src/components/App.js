@@ -78,6 +78,20 @@ function App() {
     setArticles(updatedArticles)
   }
 
+  // ========= calculate pages for an article ================
+  function splitText(article) {
+    const articleWords = article?.text?.split(" ")                                      // get all words
+        .map(word => word.replaceAll("\n\n", "\n"))
+        .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))                 // replace "\n\n" to "##\n\n" then split by \n\n
+    return articleWords
+  }
+
+
+  function calculatePages(articleWords) {
+      const words_length = articleWords?.length
+      const pages = Math.ceil(words_length / 250)
+      return pages
+  }
   
   
 
@@ -89,6 +103,7 @@ function App() {
                             chosen, setChosen, 
                             errors, setErrors,
                             isLoading, setLoading,
+                            splitText, calculatePages
                           }
 
   if(user === USER_NOT_SET) return;
