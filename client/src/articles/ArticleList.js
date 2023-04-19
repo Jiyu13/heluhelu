@@ -11,7 +11,8 @@ import { UserContext } from "../components/UserContext";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, calculatePages, userArticles} = useContext(UserContext)
+    const {user, userArticles} = useContext(UserContext)
+    
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
@@ -20,6 +21,11 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         })
         .then(() => {
             onDeleteArticle(article_id)})
+    }
+
+    // ========= calculate pages for an article ================
+    function calculatePages(article) {
+        return Math.ceil((article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length)/250)
     }
 
     // ============== check how many pages has been read ==============
@@ -33,8 +39,15 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         })
         
         if (userArticle.length === 0) {
-            console.log("not exists")
+            // console.log("not exists")
             const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
+            const curr_page = newAddedUserArticle[0]["current_page"]
+            const total_pages = calculatePages(article)
+
+            if (curr_page === total_pages) {
+                return (parseInt(newAddedUserArticle[0]["current_page"]) + 1) / calculatePages(article)
+            }
+
             return parseInt(newAddedUserArticle[0]["current_page"]) / calculatePages(article)
         }
         return parseInt(userArticle[0]["current_page"]) / calculatePages(article)

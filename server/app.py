@@ -177,19 +177,6 @@ class UserArticleByArticleId(Resource):
         user_article.current_page = request.get_json()["current_page"]
         db.session.commit()
 
-        # # update page read event
-        # total_page = math.ceil(len(user_article.text.split()) / 250)
-        # if current_page < total_page:
-        #     new_read_event = PageReadEvent(
-        #         words_read=250,
-        #         user_id=current_user
-        #     )
-        # elif current_page = total_page:
-        #     new_read_event = PageReadEvent(
-        #         words_read=len(user_article.text.split()) - (total_page - 1) * 250,
-        #         user_id=current_user
-        #     )
-
         return make_response(user_article.to_dict(), 200)
 
     def delete(self, article_id):
@@ -231,6 +218,10 @@ api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 class ArticleByID(Resource):
     def get(self, id):
         article = Article.query.filter_by(id=id).first()
+        user_article = UserArticle.query.filter_by(
+            user_id = session["user_id"],
+            article_id = article.id
+        ).first()
 
         if not article:
             response_body = {
@@ -240,7 +231,12 @@ class ArticleByID(Resource):
 
         article.update_at = datetime.utcnow()
         db.session.commit()
-        return make_response(article.to_dict(), 200)
+
+        response = {
+            "article": article.to_dict(),
+            "current_page": user_article.current_page
+        }
+        return make_response(response, 200)
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
 

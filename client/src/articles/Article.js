@@ -22,35 +22,37 @@ export function Article() {
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const {article, setArticle, 
            articles, setArticles, 
            user, chosen, setChosen, 
-           setErrors, 
-           page, setPage,
+           setErrors,
         } = useContext(UserContext)
     
     const { id } = useParams()
     useEffect(() => {
         fetch(`/articles/${id}`)
         .then(res => res.json())
-        .then(prevArticle => {
-            setArticle(prevArticle)
-            setArticles([prevArticle, ...articles])
+        .then(data => {
+            console.log(data)
+            setCurrentPage(data.current_page)
+            setArticle(data.article)
+            setArticles([data.article, ...articles])
         })
     }, [id]) // [id] eslint-disable-next-line
 
     // ==========================================================================
-    const words_length = article?.text?.replace(/(\r\n|\n|\r)/gm, "").split(" ").length
+    const articleWords = article?.text?.split(" ")                                      // get all words
+            .map(word => word.replaceAll("\n\n", "\n"))
+            .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))                 // replace "\n\n" to "##\n\n" then split by \n\n
+    const words_length = articleWords?.length
     const pages = Math.ceil(words_length / 250)
 
     // ==========================================================================
-    const textInPages = article?.text?.split(" ")                                      // get all words
-                        .map(word => word.replaceAll("\n\n", "\n"))
-                        .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))    // replace "\n\n" to "##\n\n" then split by \n\n
-                        .slice(
-                            (page-1) * PAGE_SIZE, 
-                            (page-1) * PAGE_SIZE + PAGE_SIZE)                          // slice, get words from [0-250], page increases/decreases by 1
+    const textInPages = articleWords?.slice(
+                            (currentPage) * PAGE_SIZE, 
+                            (currentPage) * PAGE_SIZE + PAGE_SIZE)                          // slice, get words from [0-250], page increases/decreases by 1
                         .join(' ')                                                     // join 250 words with space to make it a paragraph
                         .replaceAll("##", "\n\n")                                       
     const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
@@ -58,27 +60,30 @@ export function Article() {
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
-        const prevPage = page - 1 > 0 ? page - 1  : page
-        setPage(prevPage)
+        console.log("current", currentPage)
+        
+        const prevPage = Math.max(currentPage - 1, 0)
+        console.log("prevPage", prevPage)
+        setCurrentPage(prevPage)
         handleCurrentPage(prevPage)
     }
 
     function handleNextPage() {
-        const nextPage = page + 1 < pages ? page + 1 : pages
-        setPage(nextPage)
+        const nextPage = Math.min(currentPage + 1, pages - 1)
+        console.log("nextPage", nextPage)
         handleCurrentPage(nextPage)
 
-        // in dom: 2
-        console.log(pages) // 3
-        console.log(page) // 1
-        console.log(nextPage) // 2 if page === nextPage????
+        setCurrentPage(nextPage)
+        console.log("current", currentPage)
 
         let words_read
-        if (page < pages) {
+        if (currentPage < pages - 1) {
             words_read = 250
-        } else if (page === pages) {
+        } else if (currentPage === pages - 1) {
             words_read = words_length - (pages - 1)*250
         }
+
+        console.log(words_length, pages, words_read)
 
         fetch('/stats', {
             method: "POST",
@@ -91,6 +96,7 @@ export function Article() {
     }
 
     function handleCurrentPage(curr_page) {
+        console.log("handleCurrentPage", curr_page)
         fetch(`/user_article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
@@ -215,7 +221,7 @@ export function Article() {
                 <br/>
                 <PagesContainer>
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                    <PageDisplay>pg: {page} of {pages}</PageDisplay>
+                    <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
                 </PagesContainer>
 
                 <SearchArea 
@@ -232,13 +238,6 @@ export function Article() {
                         id={targetWord}
                     />
                 }
-
-                {/* <AddImage 
-                    src={add_icon} 
-                    alt="add translation for word button" 
-                    onClick={handleAddBtn} 
-                    id={targetWord}
-                /> */}
 
                 {customWord === null && targetWord !== null && chosen?.length === 0 && (
                     <NotFound>
