@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
-
+    console.log()
     let navigate = useNavigate()
     function redirectArticles() {
         navigate('/articles')
@@ -17,7 +17,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
     useEffect(() => {
         fetch(`/articles/${id}`)
         .then(res => res.json())
-        .then(article => setFormData(article))
+        .then(data => setFormData(data.article))
     }, [id])
     
     // ================= handle editing article ========================== 

@@ -95,7 +95,7 @@ export function CustomWord({word, setCustomWord}) {
                     <br/>
                     </Label>
                     <UpdateButton type="submit" value="Update" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
-                    <CancelButton type="button" value="Cancel" onClick={() => setCustomWord(!isEdit)}/>
+                    <CancelButton type="button" value="Cancel" onClick={() => setIsEdit(!isEdit)}/>
                 </EditForm>
             )}
             
