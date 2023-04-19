@@ -1,8 +1,26 @@
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import { UserContext } from "../components/UserContext"
+import { StatsTable } from "./StatsTable"
 
 export function MyStats() {
+
+    const [readEvents, setReadEvets] = useState(null)
+    const {user} = useContext(UserContext)
+
+    useEffect(() => {
+        fetch('/stats')
+        .then(res => res.json())
+        .then(data => setReadEvets(data))
+    }, [])
+
     return (
-        <StatsTitle>My Stats</StatsTitle>
+        <>
+            <StatsTitle>My Stats</StatsTitle>
+
+            <StatsTable readEvents={readEvents} setReadEvets={setReadEvets}/>
+        </>
+        
     )
 }
 

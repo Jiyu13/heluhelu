@@ -43,10 +43,10 @@ class DictionaryWord(db.Model, SerializerMixin):
 class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
 
-    # is_reading = db.Column(db.Boolean)
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, unique=True, nullable=False)
     title = db.Column(db.String, nullable=False)
+    # total_pages = db.Column(db.Integer)
     text = db.Column(db.String, nullable=False)
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -85,6 +85,7 @@ class User(db.Model, SerializerMixin):
     # one-to-many: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
     articles = db.relationship("Article", backref="user")
+    page_read_events = db.relationship("PageReadEvent", backref="user")
 
     # one-to-many: a user has many saved words
     words = db.relationship("UserWord", backref="user")
@@ -134,14 +135,27 @@ class UserWord(db.Model, SerializerMixin):
     __tablename__ = "user_words"
 
     id = db.Column(db.Integer, primary_key=True)
-
-     # a user has many saved words
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    
     word = db.Column(db.String, nullable=False)
     translation = db.Column(db.String, nullable=False)
+
+    # a user has many saved words
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     serialize_rules = ('-user',)
 
     def __repr__(self):
             return f'''<Word {self.id}: word-{self.word}>, {self.translation}; user-{self.user_id}\n'''
+
+
+class PageReadEvent(db.Model, SerializerMixin):
+    __tablename__ = "page_read_events"
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, server_default=db.func.now())
+    words_read = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    serialize_rules = ('-user', "-article")
+
+    def __repr__(self):
+            return f'''<PageRead {self.id}: date-{self.date}>, {self.words_read}; user-{self.user_id}>\n'''

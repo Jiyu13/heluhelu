@@ -5,10 +5,10 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord
+from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord, PageReadEvent
 import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Dictionaries(Resource):
     def get(self):
@@ -176,6 +176,20 @@ class UserArticleByArticleId(Resource):
         user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
         user_article.current_page = request.get_json()["current_page"]
         db.session.commit()
+
+        # # update page read event
+        # total_page = math.ceil(len(user_article.text.split()) / 250)
+        # if current_page < total_page:
+        #     new_read_event = PageReadEvent(
+        #         words_read=250,
+        #         user_id=current_user
+        #     )
+        # elif current_page = total_page:
+        #     new_read_event = PageReadEvent(
+        #         words_read=len(user_article.text.split()) - (total_page - 1) * 250,
+        #         user_id=current_user
+        #     )
+
         return make_response(user_article.to_dict(), 200)
 
     def delete(self, article_id):
@@ -297,7 +311,99 @@ class CheckSession(Resource):
     
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
+# ============================== my stats =======================================
+class PageReadEvents(Resource):
+    def get(self):
+        events = PageReadEvent.query.filter_by(user_id=session["user_id"]).all()
+        all_time = 0
+        today = 0
+        yesterday = 0
+        this_week = 0
+        this_month = 0
+        this_year = 0
+        today_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        yesterday_date = today_date - timedelta(days=1)
+        week_date = today_date - timedelta(days=today_date.weekday())
+        month_date = today_date.replace(day=1)
+        year_date = month_date.replace(month=1)
+        for event in events:
+            if event.date >= today_date:
+                today += event.words_read
+            elif event.date >= yesterday_date:
+                yesterday += event.words_read
+            
+            if event.date >= week_date:
+                this_week += event.words_read
+            
+            if event.date >= month_date:
+                this_month += event.words_read
 
+            if event.date >= year_date:
+                this_year += event.words_read
+            
+            all_time += event.words_read
+
+        return make_response({
+                'today': today,
+                'yesterday': yesterday,
+                'week': {
+                    'total': this_week,
+                    'avg': this_week / (today_date.weekday() + 1)
+                },
+                'month':{
+                    'total': this_month,
+                    'avg': this_month / today_date.day
+                },
+                'year': {
+                    'total': this_year,
+                    'avg': this_month / today_date.timetuple().tm_yday # tm_yday, range[1, 366]
+                },
+                'total': all_time
+            }, 200)
+    
+    def post(self):
+        words_read = request.get_json()["words_read"]
+        user_id = session["user_id"]
+        new_read_event = PageReadEvent(
+            words_read=words_read,
+            user_id=user_id
+        )
+        db.session.add(new_read_event)
+        db.session.commit()
+        response = new_read_event.to_dict()
+        return make_response(response, 201)
+api.add_resource(PageReadEvents, "/stats", endpoint="stats")
+
+
+class PageEventByMonth(Resource):
+    def get(self, current_month):
+        all_events = PageReadEvent.query.all()
+
+        data = [0] * 31
+
+        # get event happens within 30 days
+        today = datetime.now()
+        last_month = today - timedelta(days=30)
+        # yesterday = today - timedelta(days=1)
+        
+        events_within_a_month = []
+        
+        for event in all_events:
+            if  last_month.date() <= event.date.date() <= today.date():
+                difference = today.date() - event.date.date()
+                difference_in_days = difference.days
+
+                data[difference_in_days] += event.words_read
+    
+        response = make_response(data[::-1], 200)
+        return response
+api.add_resource(PageEventByMonth, '/stats/month/<int:current_month>')
+
+
+
+
+
+# ============================== account =========================================
 class Signup(Resource):
     def post(self): 
         username = request.get_json()["username"]

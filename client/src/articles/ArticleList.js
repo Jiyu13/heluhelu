@@ -32,8 +32,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             }
         })
         
-        console.log(userArticle)
-
         if (userArticle.length === 0) {
             console.log("not exists")
             const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)

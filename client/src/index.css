@@ -79,15 +79,35 @@ hr {
 	margin: 24px 50px 12px;
 }
 
-li:hover .recent-reading + .last-open-title {
+li:hover .recent-reading .last-open-title {
 	display: block;
 	color: grey;
 }
 
 
-/* @media screen and (max-width: 600px) {
-	input[type=text], input[type=submit], textarea {
-	  width: 100%;
-	  margin-top: 0;
-	}
-  } */
+/* table */
+.styled-table thead tr {
+	background: #083d74;
+    color: #ccc;
+    text-align: left;
+}
+
+.styled-table th {
+	color: #fff;
+}
+
+.styled-table th, .styled-table td{
+	padding: 12px 15px;
+	text-align: left;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid grey;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: rgb(204, 204, 204);
+}
+.styled-table tbody tr:nth-of-type(odd) {
+	background-color:#ecf0f1;
+}
