@@ -67,6 +67,27 @@ export function Article() {
         const nextPage = page + 1 < pages ? page + 1 : pages
         setPage(nextPage)
         handleCurrentPage(nextPage)
+
+        // in dom: 2
+        console.log(pages) // 3
+        console.log(page) // 1
+        console.log(nextPage) // 2 if page === nextPage????
+
+        let words_read
+        if (page < pages) {
+            words_read = 250
+        } else if (page === pages) {
+            words_read = words_length - (pages - 1)*250
+        }
+
+        fetch('/stats', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: user.id,
+                words_read: words_read,
+            }) 
+        })
     }
 
     function handleCurrentPage(curr_page) {
@@ -79,8 +100,6 @@ export function Article() {
                 current_page: curr_page,
             })
         })
-        .then(res => res.json())
-        .then(data => console.log(data))
     }
     // ========= check word avaliability ========================
     function checkCanAddTranslation(word) {
@@ -137,7 +156,6 @@ export function Article() {
                 if (res.status === 422) {
                     res.json().then(error => {
                         setWordExistError(error)
-                        
                     })
                 }
                 

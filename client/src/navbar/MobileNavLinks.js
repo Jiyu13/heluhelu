@@ -90,7 +90,7 @@ export function MobileNavLinks() {
                         </LinkItem>
 
                         <LinkItem>
-                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Recent Reading</Link>
+                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
                             <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                         </LinkItem>
 

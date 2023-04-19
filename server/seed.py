@@ -1,5 +1,6 @@
-from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord
+from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord, PageReadEvent
 from app import app
+import datetime
 import uuid
 
 def make_user():
@@ -7,6 +8,7 @@ def make_user():
     Article.query.delete()
     UserArticle.query.delete()
     UserWord.query.delete()
+    PageReadEvent.query.delete()
 
     username = "ziru"
     password = "Test12345!"
@@ -30,10 +32,8 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
             uuid=str(uuid.uuid4()),
             text=text,
             title=title,
+            # total_pages=len(text.split()),
             check_finished=False,
-            # text=request.get_json()['text'],
-            # title=request.get_json()["title"],
-            # # current_reading=False,
     )
     
     new_article.users.id = new_user.id
@@ -46,6 +46,19 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
         article_id=new_article.id,
     )
     db.session.add(user_article)
+    db.session.commit()
+
+    date1 = datetime.datetime(2023, 2, 1, 0, 0, 0, 0)
+    date2 = datetime.datetime(2023, 3, 16, 0, 0, 0, 0)
+    date3 = datetime.datetime(2023, 4, 17, 0, 0, 0, 0)
+    page_events = [
+        PageReadEvent(user_id = new_user.id, date=date1, words_read=250),
+        PageReadEvent(user_id = new_user.id, date=date1, words_read=250),
+        PageReadEvent(user_id = new_user.id, date=date2, words_read=250),
+        PageReadEvent(user_id = new_user.id, date=date3, words_read=150),
+        PageReadEvent(user_id = new_user.id, words_read=250),
+    ]
+    db.session.add_all(page_events)
     db.session.commit()
 
 

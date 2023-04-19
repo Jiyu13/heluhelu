@@ -30,8 +30,10 @@ export function NavLinks() {
                     </LinkItem>
                     
                     <LinkItem>
-                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Recent Reading</Link>
-                        <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
+                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>
+                            Currently Reading
+                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
+                        </Link>
                     </LinkItem>
 
                     {/* <LinkItem>
@@ -46,6 +48,7 @@ export function NavLinks() {
 
 const HideTitle = styled.div`
     display: none;
+    text-align: center;
 `
 
 const NavLinksContainer = styled.div`

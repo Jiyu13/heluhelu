@@ -1,8 +1,8 @@
 """create tables
 
-Revision ID: 22740da7ef64
+Revision ID: 3cc1b7b4b246
 Revises: 
-Create Date: 2023-04-17 16:57:56.216509
+Create Date: 2023-04-18 19:50:49.262989
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '22740da7ef64'
+revision = '3cc1b7b4b246'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,6 +44,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('title')
     )
+    op.create_table('page_read_events',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('words_read', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_page_read_events_user_id_users')),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('user_articles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -55,9 +63,9 @@ def upgrade():
     )
     op.create_table('user_words',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('word', sa.String(), nullable=False),
     sa.Column('translation', sa.String(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_words_user_id_users')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -78,6 +86,7 @@ def downgrade():
     op.drop_table('dictionary_words')
     op.drop_table('user_words')
     op.drop_table('user_articles')
+    op.drop_table('page_read_events')
     op.drop_table('dictionaries')
     op.drop_table('users')
     op.drop_table('articles')
