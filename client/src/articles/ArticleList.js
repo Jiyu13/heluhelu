@@ -4,7 +4,7 @@ import styled from "styled-components"
 import edit_icon from "../assets/images/edit_icon.svg"
 import delete_icon from "../assets/images/delete_icon.svg"
 import share_icon from "../assets/images/share_icon.svg"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../components/UserContext";
 
 
@@ -48,8 +48,17 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             return parseInt(newAddedUserArticle[0]["current_page"]) / total_pages
         }
         return parseInt(userArticle[0]["current_page"]) / total_pages
+        
+        // if (userArticle[0]["current_page"] < total_pages && finishReading === false) {
+        //     setFinish(!finishReading)
+        //     return parseInt(userArticle[0]["current_page"]) / total_pages
+        // } else if (userArticle[0]["current_page"] < total_pages && finishReading) {
+        //     console.log(userArticle[0]["current_page"], finishReading)
+        //     return (parseInt(userArticle[0]["current_page"]) + 1 )/ total_pages
+        // }
     }
     // ===============================================================
+    const [finishReading, setFinish] = useState(false)
 
     return (
     <ArticlesListContainer>

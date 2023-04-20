@@ -35,7 +35,7 @@ export function Article() {
         fetch(`/articles/${id}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             setCurrentPage(data.current_page)
             setArticle(data.article)
             setArticles([data.article, ...articles])
@@ -54,6 +54,7 @@ export function Article() {
                         .replaceAll("##", "\n\n")                                       
     const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
     // ==========================================================================
+    console.log("cur page " + currentPage)
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
@@ -61,13 +62,15 @@ export function Article() {
         
         const prevPage = Math.max(currentPage - 1, 0)
         setCurrentPage(prevPage)
-        handleCurrentPage(prevPage)
+        updatePageInDB(prevPage)
     }
 
     function handleNextPage() {
         const nextPage = Math.min(currentPage + 1, pages - 1)
-        handleCurrentPage(nextPage)
+        updatePageInDB(nextPage)
         setCurrentPage(nextPage)
+
+
         let words_read
         if (currentPage < pages - 1) {
             words_read = 250
@@ -75,7 +78,7 @@ export function Article() {
             words_read = articleWords?.length - (pages - 1)*250
         }
 
-        // console.log(words_length, pages, words_read)
+        console.log(currentPage, nextPage, pages, words_read)
 
         fetch('/stats', {
             method: "POST",
@@ -87,7 +90,7 @@ export function Article() {
         })
     }
 
-    function handleCurrentPage(curr_page) {
+    function updatePageInDB(curr_page) {
         console.log("handleCurrentPage", curr_page)
         fetch(`/user_article/${article.id}`, {
             method: "PATCH",

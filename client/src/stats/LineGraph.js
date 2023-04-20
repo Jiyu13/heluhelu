@@ -15,7 +15,7 @@ export function LineGraph() {
         .then(data => setReadingStats(data))
     }, [])
 
-    console.log(readingStats)
+    // console.log(readingStats)
 
     let labels = []
     for (let i = 30; i > 1; i--) {

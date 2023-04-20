@@ -48,8 +48,8 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
     db.session.add(user_article)
     db.session.commit()
 
-    date1 = datetime.datetime(2023, 2, 1, 0, 0, 0, 0)
-    date2 = datetime.datetime(2023, 3, 16, 0, 0, 0, 0)
+    date1 = datetime.datetime(2023, 3, 21, 0, 0, 0, 0)
+    date2 = datetime.datetime(2023, 3, 23, 0, 0, 0, 0)
     date3 = datetime.datetime(2023, 4, 1, 0, 0, 0, 0)
     date4 = datetime.datetime(2023, 4, 3, 0, 0, 0, 0)
     date5 = datetime.datetime(2023, 4, 5, 0, 0, 0, 0)
@@ -61,9 +61,9 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
     date7 = datetime.datetime(2023, 4, 18, 8, 0, 0, 0)
     page_events = [
         PageReadEvent(user_id = new_user.id, date=date1, words_read=2650),
-        PageReadEvent(user_id = new_user.id, date=date1, words_read=1450),
-        PageReadEvent(user_id = new_user.id, date=date2, words_read=450),
-        PageReadEvent(user_id = new_user.id, date=date3, words_read=650),
+        PageReadEvent(user_id = new_user.id, date=date1, words_read=2050),
+        PageReadEvent(user_id = new_user.id, date=date2, words_read=750),
+        PageReadEvent(user_id = new_user.id, date=date3, words_read=950),
         PageReadEvent(user_id = new_user.id, date=date4, words_read=765),
         PageReadEvent(user_id = new_user.id, date=date5, words_read=1265),
         PageReadEvent(user_id = new_user.id, date=date6, words_read=980),
