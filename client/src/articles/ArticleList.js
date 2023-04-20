@@ -37,7 +37,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         })
         
         if (userArticle.length === 0) {
-            // console.log("not exists")
             const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
             const curr_page = newAddedUserArticle[0]["current_page"]
             const total_pages = Math.ceil(splitText(article).length/250)

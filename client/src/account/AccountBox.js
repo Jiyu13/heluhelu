@@ -91,6 +91,7 @@ const AppContainer = styled.div`
 `;
 
 const BoxContainer = styled.div`
+    margin-top:50px;
     width: 280px;
     min-height: 550px;
     display: flex;
