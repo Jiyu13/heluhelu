@@ -34,7 +34,7 @@ export function LineGraph() {
                     {
                         label: "Pages Read",
                         // y-axis data plotting values
-                        data: readingStats?.map((words) => words / 250),
+                        data: readingStats?.map((words) => (words / 250).toFixed(2)),
                         fill: false,
                         borderWidth: 4,
                         borderColor: "#3498db",
