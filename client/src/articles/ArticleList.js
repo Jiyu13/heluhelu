@@ -11,6 +11,8 @@ import { UserContext } from "../components/UserContext";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
+    // const [finishReading, setFinish] = useState(false)
+
     const {user, userArticles, splitText, calculatePages} = useContext(UserContext)
     
 
@@ -57,8 +59,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         //     return (parseInt(userArticle[0]["current_page"]) + 1 )/ total_pages
         // }
     }
-    // ===============================================================
-    const [finishReading, setFinish] = useState(false)
+
 
     return (
     <ArticlesListContainer>

@@ -24,7 +24,6 @@ export function LineGraph() {
     labels.push("Yesterday")
     labels.push("Today")
 
-    let data = []
 
     return (
         <Line 
