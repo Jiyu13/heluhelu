@@ -4,6 +4,47 @@ import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 
+
+export function Accessibility() {
+
+    const {setUser, user} = useContext(UserContext)
+
+    // =========== logout =================================
+    function handleLogout() {
+      fetch('/logout', {
+        method: "DELETE"
+      })
+      .then(() => {
+        setUser(null)
+      })
+    }
+
+    return (
+        <AccessibilityContainer>
+            <ShowAccount>{user.username}</ShowAccount>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton> 
+
+        </AccessibilityContainer>
+    )
+}
+
+
+const ShowAccount = styled.div`
+    margin-right: 5px;
+    border: 0;
+    outline: 0;
+    padding: 8px 1em;
+    color: #222;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 2px solid #00c9ff;
+    transition: all 240ms ease-in-out;
+    cursor: pointer;
+`
+
+
 const AccessibilityContainer = styled.div`
     display: flex;
     margin-left: 10px;
@@ -35,31 +76,3 @@ const LogoutButton = styled.div`
       margin-right: 7px;
     }
 `;
-
-
-
-
-
-export function Accessibility() {
-
-    const {setUser} = useContext(UserContext)
-
-    // =========== logout =================================
-    function handleLogout() {
-      fetch('/logout', {
-        method: "DELETE"
-      })
-      .then(() => {
-        setUser(null)
-      })
-    }
-
-    return (
-        <AccessibilityContainer>
-
-            
-            <LogoutButton onClick={handleLogout}>Logout</LogoutButton> 
-
-        </AccessibilityContainer>
-    )
-}

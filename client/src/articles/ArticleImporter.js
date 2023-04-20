@@ -134,7 +134,7 @@ const ArticleTitle = styled.input`
 `
 
 
-const SubmitButton = styled.input`
+export const SubmitButton = styled.input`
     margin-top: 12px;
     width: 100px;
     padding: 8px;

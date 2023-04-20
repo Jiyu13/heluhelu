@@ -3,6 +3,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import { useNavigate } from "react-router-dom"
+import { SubmitButton } from "./ArticleImporter"
 
 export function FileImport() {
 
@@ -126,7 +127,7 @@ const TitleText = styled.div`
 
 const FileTitle = styled.input`
     width: 90%;
-    max-width: 800px;
+    max-width: 700px;
     background-color: #ddd;
     border: 2px solid #999;
     padding: 8px;
@@ -135,8 +136,4 @@ const FileTitle = styled.input`
     border-radius: 8px;
     outline: none;
     line-weight: 1.6;
-`
-
-const SubmitButton = styled.input`
-    margin-top: 12px;
 `

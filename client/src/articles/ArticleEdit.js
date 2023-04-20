@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { SubmitButton } from "./ArticleImporter";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
     console.log()
@@ -120,6 +121,6 @@ const ContentTextarea = styled.textarea`
     overflow: auto;
 `
 
-const SubmitButton = styled.input`
-    margin-top: 12px;
-`
+// const SubmitButton = styled.input`
+//     margin-top: 12px;
+// `
