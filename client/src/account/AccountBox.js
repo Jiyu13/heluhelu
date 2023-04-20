@@ -56,8 +56,8 @@ export function AccountBox() {
                         />
                         {active === "login" && (
                             <HeaderContainer>
-                                <HeaderText>Welcome</HeaderText>
-                                <HeaderText>Back</HeaderText>
+                                <HeaderText>Hawaiian</HeaderText>
+                                <HeaderText>Reader</HeaderText>
                                 <SmallText>Please sign-in to continue!</SmallText>
                             </HeaderContainer>
                         )}

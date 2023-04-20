@@ -371,6 +371,7 @@ class PageReadEvents(Resource):
 api.add_resource(PageReadEvents, "/stats", endpoint="stats")
 
 
+# my stats line graph
 class PageEventByMonth(Resource):
     def get(self, current_month):
         all_events = PageReadEvent.query.all()
