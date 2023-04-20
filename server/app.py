@@ -374,8 +374,9 @@ api.add_resource(PageReadEvents, "/stats", endpoint="stats")
 # my stats line graph
 class PageEventByMonth(Resource):
     def get(self, current_month):
-        all_events = PageReadEvent.query.all()
 
+        all_events = PageReadEvent.query.filter_by(user_id=session["user_id"]).all()
+        
         data = [0] * 31
 
         # get event happens within 30 days
