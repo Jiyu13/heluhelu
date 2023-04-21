@@ -10,7 +10,7 @@ export function FileImport() {
     const [importText, setImportText] = useState(null)
     const [fileName, setFileName] = useState(null)
 
-    const {user, articles, setArticles} = useContext(UserContext)
+    const { articles, setArticles} = useContext(UserContext)
 
     let navigate = useNavigate()
     function redirectArticles () {

@@ -2,11 +2,7 @@ import { useContext } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
-import axios from "axios"
 
-const api = axios.create({
-    baseURL: ""
-})
 
 export function CustomWord({word, setCustomWord}) {
 

@@ -11,35 +11,6 @@ import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 
 
-
-
-const NavBarContainer = styled.div`
-    width: 100%;
-    height: 60px;
-    box-shadow: 0 1px 3px rgba(15, 15, 0.13);
-    display: flex;
-    align-items: center;
-    padding: 0 1.5em;
-    // prevent padding from making 100% width extend beyond screen
-    box-sizing: border-box;
-
-`;
-
-const LeftSection = styled.div`
-    display: flex;
-`;
-
-const MiddleSection = styled.div`
-    display: flex;
-    flex: 2;
-    height: 100%;
-    justify-content: center;
-`;
-
-const RightSection = styled.div`
-    display: flex;
-`;
-
 function NavBar() {
 
     // useMediaQuery from react responsive
@@ -78,3 +49,30 @@ function NavBar() {
 }
 
 export default NavBar;
+
+const NavBarContainer = styled.div`
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 1px 3px rgba(15, 15, 0.13);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5em;
+    // prevent padding from making 100% width extend beyond screen
+    box-sizing: border-box;
+
+`;
+
+const LeftSection = styled.div`
+    display: flex;
+`;
+
+const MiddleSection = styled.div`
+    display: flex;
+    flex: 2;
+    height: 100%;
+    justify-content: center;
+`;
+
+const RightSection = styled.div`
+    display: flex;
+`;

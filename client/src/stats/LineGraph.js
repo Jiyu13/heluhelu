@@ -13,7 +13,7 @@ export function LineGraph() {
         fetch(`/stats/month/${current_month}`)
         .then(res => res.json())
         .then(data => setReadingStats(data))
-    }, [])
+    }, [current_month])
 
     // console.log(readingStats)
 
