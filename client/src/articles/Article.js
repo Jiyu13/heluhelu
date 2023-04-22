@@ -54,7 +54,7 @@ export function Article() {
                         .replaceAll("##", "\n\n")                                       
     const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
     // ==========================================================================
-    console.log("cur page " + currentPage)
+    // console.log("cur page " + currentPage)
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
@@ -115,7 +115,9 @@ export function Article() {
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
         const word = e.target.id
-        setFormData({...formData, word: targetWord})
+        // console.log(word)
+        // console.log(targetWord)
+        setFormData({...formData, word: word})
         setCustomForm(!showCustomForm)
     }
 
@@ -166,7 +168,7 @@ export function Article() {
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
-        setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))
+        setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line
         if (newWord === "") {
             setChosen(null)
             setAddBtn(false)

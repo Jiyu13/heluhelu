@@ -1,12 +1,10 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { UserContext } from "../components/UserContext"
 import { StatsTable } from "./StatsTable"
 
 export function MyStats() {
 
     const [readEvents, setReadEvets] = useState(null)
-    const {user} = useContext(UserContext)
 
     useEffect(() => {
         fetch('/stats')
