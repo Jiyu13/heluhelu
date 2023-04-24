@@ -11,7 +11,6 @@ export function TranslationWord( {word, translation} ) {
         <WordItem key={word.id}>
             <Word>{word}:</Word>
             <Translation>
-                {translation?.length > 50 ? translation?.substring(0, 50) : translation}
 
                 {isReadMore ?  translation : translation?.substring(0, 50)}
 

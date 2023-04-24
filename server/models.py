@@ -46,7 +46,6 @@ class Article(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, unique=True, nullable=False)
     title = db.Column(db.String, nullable=False)
-    # total_pages = db.Column(db.Integer)
     text = db.Column(db.String, nullable=False)
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -87,8 +86,9 @@ class User(db.Model, SerializerMixin):
     articles = db.relationship("Article", backref="user")
     page_read_events = db.relationship("PageReadEvent", backref="user")
 
-    # one-to-many: a user has many saved words
+    # one-to-many: a user has many saved words, vocabularies
     words = db.relationship("UserWord", backref="user")
+    vocabularies = db.relationship("Vocabulary", backref="user")
 
     # many-to-manny:
     user_articles = db.relationship("UserArticle", backref="user")
@@ -159,3 +159,17 @@ class PageReadEvent(db.Model, SerializerMixin):
 
     def __repr__(self):
             return f'''<PageRead {self.id}: date-{self.date}>, {self.words_read}; user-{self.user_id}>\n'''
+
+
+class Vocabulary(db.Model, SerializerMixin):
+    __tablename__ = "vocabularies"
+
+    id = db.Column(db.Integer, primary_key=True)
+    hawaiian_clean = db.Column(db.String)
+    status = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    serialize_rules = ("-user")
+
+    def __repr__(self):
+        return f"""<Voca {self.id}; hawaiian_clean: {self.hawaiian_clean}; status: {self.status}; user: {user_id}>\n"""

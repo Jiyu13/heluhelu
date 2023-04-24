@@ -50,14 +50,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
             return parseInt(newAddedUserArticle[0]["current_page"]) / total_pages
         }
         return parseInt(userArticle[0]["current_page"]) / total_pages
-        
-        // if (userArticle[0]["current_page"] < total_pages && finishReading === false) {
-        //     setFinish(!finishReading)
-        //     return parseInt(userArticle[0]["current_page"]) / total_pages
-        // } else if (userArticle[0]["current_page"] < total_pages && finishReading) {
-        //     console.log(userArticle[0]["current_page"], finishReading)
-        //     return (parseInt(userArticle[0]["current_page"]) + 1 )/ total_pages
-        // }
     }
 
 

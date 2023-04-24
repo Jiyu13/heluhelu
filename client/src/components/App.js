@@ -7,13 +7,13 @@ import {Home} from "./Home";
 import NavBar from "../navbar/NavBar";
 import { Article } from "../articles/Article";
 import { ArticleList } from "../articles/ArticleList";
-import { DictionaryUpload } from "../dictionary/DIctionaryUpload";
 import { ArticleEdit } from "../articles/ArticleEdit";
 import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
 import { LoginForm } from "../account/LoginForm";
 import { SignupForm } from "../account/SignupForm";
 import { MyStats } from "../stats/MyStats";
+import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 
 const USER_NOT_SET = -1;
 
@@ -157,20 +157,6 @@ function App() {
               >
               </Route>
 
-              {/* <Route
-                exact
-                path='/upload_dictionary'
-                element={<DictionaryUpload/>}
-              >
-              </Route> */}
-
-              {/* <Route
-                exact
-                path='/login'
-                element={<AccountBox/>}
-              >
-              </Route> */}
-
               <Route
                 exact
                 path='/login'
@@ -184,6 +170,12 @@ function App() {
                 element={<SignupForm/>}
               >
               </Route>
+
+              <Route
+                exact
+                path='/mobile/:id'
+                element={<DictionaryMobile key={article?.id}/>}
+              ></Route>
 
               <Route
                 exact
