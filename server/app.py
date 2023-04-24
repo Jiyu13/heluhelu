@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord, PageReadEvent
+from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord, PageReadEvent, Vocabulary
 import re
 import uuid
 from datetime import datetime, timedelta
@@ -398,8 +398,30 @@ class PageEventByMonth(Resource):
 api.add_resource(PageEventByMonth, '/stats/month/<int:current_month>')
 
 
+# ============================== Vocabulary tracking ============================
+class GetVocabularies(Resource):
+    def get(self):
+        user_id = session["user_id"]
+        vocabularies = Vocabulary.query.filter_by(user_id=user_id).all()
+        vocabularies_dict = [vocab.to_dict() for vocab in vocabularies]
+        return make_response(vocabularies_dict, 200)
+api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 
+# class Vocabulary(Resource):
+#     def post(self, word, status):
+#         user_id = session["user_id"]
+#         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
+#         if vocab:
+#             return make_response({"message": "Vocabulary already exists."}, 409)
+        
+#         if status == 0:
+#             new_vocab = Vocabulary(
+#                 user_id=user_id,
+#                 hawaiian_clean=word,
+#                 status=status
+#             )
+# api.add_resource(Vocabulary, "/vocabulary/<int:word>/<int:status>") 
 
 # ============================== account =========================================
 class Signup(Resource):
