@@ -457,6 +457,7 @@ const DictionaryArea = styled.div`
     background-color: #282828;
     color: #bbb;
     max-width: 300px;
+    min-width: 250px;
     flex-basis: 25%;
     box-sizing: border-box;
     padding: 0 12px 12px 12px;
