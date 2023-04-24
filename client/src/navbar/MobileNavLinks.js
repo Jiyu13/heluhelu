@@ -8,6 +8,57 @@ import { MenuToggle } from "./MenuToggle";
 import { Accessibility } from "./Accessiblity";
 import { UserContext } from "../components/UserContext";
 
+
+
+export function MobileNavLinks() {
+    // state to toggle the changes, when click show the actual ul menu, otherwise hidden by default
+    const [isOpen, setOpen] = useState(false)
+
+    const {articles} = useContext(UserContext)
+    const lastOpen = articles[0]
+    // console.log(lastOpen)
+
+    return (
+        <>
+            <NavLinksContainer>
+                <MenuToggle isOpen={isOpen} toggle={() => setOpen(!isOpen)}/>
+
+                {/* isOpen=true, grab LinksWrapper*/}
+                {isOpen && (
+                    <LinksWrapper>
+                        <LinkItem>
+                        <Link href="/">Home</Link>
+                        </LinkItem>
+
+                        <LinkItem>
+                            <Link href="/articles">Articles</Link>
+                        </LinkItem>
+
+                        <LinkItem>
+                            <Link href="/stats">My Stats</Link>
+                        </LinkItem>
+
+                        <LinkItem>
+                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
+                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
+                        </LinkItem>
+
+                        {/* <LinkItem>
+                            <Link href="#">Upload Dictionary</Link>
+                        </LinkItem> */}
+
+                        <Marginer/>
+                        <Accessibility/>
+                    </LinksWrapper>
+
+                )}
+
+                
+            </NavLinksContainer>
+        </>
+    )
+}
+
 const HideTitle = styled.div`
     display: none;
 `
@@ -60,52 +111,3 @@ const Link = styled.a`
 const Marginer = styled.div`
     height: 2em;
 `;
-
-export function MobileNavLinks() {
-    // state to toggle the changes, when click show the actual ul menu, otherwise hidden by default
-    const [isOpen, setOpen] = useState(false)
-
-    const {articles} = useContext(UserContext)
-    const lastOpen = articles[0]
-    // console.log(lastOpen)
-
-    return (
-        <>
-            <NavLinksContainer>
-                <MenuToggle isOpen={isOpen} toggle={() => setOpen(!isOpen)}/>
-
-                {/* isOpen=true, grab LinksWrapper*/}
-                {isOpen && (
-                    <LinksWrapper>
-                        <LinkItem>
-                        <Link href="/">Home</Link>
-                        </LinkItem>
-
-                        <LinkItem>
-                            <Link href="/articles">Articles</Link>
-                        </LinkItem>
-
-                        <LinkItem>
-                            <Link href="/stats">My Stats</Link>
-                        </LinkItem>
-
-                        <LinkItem>
-                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
-                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
-                        </LinkItem>
-
-                        {/* <LinkItem>
-                            <Link href="#">Upload Dictionary</Link>
-                        </LinkItem> */}
-
-                        <Marginer/>
-                        <Accessibility/>
-                    </LinksWrapper>
-
-                )}
-
-                
-            </NavLinksContainer>
-        </>
-    )
-}

@@ -14,15 +14,25 @@ import { TranslationWord } from "./TranslationWord";
 import { useState } from "react"
 import { CustomWord } from "./CustomWord"
 
+import { DeviceSize } from "../responsive"
+import { useMediaQuery } from "react-responsive"
+import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
+
+
 const PAGE_SIZE = 250;
 
 export function Article() {
+
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
+
     const [showAddBtn, setAddBtn] = useState(false)
     const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
+
+    const [isDictionaryOpen, setDictionaryOpen] = useState(false)
 
     const {article, setArticle, 
            articles, setArticles, 
@@ -165,9 +175,13 @@ export function Article() {
             }
         })
     }
+    console.log("isopen = " + isDictionaryOpen)
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
+        console.log(newWord)
+        setDictionaryOpen(true)
+        
         setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line
         if (newWord === "") {
             setChosen(null)
@@ -199,8 +213,15 @@ export function Article() {
     }
     
     return (
+        <>
         <ArticleContainer>
-            
+
+            {isDictionaryOpen && (
+                <a class="asdf" href="#"
+                style={{"width": "100%", "position": "fixed", "height": "50%"}}
+                 onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}></a>
+            )}
+
             <SideBar onClick={handlePrevPage}>
                 <SideBarImage>
                     <img src={left_arrow_icon} alt="left arrow icon"/>
@@ -208,11 +229,16 @@ export function Article() {
             </SideBar>
            
             <ReadableArea>
+                <PagesContainer>
+                    <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                    <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
+                </PagesContainer>
                 <ReadableContent>
                 {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")} onWordClicked={updateDictionaryWord} setWordExistError={setWordExistError}/>)}
                 </ReadableContent>
             </ReadableArea>
             
+            {!isMobile && (
             <DictionaryArea>
                 <span style={{"font-size":"12px"}}>Total words: {articleWords?.length}</span>
                 <br/>
@@ -277,6 +303,7 @@ export function Article() {
                     
                 </TranslationArea>
             </DictionaryArea>
+            )}
             
             <SideBar onClick={handleNextPage}>
                 <SideBarImage>
@@ -284,6 +311,31 @@ export function Article() {
                 </SideBarImage>
             </SideBar>
         </ArticleContainer>
+
+        {isMobile && isDictionaryOpen && (
+            <DictionaryMobile 
+                handleSearchChange={handleSearchChange}
+                handleAddBtn={handleAddBtn}
+                handleCustomSubmit={handleCustomSubmit}
+                handleCustomWord={handleCustomWord}
+                handleCancel={handleCancel}
+                articleWords={articleWords}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                targetWord={targetWord}
+                setTargetWord={setTargetWord}
+                customWord={customWord} 
+                setCustomWord={setCustomWord}
+                initialValues={initialValues}
+                formData={formData}
+                setFormData={setFormData}
+                wordExistError={wordExistError}
+                pages={pages}
+                showCustomForm={showCustomForm}
+
+            />
+        )}
+        </>
     )
 }
 
