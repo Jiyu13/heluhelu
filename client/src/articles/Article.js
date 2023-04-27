@@ -17,7 +17,7 @@ import { CustomWord } from "./CustomWord"
 import { DeviceSize } from "../responsive"
 import { useMediaQuery } from "react-responsive"
 import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
-
+import { WordTracker } from "./dictionary-area/WordTracker";
 
 const PAGE_SIZE = 250;
 
@@ -125,8 +125,6 @@ export function Article() {
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
         const word = e.target.id
-        // console.log(word)
-        // console.log(targetWord)
         setFormData({...formData, word: word})
         setCustomForm(!showCustomForm)
     }
@@ -175,11 +173,10 @@ export function Article() {
             }
         })
     }
-    console.log("isopen = " + isDictionaryOpen)
+    // console.log("isopen = " + isDictionaryOpen)
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
-        console.log(newWord)
         setDictionaryOpen(true)
         
         setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line
@@ -216,7 +213,7 @@ export function Article() {
         <>
         <ArticleContainer>
 
-            {isDictionaryOpen && (
+            {isMobile && isDictionaryOpen && (
                 <a class="asdf" href="#"
                 style={{"width": "100%", "position": "fixed", "height": "50%"}}
                  onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}></a>
@@ -234,13 +231,13 @@ export function Article() {
                     <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
                 </PagesContainer>
                 <ReadableContent>
-                {paragraphs?.map(p => <ArticleParagraph words={p.split(" ")} onWordClicked={updateDictionaryWord} setWordExistError={setWordExistError}/>)}
+                {paragraphs?.map((p, index) => <ArticleParagraph key={index} words={p.split(" ")} onWordClicked={updateDictionaryWord} setWordExistError={setWordExistError}/>)}
                 </ReadableContent>
             </ReadableArea>
             
             {!isMobile && (
             <DictionaryArea>
-                <span style={{"font-size":"12px"}}>Total words: {articleWords?.length}</span>
+                <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
                 <br/>
                 <PagesContainer>
                     <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
@@ -250,7 +247,7 @@ export function Article() {
                 <SearchArea 
                     type="text"
                     value={targetWord}
-                    onChange={handleSearchChange} 
+                    onChange={handleSearchChange}
                 />
 
                 {customWord ? "" :
@@ -297,9 +294,13 @@ export function Article() {
                         <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                     </CustomForm>
                 )}
+
+                
+
                 <TranslationArea>
+                    {isDictionaryOpen &&(<WordTracker word={chosen}/>)}
                     {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
-                    {chosen?.map(word => <TranslationWord word={word.hawaiian} translation={word.translation }/>)}
+                    {chosen?.map((word, index) => <TranslationWord key={word.id} word={word.hawaiian} translation={word.translation }/>)}
                     
                 </TranslationArea>
             </DictionaryArea>

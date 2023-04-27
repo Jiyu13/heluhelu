@@ -1,4 +1,4 @@
-from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord, PageReadEvent
+from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord, PageReadEvent, Vocabulary
 from app import app
 import datetime
 import uuid
@@ -9,6 +9,7 @@ def make_user():
     UserArticle.query.delete()
     UserWord.query.delete()
     PageReadEvent.query.delete()
+    Vocabulary.query.delete()
 
     username = "ziru"
     password = "Test12345!"
@@ -71,6 +72,21 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
         PageReadEvent(user_id = new_user.id, words_read=250),
     ]
     db.session.add_all(page_events)
+    db.session.commit()
+
+    # word tracker
+    word1 = "maikaʻi"
+    word2 = "loa"
+    word3 = "Lānaʻi"
+    word4= "ua"
+    
+    vocabs = [
+        Vocabulary(user_id=new_user.id, hawaiian_clean=word1, status=2), # known
+        Vocabulary(user_id=new_user.id, hawaiian_clean=word2, status=1), # studying
+        Vocabulary(user_id=new_user.id, hawaiian_clean=word3, status=3), # ignored
+        Vocabulary(user_id=new_user.id, hawaiian_clean=word4, status=2),
+    ]
+    db.session.add_all(vocabs)
     db.session.commit()
 
 

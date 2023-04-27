@@ -94,7 +94,7 @@ class User(db.Model, SerializerMixin):
     user_articles = db.relationship("UserArticle", backref="user")
     articles = association_proxy("user_articles", 'article')
 
-    serialize_rules = ('-dictionaries', "-articles", "-user_articles.user", '-user_articles.article',)
+    serialize_rules = ('-dictionaries', "-articles", "-user_articles", "-vocabularies", '-page_read_events', "-words", "-_password_hash")
 
     # ================= password validation ==========================================
     @validates('_password_hash')
@@ -162,6 +162,7 @@ class PageReadEvent(db.Model, SerializerMixin):
 
 
 class Vocabulary(db.Model, SerializerMixin):
+    """status -> 1: studying; 2: known; 3: ignored"""
     __tablename__ = "vocabularies"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -169,7 +170,7 @@ class Vocabulary(db.Model, SerializerMixin):
     status = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    serialize_rules = ("-user")
+    # serialize_rules = ("-user")
 
     def __repr__(self):
-        return f"""<Voca {self.id}; hawaiian_clean: {self.hawaiian_clean}; status: {self.status}; user: {user_id}>\n"""
+        return f"""<Vocab {self.id}; hawaiian_clean: {self.hawaiian_clean}; status: {self.status}; user: {user_id}>\n"""

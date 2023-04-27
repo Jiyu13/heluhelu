@@ -93,7 +93,13 @@ function App() {
       return pages
   }
   
-  
+  // ====== vocabularies
+  const [vocabularies, setVocabularies] = useState(null)
+    useEffect(() => {
+        fetch('/vocabularies')
+        .then(res => res.json())
+        .then(data => setVocabularies(data))
+    }, [])
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
@@ -103,7 +109,8 @@ function App() {
                             chosen, setChosen, 
                             errors, setErrors,
                             isLoading, setLoading,
-                            splitText, calculatePages
+                            splitText, calculatePages,
+                            vocabularies, setVocabularies
                           }
 
   if(user === USER_NOT_SET) return;

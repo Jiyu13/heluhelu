@@ -8,7 +8,7 @@ import { TranslationWord } from "../TranslationWord";
 import { CustomWord } from "../CustomWord"
 import { useContext } from "react";
 import { UserContext } from "../../components/UserContext";
-import { WordTracker } from "./WordTrack";
+import { WordTracker } from "./WordTracker";
 
 
 
