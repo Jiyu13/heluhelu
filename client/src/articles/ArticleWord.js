@@ -21,7 +21,7 @@ const WordContainer = styled.div`
     margin-right: 10px;
     padding: 2px 4px;
     display: inline-block;
-    // background: rgba(50,100,150,.6)!important;
+    background: rgba(50,100,150,.6)!important;
     vertical-align: top;
     font-size: 20px;
     &:hover {

@@ -5,9 +5,9 @@ export function ArticleParagraph({words, onWordClicked, setWordExistError}) {
 
     return (
         <ParagraphContainer>
-                {words.map(word => 
+                {words.map((word, index) => 
                     <ArticleWord 
-                        key={word.id} 
+                        key={index} 
                         word={word} 
                         onWordClicked={onWordClicked}
                         setWordExistError={setWordExistError}

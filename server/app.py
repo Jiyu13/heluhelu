@@ -145,7 +145,7 @@ api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
 class UserArticles(Resource):
     def get(self):
         user_articles = UserArticle.query.all()
-        user_articles_dict = [user_article.to_dict() for user_article in user_articles]
+        user_articles_dict = [user_article.to_dict(rules=("-user",)) for user_article in user_articles]
         return make_response(user_articles_dict, 200)
 api.add_resource(UserArticles, '/user_articles', endpoint="user_articles")
     
@@ -408,20 +408,40 @@ class GetVocabularies(Resource):
 api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 
-# class Vocabulary(Resource):
-#     def post(self, word, status):
-#         user_id = session["user_id"]
-#         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
-#         if vocab:
-#             return make_response({"message": "Vocabulary already exists."}, 409)
-        
-#         if status == 0:
-#             new_vocab = Vocabulary(
-#                 user_id=user_id,
-#                 hawaiian_clean=word,
-#                 status=status
-#             )
-# api.add_resource(Vocabulary, "/vocabulary/<int:word>/<int:status>") 
+class VocabularyByWord(Resource):
+    def delete(self, word):
+        user_id = session["user_id"]
+        vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
+        db.session.delete(vocab)
+        db.session.commit()
+        return make_response()
+api.add_resource(VocabularyByWord, "/vocabularies/<string:word>")
+
+
+class VocabularyByStatus(Resource):
+
+    def post(self, word, status):
+        """save studying word into db"""
+        user_id = session["user_id"]
+        # vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
+        # print("line 417", type(status))
+        # if vocab:
+        #     vocab.status = status
+        # else:
+        vocab = Vocabulary(
+            user_id=user_id,
+            hawaiian_clean=word,
+            status=status
+        )
+        db.session.add(vocab)
+        db.session.commit()
+        response = make_response(vocab.to_dict(), 201)
+        return response
+    
+    def patch(self, word, status):
+        pass
+
+api.add_resource(VocabularyByStatus, "/vocabulary/<string:word>/<int:status>") 
 
 # ============================== account =========================================
 class Signup(Resource):

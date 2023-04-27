@@ -1,6 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
 
+import add_icon from "../assets/images/add_icon.svg"
+
+
 
 export function TranslationWord( {word, translation} ) {
 
@@ -9,7 +12,15 @@ export function TranslationWord( {word, translation} ) {
     
     return (
         <WordItem key={word.id}>
-            <Word>{word}:</Word>
+            <Word>
+                {word}:
+                <MarkStudying 
+                    src={add_icon} 
+                    alt="add translation for word button" 
+                    
+                />
+            </Word>
+            
             <Translation>
 
                 {isReadMore ?  translation : translation?.substring(0, 50)}
@@ -22,13 +33,19 @@ export function TranslationWord( {word, translation} ) {
                     : null
                 }
                 
-
-                
             </Translation>
             <hr/>
         </WordItem>
     )
 }
+
+const MarkStudying = styled.img`
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    cursor: pointer;
+`
 
 const ReadOrHidebutton = styled.button`
     color: rgb(41, 128, 185);
