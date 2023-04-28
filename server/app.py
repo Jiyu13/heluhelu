@@ -421,26 +421,43 @@ api.add_resource(VocabularyByWord, "/vocabularies/<string:word>")
 class VocabularyByStatus(Resource):
 
     def post(self, word, status):
-        """save studying word into db"""
+        """save word into db, status 1->studing, 2->known, 3->igonred"""
         user_id = session["user_id"]
-        # vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
-        # print("line 417", type(status))
-        # if vocab:
-        #     vocab.status = status
-        # else:
-        vocab = Vocabulary(
-            user_id=user_id,
-            hawaiian_clean=word,
-            status=status
-        )
-        db.session.add(vocab)
-        db.session.commit()
-        response = make_response(vocab.to_dict(), 201)
-        return response
+        vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
+        print(vocab)
+        if vocab:
+            
+            if vocab.status == status:
+                
+                db.session.delete(vocab)
+                db.session.commit()
+                return make_response({"deleted": True})
+            else:
+                # print("before", vocab.status)
+                # print("after", status)
+                vocab.status = status
+                db.session.commit()
+                response = make_response(vocab.to_dict(), 200)
+                return response
+        else:
+            vocab = Vocabulary(
+                user_id=user_id,
+                hawaiian_clean=word,
+                status=status
+            )
+            db.session.add(vocab)
+            db.session.commit()
+            response = make_response(vocab.to_dict(), 201)
+            return response
+        # return response
     
-    def patch(self, word, status):
-        pass
-
+    # def patch(self, word, status):
+    #     user_id = session["user_id"]
+    #     vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
+    #     vocab.status == status
+    #     db.session.commit()
+    #     response = make_response(vocab.to_dict(), 200)
+    #     return response
 api.add_resource(VocabularyByStatus, "/vocabulary/<string:word>/<int:status>") 
 
 # ============================== account =========================================

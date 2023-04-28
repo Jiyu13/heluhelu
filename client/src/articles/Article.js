@@ -37,7 +37,8 @@ export function Article() {
     const {article, setArticle, 
            articles, setArticles, 
            user, chosen, setChosen, 
-           setErrors, splitText, calculatePages
+           setErrors, splitText, calculatePages,
+           vocabularies, setVocabularies
         } = useContext(UserContext)
     
     const { id } = useParams()
@@ -88,7 +89,7 @@ export function Article() {
             words_read = articleWords?.length - (pages - 1)*250
         }
 
-        console.log(currentPage, nextPage, pages, words_read)
+        // console.log(currentPage, nextPage, pages, words_read)
 
         fetch('/stats', {
             method: "POST",
@@ -184,19 +185,20 @@ export function Article() {
             setChosen(null)
             setAddBtn(false)
         }
-
-        fetch(`/search/${newWord}`)
-        .then(res => {
-            if (res.ok) {
-                res.json().then(data => {
-                    setCustomWord(data["custom"])
-                    setChosen(data["dictionary"])
-                    checkCanAddTranslation(data)
-                })
-            } else {
-                res.json().then(err => setErrors(err.errors))
-            }
-        })
+        else {
+            fetch(`/search/${newWord}`)
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        setCustomWord(data["custom"])
+                        setChosen(data["dictionary"])
+                        checkCanAddTranslation(data)
+                    })
+                } else {
+                    res.json().then(err => setErrors(err.errors))
+                }
+            })
+        }
     }
 
     function handleSearchChange(e) {
@@ -207,6 +209,39 @@ export function Article() {
     function handleCancel() {
         setCustomForm(false)
         setFormData(initialValues)
+    }
+
+    function PostAndDelete(word, wordStatus) {
+        const vocab= {
+            user_id: user.id,
+            hawaiian_clean: word,
+            status: wordStatus
+        }
+
+        fetch(`/vocabulary/${word}/${wordStatus}`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(vocab)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== word)
+            if (!data.deleted) {
+                updatedVocabs.push(data)
+            }
+            setVocabularies(updatedVocabs)
+        })
+    }
+
+    // toggle btn stylings
+    function checkStatus(word) {
+        let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
+        if (result.length !== 0) {
+            const statusNumber = result[0]["status"]
+            return statusNumber
+        } else {
+            return 0
+        }
     }
     
     return (
@@ -290,17 +325,25 @@ export function Article() {
                         </Label>
                         {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
                         <br/>
-                        <SaveButton type="submit" value="Save" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
+                        <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
                         <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                     </CustomForm>
                 )}
 
-                
 
                 <TranslationArea>
-                    {isDictionaryOpen &&(<WordTracker word={chosen}/>)}
+                    {isDictionaryOpen &&(<WordTracker word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>)}
                     {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
-                    {chosen?.map((word, index) => <TranslationWord key={word.id} word={word.hawaiian} translation={word.translation }/>)}
+                    {chosen?.map((word, index) => 
+                        <TranslationWord 
+                            key={word.id} 
+                            word={word.hawaiian} 
+                            translation={word.translation} 
+                            hawaiian_clean={word.hawaiian_clean}
+                            PostAndDelete={PostAndDelete}
+                            checkStatus={checkStatus}
+                        />
+                    )}
                     
                 </TranslationArea>
             </DictionaryArea>

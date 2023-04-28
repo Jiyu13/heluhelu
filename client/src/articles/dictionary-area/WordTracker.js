@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../../components/UserContext"
 
-export function WordTracker( {word} ) {
+export function WordTracker( {word, PostAndDelete, checkStatus} ) {
 
     const vocabStatus = {
         Unknown: 0, 
@@ -13,59 +13,23 @@ export function WordTracker( {word} ) {
 
     const {user, vocabularies, setVocabularies} = useContext(UserContext)    
 
-
     let trackWord 
-    if ((word.length) !== 0) {
+    if (word && (word?.length) !== 0) {
         trackWord = word[0]["hawaiian_clean"]
-    }
-
-    function checkStatus() {
-        let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === trackWord)
-        if (result.length !== 0) {
-            const statusNumber = result[0]["status"]
-            return statusNumber
-        } else {
-            return 0
-        }
     }
     
 
-    function onDeleteVocab(deletedWord) {
-        const updatedVocabs = vocabularies?.filter(vocab => vocab.hawaiian_clean != deletedWord)
-        setVocabularies(updatedVocabs)
-    }
-
     function handleChangeToKnown() {
-        // check if trackWord already exists
-        if (!vocabularies?.some(vocab => vocab.hawaiian_clean === trackWord)) {
-            const newVocab= {
-                user_id: user.id,
-                hawaiian_clean: trackWord,
-                status: 2   // post a word with status "known - 2"
-            }
-
-            fetch(`/vocabulary/${trackWord}/${2}`, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(newVocab)
-            })
-            .then(res => res.json())
-            .then(data => setVocabularies([...vocabularies, data]))
-        } else {
-            fetch(`/vocabularies/${trackWord}`, {
-                method: "DELETE",
-            })
-            .then(onDeleteVocab(trackWord))
-        }
+        PostAndDelete(trackWord, 2)
     }
 
     return (
         <WordTrackerBox>
             <TrackerContainer>
                 Word Status: 
-                <ShowStatus>{Object.keys(vocabStatus).find(key => vocabStatus[key] === checkStatus())}</ShowStatus>
+                <ShowStatus>{Object.keys(vocabStatus).find(key => vocabStatus[key] === checkStatus(trackWord))}</ShowStatus>
                 <br/>
-                <Mark onClick={handleChangeToKnown}>{checkStatus() === 0 ? "Mark Known" : "Mark Not-Known"}</Mark>
+                <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
                 <Mark>Exclude Word</Mark>
             </TrackerContainer>
         </WordTrackerBox>

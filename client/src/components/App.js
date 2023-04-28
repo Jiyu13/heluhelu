@@ -95,11 +95,13 @@ function App() {
   
   // ====== vocabularies
   const [vocabularies, setVocabularies] = useState(null)
-    useEffect(() => {
-        fetch('/vocabularies')
-        .then(res => res.json())
-        .then(data => setVocabularies(data))
-    }, [])
+  useEffect(() => {
+      fetch('/vocabularies')
+      .then(res => res.json())
+      .then(data => {
+        setVocabularies(data)
+      })
+  }, [])
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
