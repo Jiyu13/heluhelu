@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { SubmitButton } from "./ArticleImporter";
+import apiFetch from "../api/ApiFetch";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
     console.log()
@@ -16,7 +17,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
     const [formData, setFormData] = useState({})
 
     useEffect(() => {
-        fetch(`/articles/${id}`)
+        apiFetch(`/articles/${id}`)
         .then(res => res.json())
         .then(data => setFormData(data.article))
     }, [id])
@@ -37,7 +38,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
             title: formData.title,
         }
 
-        fetch(`/article/edit/${id}`, {
+        apiFetch(`/article/edit/${id}`, {
             method: "PATCH",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(updated)

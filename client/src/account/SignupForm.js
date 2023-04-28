@@ -4,6 +4,7 @@ import { Marginer } from "./Marginer";
 import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink, ErrorContainer } from "./formStylings";
 import { UserContext } from "../components/UserContext";
 import { useNavigate } from "react-router-dom";
+import apiFetch from "../api/ApiFetch";
 
 export function SignupForm() {
 
@@ -37,7 +38,7 @@ export function SignupForm() {
             password: formData.password
         }
 
-        fetch('/signup', {
+        apiFetch('/signup', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(signupUser)

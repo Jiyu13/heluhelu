@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
+import apiFetch from "../api/ApiFetch";
 
 
 export function Accessibility() {
@@ -11,7 +12,7 @@ export function Accessibility() {
 
     // =========== logout =================================
     function handleLogout() {
-      fetch('/logout', {
+      apiFetch('/logout', {
         method: "DELETE"
       })
       .then(() => {

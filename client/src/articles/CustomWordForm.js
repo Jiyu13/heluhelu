@@ -31,7 +31,7 @@
 //             user_id: user.id
 //         }
 
-//         fetch('/user_words', {
+//         apiFetch('/user_words', {
 //             method: "POST",
 //             headers: {"Content-Type": 'application/json'},
 //             body: JSON.stringify(newCustomWord)

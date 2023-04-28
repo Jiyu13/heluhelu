@@ -7,6 +7,7 @@ import { AccountContext } from "./AccountContext";
 import { useState } from "react";
 import { UserContext } from "../components/UserContext";
 import { useNavigate } from "react-router-dom";
+import apiFetch from "../api/ApiFetch";
 
 export function LoginForm(props) {
 
@@ -40,7 +41,7 @@ export function LoginForm(props) {
             password: formData.password
         }
 
-        fetch('/login', {
+        apiFetch('/login', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(loginUser)

@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import { useNavigate } from "react-router-dom"
 import { SubmitButton } from "./ArticleImporter"
+import apiFetch from "../api/ApiFetch"
 
 export function FileImport() {
 
@@ -48,7 +49,7 @@ export function FileImport() {
             text: importText,
         }
 
-        fetch('/articles',{
+        apiFetch('/articles',{
             method: "POST",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newArticle)

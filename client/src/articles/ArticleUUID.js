@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
+import apiFetch from "../api/ApiFetch"
 
 export function ArticleUUID() {
 
@@ -10,7 +11,7 @@ export function ArticleUUID() {
     const [sharedArticle, setSharedArticle] = useState("")
 
     useEffect(() => {
-        fetch(`/article/share/${id}`)
+        apiFetch(`/article/share/${id}`)
         .then(res => res.json())
         .then(data => setSharedArticle(data))
     }, [id])
