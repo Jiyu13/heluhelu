@@ -14,7 +14,9 @@ import { WordTracker } from "./WordTracker";
 
 export function DictionaryMobile(props) {
     
-    const {handleSearchChange,
+    const {
+           word, PostAndDelete, checkStatus,
+           handleSearchChange,
            handleAddBtn,
            handleCustomSubmit,
            handleCustomWord,
@@ -56,8 +58,6 @@ export function DictionaryMobile(props) {
                     />
                 }
             </div>
-            
-            <WordTracker />
 
             {customWord === null && targetWord !== null && chosen?.length === 0 && (
                 <NotFound>
@@ -95,8 +95,18 @@ export function DictionaryMobile(props) {
                 </CustomForm>
             )}
             <TranslationArea>
+                <WordTracker word={word} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>
                 {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
-                {chosen?.map(word => <TranslationWord word={word.hawaiian} translation={word.translation }/>)}
+                {chosen?.map(word => 
+                    <TranslationWord 
+                        key={word.id} 
+                        word={word.hawaiian} 
+                        translation={word.translation} 
+                        hawaiian_clean={word.hawaiian_clean}
+                        PostAndDelete={PostAndDelete}
+                        checkStatus={checkStatus}
+                    />
+                )}
                 
             </TranslationArea>
         </DictionaryArea>

@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
-import { UserContext } from "../../components/UserContext"
 
 export function WordTracker( {word, PostAndDelete, checkStatus} ) {
 
@@ -11,7 +9,6 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
         Ignored: 3,
     }
 
-    const {user, vocabularies, setVocabularies} = useContext(UserContext)    
 
     let trackWord 
     if (word && (word?.length) !== 0) {
