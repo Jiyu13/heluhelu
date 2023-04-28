@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export function ArticleWord({ word, onWordClicked, setWordExistError }) {
 
-
+    // console.log(word)
     function handleClick(e) {
         setWordExistError(null)
         onWordClicked(e.target.id)

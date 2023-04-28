@@ -2,22 +2,32 @@ import { useState } from "react"
 import styled from "styled-components"
 
 import add_icon from "../assets/images/add_icon.svg"
+import check_circle_icon from "../assets/images/check_circle_icon.svg"
 
 
 
-export function TranslationWord( {word, translation} ) {
+export function TranslationWord( {word, translation, hawaiian_clean, PostAndDelete, checkStatus} ) {
 
     const [isReadMore, setReadMore] = useState(false)
 
+
+    function handleMarkStudying() {
+        PostAndDelete(hawaiian_clean, 1)
+        // console.log(checkStatus(hawaiian_clean))
+    }
+
+    
+    const bgColor = (checkStatus(hawaiian_clean) === 1 ? "#2ecc71": "")
     
     return (
         <WordItem key={word.id}>
             <Word>
                 {word}:
-                <MarkStudying 
-                    src={add_icon} 
-                    alt="add translation for word button" 
-                    
+                <MarkStudyingImg 
+                    src={checkStatus(hawaiian_clean) === 1 ? check_circle_icon :  add_icon} 
+                    alt="add translation for word button"
+                    onClick={handleMarkStudying}
+                    style={{backgroundColor: bgColor}}
                 />
             </Word>
             
@@ -39,12 +49,13 @@ export function TranslationWord( {word, translation} ) {
     )
 }
 
-const MarkStudying = styled.img`
+const MarkStudyingImg = styled.img`
     float: right;
     width: 25px;
     height: 25px;
     margin-right: 8px;
     cursor: pointer;
+    border-radius: 50%;
 `
 
 const ReadOrHidebutton = styled.button`

@@ -169,8 +169,9 @@ class Vocabulary(db.Model, SerializerMixin):
     hawaiian_clean = db.Column(db.String)
     status = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    
 
     # serialize_rules = ("-user")
 
     def __repr__(self):
-        return f"""<Vocab {self.id}; hawaiian_clean: {self.hawaiian_clean}; status: {self.status}; user: {user_id}>\n"""
+        return f"""<Vocab {self.id}; hawaiian_clean: {self.hawaiian_clean}; status: {self.status}; user: {self.user_id}>\n"""
