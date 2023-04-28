@@ -1,4 +1,8 @@
-export default function apiFetch(api) {
+export default function apiFetch(api, method = null) {
     const baseUrl = process.env.REACT_APP_API
-    return fetch(baseUrl + api)
+    if (method)
+       return fetch(baseUrl + api, method)
+    else {
+        return fetch(baseUrl + api)
+    }
 }
