@@ -487,6 +487,7 @@ const SideBarImage = styled.div`
 
 const ReadableArea = styled.div`
     max-width: 725px;
+    width: 100%;
     background-color: #333;
     color: #ddd;
     background-color: #333;

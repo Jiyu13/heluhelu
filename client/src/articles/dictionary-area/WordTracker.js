@@ -27,7 +27,7 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
                 <ShowStatus>{Object.keys(vocabStatus).find(key => vocabStatus[key] === checkStatus(trackWord))}</ShowStatus>
                 <br/>
                 <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
-                <Mark>Exclude Word</Mark>
+                <Mark>Ignore This Word</Mark>
             </TrackerContainer>
         </WordTrackerBox>
     )
