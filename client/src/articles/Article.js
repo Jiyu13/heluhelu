@@ -236,6 +236,7 @@ export function Article() {
     // toggle btn stylings
     function checkStatus(word) {
         let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
+        // console.log(result)
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]
             return statusNumber
@@ -249,9 +250,10 @@ export function Article() {
         <ArticleContainer>
 
             {isMobile && isDictionaryOpen && (
-                <a class="asdf" href="#"
-                style={{"width": "100%", "position": "fixed", "height": "50%"}}
-                 onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}></a>
+                <a href="#"
+                   style={{"width": "100%", "position": "fixed", "height": "50%"}}
+                   onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
+                />
             )}
 
             <SideBar onClick={handlePrevPage}>
@@ -358,6 +360,7 @@ export function Article() {
 
         {isMobile && isDictionaryOpen && (
             <DictionaryMobile 
+                word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}
                 handleSearchChange={handleSearchChange}
                 handleAddBtn={handleAddBtn}
                 handleCustomSubmit={handleCustomSubmit}
@@ -484,6 +487,7 @@ const SideBarImage = styled.div`
 
 const ReadableArea = styled.div`
     max-width: 725px;
+    width: 100%;
     background-color: #333;
     color: #ddd;
     background-color: #333;
