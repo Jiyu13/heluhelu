@@ -36,7 +36,6 @@ export function Article() {
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
 
     const {article, setArticle, 
-           articles, setArticles, 
            user, chosen, setChosen, 
            setErrors, splitText, calculatePages,
            vocabularies, setVocabularies
@@ -47,10 +46,8 @@ export function Article() {
         apiFetch(`/articles/${id}`)
         .then(res => res.json())
         .then(data => {
-            // console.log(data)
             setCurrentPage(data.current_page)
             setArticle(data.article)
-            setArticles([data.article, ...articles])
         })
     }, [id]) // [id] eslint-disable-next-line
 

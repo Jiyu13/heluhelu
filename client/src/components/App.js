@@ -80,7 +80,7 @@ function App() {
 
   // ========= calculate pages for an article ================
   function splitText(article) {
-    const articleWords = article?.text?.split(" ")                                      // get all words
+    const articleWords = article?.text?.split(" ")                                  // get all words
         .map(word => word.replaceAll("\n\n", "\n"))
         .flatMap(word => word.replaceAll("\n", "##\n").split("\n"))                 // replace "\n\n" to "##\n\n" then split by \n\n
     return articleWords
@@ -93,7 +93,7 @@ function App() {
       return pages
   }
   
-  // ====== vocabularies
+  // ====== vocabularies =====================================
   const [vocabularies, setVocabularies] = useState(null)
   useEffect(() => {
       apiFetch('/vocabularies')
@@ -102,6 +102,7 @@ function App() {
         setVocabularies(data)
       })
   }, [])
+
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
