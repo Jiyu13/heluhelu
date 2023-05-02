@@ -6,6 +6,7 @@ import delete_icon from "../assets/images/delete_icon.svg"
 import share_icon from "../assets/images/share_icon.svg"
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
+import apiFetch from "../api/ApiFetch";
 
 
 
@@ -18,7 +19,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
-        fetch(`/user_article/${article_id}`, {
+        apiFetch(`/user_article/${article_id}`, {
             method: "DELETE",
         })
         .then(() => {

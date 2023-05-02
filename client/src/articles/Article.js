@@ -18,6 +18,7 @@ import { DeviceSize } from "../responsive"
 import { useMediaQuery } from "react-responsive"
 import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
+import apiFetch from "../api/ApiFetch"
 
 const PAGE_SIZE = 250;
 
@@ -43,7 +44,7 @@ export function Article() {
     
     const { id } = useParams()
     useEffect(() => {
-        fetch(`/articles/${id}`)
+        apiFetch(`/articles/${id}`)
         .then(res => res.json())
         .then(data => {
             // console.log(data)
@@ -91,7 +92,7 @@ export function Article() {
 
         // console.log(currentPage, nextPage, pages, words_read)
 
-        fetch('/stats', {
+        apiFetch('/stats', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -103,7 +104,7 @@ export function Article() {
 
     function updatePageInDB(curr_page) {
         console.log("handleCurrentPage", curr_page)
-        fetch(`/user_article/${article.id}`, {
+        apiFetch(`/user_article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -152,7 +153,7 @@ export function Article() {
             user_id: user.id
         }
 
-        fetch('/user_words', {
+        apiFetch('/user_words', {
             method: "POST",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newCustomWord)
@@ -186,7 +187,7 @@ export function Article() {
             setAddBtn(false)
         }
         else {
-            fetch(`/search/${newWord}`)
+            apiFetch(`/search/${newWord}`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
@@ -218,7 +219,7 @@ export function Article() {
             status: wordStatus
         }
 
-        fetch(`/vocabulary/${word}/${wordStatus}`, {
+        apiFetch(`/vocabulary/${word}/${wordStatus}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(vocab)

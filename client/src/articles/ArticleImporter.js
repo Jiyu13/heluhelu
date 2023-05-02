@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";    
+import apiFetch from '../api/ApiFetch';
 
 
 
@@ -36,7 +37,7 @@ function ArticleImporter() {
             title: formData.title
         }
 
-        fetch('/articles',{
+        apiFetch('/articles',{
             method: "POST",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(newArticle)

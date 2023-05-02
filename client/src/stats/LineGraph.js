@@ -1,6 +1,7 @@
 import Chart from 'chart.js/auto'
 import { useEffect, useState } from 'react';
 import { Line } from "react-chartjs-2";
+import apiFetch from '../api/ApiFetch';
 
 export function LineGraph() {
 
@@ -10,7 +11,7 @@ export function LineGraph() {
     let current_month = d.getMonth() + 1  // 0 -11
 
     useEffect(() => {
-        fetch(`/stats/month/${current_month}`)
+        apiFetch(`/stats/month/${current_month}`)
         .then(res => res.json())
         .then(data => setReadingStats(data))
     }, [current_month])

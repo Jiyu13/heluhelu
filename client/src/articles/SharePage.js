@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
+import apiFetch from "../api/ApiFetch"
 
 export function SharePage() {
 
@@ -23,7 +24,7 @@ export function SharePage() {
     }
 
     useEffect(() => {
-        fetch(`/articles/${uuid}`)
+        apiFetch(`/articles/${uuid}`)
         .then(res => res.json())
         .then(data => setSharedArticle(data))
     }, [uuid])
@@ -37,7 +38,7 @@ export function SharePage() {
     function handleAddUserArticle(e) {
 
         if (e.target.value === "yes") {
-             fetch(`/user_article/${uuid}`, {
+             apiFetch(`/user_article/${uuid}`, {
                 method: "POST",
                 headers: {"Content-Type": 'application/json'},
                 body: JSON.stringify(userArticle)

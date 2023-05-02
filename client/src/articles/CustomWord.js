@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
+import apiFetch from "../api/ApiFetch"
 
 
 export function CustomWord({word, setCustomWord}) {
@@ -16,7 +17,7 @@ export function CustomWord({word, setCustomWord}) {
     }
 
     function handleDeleteCustomWord() {
-        fetch(`/user_word/${word.id}`, {
+        apiFetch(`/user_word/${word.id}`, {
             method: "DELETE"
         })
         .then(() => {
@@ -41,7 +42,7 @@ export function CustomWord({word, setCustomWord}) {
         console.log(updatedWord)
         
         console.log(word.id)
-        fetch(`/user_word/${word.id}`, {
+        apiFetch(`/user_word/${word.id}`, {
             method: "PATCH",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(updatedWord)

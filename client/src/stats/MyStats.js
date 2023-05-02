@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { StatsTable } from "./StatsTable"
+import apiFetch from "../api/ApiFetch"
 
 export function MyStats() {
 
     const [readEvents, setReadEvets] = useState(null)
 
     useEffect(() => {
-        fetch('/stats')
+        apiFetch('/stats')
         .then(res => res.json())
         .then(data => setReadEvets(data))
     }, [])

@@ -14,12 +14,12 @@ import { LoginForm } from "../account/LoginForm";
 import { SignupForm } from "../account/SignupForm";
 import { MyStats } from "../stats/MyStats";
 import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
+import apiFetch from "../api/ApiFetch";
 
 const USER_NOT_SET = -1;
 
 function App() {
 
-  
   const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
@@ -31,7 +31,7 @@ function App() {
 
   // ========= get articles =================================
   useEffect(() => {
-    fetch('/articles')
+    apiFetch('/articles')
         .then(res => res.json())
         .then(articles => setArticles(articles))
   }, [])
@@ -39,7 +39,7 @@ function App() {
   
   // ========= check session - user remains logged in ========
   useEffect(() => {
-    fetch("/check_session")
+    apiFetch("/check_session")
     .then((r) => {
       if (r.ok) {
         r.json().then((user) => setUser(user));
@@ -51,7 +51,7 @@ function App() {
 
   // ========= get user_articles ============================
   useEffect (() => {
-    fetch('/user_articles')
+    apiFetch('/user_articles')
     .then(res => res.json())
     .then(data => setUserArticles(data))
   }, [])
@@ -96,7 +96,7 @@ function App() {
   // ====== vocabularies
   const [vocabularies, setVocabularies] = useState(null)
   useEffect(() => {
-      fetch('/vocabularies')
+      apiFetch('/vocabularies')
       .then(res => res.json())
       .then(data => {
         setVocabularies(data)
