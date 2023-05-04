@@ -1,18 +1,43 @@
+import { useContext } from "react"
 import styled from "styled-components"
+import { UserContext } from "../components/UserContext"
 
 export function ArticleWord({ word, onWordClicked, setWordExistError }) {
+    const {vocabularies} = useContext(UserContext)
 
-    // console.log(word)
     function handleClick(e) {
         setWordExistError(null)
-        onWordClicked(e.target.id)
+        onWordClicked(e.target.innerHTML)
     }    
 
+    const word_clean = word.toLowerCase().replace(/[^a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
+    const match = vocabularies?.filter((v) => v.hawaiian_clean.toLowerCase() === word_clean)[0]
+    
+    
+    let styling = "rgba(112, 161, 255, 0.5)"
+    if (match) {
+        switch(match.status) {
+            // studying
+            case 1:
+                styling = "rgba(255, 221, 89, 0.5)"
+                break;
+            // known
+            case 2:
+                styling = ""
+                break;
+            // ignored
+            case 3:
+                styling = ""
+                break;
+            default:
+                styling = "rgba(112, 161, 255, 0.5)"
+        }
+    }
+
     return (
-        <WordContainer id={word} onClick={handleClick}>
+        <WordContainer onClick={handleClick} style={{backgroundColor: styling}}>
             {word}
         </WordContainer>
-
     )
 }
 
@@ -21,7 +46,7 @@ const WordContainer = styled.div`
     margin-right: 10px;
     padding: 2px 4px;
     display: inline-block;
-    background: rgba(50,100,150,.6)!important;
+    // background: rgba(50,100,150,.6)!important;
     vertical-align: top;
     font-size: 20px;
     &:hover {

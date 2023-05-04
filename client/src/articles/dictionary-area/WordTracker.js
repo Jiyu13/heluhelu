@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export function WordTracker( {word, PostAndDelete, checkStatus} ) {
 
-    const vocabStatus = {
+    const vocabStatusType = {
         Unknown: 0, 
         Studying: 1,
         Known: 2,
@@ -17,14 +17,31 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
     
 
     function handleChangeToKnown() {
+        console.log(word)
         PostAndDelete(trackWord, 2)
     }
 
+
+    const vocabStatus = Object.keys(vocabStatusType).find(key => vocabStatusType[key] === checkStatus(trackWord))
+
+    let styling = "rgba(112, 161, 255, 0.5)"
+    switch(vocabStatus) {
+        case "Studying":
+            styling = "rgba(255, 221, 89, 0.5)"
+            break;
+        case "Known":
+            styling = "rgba(112, 161, 255, 0.5)"
+            break;
+        case "Ignored":
+            styling = ""
+            break;
+    }
+    
     return (
         <WordTrackerBox>
             <TrackerContainer>
                 Word Status: 
-                <ShowStatus>{Object.keys(vocabStatus).find(key => vocabStatus[key] === checkStatus(trackWord))}</ShowStatus>
+                <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
                 <br/>
                 <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
                 <Mark>Ignore This Word</Mark>
@@ -60,11 +77,11 @@ const ShowStatus = styled.span`
     border: 2px solid transparent;
     cursor: pointer;
     font-size: inherit;
-    background-color: rgba(50,100,150,.6)!important;
+    // background-color: rgba(50,100,150,.6)!important;
     line-height: 1.6;
     padding: 2px 6px;
     &:hover {
-        background-color: rgba(50,100,150, 1)!important;
+        background-color: rgba(112, 161, 255, .8)!important;
     }
 `
 
