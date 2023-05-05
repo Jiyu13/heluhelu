@@ -177,7 +177,6 @@ export function Article() {
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
         // console.log(newWord)
-
         setDictionaryOpen(true)
         
         setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line

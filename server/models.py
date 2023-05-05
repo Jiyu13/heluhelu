@@ -76,10 +76,6 @@ class User(db.Model, SerializerMixin):
     words = db.relationship("UserWord", backref="user")
     vocabularies = db.relationship("Vocabulary", backref="user")
 
-    # # many-to-manny:
-    # user_articles = db.relationship("UserArticle", backref="user")
-    # articles = association_proxy("user_articles", 'article')
-
     serialize_rules = ('-dictionaries', "-articles", "-user_articles", "-vocabularies", '-page_read_events', "-words", "-_password_hash")
 
     # ================= password validation ==========================================

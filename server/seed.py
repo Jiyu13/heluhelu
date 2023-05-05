@@ -6,7 +6,6 @@ import uuid
 def make_user():
     User.query.delete()
     Article.query.delete()
-    # UserArticle.query.delete()
     UserWord.query.delete()
     PageReadEvent.query.delete()
     Vocabulary.query.delete()
@@ -40,14 +39,6 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
     # new_article.users.id = new_user.id
     db.session.add(new_article)
     db.session.commit()
-
-    # # user-article
-    # user_article = UserArticle(
-    #     user_id=new_user.id,
-    #     article_id=new_article.id,
-    # )
-    # db.session.add(user_article)
-    # db.session.commit()
 
     date1 = datetime.datetime(2023, 3, 21, 0, 0, 0, 0)
     date2 = datetime.datetime(2023, 3, 23, 0, 0, 0, 0)

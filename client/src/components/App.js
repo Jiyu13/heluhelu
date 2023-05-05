@@ -49,13 +49,6 @@ function App() {
     });
   }, []);
 
-  // // ========= get user_articles ============================
-  // useEffect (() => {
-  //   apiFetch('/articles')
-  //   .then(res => res.json())
-  //   .then(data => setUserArticles(data))
-  // }, [])
-
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {
     const updatedArticles = articles?.map(a => {

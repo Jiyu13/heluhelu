@@ -139,7 +139,7 @@ class ArticleByArticleId(Resource):
     def delete(self, article_id):
         current_user = session["user_id"]
         article = Article.query.filter_by(user_id=current_user, id=article_id).first()
-        db.session.delete(user_article)
+        db.session.delete(article)
         db.session.commit()
         return make_response()
 api.add_resource(ArticleByArticleId, '/article/<int:article_id>')
@@ -212,10 +212,6 @@ class ArticleByID(Resource):
     def get(self, id):
         user_id = session["user_id"]
         article = Article.query.filter_by(id=id, user_id=user_id).first()
-        # user_article = UserArticle.query.filter_by(
-        #     user_id = session["user_id"],
-        #     article_id = article.id
-        # ).first()
 
         if not article:
             response_body = {
