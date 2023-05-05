@@ -127,6 +127,24 @@ class Articles(Resource):
 api.add_resource(Articles, '/articles', endpoint="articles")
 
 
+class ArticleByArticleId(Resource):
+    def patch(self, article_id):
+        current_user = session["user_id"]
+        article = Article.query.filter_by(id=article_id, user_id=current_user).first()
+        article.current_page = request.get_json()["current_page"]
+        db.session.commit()
+
+        return make_response(article.to_dict(), 200)
+
+    def delete(self, article_id):
+        current_user = session["user_id"]
+        article = Article.query.filter_by(user_id=current_user, id=article_id).first()
+        db.session.delete(user_article)
+        db.session.commit()
+        return make_response()
+api.add_resource(ArticleByArticleId, '/article/<int:article_id>')
+
+
 class ArticleSharedByID(Resource):
     def get(self, id):
         article = Article.query.filter_by(id=id, user_id=session["user_id"]).first()
@@ -140,7 +158,6 @@ class ArticleSharedByID(Resource):
 api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
 
 
-    
 
 # deal with adding new user to an article when an article is shared
 class ArticlesByUUID(Resource):
@@ -162,22 +179,6 @@ class ArticlesByUUID(Resource):
 api.add_resource(ArticlesByUUID, '/user_article/<string:uuid>')
 
 
-class UserArticleByArticleId(Resource):
-    def patch(self, article_id):
-        current_user = session["user_id"]
-        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
-        user_article.current_page = request.get_json()["current_page"]
-        db.session.commit()
-
-        return make_response(user_article.to_dict(), 200)
-
-    def delete(self, article_id):
-        current_user = session["user_id"]
-        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
-        db.session.delete(user_article)
-        db.session.commit()
-        return make_response()
-api.add_resource(UserArticleByArticleId, '/user_article/<int:article_id>')
 
 
 class ArticleShared(Resource):

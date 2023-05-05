@@ -100,8 +100,8 @@ export function Article() {
     }
 
     function updatePageInDB(curr_page) {
-        console.log("handleCurrentPage", curr_page)
-        apiFetch(`/user_article/${article.id}`, {
+        // console.log("handleCurrentPage", curr_page)
+        apiFetch(`/article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
