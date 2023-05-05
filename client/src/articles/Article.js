@@ -173,9 +173,11 @@ export function Article() {
         })
     }
     // console.log("isopen = " + isDictionaryOpen)
-
+    // console.log(targetWord) // default null
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
+        // console.log(newWord)
+
         setDictionaryOpen(true)
         
         setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line
@@ -234,7 +236,6 @@ export function Article() {
     // toggle btn stylings
     function checkStatus(word) {
         let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
-        // console.log(result)
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]
             return statusNumber
@@ -266,7 +267,14 @@ export function Article() {
                     <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
                 </PagesContainer>
                 <ReadableContent>
-                {paragraphs?.map((p, index) => <ArticleParagraph key={index} words={p.split(" ")} onWordClicked={updateDictionaryWord} setWordExistError={setWordExistError}/>)}
+                {paragraphs?.map((p, index) => 
+                    <ArticleParagraph 
+                        key={index} 
+                        words={p.split(" ")} 
+                        onWordClicked={updateDictionaryWord} 
+                        setWordExistError={setWordExistError}
+                    />
+                )}
                 </ReadableContent>
             </ReadableArea>
             

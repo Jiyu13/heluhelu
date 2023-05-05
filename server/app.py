@@ -408,16 +408,6 @@ class GetVocabularies(Resource):
 api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 
-class VocabularyByWord(Resource):
-    def delete(self, word):
-        user_id = session["user_id"]
-        vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
-        db.session.delete(vocab)
-        db.session.commit()
-        return make_response()
-api.add_resource(VocabularyByWord, "/vocabularies/<string:word>")
-
-
 class VocabularyByStatus(Resource):
 
     def post(self, word, status):
@@ -448,16 +438,8 @@ class VocabularyByStatus(Resource):
             db.session.add(vocab)
             db.session.commit()
             response = make_response(vocab.to_dict(), 201)
-            return response
-        # return response
-    
-    # def patch(self, word, status):
-    #     user_id = session["user_id"]
-    #     vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
-    #     vocab.status == status
-    #     db.session.commit()
-    #     response = make_response(vocab.to_dict(), 200)
-    #     return response
+            return response    
+
 api.add_resource(VocabularyByStatus, "/vocabulary/<string:word>/<int:status>") 
 
 # ============================== account =========================================
