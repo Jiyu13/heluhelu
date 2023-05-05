@@ -17,8 +17,13 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
     
 
     function handleChangeToKnown() {
-        console.log(word)
+        // console.log(word)
         PostAndDelete(trackWord, 2)
+    }
+
+    function handleIgnoredWord() {
+        // console.log(trackWord)
+        PostAndDelete(trackWord, 3)
     }
 
 
@@ -30,7 +35,7 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
             styling = "rgba(255, 221, 89, 0.5)"
             break;
         case "Known":
-            styling = "rgba(112, 161, 255, 0.5)"
+            styling = ""
             break;
         case "Ignored":
             styling = ""
@@ -44,7 +49,7 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
                 <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
                 <br/>
                 <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
-                <Mark>Ignore This Word</Mark>
+                <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignoring Word": "Ignore This Word"}</Mark>
             </TrackerContainer>
         </WordTrackerBox>
     )
