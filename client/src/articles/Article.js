@@ -67,7 +67,7 @@ export function Article() {
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
-        console.log("current", currentPage)
+        // console.log("current", currentPage)
         
         const prevPage = Math.max(currentPage - 1, 0)
         setCurrentPage(prevPage)

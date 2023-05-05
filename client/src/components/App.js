@@ -29,7 +29,7 @@ function App() {
   const [isLoading, setLoading] = useState(false)
 
 
-  // ========= get articles =================================
+  // ========= get all articles of current user =================================
   useEffect(() => {
     apiFetch('/articles')
         .then(res => res.json())
@@ -49,12 +49,12 @@ function App() {
     });
   }, []);
 
-  // ========= get user_articles ============================
-  useEffect (() => {
-    apiFetch('/user_articles')
-    .then(res => res.json())
-    .then(data => setUserArticles(data))
-  }, [])
+  // // ========= get user_articles ============================
+  // useEffect (() => {
+  //   apiFetch('/articles')
+  //   .then(res => res.json())
+  //   .then(data => setUserArticles(data))
+  // }, [])
 
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {

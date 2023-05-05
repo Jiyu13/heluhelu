@@ -1,4 +1,4 @@
-from models import db, Dictionary, User, DictionaryWord, Article, UserArticle, UserWord, PageReadEvent, Vocabulary
+from models import db, Dictionary, User, DictionaryWord, Article, UserWord, PageReadEvent, Vocabulary
 from app import app
 import datetime
 import uuid
@@ -6,7 +6,7 @@ import uuid
 def make_user():
     User.query.delete()
     Article.query.delete()
-    UserArticle.query.delete()
+    # UserArticle.query.delete()
     UserWord.query.delete()
     PageReadEvent.query.delete()
     Vocabulary.query.delete()
@@ -30,24 +30,24 @@ He liʻiliʻi wale nō kēia mokupuni: 18 mile ka loa, a he 13 mile ka laulā. H
             '''.strip()
     title = "Lānaʻi Story"
     new_article = Article(
+            user_id=new_user.id,
             uuid=str(uuid.uuid4()),
             text=text,
             title=title,
-            # total_pages=len(text.split()),
             check_finished=False,
     )
     
-    new_article.users.id = new_user.id
+    # new_article.users.id = new_user.id
     db.session.add(new_article)
     db.session.commit()
 
-    # user-article
-    user_article = UserArticle(
-        user_id=new_user.id,
-        article_id=new_article.id,
-    )
-    db.session.add(user_article)
-    db.session.commit()
+    # # user-article
+    # user_article = UserArticle(
+    #     user_id=new_user.id,
+    #     article_id=new_article.id,
+    # )
+    # db.session.add(user_article)
+    # db.session.commit()
 
     date1 = datetime.datetime(2023, 3, 21, 0, 0, 0, 0)
     date2 = datetime.datetime(2023, 3, 23, 0, 0, 0, 0)
