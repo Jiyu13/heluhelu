@@ -12,7 +12,6 @@ import apiFetch from "../api/ApiFetch";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    console.log(articles)
     const {user, userArticles, splitText, calculatePages} = useContext(UserContext)
     
 
