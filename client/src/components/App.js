@@ -20,7 +20,7 @@ const USER_NOT_SET = -1;
 
 function App() {
 
-  const [userArticles, setUserArticles] = useState([])
+  // const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
@@ -29,7 +29,7 @@ function App() {
   const [isLoading, setLoading] = useState(false)
 
 
-  // ========= get articles =================================
+  // ========= get all articles of current user =================================
   useEffect(() => {
     apiFetch('/articles')
         .then(res => res.json())
@@ -48,13 +48,6 @@ function App() {
       }
     });
   }, []);
-
-  // ========= get user_articles ============================
-  useEffect (() => {
-    apiFetch('/user_articles')
-    .then(res => res.json())
-    .then(data => setUserArticles(data))
-  }, [])
 
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {
@@ -106,7 +99,7 @@ function App() {
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
-                            userArticles, setUserArticles,
+                            // userArticles, setUserArticles,
                             article, setArticle, 
                             articles, setArticles,
                             chosen, setChosen, 

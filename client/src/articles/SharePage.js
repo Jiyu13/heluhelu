@@ -6,7 +6,7 @@ import apiFetch from "../api/ApiFetch"
 
 export function SharePage() {
 
-    const { user, articles, setArticles, userArticles, setUserArticles } = useContext(UserContext)
+    const {articles, setArticles } = useContext(UserContext)
     const { uuid } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
 
@@ -16,46 +16,57 @@ export function SharePage() {
         navigate('/')
     }
 
-    function redirectArticles(article_id){
-        // if navigate to /articles, articles state doesn't got updated
-        // causes ArticleList getCurrentPage() userArticle undefined
-        // navigate(`/articles/${article_id}`)
+    function redirectArticles(){
         navigate(`/articles`)
     }
+
 
     useEffect(() => {
         apiFetch(`/articles/${uuid}`)
         .then(res => res.json())
-        .then(data => setSharedArticle(data))
+        .then(data => {
+            setSharedArticle(data)
+        })
     }, [uuid])
     
-    const userArticle = {
-        user_id: user.id,
-        article: sharedArticle.id,
+    const newArticle = {
+        text: sharedArticle?.text,
+        title: sharedArticle?.title
     }
 
 
     function handleAddUserArticle(e) {
 
         if (e.target.value === "yes") {
-             apiFetch(`/user_article/${uuid}`, {
+             apiFetch(`/articles`, {
                 method: "POST",
                 headers: {"Content-Type": 'application/json'},
-                body: JSON.stringify(userArticle)
+                body: JSON.stringify(newArticle)
             })
-            .then(res => {
+            .then((res) => {
                 if (res.ok) {res.json().then(data => {
-                    setArticles([sharedArticle, ...articles])
-                    setUserArticles([...userArticles, data])
-                    redirectArticles(data.article_id)
-                })} else  {
-                    if (res.status === 404) {
-                        window.alert("This article does not exist in the database, please try again")
-                    } else if (res.status === 409) {
+                    setArticles([data, ...articles])
+                    redirectArticles()
+                })} else {
+                    if (res.status === 409) {
                         window.alert("Article already exists.")
                     }
                 }
             })
+            
+            // .then(res => {
+            //     if (res.ok) {res.json().then(data => {
+            //         setArticles([sharedArticle, ...articles])
+            //         // setUserArticles([...userArticles, data])
+            //         redirectArticles(data.article_id)
+            //     })} else  {
+            //         if (res.status === 404) {
+            //             window.alert("This article does not exist in the database, please try again")
+            //         } else if (res.status === 409) {
+            //             window.alert("Article already exists.")
+            //         }
+            //     }
+            // })
         } else {
             redirectHomePage()
         }

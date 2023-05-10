@@ -67,7 +67,7 @@ export function Article() {
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
-        console.log("current", currentPage)
+        // console.log("current", currentPage)
         
         const prevPage = Math.max(currentPage - 1, 0)
         setCurrentPage(prevPage)
@@ -100,8 +100,8 @@ export function Article() {
     }
 
     function updatePageInDB(curr_page) {
-        console.log("handleCurrentPage", curr_page)
-        apiFetch(`/user_article/${article.id}`, {
+        // console.log("handleCurrentPage", curr_page)
+        apiFetch(`/article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -176,8 +176,6 @@ export function Article() {
     // console.log(targetWord) // default null
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
-        // console.log(newWord)
-
         setDictionaryOpen(true)
         
         setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line

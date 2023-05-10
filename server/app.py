@@ -5,7 +5,7 @@ from sqlalchemy.sql.expression import func
 from config import app, db, api 
 from flask_restful import Resource
 
-from models import db, Dictionary, DictionaryWord, Article, User, UserArticle, UserWord, PageReadEvent, Vocabulary
+from models import db, Dictionary, DictionaryWord, Article, User, UserWord, PageReadEvent, Vocabulary
 import re
 import uuid
 from datetime import datetime, timedelta
@@ -90,49 +90,60 @@ class Users(Resource):
 api.add_resource(Users, '/users', endpoint="users")
 
 
+# ========================================= Articles ==========================================
 class Articles(Resource):
-    
     def get(self):
-        # show artciles belong to current user
         user_id = session["user_id"]
         if user_id:
-            user = User.query.filter_by(id=user_id).first()
-
-            # cannot use sort(key=...)????
-            articles = sorted(user.articles, key=lambda x: x.update_at,  reverse=True)
-            # articles = user.articles
-            articles_dict = [article.to_dict() for article in articles]
+            articles = Article.query.filter_by(user_id=user_id).all()
+            articles = sorted(articles, key=lambda x: x.update_at, reverse=True)
+            articles_dict = [article.to_dict(rules=("-user",)) for article in articles]
             return make_response(articles_dict, 200)
 
-    # create Article
     def post(self):
-        new_article = Article(
-            uuid=str(uuid.uuid4()),
-            text=request.get_json()['text'],
-            title=request.get_json()["title"],
-            check_finished=False,
-            # current_reading=False,
-        )
-        new_article.users.id = session["user_id"]
-        db.session.add(new_article)
-        db.session.commit()
+        user_id = session["user_id"]
 
-        # ======= user_articles table ===========================
-        user_article = UserArticle(
-            user_id=session['user_id'],
-            article_id=new_article.id
-        )
-        db.session.add(user_article)
-        db.session.commit()
-        # =======================================================
+        title = request.get_json()["title"]
+        article = Article.query.filter_by(user_id=user_id, title=title).first()
+        # ================= check by title to see if article exists ===================
+        if article: 
+            return make_response({"message": "article already exists"}, 409)
+        else:
+            new_article = Article(
+                user_id=user_id,
+                uuid=str(uuid.uuid4()),
+                text=request.get_json()['text'],
+                title=request.get_json()["title"],
+                check_finished=False,
+            )
+            db.session.add(new_article)
+            db.session.commit()
 
-        return make_response(new_article.to_dict(), 201)
+            return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
 
-class ArticleSharedByID(Resource):
+class ArticleByArticleId(Resource):
+    def patch(self, article_id):
+        current_user = session["user_id"]
+        article = Article.query.filter_by(id=article_id, user_id=current_user).first()
+        article.current_page = request.get_json()["current_page"]
+        db.session.commit()
+
+        return make_response(article.to_dict(), 200)
+
+    def delete(self, article_id):
+        current_user = session["user_id"]
+        article = Article.query.filter_by(user_id=current_user, id=article_id).first()
+        db.session.delete(article)
+        db.session.commit()
+        return make_response()
+api.add_resource(ArticleByArticleId, '/article/<int:article_id>')
+
+
+class ArticleSharedPageByID(Resource):
     def get(self, id):
-        article = Article.query.filter_by(id=id).first()
+        article = Article.query.filter_by(id=id, user_id=session["user_id"]).first()
         if not article:
             response_body = {
                 "message": "This article does not exist in the database, please try again"
@@ -140,66 +151,21 @@ class ArticleSharedByID(Resource):
             return make_response(jsonify(response_body), 404)
 
         return make_response(article.to_dict(), 200)
-api.add_resource(ArticleSharedByID, '/article/share/<int:id>')
-
-class UserArticles(Resource):
-    def get(self):
-        user_articles = UserArticle.query.all()
-        user_articles_dict = [user_article.to_dict(rules=("-user",)) for user_article in user_articles]
-        return make_response(user_articles_dict, 200)
-api.add_resource(UserArticles, '/user_articles', endpoint="user_articles")
-    
-
-# deal with adding new user to an article when an article is shared
-class UserArticlesByUUID(Resource):
-    def post(self, uuid):
-        article = Article.query.filter_by(uuid=uuid).first()
-        current_user = session["user_id"]
-
-        user_article = UserArticle.query.filter_by(user_id=session["user_id"], article_id=article.id).first()
-        if user_article:
-            return make_response({"message": "article already exists"}, 409)
-        else:
-            new_user_article = UserArticle(
-                article_id=article.id,
-                user_id=current_user
-            )
-            db.session.add(new_user_article)
-            db.session.commit()
-            return make_response(new_user_article.to_dict(), 201)
-api.add_resource(UserArticlesByUUID, '/user_article/<string:uuid>')
+api.add_resource(ArticleSharedPageByID, '/article/share/<int:id>')
 
 
-class UserArticleByArticleId(Resource):
-    def patch(self, article_id):
-        current_user = session["user_id"]
-        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
-        user_article.current_page = request.get_json()["current_page"]
-        db.session.commit()
 
-        return make_response(user_article.to_dict(), 200)
-
-    def delete(self, article_id):
-        current_user = session["user_id"]
-        user_article = UserArticle.query.filter_by(user_id=current_user, article_id=article_id).first()
-        db.session.delete(user_article)
-        db.session.commit()
-        return make_response()
-api.add_resource(UserArticleByArticleId, '/user_article/<int:article_id>')
-
-
-class ArticleShared(Resource):
+class ArticleReceivePage(Resource):
     def get(self, uuid):
         article = Article.query.filter_by(uuid=uuid).first()
-
         if not article: 
             response_body = {
                 "message": "This article does not exist in the database, please try again"
             }
             return make_response(jsonify(response_body), 404)
 
-        return make_response(user_article.to_dict(), 200)
-api.add_resource(ArticleShared, '/article/share_receive/<string:uuid>')
+        return make_response(article.to_dict(), 200)
+api.add_resource(ArticleReceivePage, '/article/share_receive/<string:uuid>')
 
 
 class ArticleByUUID(Resource):
@@ -215,13 +181,11 @@ class ArticleByUUID(Resource):
 api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 
 
+
 class ArticleByID(Resource):
     def get(self, id):
-        article = Article.query.filter_by(id=id).first()
-        user_article = UserArticle.query.filter_by(
-            user_id = session["user_id"],
-            article_id = article.id
-        ).first()
+        user_id = session["user_id"]
+        article = Article.query.filter_by(id=id, user_id=user_id).first()
 
         if not article:
             response_body = {
@@ -234,7 +198,7 @@ class ArticleByID(Resource):
 
         response = {
             "article": article.to_dict(),
-            "current_page": user_article.current_page
+            "current_page": article.current_page
         }
         return make_response(response, 200)
 api.add_resource(ArticleByID, '/articles/<int:id>')
@@ -409,7 +373,6 @@ api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 
 class VocabularyByStatus(Resource):
-
     def post(self, word, status):
         """save word into db, status 1->studing, 2->known, 3->igonred"""
         user_id = session["user_id"]

@@ -12,14 +12,12 @@ import apiFetch from "../api/ApiFetch";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    // const [finishReading, setFinish] = useState(false)
-
-    const {user, userArticles, splitText, calculatePages} = useContext(UserContext)
+    const {user, splitText, calculatePages} = useContext(UserContext)
     
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)
-        apiFetch(`/user_article/${article_id}`, {
+        apiFetch(`/article/${article_id}`, {
             method: "DELETE",
         })
         .then(() => {
@@ -33,14 +31,14 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         const total_pages = calculatePages(words)
         // eslint-disable-next-line
         // console.log(article) // shared article will not be shown in user_articles at this moment
-        const userArticle = article?.user_articles?.filter(u_r => {
-            if (u_r && u_r.user_id === user?.id) {
-                return u_r
+        const currentUserArticle = articles.filter(a => {
+            if (a && a.user_id === user?.id) {
+                return a
             }
         })
         
-        if (userArticle.length === 0) {
-            const newAddedUserArticle = userArticles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
+        if (currentUserArticle.length === 0) {
+            const newAddedUserArticle = articles.filter(u_r => u_r.user_id===user.id && u_r.article_id===article.id)
             const curr_page = newAddedUserArticle[0]["current_page"]
             const total_pages = Math.ceil(splitText(article).length/250)
 
@@ -50,7 +48,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 
             return parseInt(newAddedUserArticle[0]["current_page"]) / total_pages
         }
-        return parseInt(userArticle[0]["current_page"]) / total_pages
+        return parseInt(currentUserArticle[0]["current_page"]) / total_pages
     }
 
 

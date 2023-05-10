@@ -44,34 +44,20 @@ class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
 
     id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    current_page = db.Column(db.Integer, default=0)
     uuid = db.Column(db.String, unique=True, nullable=False)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.String, nullable=False)
     check_finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     update_at = db.Column(db.DateTime, server_default=db.func.now())
-    
-    # many-to-many
-    user_articles = db.relationship("UserArticle", backref="article")
-    users = association_proxy("user_articles", "user")
 
     serialize_rules = ('-user', "-user_articles.user", '-user_articles.article',)
 
     def __repr__(self):
         return f'''<Article {self.id, self.uuid} -> {self.title}; <{self.update_at}>\n'''
-
-
-class UserArticle(db.Model, SerializerMixin):
-    __tablename__ = "user_articles"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    article_id = db.Column(db.Integer, db.ForeignKey("articles.id"))
-    current_page = db.Column(db.Integer, default=0)
-
-    serialize_rules = ('-user.user_articles', '-article.user_articles',)
-
-    def __repr__(self):
-        return f'''<UserArticle {self.id} -> user_id: {self.user_id}; article_id: {self.article_id}; current_page: {self.current_page}>'''
 
 
 class User(db.Model, SerializerMixin):
@@ -89,10 +75,6 @@ class User(db.Model, SerializerMixin):
     # one-to-many: a user has many saved words, vocabularies
     words = db.relationship("UserWord", backref="user")
     vocabularies = db.relationship("Vocabulary", backref="user")
-
-    # many-to-manny:
-    user_articles = db.relationship("UserArticle", backref="user")
-    articles = association_proxy("user_articles", 'article')
 
     serialize_rules = ('-dictionaries', "-articles", "-user_articles", "-vocabularies", '-page_read_events', "-words", "-_password_hash")
 
