@@ -247,6 +247,9 @@ export function Article() {
         <ArticleContainer>
 
             {isMobile && isDictionaryOpen && (
+                /* eslint-disable jsx-a11y/anchor-is-valid */
+                /* eslint-disable jsx-a11y/anchor-has-content */
+
                 <a href="#"
                    style={{"width": "100%", "position": "fixed", "height": "50%"}}
                    onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
