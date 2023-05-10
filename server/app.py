@@ -93,7 +93,6 @@ api.add_resource(Users, '/users', endpoint="users")
 # ========================================= Articles ==========================================
 class Articles(Resource):
     def get(self):
-        # # show artciles belong to current user
         user_id = session["user_id"]
         if user_id:
             articles = Article.query.filter_by(user_id=user_id).all()
@@ -101,7 +100,6 @@ class Articles(Resource):
             articles_dict = [article.to_dict(rules=("-user",)) for article in articles]
             return make_response(articles_dict, 200)
 
-    # create Article
     def post(self):
         user_id = session["user_id"]
 
@@ -124,7 +122,7 @@ class Articles(Resource):
             return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
-# checked
+
 class ArticleByArticleId(Resource):
     def patch(self, article_id):
         current_user = session["user_id"]
@@ -142,7 +140,7 @@ class ArticleByArticleId(Resource):
         return make_response()
 api.add_resource(ArticleByArticleId, '/article/<int:article_id>')
 
-# checked
+
 class ArticleSharedPageByID(Resource):
     def get(self, id):
         article = Article.query.filter_by(id=id, user_id=session["user_id"]).first()
@@ -156,7 +154,7 @@ class ArticleSharedPageByID(Resource):
 api.add_resource(ArticleSharedPageByID, '/article/share/<int:id>')
 
 
-#  SharePage - checked
+
 class ArticleReceivePage(Resource):
     def get(self, uuid):
         article = Article.query.filter_by(uuid=uuid).first()
@@ -170,7 +168,6 @@ class ArticleReceivePage(Resource):
 api.add_resource(ArticleReceivePage, '/article/share_receive/<string:uuid>')
 
 
-# SharePage to get article by uuid & get its title and text - checked
 class ArticleByUUID(Resource):
     def get(self, uuid):
         article = Article.query.filter_by(uuid=uuid).first()
@@ -184,7 +181,7 @@ class ArticleByUUID(Resource):
 api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 
 
-# checked
+
 class ArticleByID(Resource):
     def get(self, id):
         user_id = session["user_id"]
@@ -206,7 +203,7 @@ class ArticleByID(Resource):
         return make_response(response, 200)
 api.add_resource(ArticleByID, '/articles/<int:id>')
 
-# checked
+
 class ArticleEdit(Resource):
     def patch(self, id):
         try:
@@ -223,29 +220,6 @@ class ArticleEdit(Resource):
 api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 
 
-
-# deal with adding new user to an article when an article is shared
-# class ArticlesByUUID(Resource):
-#     def post(self, uuid):
-#         article = Article.query.filter_by(user_id=session["user_id"], uuid=uuid).first()
-#         current_user = session["user_id"]
-
-#         # article = Article.query.filter_by(user_id=session["user_id"], article_id=article.id).first()
-#         if article:
-#             return make_response({"message": "article already exists"}, 409)
-#         else:
-#             new_article = Article(
-#                 user_id=current_user,
-#                 uuid=str(uuid.uuid4()),
-#                 text=article.text,
-#                 title=article.title,
-#                 check_finished=False,
-#             )
-#             db.session.add(new_article)
-#             db.session.commit()
-#             return make_response(new_article.to_dict(), 201)
-# api.add_resource(ArticlesByUUID, '/article/<string:uuid>')
-# ??????????????????????????????????????????????????????????????????????????
 # =============================== user words ============================================
 class UserWords(Resource):
     def post(self):

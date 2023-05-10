@@ -12,7 +12,7 @@ import apiFetch from "../api/ApiFetch";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, userArticles, splitText, calculatePages} = useContext(UserContext)
+    const {user, splitText, calculatePages} = useContext(UserContext)
     
 
     function handleDelete(e) {

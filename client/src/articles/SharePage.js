@@ -6,7 +6,7 @@ import apiFetch from "../api/ApiFetch"
 
 export function SharePage() {
 
-    const { user, articles, setArticles, userArticles, setUserArticles } = useContext(UserContext)
+    const {articles, setArticles } = useContext(UserContext)
     const { uuid } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
 
@@ -16,14 +16,11 @@ export function SharePage() {
         navigate('/')
     }
 
-    function redirectArticles(article_id){
-        // if navigate to /articles, articles state doesn't got updated
-        // causes ArticleList getCurrentPage() userArticle undefined
-        // navigate(`/articles/${article_id}`)
+    function redirectArticles(){
         navigate(`/articles`)
     }
 
-    
+
     useEffect(() => {
         apiFetch(`/articles/${uuid}`)
         .then(res => res.json())

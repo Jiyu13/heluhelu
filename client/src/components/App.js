@@ -20,7 +20,7 @@ const USER_NOT_SET = -1;
 
 function App() {
 
-  const [userArticles, setUserArticles] = useState([])
+  // const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
@@ -99,7 +99,7 @@ function App() {
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
-                            userArticles, setUserArticles,
+                            // userArticles, setUserArticles,
                             article, setArticle, 
                             articles, setArticles,
                             chosen, setChosen, 
