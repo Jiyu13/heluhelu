@@ -21,9 +21,6 @@ export function NavLinks() {
                     <LinkItem>
                         <Link href="/">Home</Link>
                     </LinkItem>
-                    <LinkItem>
-                        <Link href="/articles">Articles</Link>
-                    </LinkItem>
 
                     <LinkItem>
                         <Link href="/stats">My Stats</Link>
@@ -36,9 +33,6 @@ export function NavLinks() {
                         </Link>
                     </LinkItem>
 
-                    {/* <LinkItem>
-                        <Link href="/upload_dictionary">Upload Dictionary</Link>
-                    </LinkItem> */}
 
                 </LinksWrapper>
             </NavLinksContainer>

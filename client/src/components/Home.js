@@ -1,49 +1,67 @@
-import { useState } from "react";
-import ArticleImporter from "../articles/ArticleImporter";
 import styled from "styled-components";
-import { FileImport } from "../articles/FileImporter";
+import { ArticleList } from "../articles/ArticleList";
 
-export function Home({onAddNewText}) {
+import import_icon from "../assets/images/note_add_white_24dp.svg"
+import { Link } from "react-router-dom";
 
-    const [showTxtImport, setShowTxtImport] = useState(false)
-    const [showFileImport, setShowFileImport] = useState(false)
 
-    // console.log("showTxtImport", showTxtImport, "showFileImport", showFileImport)
-    
-    // function handleClick(e) {
-    //     setShowReader(!isShowReader)
-    // }
-
-    function handleTxTClick(e) {
-        setShowTxtImport(!showTxtImport)
-        setShowFileImport(false)
-    }
-
-    function handleFileClick(e) {
-        setShowFileImport(!showFileImport)
-        setShowTxtImport(false)
-    }
+export function Home({articles, onDeleteArticle}) {
 
     return (
         <HomepageContainer>
-            <HomepageTitle>Hawaiian Reader</HomepageTitle>
-            <HomepageText>Hawaiian learning tool. Read your Hawaiian text and articles in to Hawaiian Reader to make reading easier and to track your vocabulary growth over time.</HomepageText>
-            
+            <HomepageTitle>Heluhelu</HomepageTitle>
+            <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
             <HomepageButtonContainer className="upload-buttons">
-                <EnterTextButton className="text" value="text" onClick={handleTxTClick}>Enter Text</EnterTextButton>
-                <ImportFileButton className="file" value="file" onClick={handleFileClick}>Import Text File</ImportFileButton>
-            </HomepageButtonContainer>
-            
-            {/* <ArticleImporter onAddNewText={onAddNewText}/> */}
-            
-            {showTxtImport ? <ArticleImporter onAddNewText={onAddNewText}/> : ""}
-            {showFileImport ? <FileImport/> : ""}
+                
+                <ImportButton title="import text/article">
+                    <Link to={"/import/text"}>
+                        <span style={{display:"flex"}}>
+                            <ImportIcon src={import_icon}/>
+                            <InnerText>Import</InnerText>
+                            {/* <DropDownIcon src={drop_down}/> */}
+                        </span>
+                    </Link>
+                </ImportButton>
+                
 
-            
+            </HomepageButtonContainer>
+
+            <ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>
+
         </HomepageContainer>
     ) 
 }
+
+// ------------------import btn---------------------------
+const ImportButton = styled.button`
+    background-color: #192a56;
+    border-radius: 8px;
+    display: inline-block;
+    align-items : center;
+    cursor: pointer;
+    text-align: center;
+    pointer-events: auto;
+
+    &:hover {
+        transform: scale(1.2);
+        transition-duration: 0.5s;
+    }
+`
+
+const ImportIcon = styled.img`
+    margin: 5px;
+`
+
+
+const InnerText = styled.span`
+    margin: 5px;
+    font-size: 1.2rem;
+    color: #fff;
+`
+
+// ------------------import btn---------------------------
+
 
 const HomepageContainer = styled.div`
 `
@@ -55,12 +73,6 @@ const HomepageTitle = styled.h1`
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-    // color: #222;
-    // margin-bottom: 36px;
-    // font-family: readex prox, arial, sans-serif;
-    // font-size: 48px;
-    // text-align: center;
-    // display: block;
 `
 
 const HomepageText = styled.div`
@@ -79,37 +91,4 @@ const HomepageButtonContainer = styled.div`
     text-align: center;
     font-size: 20px;
     line-weight: 1.6;
-`
-
-const EnterTextButton = styled.button`
-    display: inline-block;
-    font-size: 21px;
-    font-weight: 700;
-    padding: 18px;
-    min-width: 260px;
-    text-align: center;
-    border: 2px solid #ccc;
-    border-radius: 16px;
-    margin: 0 20px 12px;
-    // margin-bottom: 12px;
-    background-color: #083d74!important;
-    color: #fff!important;
-    line-height: 1.6;
-    cursor: pointer;
-`
-
-const ImportFileButton = styled.button`
-    display: inline-block;
-    font-size: 21px;
-    font-weight: 700;
-    padding: 18px;
-    min-width: 260px;
-    text-align: center;
-    border: 2px solid #ccc;
-    border-radius: 16px;
-    margin-bottom: 12px;
-    background-color: # #ebe8e5!important;
-    color: #555!important;
-    line-height: 1.6;
-    cursor: pointer;
 `

@@ -27,11 +27,7 @@ export function MobileNavLinks() {
                 {isOpen && (
                     <LinksWrapper>
                         <LinkItem>
-                        <Link href="/">Home</Link>
-                        </LinkItem>
-
-                        <LinkItem>
-                            <Link href="/articles">Articles</Link>
+                            <Link href="/">Home</Link>
                         </LinkItem>
 
                         <LinkItem>
@@ -42,10 +38,6 @@ export function MobileNavLinks() {
                             <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
                             <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
                         </LinkItem>
-
-                        {/* <LinkItem>
-                            <Link href="#">Upload Dictionary</Link>
-                        </LinkItem> */}
 
                         <Marginer/>
                         <Accessibility/>

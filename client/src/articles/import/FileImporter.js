@@ -1,12 +1,12 @@
 import { useContext } from "react"
 import { useState } from "react"
 import styled from "styled-components"
-import { UserContext } from "../components/UserContext"
-import { useNavigate } from "react-router-dom"
+import { UserContext } from "../../components/UserContext"
+import { Link, useNavigate } from "react-router-dom"
 import { SubmitButton } from "./ArticleImporter"
-import apiFetch from "../api/ApiFetch"
+import apiFetch from "../../api/ApiFetch"
 
-export function FileImport() {
+export function FileImporter() {
 
     const [importText, setImportText] = useState(null)
     const [fileName, setFileName] = useState(null)
@@ -15,7 +15,7 @@ export function FileImport() {
 
     let navigate = useNavigate()
     function redirectArticles () {
-        navigate('/articles')
+        navigate('/')
     }
 
     function handleTitleChange(e) {
@@ -57,26 +57,20 @@ export function FileImport() {
         .then((res) => res.json())
         .then(newObj => {
             setArticles([newObj, ...articles]);
-            // setFormData(initialValues)
             redirectArticles()
         })
     }
 
     return (
         <FileBox>
-            <b>Accepted file types: .txt.</b>
-            <br/>
-            <br/>
+            
             <FormContainer onSubmit={handleSubmit}>
-            {/*  */}
-                <ImportFileInput
-                    required
-                    type="file"
-                    accept='.txt'
-                    name='filename'
-                    onChange={handleOnChange}
-                />
+                <SubmitButton type="submit" value="Save" />
+                <Link to="/import/text">
+                    <ImportButton type="button" value="Import Text" />
+                </Link>
                 <br/>
+
                 <TitleText>
                     Give this document a title:
                 </TitleText>
@@ -89,13 +83,36 @@ export function FileImport() {
                     onChange={handleTitleChange}
                 />
                 <br/>
-                <SubmitButton type="submit" value="Import" />
+                <ImportFileInput
+                    required
+                    type="file"
+                    accept='.txt'
+                    name='filename'
+                    onChange={handleOnChange}
+                />
+                <br/>
+                <b>Accepted file types: .txt.</b>
+                <br/>
                 <br/>
                 
             </FormContainer>
         </FileBox>
     )
 }
+
+const ImportButton = styled.input`
+    margin-top: 12px;
+    width: 100px;
+    padding: 8px;
+    background: #feca57;
+    color: white;
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+        background: #ff9f43; !important;
+    }
+`
 
 const FileBox = styled.div`
     background-color: rgb(204, 204, 204);

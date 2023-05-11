@@ -6,7 +6,6 @@ import { UserContext } from "./UserContext";
 import {Home} from "./Home";
 import NavBar from "../navbar/NavBar";
 import { Article } from "../articles/Article";
-import { ArticleList } from "../articles/ArticleList";
 import { ArticleEdit } from "../articles/ArticleEdit";
 import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
@@ -15,12 +14,13 @@ import { SignupForm } from "../account/SignupForm";
 import { MyStats } from "../stats/MyStats";
 import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 import apiFetch from "../api/ApiFetch";
+import {FileImporter} from "../articles/import/FileImporter";
+import ArticleImporter from "../articles/import/ArticleImporter";
 
 const USER_NOT_SET = -1;
 
 function App() {
 
-  // const [userArticles, setUserArticles] = useState([])
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState("")
   const [user, setUser] = useState(USER_NOT_SET);
@@ -155,8 +155,14 @@ function App() {
 
               <Route
                 exact
-                path='/articles'
-                element={<ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>}
+                path='/import/text'
+                element={<ArticleImporter/>}
+              >
+              </Route>
+              <Route
+                exact
+                path='/import/file'
+                element={<FileImporter/>}
               >
               </Route>
 
@@ -183,7 +189,7 @@ function App() {
               <Route
                 exact
                 path='/'
-                element={<Home/>}
+                element={<Home articles={articles} onDeleteArticle={onDeleteArticle}/>}
               >
               </Route>
           </Routes>

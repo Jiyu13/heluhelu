@@ -66,14 +66,14 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 {article.title}
                             </Link>
                             <br/>
-                            {/* ============== process bar ========================= */}
+                            {/* ============== progress bar ========================= */}
                             <CompletionBar>
                                 <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
                             </CompletionBar>
                             <CompletionText>
                                 {calculatePages(splitText(article))} pgs
                             </CompletionText>
-                            {/* ============== process bar ========================= */}
+                            {/* ============== progress bar ========================= */}
                     
 
                         </ArticleTitle>
@@ -146,7 +146,6 @@ const ArticleTitleCell = styled.td`
     }
 `
 const ArticleTitle = styled.div`
-    // background-color: rgba(255,255,255,.2)!important;
     color: #ccc;
     display: block;
     padding: 12px 18px;
@@ -192,7 +191,6 @@ const CompletionText = styled.span`
 const EditCell = styled.td`
     vertical-align: top;
     width: 100px;
-    // background: grey;
     border-radius: 8px;
 `
 
