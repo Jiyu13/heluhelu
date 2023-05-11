@@ -263,10 +263,6 @@ export function Article() {
             </SideBar>
            
             <ReadableArea>
-                <PagesContainer>
-                    <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                    <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
-                </PagesContainer>
                 <ReadableContent>
                 {paragraphs?.map((p, index) => 
                     <ArticleParagraph 
