@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { SubmitButton } from "./ArticleImporter";
+import { SubmitButton } from "./import/ArticleImporter";
 import apiFetch from "../api/ApiFetch";
 
 export function ArticleEdit( {onUpdatedArticle} ) {

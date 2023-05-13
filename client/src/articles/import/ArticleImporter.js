@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useContext } from "react";
-import { UserContext } from "../components/UserContext";    
-import apiFetch from '../api/ApiFetch';
+import { UserContext } from "../../components/UserContext";    
+import apiFetch from '../../api/ApiFetch';
 
 
 
@@ -13,7 +13,7 @@ function ArticleImporter() {
 
     let navigate = useNavigate()
     function redirectArticles () {
-        navigate('/articles')
+        navigate('/')
     }
 
     const initialValues = {
@@ -56,6 +56,22 @@ function ArticleImporter() {
     return (
         <PasteBox>
             <FormContainer onSubmit={handleSubmit}>
+
+                <SubmitButton type="submit" value="Save" />
+                <Link to="/import/file">
+                    <ImportButton type="button" value="Import File" />
+                </Link>
+                
+                <br/>
+                <ArticleTitle 
+                    required
+                    type="text"
+                    placeholder="Add title here..."
+                    name="title"
+                    value={formData.title}
+                    onChange={handleOnChange}
+                />
+                <br/>
                 <FormTextarea
                     required
                     placeholder="Paste your Hawaiian text here..."
@@ -65,20 +81,6 @@ function ArticleImporter() {
 
                 />
                 <br/>
-                <TitleText>
-                    Give this text a title:
-                </TitleText>
-                <ArticleTitle 
-                    required
-                    type="text"
-                    placeholder="Enter title here..."
-                    name="title"
-                    value={formData.title}
-                    onChange={handleOnChange}
-                />
-                <br/>
-                <SubmitButton type="submit" value="Submit" />
-                <br/>
                 
             </FormContainer>
         </PasteBox>
@@ -86,6 +88,20 @@ function ArticleImporter() {
 }
 
 export default ArticleImporter;
+
+const ImportButton = styled.input`
+    margin-top: 12px;
+    width: 100px;
+    padding: 8px;
+    background: #feca57;
+    color: white;
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+        background: #ff9f43; !important;
+    }
+`
 
 const PasteBox = styled.div`
     background-color: rgba(255, 255, 255, 0.4);
@@ -113,14 +129,6 @@ const FormTextarea = styled.textarea`
     border-radius: 8px;
 `
 
-const TitleText = styled.div`
-    margin-top: 12px;
-    font-size: 15px;
-    font-weight: Bold;
-    line-weight: 1.6;
-    display: block;
-`
-
 const ArticleTitle = styled.input`
     width: 90%;
     max-width: 800px;
@@ -137,6 +145,7 @@ const ArticleTitle = styled.input`
 
 export const SubmitButton = styled.input`
     margin-top: 12px;
+    margin-right: 12px;
     width: 100px;
     padding: 8px;
 
