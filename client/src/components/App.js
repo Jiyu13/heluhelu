@@ -16,6 +16,7 @@ import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 import apiFetch from "../api/ApiFetch";
 import {FileImporter} from "../articles/import/FileImporter";
 import ArticleImporter from "../articles/import/ArticleImporter";
+import { HawaiianMap } from "../hawaiian-map/HawaiianMap";
 
 const USER_NOT_SET = -1;
 
@@ -185,6 +186,16 @@ function App() {
                 path='/mobile/:id'
                 element={<DictionaryMobile key={article?.id}/>}
               ></Route>
+
+              {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Map!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+              <Route
+                exact
+                path='/map'
+                element={<HawaiianMap/>}
+              >
+              </Route>
+              {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Map!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
 
               <Route
                 exact
