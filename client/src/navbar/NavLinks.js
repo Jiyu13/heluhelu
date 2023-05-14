@@ -33,10 +33,6 @@ export function NavLinks() {
                         </Link>
                     </LinkItem>
 
-                    <LinkItem>
-                        <Link href={`/map`}>Map</Link>
-                    </LinkItem>
-
                 </LinksWrapper>
             </NavLinksContainer>
         </>
