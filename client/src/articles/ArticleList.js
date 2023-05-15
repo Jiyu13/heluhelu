@@ -7,6 +7,7 @@ import share_icon from "../assets/images/share_icon.svg"
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 import apiFetch from "../api/ApiFetch";
+import { ProgressBar } from "./progress-bar/ProgressBar";
 
 
 
@@ -67,12 +68,13 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                             </Link>
                             <br/>
                             {/* ============== progress bar ========================= */}
-                            <CompletionBar>
+                            <ProgressBar article={article} getCurrentPage={getCurrentPage}/>
+                            {/* <CompletionBar>
                                 <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
                             </CompletionBar>
                             <CompletionText>
                                 {calculatePages(splitText(article))} pgs
-                            </CompletionText>
+                            </CompletionText> */}
                             {/* ============== progress bar ========================= */}
                     
 

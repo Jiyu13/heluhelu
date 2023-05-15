@@ -19,6 +19,7 @@ import { useMediaQuery } from "react-responsive"
 import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
+// import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
 
@@ -41,6 +42,9 @@ export function Article() {
            vocabularies, setVocabularies
         } = useContext(UserContext)
     
+    
+    console.log(vocabularies["status"])
+
     const { id } = useParams()
     useEffect(() => {
         apiFetch(`/articles/${id}`)
@@ -244,6 +248,7 @@ export function Article() {
     
     return (
         <>
+        {/* <ProgressBar /> */}
         <ArticleContainer>
 
             {isMobile && isDictionaryOpen && (
