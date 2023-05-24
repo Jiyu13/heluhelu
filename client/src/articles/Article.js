@@ -35,16 +35,16 @@ export function Article() {
     const [currentPage, setCurrentPage] = useState(1)
 
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
+    const [article, setArticle] = useState(null)
 
-    const {article, setArticle, 
-           user, chosen, setChosen, 
-           setErrors, splitText, calculatePages,
-           vocabularies, setVocabularies
+    const {
+            // article, setArticle, 
+            user, chosen, setChosen, 
+            setErrors, splitText, calculatePages,
+            vocabularies, setVocabularies
         } = useContext(UserContext)
     
     
-    console.log(vocabularies["status"])
-
     const { id } = useParams()
     useEffect(() => {
         apiFetch(`/articles/${id}`)
@@ -55,6 +55,7 @@ export function Article() {
         })
     }, [id]) // [id] eslint-disable-next-line
 
+    // console.log(article)
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)

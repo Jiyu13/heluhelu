@@ -4,7 +4,7 @@ import { UserContext } from "../../components/UserContext"
 
 export function ProgressBar({article, getCurrentPage}) {
 
-    const {calculatePages, splitText} = useContext(UserContext)
+    const { calculatePages, splitText} = useContext(UserContext)
 
     return (
         <>

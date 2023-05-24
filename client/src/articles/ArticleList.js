@@ -8,12 +8,14 @@ import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 import apiFetch from "../api/ApiFetch";
 import { ProgressBar } from "./progress-bar/ProgressBar";
+import { VocabStats } from "./vocab-stats/VocbStats";
 
 
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
     const {user, splitText, calculatePages} = useContext(UserContext)
+    // console.log(article)
     
 
     function handleDelete(e) {
@@ -58,24 +60,19 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         {articles.length ?  
         <ArticlesListTable>
             <tbody>
-            {articles.map(article =>
-                <tr key={article.id}>
+            {articles.map(a =>
+                <tr key={a.id}>
                     <ArticleTitleCell>  
 
                         <ArticleTitle>
-                            <Link to={`/articles/${article.id}`} style={{textDecoration: 'none'}} id={article.id}>
-                                {article.title}
+                            <Link to={`/articles/${a.id}`} style={{textDecoration: 'none'}} id={a.id}>
+                                {a.title}
                             </Link>
                             <br/>
-                            {/* ============== progress bar ========================= */}
-                            <ProgressBar article={article} getCurrentPage={getCurrentPage}/>
-                            {/* <CompletionBar>
-                                <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
-                            </CompletionBar>
-                            <CompletionText>
-                                {calculatePages(splitText(article))} pgs
-                            </CompletionText> */}
-                            {/* ============== progress bar ========================= */}
+                            {/* ============== progress bar + vocab stats ========================= */}
+                            <ProgressBar article={a} getCurrentPage={getCurrentPage}/>
+                            <VocabStats article={a}/>
+                            {/* ============== progress bar + vocab stats  ========================= */}
                     
 
                         </ArticleTitle>
@@ -86,17 +83,17 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                     <EditCell>
                         <EditContainer>
                             <Button >
-                                <Link to={`/article/edit/${article.id}`} style={{"color": "inherit"}}>
+                                <Link to={`/article/edit/${a.id}`} style={{"color": "inherit"}}>
                                     <ButtonImage src={edit_icon} alt="edit icon"/>
                                 </Link>
                                 
                             </Button>
                             <Button >
-                                <ButtonImage src={delete_icon} alt="delete icon" id={article.id} onClick={handleDelete}/>
+                                <ButtonImage src={delete_icon} alt="delete icon" id={a.id} onClick={handleDelete}/>
                             </Button>
 
                             <Button>
-                                <Link to={`/article/share/${article.id}`}>
+                                <Link to={`/article/share/${a.id}`}>
                                     <ButtonImage src={share_icon} alt="share icon"/>
                                 </Link>
                                 

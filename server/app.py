@@ -363,6 +363,7 @@ api.add_resource(PageEventByMonth, '/stats/month/<int:current_month>')
 
 
 # ============================== Vocabulary tracking ============================
+# Unknown: 0, Studying: 1, Known: 2, Ignored: 3,
 class GetVocabularies(Resource):
     def get(self):
         user_id = session["user_id"]
