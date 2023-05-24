@@ -15,7 +15,7 @@ export function Home({articles, onDeleteArticle}) {
             <HomepageButtonContainer className="upload-buttons">
                 
                 <ImportButton title="import text/article">
-                    <Link to={"/import/text"}>
+                    <Link to={"/import/text"} style={{textDecoration: "none"}}>
                         <span style={{display:"flex"}}>
                             <ImportIcon src={import_icon}/>
                             <InnerText>Import</InnerText>
