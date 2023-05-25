@@ -10,12 +10,14 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
         onWordClicked(e.target.innerHTML)
     }    
 
-    const word_clean = word.toLowerCase().replace(/[^a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
+    const word_clean = word.toLowerCase().replace(/[^0-9a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
+    console.log(word_clean==="")
+    console.log(word_clean)
     const match = vocabularies?.filter((v) => v.hawaiian_clean.toLowerCase() === word_clean)[0]
     
     
     let styling = "rgba(112, 161, 255, 0.5)"
-    if (match) {
+    if (match & word_clean!=="") {
         switch(match.status) {
             // studying
             case 1:
@@ -29,9 +31,14 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
             case 3:
                 styling = ""
                 break;
-            default:
+            // case word_clean==="":
+            //     styling = ""
+            //     break;
+            default: 
                 styling = "rgba(112, 161, 255, 0.5)"
         }
+    } else if (word_clean === "") {
+        styling = ""
     }
 
     return (
