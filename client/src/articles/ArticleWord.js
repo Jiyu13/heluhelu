@@ -16,8 +16,10 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
     const match = vocabularies?.filter((v) => v.hawaiian_clean.toLowerCase() === word_clean)[0]
     
     
+    
     let styling = "rgba(112, 161, 255, 0.5)"
-    if (match & word_clean!=="") {
+    if (match) {
+        // & word_clean!==""
         switch(match.status) {
             // studying
             case 1:
@@ -31,13 +33,11 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
             case 3:
                 styling = ""
                 break;
-            // case word_clean==="":
-            //     styling = ""
-            //     break;
             default: 
                 styling = "rgba(112, 161, 255, 0.5)"
         }
-    } else if (word_clean === "") {
+    } 
+    if (word_clean === "") {
         styling = ""
     }
 
