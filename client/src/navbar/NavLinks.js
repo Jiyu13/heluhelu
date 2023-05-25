@@ -33,7 +33,6 @@ export function NavLinks() {
                         </Link>
                     </LinkItem>
 
-
                 </LinksWrapper>
             </NavLinksContainer>
         </>

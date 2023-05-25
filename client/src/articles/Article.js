@@ -19,6 +19,7 @@ import { useMediaQuery } from "react-responsive"
 import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
+// import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
 
@@ -34,12 +35,15 @@ export function Article() {
     const [currentPage, setCurrentPage] = useState(1)
 
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
+    const [article, setArticle] = useState(null)
 
-    const {article, setArticle, 
-           user, chosen, setChosen, 
-           setErrors, splitText, calculatePages,
-           vocabularies, setVocabularies
+    const {
+            // article, setArticle, 
+            user, chosen, setChosen, 
+            setErrors, splitText, calculatePages,
+            vocabularies, setVocabularies
         } = useContext(UserContext)
+    
     
     const { id } = useParams()
     useEffect(() => {
@@ -51,6 +55,7 @@ export function Article() {
         })
     }, [id]) // [id] eslint-disable-next-line
 
+    // console.log(article)
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)
@@ -244,6 +249,7 @@ export function Article() {
     
     return (
         <>
+        {/* <ProgressBar /> */}
         <ArticleContainer>
 
             {isMobile && isDictionaryOpen && (

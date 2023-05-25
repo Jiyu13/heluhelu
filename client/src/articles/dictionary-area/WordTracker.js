@@ -29,7 +29,7 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
 
     const vocabStatus = Object.keys(vocabStatusType).find(key => vocabStatusType[key] === checkStatus(trackWord))
 
-    let styling = "rgba(112, 161, 255, 0.5)"
+    let styling
     switch(vocabStatus) {
         case "Studying":
             styling = "rgba(255, 221, 89, 0.5)"
@@ -40,6 +40,8 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
         case "Ignored":
             styling = ""
             break;
+        default:
+            styling = "rgba(112, 161, 255, 0.5)"
     }
     
     return (
@@ -82,7 +84,6 @@ const ShowStatus = styled.span`
     border: 2px solid transparent;
     cursor: pointer;
     font-size: inherit;
-    // background-color: rgba(50,100,150,.6)!important;
     line-height: 1.6;
     padding: 2px 6px;
     &:hover {

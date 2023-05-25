@@ -18,32 +18,29 @@ body {
 }
 
 input[type="submit"] {
-	/* border: 2px solid #ccc; */
-	border: 0;
+	/* border: 0;
 	background-color: #ebe8e5;
 	color: #555;
 	display: inline-block;
 	font-size: 15px;
 	font-weight: 700;
-	/* padding: 10px 10px 9px; */
-	/* min-width: 250px; */
 	text-align: center;
 	border-radius: 8px;
 	margin-bottom: 12px;
 	cursor: pointer;
 	box-sizing: border-box;
-	outline: none;
+	outline: none; */
 }
 
 input[type="text"], textarea {
-	padding: 8px; 
+	/* padding: 8px; 
 	margin-bottom: 8px;
 	font-size: 17px;
 	border-radius: 8px;
 	outline: none;
-	line-height: 1.6;
-	background-color: #ddd;
-	border: 2px solid #999;
+	line-height: 1.6; */
+	/* background-color: #ddd;
+	border: 2px solid #999; */
 }
 
 h1 {
