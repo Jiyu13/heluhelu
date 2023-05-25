@@ -71,7 +71,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 id={a.id}
                                 onClick={() => {window.location.href=`/articles/${a.id}`}}
                             >
-                                {a.id} 
+                                {a.title} 
                             </Link>
                             <br/>
                             {/* ============== progress bar + vocab stats ========================= */}

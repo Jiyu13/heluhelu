@@ -32,7 +32,7 @@ export function NavLinks() {
                     <LinkItem>
                         <Link className="recent-reading" href={`/articles/${articles[0]?.id}`}>
                             Currently Reading
-                            <HideTitle className="last-open-title">{articles[0]?.id}</HideTitle>
+                            <HideTitle className="last-open-title">{articles[0]?.title}</HideTitle>
                         </Link>
                     </LinkItem>
 
