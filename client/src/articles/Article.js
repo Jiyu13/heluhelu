@@ -38,12 +38,10 @@ export function Article() {
     const [article, setArticle] = useState(null)
 
     const {
-            // article, setArticle, 
             user, chosen, setChosen, 
             setErrors, splitText, calculatePages,
             vocabularies, setVocabularies
         } = useContext(UserContext)
-    
     
     const { id } = useParams()
     useEffect(() => {
@@ -53,7 +51,7 @@ export function Article() {
             setCurrentPage(data.current_page)
             setArticle(data.article)
         })
-    }, [id]) // [id] eslint-disable-next-line
+    }, [id]) 
 
     // console.log(article)
     // ==========================================================================

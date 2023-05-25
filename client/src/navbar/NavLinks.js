@@ -4,14 +4,17 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../components/UserContext";
 
+import { useParams } from "react-router-dom"
+
 
 export function NavLinks() {
 
     const {articles} = useContext(UserContext)
-    let lastOpen
-    if (articles) {
-        lastOpen = articles[0]
-    }
+    // let lastOpen
+    // if (articles) {
+    //     lastOpen = articles[0]
+    // }
+
 
     return (
         <>
@@ -27,9 +30,9 @@ export function NavLinks() {
                     </LinkItem>
                     
                     <LinkItem>
-                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>
+                        <Link className="recent-reading" href={`/articles/${articles[0]?.id}`}>
                             Currently Reading
-                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
+                            <HideTitle className="last-open-title">{articles[0]?.id}</HideTitle>
                         </Link>
                     </LinkItem>
 

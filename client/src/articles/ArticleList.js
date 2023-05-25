@@ -14,7 +14,7 @@ import { VocabStats } from "./vocab-stats/VocbStats";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, splitText, calculatePages} = useContext(UserContext)
+    const {user, splitText, calculatePages, setArticle} = useContext(UserContext)
     // console.log(article)
     
 
@@ -69,8 +69,9 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 to={`/articles/${a.id}`} 
                                 style={{textDecoration: 'none', color: "rgb(41, 42, 46)", fontSize: "1.3rem", fontWeight: "700"}} 
                                 id={a.id}
+                                onClick={() => {window.location.href=`/articles/${a.id}`}}
                             >
-                                {a.title}
+                                {a.id} 
                             </Link>
                             <br/>
                             {/* ============== progress bar + vocab stats ========================= */}
