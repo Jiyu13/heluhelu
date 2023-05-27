@@ -65,7 +65,11 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                     <ArticleTitleCell>  
 
                         <ArticleTitle>
-                            <Link to={`/articles/${a.id}`} style={{textDecoration: 'none'}} id={a.id}>
+                            <Link 
+                                to={`/articles/${a.id}`} 
+                                style={{textDecoration: 'none', color: "rgb(41, 42, 46)", fontSize: "1.3rem", fontWeight: "700"}} 
+                                id={a.id}
+                            >
                                 {a.title}
                             </Link>
                             <br/>
@@ -73,11 +77,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                             <ProgressBar article={a} getCurrentPage={getCurrentPage}/>
                             <VocabStats article={a}/>
                             {/* ============== progress bar + vocab stats  ========================= */}
-                    
-
                         </ArticleTitle>
-
-                        
                     </ArticleTitleCell>
 
                     <EditCell>
@@ -86,7 +86,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 <Link to={`/article/edit/${a.id}`} style={{"color": "inherit"}}>
                                     <ButtonImage src={edit_icon} alt="edit icon"/>
                                 </Link>
-                                
                             </Button>
                             <Button >
                                 <ButtonImage src={delete_icon} alt="delete icon" id={a.id} onClick={handleDelete}/>
@@ -116,8 +115,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 }
 
 const ArticlesListContainer = styled.div`
-    margin: 0 auto;
-    margin-top: 72px;
+    margin: 72px auto 0;
     max-width: 750px;
     text-align: center;
     font-size: 20px;
@@ -126,65 +124,29 @@ const ArticlesListContainer = styled.div`
 
 const ArticlesListTable = styled.table`
     width: 100%;
-    box-sizing: border-box;
     max-width: 750px;
-    margin: 0 auto;
     display: table;
     box-sizing: border-box;
-    border-color: gray;
     text-align: center;
+    // margin: 0 auto;
+    // border-color: gray;
 `
 
 const ArticleTitleCell = styled.td`
-    vertical-align: top;
-    background: grey;
-    border-radius: 8px;
-
-    &:hover {
-        background: #575757;
-    }
+    // vertical-align: top;
+    border: 3px solid rgb(227, 231, 239);
+    border-radius: 1.25rem;
 `
 const ArticleTitle = styled.div`
-    color: #ccc;
-    display: block;
     padding: 12px 18px;
     border-radius: 8px;
     font-size: 21px;
-    text-decoration: none;
     text-align: left;
     vertical-align: top;
-    margin-bottom: 10px;
-`
-
-const CompletionBar = styled.div`
-    display: inline-block;
-    backgoround-color: rgba(0,0,0,.2);
-    border: 1px solid #aaa;
-
-    // control the length of the bar
-    width: 100%;
-    max-width: 150px;
-    padding: 0;
-    margin: 8px 0 0;
-    border-radius: 5px;
-`
-
-const CompletionBarProgress = styled.div`
-    width: 1%;
-    background-color: rgba(255,255,255,.4);
-    max-width: 150px;
-    padding: 0;
-    margin: 0;
-    border-radius: 5px;
-    height: 5px;
-`
-
-const CompletionText = styled.span`
-    font-size: 14px;
-    font-weight: bold;
-    color: #aaa!important;
-    line-weight: 1.6;
-    margin: 0 15px;
+    // text-decoration: none;
+    // color: #ccc;
+    // display: block;
+    // margin-bottom: 10px;
 `
 
 const EditCell = styled.td`
