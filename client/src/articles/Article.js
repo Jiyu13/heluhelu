@@ -210,6 +210,7 @@ export function Article() {
     }
 
     function PostAndDelete(word, wordStatus) {
+        console.log(word)
         const vocab= {
             user_id: user.id,
             hawaiian_clean: word,
@@ -244,7 +245,6 @@ export function Article() {
     
     return (
         <>
-        {/* <ProgressBar /> */}
         <ArticleContainer>
 
             {isMobile && isDictionaryOpen && (
@@ -338,8 +338,22 @@ export function Article() {
 
 
                 <TranslationArea>
-                    {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(<WordTracker word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>)}
-                    {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
+                    {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(
+                        <WordTracker 
+                            word={chosen} 
+                            PostAndDelete={PostAndDelete} 
+                            checkStatus={checkStatus}
+                        />
+                    )}
+                    {customWord && (
+                        <CustomWord 
+                            key={customWord.id} 
+                            word={customWord} 
+                            setCustomWord={setCustomWord} 
+                            PostAndDelete={PostAndDelete} 
+                            checkStatus={checkStatus}
+                        />
+                    )}
                     {chosen?.map((word, index) => 
                         <TranslationWord 
                             key={word.id} 

@@ -5,7 +5,12 @@ import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 
 
-export function CustomWord({word, setCustomWord}) {
+import add_icon from "../assets/images/add_icon.svg"
+import check_circle_icon from "../assets/images/check_circle_icon.svg"
+
+
+
+export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
 
 
     const {user} = useContext(UserContext)
@@ -52,6 +57,14 @@ export function CustomWord({word, setCustomWord}) {
         })
     }
 
+
+    function handleMarkStudying() {
+        PostAndDelete(word.word, 1)
+    }
+
+    const bgColor = (checkStatus(word.word) === 1 ? "#2ecc71": "")
+
+
     return (
         <WordItem key={word.id}>
             <Word>
@@ -59,6 +72,12 @@ export function CustomWord({word, setCustomWord}) {
                 <ButtonContainer>
                     <Button type="button" value="Edit" onClick={handleEditClick}/>
                     <Button type="button" value="Delete" onClick={handleDeleteCustomWord}/>
+                    <MarkStudyingImg
+                        src={checkStatus(word.word) === 1 ? check_circle_icon :  add_icon} 
+                        alt="mark studying button"
+                        onClick={handleMarkStudying}
+                        style={{backgroundColor: bgColor}}
+                    />
                 </ButtonContainer>
                 
             </Word>
@@ -99,6 +118,14 @@ export function CustomWord({word, setCustomWord}) {
     )
 }
 
+const MarkStudyingImg = styled.img`
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+`
 
 
 const UpdateButton = styled.input`
