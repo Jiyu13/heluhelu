@@ -39,9 +39,7 @@ export function CustomWord({word, setCustomWord}) {
             user_id: user.id
         }
 
-        console.log(updatedWord)
         
-        console.log(word.id)
         apiFetch(`/user_word/${word.id}`, {
             method: "PATCH",
             headers: {"Content-Type": 'application/json'},
@@ -49,7 +47,6 @@ export function CustomWord({word, setCustomWord}) {
         })
         .then(res => res.json())
         .then(data => {
-
             setCustomWord(data)
             setIsEdit(!isEdit)
         })

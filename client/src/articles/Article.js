@@ -294,7 +294,7 @@ export function Article() {
                 {customWord ? "" :
                     <AddImage 
                         src={add_icon} 
-                        alt="add translation for word button" 
+                        alt="add custom word button" 
                         onClick={handleAddBtn} 
                         id={targetWord}
                     />

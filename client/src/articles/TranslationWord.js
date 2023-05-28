@@ -25,7 +25,7 @@ export function TranslationWord( {word, translation, hawaiian_clean, PostAndDele
                 {word}:
                 <MarkStudyingImg 
                     src={checkStatus(hawaiian_clean) === 1 ? check_circle_icon :  add_icon} 
-                    alt="add translation for word button"
+                    alt="mark studying button"
                     onClick={handleMarkStudying}
                     style={{backgroundColor: bgColor}}
                 />
