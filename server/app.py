@@ -56,8 +56,8 @@ api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_wor
 
 class DictionariesWordsByWord(Resource):
     def get(self, word):
-        # clean_word = ''.join(filter(str.isalpha, word.strip()))
         clean_word = ''.join(word.strip())
+        clean_word = re.sub(r"[^\w\s']", "", clean_word)
 
         # get translation from dictionary_words
         hawaiians = DictionaryWord.query.filter(

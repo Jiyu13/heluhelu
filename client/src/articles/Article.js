@@ -27,7 +27,6 @@ export function Article() {
 
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
 
-    // const [showAddBtn, setAddBtn] = useState(false)
     const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
@@ -65,11 +64,9 @@ export function Article() {
                         .replaceAll("##", "\n\n")                                       
     const paragraphs = textInPages?.split("\n\n").map(p => p.trim())                   // split the formatted text in each page by \n\n and trim every paragraph in that page
     // ==========================================================================
-    // console.log("cur page " + currentPage)
 
     // ===== handle show next/prev page container & update current_page =========
     function handlePrevPage() {
-        // console.log("current", currentPage)
         
         const prevPage = Math.max(currentPage - 1, 0)
         setCurrentPage(prevPage)
@@ -89,8 +86,6 @@ export function Article() {
             words_read = articleWords?.length - (pages - 1)*250
         }
 
-        // console.log(currentPage, nextPage, pages, words_read)
-
         apiFetch('/stats', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -102,7 +97,6 @@ export function Article() {
     }
 
     function updatePageInDB(curr_page) {
-        // console.log("handleCurrentPage", curr_page)
         apiFetch(`/article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
@@ -178,15 +172,13 @@ export function Article() {
             }
         })
     }
-    // console.log("isopen = " + isDictionaryOpen)
-    // console.log(targetWord) // default null
+
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
         setDictionaryOpen(true)
         
         // setTargetWord(newWord.replace(/[".,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace("'", "ʻ"))  //eslint-disable-line
         setTargetWord(newWord.replace("'", "ʻ"))
-        console.log(targetWord)
         if (newWord === "") {
             setChosen(null)
         }
@@ -199,7 +191,6 @@ export function Article() {
                         setChosen(data["dictionary"])
                         // checkCanAddTranslation(data)
                         setDictionaryWords(data.dictionary)
-                        console.log(data.dictionary)
                     })
                 } else {
                     res.json().then(err => setErrors(err.errors))
@@ -209,9 +200,8 @@ export function Article() {
     }
 
     function handleSearchChange(e) {
-        const newWord = e.target.value 
+        const newWord = e.target.value
         updateDictionaryWord(newWord)
-        // console.log(newWord)
     }
 
     function handleCancel() {
