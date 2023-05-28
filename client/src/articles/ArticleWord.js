@@ -11,8 +11,7 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
     }    
 
     const word_clean = word.toLowerCase().replace(/[^0-9a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
-    console.log(word_clean==="")
-    console.log(word_clean)
+
     const match = vocabularies?.filter((v) => v.hawaiian_clean.toLowerCase() === word_clean)[0]
     
     

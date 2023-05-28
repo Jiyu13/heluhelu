@@ -14,7 +14,7 @@ import { VocabStats } from "./vocab-stats/VocbStats";
 
 export function ArticleList( {articles, onDeleteArticle} ) {
 
-    const {user, splitText, calculatePages, setArticle} = useContext(UserContext)
+    const { user, splitText, calculatePages } = useContext(UserContext)
     // console.log(article)
     
 
@@ -33,7 +33,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
         const words = splitText(article)
         const total_pages = calculatePages(words)
         // eslint-disable-next-line
-        // console.log(article) // shared article will not be shown in user_articles at this moment
         const currentUserArticle = articles.filter(a => {
             if (a && a.user_id === user?.id) {
                 return a
@@ -69,7 +68,6 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 to={`/articles/${a.id}`} 
                                 style={{textDecoration: 'none', color: "rgb(41, 42, 46)", fontSize: "1.3rem", fontWeight: "700"}} 
                                 id={a.id}
-                                onClick={() => {window.location.href=`/articles/${a.id}`}}
                             >
                                 {a.title} 
                             </Link>

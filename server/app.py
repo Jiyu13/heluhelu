@@ -56,7 +56,8 @@ api.add_resource(DictionaryWords, '/dictionary_words', endpoint="/dictionary_wor
 
 class DictionariesWordsByWord(Resource):
     def get(self, word):
-        clean_word = ''.join(filter(str.isalpha, word.strip()))
+        # clean_word = ''.join(filter(str.isalpha, word.strip()))
+        clean_word = ''.join(word.strip())
 
         # get translation from dictionary_words
         hawaiians = DictionaryWord.query.filter(
@@ -71,7 +72,6 @@ class DictionariesWordsByWord(Resource):
         
         if hawaiians:
             hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
-            print(hawaiian_dict)
             return make_response(jsonify({
                 "dictionary": hawaiian_dict,
                 "custom": custom_word
@@ -379,7 +379,6 @@ class VocabularyByStatus(Resource):
         """save word into db, status 1->studing, 2->known, 3->igonred"""
         user_id = session["user_id"]
         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
-        print(vocab)
         if vocab:
             
             if vocab.status == status:
@@ -388,8 +387,6 @@ class VocabularyByStatus(Resource):
                 db.session.commit()
                 return make_response({"deleted": True})
             else:
-                # print("before", vocab.status)
-                # print("after", status)
                 vocab.status = status
                 db.session.commit()
                 response = make_response(vocab.to_dict(), 200)

@@ -27,17 +27,17 @@ export function Article() {
 
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
 
-    const [showAddBtn, setAddBtn] = useState(false)
+    // const [showAddBtn, setAddBtn] = useState(false)
     const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
-
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
-    const [article, setArticle] = useState(null)
+    const [dictionaryWords, setDictionaryWords] = useState([])
 
     const {
+            article, setArticle,
             user, chosen, setChosen, 
             setErrors, splitText, calculatePages,
             vocabularies, setVocabularies
@@ -51,9 +51,8 @@ export function Article() {
             setCurrentPage(data.current_page)
             setArticle(data.article)
         })
-    }, [id]) 
+    }, [id, setArticle]) 
 
-    // console.log(article)
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)
@@ -115,14 +114,18 @@ export function Article() {
         })
     }
     // ========= check word avaliability ========================
-    function checkCanAddTranslation(word) {
-        if (word.length === 0) {
-            setAddBtn(true)
-        } else {
-            setAddBtn(false)
-            handleCancel()
-        }
-    }
+    // function checkCanAddTranslation(word) {
+    //     console.log(word)
+    //     if (word.length !== 0) {
+    //         // setAddBtn(true)
+    //         handleCancel()
+    //         return
+    //     } 
+    //     // else {
+    //     //     // setAddBtn(false)
+    //     //     handleCancel()
+    //     // }
+    // }
 
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
@@ -181,10 +184,11 @@ export function Article() {
     function updateDictionaryWord(newWord) {
         setDictionaryOpen(true)
         
-        setTargetWord(newWord.replace(/["'.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))  //eslint-disable-line
+        // setTargetWord(newWord.replace(/[".,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace("'", "ʻ"))  //eslint-disable-line
+        setTargetWord(newWord.replace("'", "ʻ"))
+        console.log(targetWord)
         if (newWord === "") {
             setChosen(null)
-            setAddBtn(false)
         }
         else {
             apiFetch(`/search/${newWord}`)
@@ -193,7 +197,9 @@ export function Article() {
                     res.json().then(data => {
                         setCustomWord(data["custom"])
                         setChosen(data["dictionary"])
-                        checkCanAddTranslation(data)
+                        // checkCanAddTranslation(data)
+                        setDictionaryWords(data.dictionary)
+                        console.log(data.dictionary)
                     })
                 } else {
                     res.json().then(err => setErrors(err.errors))
@@ -205,6 +211,7 @@ export function Article() {
     function handleSearchChange(e) {
         const newWord = e.target.value 
         updateDictionaryWord(newWord)
+        // console.log(newWord)
     }
 
     function handleCancel() {
@@ -341,7 +348,7 @@ export function Article() {
 
 
                 <TranslationArea>
-                    {isDictionaryOpen &&(<WordTracker word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>)}
+                    {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(<WordTracker word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>)}
                     {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
                     {chosen?.map((word, index) => 
                         <TranslationWord 

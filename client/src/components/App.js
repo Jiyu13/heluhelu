@@ -22,7 +22,7 @@ const USER_NOT_SET = -1;
 function App() {
 
   const [articles, setArticles] = useState([])
-  const [article, setArticle] = useState("")
+  const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
   const [errors, setErrors] = useState(null)
@@ -95,11 +95,9 @@ function App() {
         setVocabularies(data)
       })
   }, [])
-  // console.log(vocabularies)
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
-                            // userArticles, setUserArticles,
                             article, setArticle, 
                             articles, setArticles,
                             chosen, setChosen, 
