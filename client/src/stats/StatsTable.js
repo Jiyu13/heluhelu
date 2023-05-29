@@ -59,10 +59,11 @@ export function StatsTable( {readEvents, setReadEvets} ) {
                             </TRow>
                         </tbody>
                     </Table>
+                    <span>* one page = 250 words of text</span>
                 </TableContainer>
             </TableBox>
             <br/>
-            <span>* one page = 250 words of text</span>
+            
         </>
     )
 
