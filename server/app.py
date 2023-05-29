@@ -124,13 +124,23 @@ class Articles(Resource):
 api.add_resource(Articles, '/articles', endpoint="articles")
 
 
+class ArticleFinish(Resource):
+    def patch(self, article_id):
+        current_user = session["user_id"]
+        article = Article.query.filter_by(id=article_id, user_id=current_user).first()
+        article.check_finished = 1
+        db.session.commit()
+        return make_response(article.to_dict(), 200)
+api.add_resource(ArticleFinish, '/article/<int:article_id>')
+        
+
 class ArticleByArticleId(Resource):
     def patch(self, article_id):
         current_user = session["user_id"]
         article = Article.query.filter_by(id=article_id, user_id=current_user).first()
         article.current_page = request.get_json()["current_page"]
         db.session.commit()
-        print(article.current_page)
+        # print(article.current_page)
         return make_response(article.to_dict(), 200)
 
     def delete(self, article_id):

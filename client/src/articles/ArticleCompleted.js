@@ -2,28 +2,44 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+
+import close_btn from "../assets/images/close_btn.svg"
+
 
 export function ArticleCompleted() {
 
-    const [isClose, setClose] = useState(true)
+    const [isClose, setClose] = useState(false)
 
     const {article} = useContext(UserContext)
 
+    let navigate = useNavigate()
+    
 
     function handleClosePopup() {
-        setClose(false)
+        
+        navigate('/')
+        // setClose(false)
+        setClose(true)
     }
 
     const display = isClose ? "" : "none"
 
-    // console.log(article)
+    // console.log(isClose)
     return (
-        <CompleteContainer style={{display: display}}>
+        // style={{display: display}}
+        <CompleteContainer>
             <ContainerHeader>
                 <Title>
                     Reading Completed! - {article?.title}
                 </Title>
-                <CloseButton onClick={handleClosePopup}>&times;</CloseButton>
+                {/* <CloseButton onClick={handleClosePopup}>&times;</CloseButton> */}
+                <CloseButton >
+                {/* style={{"color": "inherit"}} */}
+                    <Link to={`/`} >
+                        <ButtonImage src={close_btn} alt="close icon"/>
+                    </Link>
+                </CloseButton>
             </ContainerHeader>
             <Divider/>
             <ContainerBody>
@@ -32,11 +48,21 @@ export function ArticleCompleted() {
                     <KnownnWords>Known Word</KnownnWords>
                     <StudyingWords>Studying Word</StudyingWords>
                 </ArticleStats>
-                <HomePageButton>Back To Home</HomePageButton>
+                {/* <HomePageButton>Back To Home</HomePageButton> */}
             </ContainerBody>
         </CompleteContainer>
     )
 }
+
+const ButtonImage = styled.img`
+    width: 28px;
+    height: 28px;
+    opacity: 0.5;
+    padding: 0;
+    margin: 3px 0 0 0;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+`
 
 
 const CompleteContainer = styled.div`

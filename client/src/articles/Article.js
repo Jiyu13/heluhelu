@@ -38,7 +38,7 @@ export function Article() {
     const [dictionaryWords, setDictionaryWords] = useState([])
 
     const [currentPage, setCurrentPage] = useState(0)
-    const [finishReading, setFinishReading] = useState(false)
+    const [finishReading, setFinishReading] = useState(null)
     // const [haveReadPages, setReadPages] = useState(0)
 
     const {
@@ -57,6 +57,7 @@ export function Article() {
             setArticle(data.article)
         })
     }, [id]) 
+
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)
@@ -72,11 +73,9 @@ export function Article() {
 
     // ===== handle show next/prev page container & update current_page =========
     const leftArrow = currentPage === 0 ? "hidden" : "visible"
-    // const rightSideBar = currentPage === pages - 1 ? finish_reading_icon : right_arrow_icon
 
     function handlePrevPage() {
-        if (currentPage > 0)
-        {
+        if (currentPage > 0){
             const prevPage = currentPage - 1
             setCurrentPage(prevPage)
             updatePageInDB(prevPage)
@@ -90,25 +89,22 @@ export function Article() {
     
 
     function handleNextPage() {
-        let words_read
         if (currentPage < pages - 1) {
             const nextPage = currentPage + 1
             setCurrentPage(nextPage)
             updatePageInDB(nextPage)
+            handleWordsRead(250)  
+        } 
+    }
 
-            words_read = 250
-            
-        } else if (currentPage === pages - 1) {
-            
-            words_read = articleWords?.length - (pages - 1)*250
-        }
-
+    function handleWordsRead(wordsRead) {
+        
         apiFetch('/stats', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 user_id: user.id,
-                words_read: words_read,
+                words_read: wordsRead,
             }) 
         })
     }
@@ -116,19 +112,34 @@ export function Article() {
 
     // ????????????????????????????
     function handleFinishReading() {
+        console.log(article.check_finished)
+        if ( article.check_finished !== true ) {
+            apiFetch(`/article/${article.id}`, {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    user_id: user.id,
+                    article_id: article.id,
+                    check_finished: 1,
+                })
+            })
+        }
+        // console.log(articleWords?.length - (pages - 1)*250)
+        handleWordsRead(articleWords?.length - (pages - 1)*250)
         setFinishReading(true)
+
     }
 
 
 
-    function updatePageInDB(readPages) {
+    function updatePageInDB(page) {
         apiFetch(`/article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 user_id: user.id,
                 article_id: article.id,
-                current_page: readPages,
+                current_page: page,
             })
         })
     }
@@ -423,8 +434,8 @@ export function Article() {
 
                 />
             )}
-
-            <ArticleCompleted/>
+            {finishReading && (<ArticleCompleted/>)}
+            
         </>
     )
 }
