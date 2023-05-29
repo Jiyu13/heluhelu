@@ -130,7 +130,7 @@ class ArticleByArticleId(Resource):
         article = Article.query.filter_by(id=article_id, user_id=current_user).first()
         article.current_page = request.get_json()["current_page"]
         db.session.commit()
-
+        print(article.current_page)
         return make_response(article.to_dict(), 200)
 
     def delete(self, article_id):

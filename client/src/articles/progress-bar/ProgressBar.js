@@ -2,17 +2,21 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../../components/UserContext"
 
-export function ProgressBar({article, getCurrentPage}) {
+export function ProgressBar({article, getCurtPage}) {
 
     const { calculatePages, splitText} = useContext(UserContext)
+
+    const total_pages = calculatePages(splitText(article))
+
+    console.log(total_pages, article["current_page"])
 
     return (
         <>
             <CompletionBar>
-                <CompletionBarProgress style={{width: `${getCurrentPage(article) * 100 }%`}}/>
+                <CompletionBarProgress style={{width: `${(total_pages - article["current_page"]) * 100 }%`}}/>
             </CompletionBar>
             <CompletionText>
-                {calculatePages(splitText(article))} pgs
+                {total_pages} pgs
             </CompletionText>
         </>
         
@@ -21,21 +25,19 @@ export function ProgressBar({article, getCurrentPage}) {
 
 const CompletionBar = styled.div`
     display: inline-block;
-    backgoround-color: rgba(0,0,0,.2);
+    background-color: rgba(0,0,0,.2);
     border: 1px solid #aaa;
 
     // control the length of the bar
-    width: 100%;
-    max-width: 150px;
+    width:30%;
     padding: 0;
     margin: 8px 0 0;
     border-radius: 5px;
 `
 
 const CompletionBarProgress = styled.div`
-    width: 1%;
-    background-color: rgba(255,255,255,.4);
-    max-width: 150px;
+    // background-color: rgba(255,255,255,.4);
+    background-color: green;
     padding: 0;
     margin: 0;
     border-radius: 5px;

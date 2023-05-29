@@ -7,6 +7,8 @@ import book_material_icon from "../assets/images/book_material_icon.svg"
 import left_arrow_icon from "../assets/images/arrowleft.svg"
 import right_arrow_icon from "../assets/images/arrowright.svg"
 import add_icon from "../assets/images/add_icon.svg"
+import finish_reading_icon from "../assets/images/finish_reading_icon.svg"
+
 
 
 import { ArticleParagraph } from "./ArticleParagraph"
@@ -19,6 +21,7 @@ import { useMediaQuery } from "react-responsive"
 import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
+import { ArticleCompleted } from "./ArticleCompleted"
 // import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
@@ -31,9 +34,12 @@ export function Article() {
     const [wordExistError, setWordExistError] = useState(null)
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
-    const [currentPage, setCurrentPage] = useState(1)
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
     const [dictionaryWords, setDictionaryWords] = useState([])
+
+    const [currentPage, setCurrentPage] = useState(0)
+    const [finishReading, setFinishReading] = useState(false)
+    // const [haveReadPages, setReadPages] = useState(0)
 
     const {
             article, setArticle,
@@ -50,8 +56,7 @@ export function Article() {
             setCurrentPage(data.current_page)
             setArticle(data.article)
         })
-    }, [id, setArticle]) 
-
+    }, [id]) 
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)
@@ -66,23 +71,35 @@ export function Article() {
     // ==========================================================================
 
     // ===== handle show next/prev page container & update current_page =========
+    const leftArrow = currentPage === 0 ? "hidden" : "visible"
+    // const rightSideBar = currentPage === pages - 1 ? finish_reading_icon : right_arrow_icon
+
     function handlePrevPage() {
-        
-        const prevPage = Math.max(currentPage - 1, 0)
-        setCurrentPage(prevPage)
-        updatePageInDB(prevPage)
+        if (currentPage > 0)
+        {
+            const prevPage = currentPage - 1
+            setCurrentPage(prevPage)
+            updatePageInDB(prevPage)
+        } 
+        else if (currentPage === 0) {
+             setCurrentPage(0)
+             updatePageInDB(0)
+        }
+        setFinishReading(false)
     }
+    
 
     function handleNextPage() {
-        const nextPage = Math.min(currentPage + 1, pages - 1)
-        updatePageInDB(nextPage)
-        setCurrentPage(nextPage)
-
-
         let words_read
         if (currentPage < pages - 1) {
+            const nextPage = currentPage + 1
+            setCurrentPage(nextPage)
+            updatePageInDB(nextPage)
+
             words_read = 250
+            
         } else if (currentPage === pages - 1) {
+            
             words_read = articleWords?.length - (pages - 1)*250
         }
 
@@ -96,30 +113,26 @@ export function Article() {
         })
     }
 
-    function updatePageInDB(curr_page) {
+
+    // ????????????????????????????
+    function handleFinishReading() {
+        setFinishReading(true)
+    }
+
+
+
+    function updatePageInDB(readPages) {
         apiFetch(`/article/${article.id}`, {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 user_id: user.id,
                 article_id: article.id,
-                current_page: curr_page,
+                current_page: readPages,
             })
         })
     }
-    // ========= check word avaliability ========================
-    // function checkCanAddTranslation(word) {
-    //     console.log(word)
-    //     if (word.length !== 0) {
-    //         // setAddBtn(true)
-    //         handleCancel()
-    //         return
-    //     } 
-    //     // else {
-    //     //     // setAddBtn(false)
-    //     //     handleCancel()
-    //     // }
-    // }
+
 
     // ========= handle adding custom translation for word ======================
     function handleAddBtn(e) {
@@ -176,9 +189,7 @@ export function Article() {
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
         setDictionaryOpen(true)
-        
-        // setTargetWord(newWord.replace(/[".,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace("'", "ʻ"))  //eslint-disable-line
-        setTargetWord(newWord.replace("'", "ʻ"))
+            setTargetWord(newWord.replace("'", "ʻ"))
         if (newWord === "") {
             setChosen(null)
         }
@@ -189,7 +200,6 @@ export function Article() {
                     res.json().then(data => {
                         setCustomWord(data["custom"])
                         setChosen(data["dictionary"])
-                        // checkCanAddTranslation(data)
                         setDictionaryWords(data.dictionary)
                     })
                 } else {
@@ -210,7 +220,6 @@ export function Article() {
     }
 
     function PostAndDelete(word, wordStatus) {
-        console.log(word)
         const vocab= {
             user_id: user.id,
             hawaiian_clean: word,
@@ -242,168 +251,190 @@ export function Article() {
             return 0
         }
     }
-    
+
     return (
         <>
-        <ArticleContainer>
+            <ArticleContainer>
+
+                {isMobile && isDictionaryOpen && (
+                    /* eslint-disable jsx-a11y/anchor-is-valid */
+                    /* eslint-disable jsx-a11y/anchor-has-content */
+
+                    <a href="#"
+                    style={{"width": "100%", "position": "fixed", "height": "50%"}}
+                    onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
+                    />
+                )}
+
+                <SideBar onClick={handlePrevPage} style={{visibility: leftArrow}}>
+                    <SideBarImage>
+                        <img src={left_arrow_icon} alt="left arrow icon"/>
+                    </SideBarImage>
+                </SideBar>
+            
+                <ReadableArea>
+                    <ReadableContent>
+                    {paragraphs?.map((p, index) => 
+                        <ArticleParagraph 
+                            key={index} 
+                            words={p.split(" ")} 
+                            onWordClicked={updateDictionaryWord} 
+                            setWordExistError={setWordExistError}
+                        />
+                    )}
+                    </ReadableContent>
+                </ReadableArea>
+                
+                {!isMobile && (
+                <DictionaryArea>
+                    <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
+                    <br/>
+                    <PagesContainer>
+                        <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                        <PageDisplay>pg: {currentPage+1} of {pages}</PageDisplay>
+                    </PagesContainer>
+
+                    <SearchArea 
+                        type="text"
+                        value={targetWord}
+                        onChange={handleSearchChange}
+                    />
+
+                    {customWord ? "" :
+                        <AddImage 
+                            src={add_icon} 
+                            alt="add custom word button" 
+                            onClick={handleAddBtn} 
+                            id={targetWord}
+                        />
+                    }
+
+                    {customWord === null && targetWord !== null && chosen?.length === 0 && (
+                        <NotFound>
+                            No results found for '{targetWord}'.
+                        </NotFound>
+                    )}
+                    {showCustomForm && ( 
+                        <CustomForm onSubmit={handleCustomSubmit}>
+                            <Label>Hawaiian:
+                                <br/>
+                                <WordInput
+                                    required
+                                    disabled
+                                    type="text"
+                                    name="word"
+                                    value={formData.word}
+                                />
+                            </Label>
+                            <br/>
+                            <Label>Translation:
+                                <br/>
+                                <TranslationInput
+                                    required
+                                    type="text"
+                                    name="translation"
+                                    value={formData.translation}
+                                    onChange={handleCustomWord}
+                                />
+                                <br/>
+                            </Label>
+                            {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
+                            <br/>
+                            <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
+                            <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
+                        </CustomForm>
+                    )}
+
+
+                    <TranslationArea>
+                        {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(
+                            <WordTracker 
+                                word={chosen} 
+                                PostAndDelete={PostAndDelete} 
+                                checkStatus={checkStatus}
+                            />
+                        )}
+                        {customWord && (
+                            <CustomWord 
+                                key={customWord.id} 
+                                word={customWord} 
+                                setCustomWord={setCustomWord} 
+                                PostAndDelete={PostAndDelete} 
+                                checkStatus={checkStatus}
+                            />
+                        )}
+                        {chosen?.map((word, index) => 
+                            <TranslationWord 
+                                key={word.id} 
+                                word={word.hawaiian} 
+                                translation={word.translation} 
+                                hawaiian_clean={word.hawaiian_clean}
+                                PostAndDelete={PostAndDelete}
+                                checkStatus={checkStatus}
+                            />
+                        )}
+                        
+                    </TranslationArea>
+                </DictionaryArea>
+                )}
+                
+                {currentPage === pages - 1 ?  
+                    <SideBar onClick={handleFinishReading} >
+                        <SideBarImage>
+                            <FinishReadingImg 
+                                src={finish_reading_icon} 
+                                alt="finish reading icon"
+                            />
+                        </SideBarImage>
+                    </SideBar>
+                    :
+                    <SideBar onClick={handleNextPage} >
+                        <SideBarImage>
+                            <img 
+                                src={right_arrow_icon} 
+                                alt="right arrow icon"
+                            />
+                        </SideBarImage>
+                    </SideBar>    
+                }
+            </ArticleContainer>
 
             {isMobile && isDictionaryOpen && (
-                /* eslint-disable jsx-a11y/anchor-is-valid */
-                /* eslint-disable jsx-a11y/anchor-has-content */
+                <DictionaryMobile 
+                    word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}
+                    handleSearchChange={handleSearchChange}
+                    handleAddBtn={handleAddBtn}
+                    handleCustomSubmit={handleCustomSubmit}
+                    handleCustomWord={handleCustomWord}
+                    handleCancel={handleCancel}
+                    articleWords={articleWords}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    targetWord={targetWord}
+                    setTargetWord={setTargetWord}
+                    customWord={customWord} 
+                    setCustomWord={setCustomWord}
+                    initialValues={initialValues}
+                    formData={formData}
+                    setFormData={setFormData}
+                    wordExistError={wordExistError}
+                    pages={pages}
+                    showCustomForm={showCustomForm}
 
-                <a href="#"
-                   style={{"width": "100%", "position": "fixed", "height": "50%"}}
-                   onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
                 />
             )}
 
-            <SideBar onClick={handlePrevPage}>
-                <SideBarImage>
-                    <img src={left_arrow_icon} alt="left arrow icon"/>
-                </SideBarImage>
-            </SideBar>
-           
-            <ReadableArea>
-                <ReadableContent>
-                {paragraphs?.map((p, index) => 
-                    <ArticleParagraph 
-                        key={index} 
-                        words={p.split(" ")} 
-                        onWordClicked={updateDictionaryWord} 
-                        setWordExistError={setWordExistError}
-                    />
-                )}
-                </ReadableContent>
-            </ReadableArea>
-            
-            {!isMobile && (
-            <DictionaryArea>
-                <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
-                <br/>
-                <PagesContainer>
-                    <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                    <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
-                </PagesContainer>
-
-                <SearchArea 
-                    type="text"
-                    value={targetWord}
-                    onChange={handleSearchChange}
-                />
-
-                {customWord ? "" :
-                    <AddImage 
-                        src={add_icon} 
-                        alt="add custom word button" 
-                        onClick={handleAddBtn} 
-                        id={targetWord}
-                    />
-                }
-
-                {customWord === null && targetWord !== null && chosen?.length === 0 && (
-                    <NotFound>
-                        No results found for '{targetWord}'.
-                    </NotFound>
-                )}
-                {showCustomForm && ( 
-                    <CustomForm onSubmit={handleCustomSubmit}>
-                        <Label>Hawaiian:
-                            <br/>
-                            <WordInput
-                                required
-                                disabled
-                                type="text"
-                                name="word"
-                                value={formData.word}
-                            />
-                        </Label>
-                        <br/>
-                        <Label>Translation:
-                            <br/>
-                            <TranslationInput
-                                required
-                                type="text"
-                                name="translation"
-                                value={formData.translation}
-                                onChange={handleCustomWord}
-                            />
-                            <br/>
-                        </Label>
-                        {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
-                        <br/>
-                        <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
-                        <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
-                    </CustomForm>
-                )}
-
-
-                <TranslationArea>
-                    {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(
-                        <WordTracker 
-                            word={chosen} 
-                            PostAndDelete={PostAndDelete} 
-                            checkStatus={checkStatus}
-                        />
-                    )}
-                    {customWord && (
-                        <CustomWord 
-                            key={customWord.id} 
-                            word={customWord} 
-                            setCustomWord={setCustomWord} 
-                            PostAndDelete={PostAndDelete} 
-                            checkStatus={checkStatus}
-                        />
-                    )}
-                    {chosen?.map((word, index) => 
-                        <TranslationWord 
-                            key={word.id} 
-                            word={word.hawaiian} 
-                            translation={word.translation} 
-                            hawaiian_clean={word.hawaiian_clean}
-                            PostAndDelete={PostAndDelete}
-                            checkStatus={checkStatus}
-                        />
-                    )}
-                    
-                </TranslationArea>
-            </DictionaryArea>
-            )}
-            
-            <SideBar onClick={handleNextPage}>
-                <SideBarImage>
-                    <img src={right_arrow_icon} alt="right arrow icon"/>
-                </SideBarImage>
-            </SideBar>
-        </ArticleContainer>
-
-        {isMobile && isDictionaryOpen && (
-            <DictionaryMobile 
-                word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}
-                handleSearchChange={handleSearchChange}
-                handleAddBtn={handleAddBtn}
-                handleCustomSubmit={handleCustomSubmit}
-                handleCustomWord={handleCustomWord}
-                handleCancel={handleCancel}
-                articleWords={articleWords}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                targetWord={targetWord}
-                setTargetWord={setTargetWord}
-                customWord={customWord} 
-                setCustomWord={setCustomWord}
-                initialValues={initialValues}
-                formData={formData}
-                setFormData={setFormData}
-                wordExistError={wordExistError}
-                pages={pages}
-                showCustomForm={showCustomForm}
-
-            />
-        )}
+            <ArticleCompleted/>
         </>
     )
 }
 
+const FinishReadingImg = styled.img`
+    border-radius: 50%;
+    &:hover {
+        background-color: #A1C181;
+    }
+`
 
 const ExistWarning = styled.span`
     color: red;
