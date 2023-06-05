@@ -131,7 +131,7 @@ class ArticleFinish(Resource):
         article.check_finished = 1
         db.session.commit()
         return make_response(article.to_dict(), 200)
-api.add_resource(ArticleFinish, '/article/<int:article_id>')
+api.add_resource(ArticleFinish, '/article/<int:article_id>/check_finish')
         
 
 class ArticleByArticleId(Resource):

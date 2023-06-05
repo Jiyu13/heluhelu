@@ -7,12 +7,13 @@ export function ProgressBar({article, getCurtPage}) {
     const { calculatePages, splitText} = useContext(UserContext)
 
     const total_pages = calculatePages(splitText(article))
-
+    const completed = article["current_page"] + 1
+    console.log(article.title, completed, "total", total_pages)
 
     return (
         <>
             <CompletionBar>
-                <CompletionBarProgress style={{width: `${(total_pages - article["current_page"]) * 100 }%`}}/>
+                <CompletionBarProgress style={{width: `${(completed / total_pages) * 100}%`}}/>
             </CompletionBar>
             <CompletionText>
                 {total_pages} pgs

@@ -95,6 +95,7 @@ export function Article() {
     function handleNextPage() {
         if (currentPage < pages - 1) {
             const nextPage = currentPage + 1
+            console.log(nextPage)
             setCurrentPage(nextPage)
             updatePageInDB(nextPage)
             handleWordsRead(250)  
@@ -118,7 +119,7 @@ export function Article() {
     // ????????????????????????????
     function handleFinishReading() {
         if ( article.check_finished !== true ) {
-            apiFetch(`/article/${article.id}`, {
+            apiFetch(`/article/${article.id}/check_finish`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
