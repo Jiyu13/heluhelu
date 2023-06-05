@@ -7,65 +7,41 @@ import { Link, useNavigate } from "react-router-dom"
 import close_btn from "../assets/images/close_btn.svg"
 
 
-export function ArticleCompleted() {
-
-    const [isClose, setClose] = useState(false)
+export function ArticleCompleted( {totolWords} ) {
 
     const {article} = useContext(UserContext)
 
-    let navigate = useNavigate()
-    
 
-    function handleClosePopup() {
-        
-        navigate('/')
-        // setClose(false)
-        setClose(true)
-    }
-
-    const display = isClose ? "" : "none"
-
-    // console.log(isClose)
     return (
-        // style={{display: display}}
-        <CompleteContainer>
-            <ContainerHeader>
-                <Title>
-                    Reading Completed! - {article?.title}
-                </Title>
-                {/* <CloseButton onClick={handleClosePopup}>&times;</CloseButton> */}
-                <CloseButton >
-                {/* style={{"color": "inherit"}} */}
-                    <Link to={`/`} >
-                        <ButtonImage src={close_btn} alt="close icon"/>
-                    </Link>
-                </CloseButton>
-            </ContainerHeader>
-            <Divider/>
-            <ContainerBody>
-                <ArticleStats>
-                    <TotalWords>Words Read</TotalWords>
-                    <KnownnWords>Known Word</KnownnWords>
-                    <StudyingWords>Studying Word</StudyingWords>
-                </ArticleStats>
-                {/* <HomePageButton>Back To Home</HomePageButton> */}
-            </ContainerBody>
-        </CompleteContainer>
+        <>
+            <PopupContainer>
+                <ContainerHeader>
+                    <Title>
+                        Completed! - {article?.title}
+                    </Title>
+                    <CloseButton>
+                        <Link to={`/`} >
+                            <ButtonImage src={close_btn} alt="close icon"/>
+                        </Link>
+                    </CloseButton>
+                </ContainerHeader>
+                <Divider/>
+                <ContainerBody>
+                    <ArticleStats>
+                        <TotalWords>Words Read - {totolWords}</TotalWords>
+                        <KnownnWords>Known Word</KnownnWords>
+                        <StudyingWords>Studying Word</StudyingWords>
+                    </ArticleStats>
+                    {/* <HomePageButton>Back To Home</HomePageButton> */}
+                </ContainerBody>
+            </PopupContainer>
+            <Overlay></Overlay>
+        </>
     )
 }
 
-const ButtonImage = styled.img`
-    width: 28px;
-    height: 28px;
-    opacity: 0.5;
-    padding: 0;
-    margin: 3px 0 0 0;
-    overflow-clip-margin: content-box;
-    overflow: clip;
-`
-
-
-const CompleteContainer = styled.div`
+// class="sc-lnOvfY hqOYSU"
+const PopupContainer = styled.div`
     position: fixed;
     top: 50%;
     left: 50%;
@@ -73,24 +49,26 @@ const CompleteContainer = styled.div`
     background-color: white;
     border-radius: 10px;
     z-index: 10;
-    width: 400px;
+    width: 350px;
     max-width: 80%;
-    padding: 20px;
 `
-
 const ContainerHeader = styled.div`
-    display: block;
-    
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-item: center;
+
 `
 const Title = styled.div`
-    display: inline-block;
-    
+    font-size: 1.2rem;
+    font-weight: bold;    
 `
 const CloseButton = styled.button`
-    display: inline-block;
+    cursor: pointer;    
     float: right;
+    border: none;
+    background-color: transparent;
 `
-
 
 const Divider = styled.hr`
     width: 90%;
@@ -99,8 +77,30 @@ const Divider = styled.hr`
     height: 1px;
 `
 
+const ButtonImage = styled.img`
+    width: 20px;
+    height: 20px;
+`
 
-const ContainerBody = styled.div``
+const ContainerBody = styled.div`
+    padding: 10px 20px;
+`
+
+
+const Overlay = styled.div`
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    // opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // pointer-events: none;
+`
+
+
+
+
 const ArticleStats = styled.div``
 const TotalWords = styled.div``
 const KnownnWords = styled.div``

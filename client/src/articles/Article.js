@@ -37,6 +37,7 @@ export function Article() {
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
     const [dictionaryWords, setDictionaryWords] = useState([])
 
+    const [totalWords, setTotalWords] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
     const [finishReading, setFinishReading] = useState(null)
     // const [haveReadPages, setReadPages] = useState(0)
@@ -61,7 +62,6 @@ export function Article() {
     // ==========================================================================
     const articleWords = splitText(article)
     const pages = calculatePages(articleWords)
-
     // ==========================================================================
     const textInPages = articleWords?.slice(
                             (currentPage) * PAGE_SIZE, 
@@ -85,6 +85,10 @@ export function Article() {
              updatePageInDB(0)
         }
         setFinishReading(false)
+
+        if (totalWords >= currentPage*250){
+            setTotalWords(totalWords - 250)
+        }
     }
     
 
@@ -94,11 +98,12 @@ export function Article() {
             setCurrentPage(nextPage)
             updatePageInDB(nextPage)
             handleWordsRead(250)  
-        } 
+            setTotalWords(totalWords + 250)
+        }
     }
 
     function handleWordsRead(wordsRead) {
-        
+
         apiFetch('/stats', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -112,7 +117,6 @@ export function Article() {
 
     // ????????????????????????????
     function handleFinishReading() {
-        console.log(article.check_finished)
         if ( article.check_finished !== true ) {
             apiFetch(`/article/${article.id}`, {
                 method: "PATCH",
@@ -124,13 +128,11 @@ export function Article() {
                 })
             })
         }
-        // console.log(articleWords?.length - (pages - 1)*250)
-        handleWordsRead(articleWords?.length - (pages - 1)*250)
+        const lastPageWords = articleWords?.length - (pages - 1)*250
+        handleWordsRead(lastPageWords)
+        setTotalWords(totalWords + lastPageWords)
         setFinishReading(true)
-
     }
-
-
 
     function updatePageInDB(page) {
         apiFetch(`/article/${article.id}`, {
@@ -263,6 +265,8 @@ export function Article() {
         }
     }
 
+
+    const bgColor = article?.check_finished ? "#A1C181" : ""
     return (
         <>
             <ArticleContainer>
@@ -395,6 +399,7 @@ export function Article() {
                             <FinishReadingImg 
                                 src={finish_reading_icon} 
                                 alt="finish reading icon"
+                                style={{backgroundColor: bgColor}}
                             />
                         </SideBarImage>
                     </SideBar>
@@ -434,7 +439,7 @@ export function Article() {
 
                 />
             )}
-            {finishReading && (<ArticleCompleted/>)}
+            {finishReading && (<ArticleCompleted totolWords={totalWords}/>)}
             
         </>
     )
