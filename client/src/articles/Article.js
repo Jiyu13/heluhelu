@@ -22,6 +22,7 @@ import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
+import { MarkNotFound } from "../words/MarkNotFound"
 // import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
@@ -202,8 +203,9 @@ export function Article() {
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
+        
         setDictionaryOpen(true)
-            setTargetWord(newWord.replace("'", "ʻ"))
+        setTargetWord(newWord.replace("'", "ʻ"))
         if (newWord === "") {
             setChosen(null)
         }
@@ -234,6 +236,7 @@ export function Article() {
     }
 
     function PostAndDelete(word, wordStatus) {
+        console.log(word)
         const vocab= {
             user_id: user.id,
             hawaiian_clean: word,
@@ -257,6 +260,7 @@ export function Article() {
 
     // toggle btn stylings
     function checkStatus(word) {
+        console.log(word)
         let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]
@@ -326,9 +330,17 @@ export function Article() {
                     }
 
                     {customWord === null && targetWord !== null && chosen?.length === 0 && (
-                        <NotFound>
-                            No results found for '{targetWord}'.
-                        </NotFound>
+                        <>
+                            <NotFound>
+                                No results found for '{targetWord}'.
+                            </NotFound>
+                            <MarkNotFound 
+                                word={targetWord} 
+                                PostAndDelete={PostAndDelete} 
+                                checkStatus={checkStatus}
+                            />
+                        </>
+                        
                     )}
                     {showCustomForm && ( 
                         <CustomForm onSubmit={handleCustomSubmit}>
