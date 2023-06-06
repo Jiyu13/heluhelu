@@ -5,7 +5,6 @@ import { SubmitButton } from "./import/ArticleImporter";
 import apiFetch from "../api/ApiFetch";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
-    console.log()
     let navigate = useNavigate()
     function redirectArticles() {
         navigate('/')

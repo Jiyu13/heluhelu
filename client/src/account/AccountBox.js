@@ -5,14 +5,6 @@ import {motion} from "framer-motion"
 import { useState } from "react";
 import { AccountContext } from "./AccountContext";
 
-import map_background from "../assets/images/map-background.gif"
-
-import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps"
-import { geoCentroid } from "d3-geo"
-import allIslands from '../data/islands.json'
-
-
-const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/HI-15-hawaii-counties.json"
 
 
 export function AccountBox() {
@@ -42,7 +34,6 @@ export function AccountBox() {
             setActive("login");
         }, 400);
     };
-    // console.log(active)
     // ======================================================
 
     // create context values
@@ -53,93 +44,31 @@ export function AccountBox() {
             
             {/* use AccountContext to spread the context value, make the child components below being able to access context values */}
             <AccountContext.Provider value={contextValue}>
-                <MapContainer>
-                    {/* <img src={bg} alt="map"/> */}
-                    <ComposableMap
-                        viewBox="0 0 138 105"
-                        projection={"geoAlbers"}
-                        height={180}
-                        width={180}
-                        projectionConfig={{ 
-                            center: [-94.4, -328.8], 
-                            scale: 1450,
-                            rotate: [93, 60.0, 0]
-                        }}>
-                                   
-                        <Geographies geography={geoUrl}>
-                            {({ geographies }) => (
-                                <>
-                                    {geographies.map((geo) => (
-                                        <Geography 
-                                            key={geo.rsmKey} 
-                                            geography={geo}
-                                            fill="#ff7675"
-                                            style={{
-                                                default: {
-                                                    fill:"#ff7675",
-                                                    outline: 'none'
-                                                },
-                                                hover: {
-                                                    fill: "#e17055",
-                                                    outline: 'none',
-                                                    transform: 'scale(1.2)'
-                                                },
-                                                pressed: {
-                                                    outline: 'none'
-                                                }
-                                            }}
-                                        />
-                                    ))}
-
-                                    {geographies.map(geo => {
-                                        console.log(geo)
-                                        const centroid = geoCentroid(geo)
-                                        const cur_island = allIslands.find(island => {
-                                            return island.val === geo.properties["COUNTYFP"]
-                                        })
-                                        
-                                        // console.log(centroid)
-                                        // console.log(cur_island.id) 
-
-                                        return (
-                                            <g>
-                                                {
-                                                    cur_island && centroid[0] > -160 && centroid[0] < -67 &&
-                                                    (
-                                                        <Marker coordinates={centroid}>
-                                                            <text y="2" fontSize={4} textAnchor="middle">
-                                                                {cur_island.id}
-                                                            </text>
-                                                        </Marker>
-                                                    )
-                                                    
-                                                }
-                                            </g>
-                                        )
-                         
-                                    })}
-                                </>
-                            )}
-                        </Geographies>
-                    </ComposableMap>
-                </MapContainer>
-                
                 <BoxContainer>
-                    {active === "login" && (
-                        <HeaderContainer>
-                            <HeaderText>Hawaiian</HeaderText>
-                            <HeaderText>Reader</HeaderText>
-                            <SmallText>Please sign-in to continue!</SmallText>
-                        </HeaderContainer>
-                    )}
+                    <TopContainer>
+                        <BackDrop
+                            // initial -> play animation only when a style/state is changed
+                            initial={false}
+                            animate={isExpanded ? "expanded" : "collapsed"}
+                            variants={backdropVariants}
+                            transition={expandingTransition}
+                        />
+                        {active === "login" && (
+                            <HeaderContainer>
+                                <HeaderText>Hawaiian</HeaderText>
+                                <HeaderText>Reader</HeaderText>
+                                <SmallText>Please sign-in to continue!</SmallText>
+                            </HeaderContainer>
+                        )}
 
-                    {active === "signup" && (
-                        <HeaderContainer>
-                            <HeaderText>Create</HeaderText>
-                            <HeaderText>Account</HeaderText>
-                            <SmallText>Please sign-up to continue!</SmallText>
-                        </HeaderContainer>
-                    )}
+                        {active === "signup" && (
+                            <HeaderContainer>
+                                <HeaderText>Create</HeaderText>
+                                <HeaderText>Account</HeaderText>
+                                <SmallText>Please sign-up to continue!</SmallText>
+                            </HeaderContainer>
+                        )}
+                    </TopContainer>
 
                     <InnerContainer>
                         {active === "login" && <LoginForm/>}
@@ -151,34 +80,18 @@ export function AccountBox() {
     )
 }
 
-
-
-
 const AppContainer = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // background-color: #85D2D0;
-    background-image: url("${map_background}");
-    // background-repeat: repeat;
-    // background-size: 60%;
-    box-sizing: border-box;
-    padding-right: 50px;
-
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const MapContainer = styled.div`
-    max-width: 750px;
-    width:75%;
-    margin-top: 50px;
-    margin-right: 50px;
-`
-
 const BoxContainer = styled.div`
-    width: 280px;
     margin-top:50px;
+    width: 280px;
     min-height: 550px;
     display: flex;
     flex-direction: column;
@@ -189,14 +102,42 @@ const BoxContainer = styled.div`
     overflow: hidden;
 `;
 
+// top container that contains the backdrop and title
+const TopContainer = styled.div`
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 1.8em;
+    padding-bottom: 5em;
+`;
+
+// the animation drop using framer-motion
+const BackDrop = styled(motion.div)`
+    width: 160%;
+    height: 550px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 50%;
+    transform: rotate(60deg);
+    top: -290px;
+    left: -70px;
+    background: rgb(46,204,113);
+    background: linear-gradient(
+        58deg, 
+        rgba(46,204,113,1) 0%, 
+        rgba(0,212,255,1) 100%
+    );
+`
 
 // for create account or welcome text
 const HeaderContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    display: block;
+    // move header 80px above
     margin: 80px 0;
 `
 
@@ -205,6 +146,7 @@ const HeaderText = styled.h2`
     font-weight: 600;
     line-height: 1.24;
     color: #222;
+    // color: #fff;
     z-index: 10;
     margin: 0;
 `
@@ -226,6 +168,21 @@ const InnerContainer = styled.div`
     // prevent padding (Signin&Login button) from making 100% width extend beyond InnerContainer
     box-sizing: border-box;
 `
+
+const backdropVariants = {
+    expanded: {
+      width: "233%",
+      height: "1050px",
+      borderRadius: "20%",
+      transform: "rotate(60deg)",
+    },
+    collapsed: {
+      width: "160%",
+      height: "550px",
+      borderRadius: "50%",
+      transform: "rotate(60deg)",
+    },
+  };
 
 // config for the transition, after 2.3s, it starts collapsing again
 const expandingTransition = {

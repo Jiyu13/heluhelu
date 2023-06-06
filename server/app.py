@@ -140,7 +140,6 @@ class ArticleByArticleId(Resource):
         article = Article.query.filter_by(id=article_id, user_id=current_user).first()
         article.current_page = request.get_json()["current_page"]
         db.session.commit()
-        # print(article.current_page)
         return make_response(article.to_dict(), 200)
 
     def delete(self, article_id):
@@ -163,7 +162,6 @@ class ArticleSharedPageByID(Resource):
 
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleSharedPageByID, '/article/share/<int:id>')
-
 
 
 class ArticleReceivePage(Resource):
@@ -270,17 +268,6 @@ class UserWordByID(Resource):
         return make_response()
 api.add_resource(UserWordByID, "/user_word/<int:id>")
 
-# =============================== account ===============================================
-class CheckSession(Resource):
-    def get(self):
-        # if the user is logged in (if their user_id is in the session object):
-        if session.get('user_id'):
-            user = User.query.filter_by(id=session['user_id']).first()
-            if user:
-                return make_response(user.to_dict(), 200)
-        return make_response({'message': '401: Not Authorized'}, 401)
-    
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 # ============================== my stats =======================================
 class PageReadEvents(Resource):
@@ -414,6 +401,18 @@ class VocabularyByStatus(Resource):
 
 api.add_resource(VocabularyByStatus, "/vocabulary/<string:word>/<int:status>") 
 
+# =============================== account ===============================================
+class CheckSession(Resource):
+    def get(self):
+        # if the user is logged in (if their user_id is in the session object):
+        if session.get('user_id'):
+            user = User.query.filter_by(id=session['user_id']).first()
+            if user:
+                return make_response(user.to_dict(), 200)
+        return make_response({'message': '401: Not Authorized'}, 401)
+    
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+
 # ============================== account =========================================
 class Signup(Resource):
     def post(self): 
@@ -447,6 +446,7 @@ class Login(Resource):
         if user:
             if user.authenticate(password):
                 session["user_id"] = user.id
+                session.modified = True
                 return make_response(user.to_dict(), 201)
             return make_response({"message": "Invalid username or password"}, 401)
         return make_response({"message": "Invalid username or password"}, 401)

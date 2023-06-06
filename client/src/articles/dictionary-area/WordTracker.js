@@ -17,12 +17,10 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
     
 
     function handleChangeToKnown() {
-        // console.log(word)
         PostAndDelete(trackWord, 2)
     }
 
     function handleIgnoredWord() {
-        // console.log(trackWord)
         PostAndDelete(trackWord, 3)
     }
 

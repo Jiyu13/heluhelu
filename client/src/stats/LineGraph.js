@@ -1,4 +1,6 @@
+// eslint-disable-next-line
 import Chart from 'chart.js/auto'
+
 import { useEffect, useState } from 'react';
 import { Line } from "react-chartjs-2";
 import apiFetch from '../api/ApiFetch';
@@ -16,7 +18,6 @@ export function LineGraph() {
         .then(data => setReadingStats(data))
     }, [current_month])
 
-    // console.log(readingStats)
 
     let labels = []
     for (let i = 30; i > 1; i--) {

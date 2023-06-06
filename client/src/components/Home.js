@@ -5,7 +5,7 @@ import import_icon from "../assets/images/note_add_white_24dp.svg"
 import { Link } from "react-router-dom";
 
 
-export function Home({articles, onDeleteArticle}) {
+export function Home({articles, onDeleteArticle}) {   
 
     return (
         <HomepageContainer>

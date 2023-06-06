@@ -13,7 +13,6 @@ export function TranslationWord( {word, translation, hawaiian_clean, PostAndDele
 
     function handleMarkStudying() {
         PostAndDelete(hawaiian_clean, 1)
-        // console.log(checkStatus(hawaiian_clean))
     }
 
     

@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { LineGraph } from "./LineGraph"
 
 export function StatsTable( {readEvents, setReadEvets} ) {
-    // console.log(readEvents)
 
     return (
         <>  

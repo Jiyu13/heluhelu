@@ -15,8 +15,6 @@ import { VocabStats } from "./vocab-stats/VocbStats";
 export function ArticleList( {articles, onDeleteArticle} ) {
 
     const { user, splitText, calculatePages } = useContext(UserContext)
-    // console.log(article)
-    
 
     function handleDelete(e) {
         const article_id = parseInt(e.target.id)

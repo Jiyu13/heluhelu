@@ -16,7 +16,6 @@ export function MobileNavLinks() {
 
     const {articles} = useContext(UserContext)
     const lastOpen = articles[0]
-    // console.log(lastOpen)
 
     return (
         <>

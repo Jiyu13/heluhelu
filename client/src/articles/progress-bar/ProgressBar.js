@@ -8,7 +8,6 @@ export function ProgressBar({article, getCurtPage}) {
 
     const total_pages = calculatePages(splitText(article))
     const completed = article["current_page"] + 1
-    console.log(article.title, completed, "total", total_pages)
 
     return (
         <>

@@ -57,6 +57,7 @@ export function Article() {
             setCurrentPage(data.current_page)
             setArticle(data.article)
         })
+        // eslint-disable-next-line
     }, [id]) 
 
     // ==========================================================================
@@ -95,7 +96,6 @@ export function Article() {
     function handleNextPage() {
         if (currentPage < pages - 1) {
             const nextPage = currentPage + 1
-            console.log(nextPage)
             setCurrentPage(nextPage)
             updatePageInDB(nextPage)
             handleWordsRead(250)  
