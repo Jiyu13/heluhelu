@@ -16,7 +16,7 @@ export function VocabStats( {article} ) {
 
 
     function countWords(saveVocabs) {
-        return all_word?.filter(w => saveVocabs.includes(w)).length
+        return all_word?.filter(w => saveVocabs?.includes(w)).length
     }
 
     const knownVocab = searchVocabs(2)
