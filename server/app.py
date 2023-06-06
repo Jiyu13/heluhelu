@@ -66,7 +66,7 @@ class DictionariesWordsByWord(Resource):
 
         # get tranlastion from user_words
         custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
-
+        
         if custom_word:
             custom_word = custom_word.to_dict()
         
