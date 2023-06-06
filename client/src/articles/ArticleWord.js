@@ -2,20 +2,19 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 
+
 export function ArticleWord({ word, onWordClicked, setWordExistError }) {
     const {vocabularies} = useContext(UserContext)
 
     function handleClick(e) {
-        setWordExistError(null)
-        onWordClicked(e.target.innerHTML)
-    }    
+            setWordExistError(null)
+            onWordClicked(e.target.innerHTML)
+    }
 
-    const word_clean = word.toLowerCase().replace(/[^0-9a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
-
+    const word_clean = word.toLowerCase().replace(/[^a-zā-ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]
+    
+    
     const match = vocabularies?.filter((v) => v.hawaiian_clean.toLowerCase() === word_clean)[0]
-    
-    
-    
     let styling = "rgba(112, 161, 255, 0.5)"
     if (match) {
         // & word_clean!==""
@@ -36,16 +35,42 @@ export function ArticleWord({ word, onWordClicked, setWordExistError }) {
                 styling = "rgba(112, 161, 255, 0.5)"
         }
     } 
+
+    let disableClick = false
     if (word_clean === "") {
         styling = ""
+        disableClick = true
     }
 
+
     return (
-        <WordContainer onClick={handleClick} style={{backgroundColor: styling}}>
-            {word}
-        </WordContainer>
+        
+        <>
+            {disableClick ? 
+                <DisableWordContainer>
+                    {word}
+                </DisableWordContainer>
+                
+
+                :
+
+                <WordContainer onClick={handleClick} style={{backgroundColor: styling}}>
+                    {word}
+                </WordContainer>
+            }
+        </>
+
+        
+
+        
     )
 }
+
+const DisableWordContainer = styled.span`
+    pointer-events: none;
+    background-color: none;
+    margin-right: 10px;
+`
 
 const WordContainer = styled.div`
     border-radius: 5px;
