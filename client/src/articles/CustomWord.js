@@ -36,7 +36,6 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log("submitted")
 
         const updatedWord = {
             word: formData.word,

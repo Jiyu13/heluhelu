@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 export function WordTracker( {word, PostAndDelete, checkStatus} ) {
-
     const vocabStatusType = {
         Unknown: 0, 
         Studying: 1,

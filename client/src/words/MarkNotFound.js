@@ -9,7 +9,6 @@ const vocabStatusType = {
 
 
 export function MarkNotFound( { word, PostAndDelete,checkStatus } ) {
-    // console.log(word)
     function handleChangeToKnown() {
         PostAndDelete(word, 2)
     }
