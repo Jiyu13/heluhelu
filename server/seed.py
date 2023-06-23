@@ -101,13 +101,31 @@ def upload_dictionary():
         lines = file.readlines()
         for line in lines:
             word_translation = line.split('\t')
-            w_t = DictionaryWord(
-                hawaiian=word_translation[0], 
-                translation=word_translation[1],
-                dictionary_id=new_dictionary.id
-            )
-            w_t.hawaiian_clean = w_t.hawaiian.replace(".","").replace("-", "")
-            all_words.append(w_t)
+
+            # =================================================
+            # check if ", " in the hawaiian word
+            word = word_translation[0]
+            if ", " in word:
+                word_list = word.split(", ")
+                for each in word_list:
+                    w_t = DictionaryWord(
+                        hawaiian=each,
+                        translation=word_translation[1],
+                        dictionary_id=new_dictionary.id
+                    )
+                    w_t.hawaiian_clean = w_t.hawaiian.replace(".","").replace("-", "")
+                    all_words.append(w_t)
+            else:
+                w_t = DictionaryWord(
+                    hawaiian=word, 
+                    translation=word_translation[1],
+                    dictionary_id=new_dictionary.id
+                )
+                w_t.hawaiian_clean = w_t.hawaiian.replace(".","").replace("-", "")
+                all_words.append(w_t)
+            # ===================================================
+            # w_t.hawaiian_clean = w_t.hawaiian.replace(".","").replace("-", "")
+            # all_words.append(w_t)
     db.session.add_all(all_words)
     db.session.commit()
 
