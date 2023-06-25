@@ -203,7 +203,6 @@ export function Article() {
 
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
-        
         setDictionaryOpen(true)
         setTargetWord(newWord.replace("'", "ʻ"))
         if (newWord === "") {
@@ -236,7 +235,6 @@ export function Article() {
     }
 
     function PostAndDelete(word, wordStatus) {
-        console.log(word)
         const vocab= {
             user_id: user.id,
             hawaiian_clean: word,
@@ -260,7 +258,6 @@ export function Article() {
 
     // toggle btn stylings
     function checkStatus(word) {
-        console.log(word)
         let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]

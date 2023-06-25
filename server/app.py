@@ -377,7 +377,6 @@ class VocabularyByStatus(Resource):
         user_id = session["user_id"]
         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
         if vocab:
-            
             if vocab.status == status:
                 
                 db.session.delete(vocab)
