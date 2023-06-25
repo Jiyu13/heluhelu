@@ -267,7 +267,6 @@ export function Article() {
         }
     }
 
-
     const bgColor = article?.check_finished ? "#A1C181" : ""
     return (
         <>
@@ -326,19 +325,6 @@ export function Article() {
                         />
                     }
 
-                    {customWord === null && targetWord !== null && chosen?.length === 0 && (
-                        <>
-                            <NotFound>
-                                No results found for '{targetWord}'.
-                            </NotFound>
-                            <MarkNotFound 
-                                word={targetWord} 
-                                PostAndDelete={PostAndDelete} 
-                                checkStatus={checkStatus}
-                            />
-                        </>
-                        
-                    )}
                     {showCustomForm && ( 
                         <CustomForm onSubmit={handleCustomSubmit}>
                             <Label>Hawaiian:
@@ -370,15 +356,32 @@ export function Article() {
                         </CustomForm>
                     )}
 
+                    {/* {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&( */}
+                    {isDictionaryOpen && chosen &&(
+                        <WordTracker
+                            target={targetWord} 
+                            word={chosen} 
+                            PostAndDelete={PostAndDelete} 
+                            checkStatus={checkStatus}
+                        />
+                    )}
 
-                    <TranslationArea>
-                        {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&(
-                            <WordTracker 
-                                word={chosen} 
+                    {customWord === null && targetWord !== null && chosen?.length === 0 && (
+                        <>
+                            <NotFound>
+                                No results found for '{targetWord}'.
+                            </NotFound>
+                            {/* <MarkNotFound 
+                                word={targetWord} 
                                 PostAndDelete={PostAndDelete} 
                                 checkStatus={checkStatus}
-                            />
-                        )}
+                            /> */}
+                        </>
+                        
+                    )}
+
+                    <TranslationArea>
+                        
                         {customWord && (
                             <CustomWord 
                                 key={customWord.id} 

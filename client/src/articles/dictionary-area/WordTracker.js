@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
-export function WordTracker( {word, PostAndDelete, checkStatus} ) {
+export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
+    // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
         Unknown: 0, 
         Studying: 1,
@@ -9,10 +10,19 @@ export function WordTracker( {word, PostAndDelete, checkStatus} ) {
     }
 
 
-    let trackWord 
+    let trackWord
     if (word && (word?.length) !== 0) {
-        trackWord = word[0]["hawaiian_clean"]
-    }
+        // might need to compare it to word(array from dictionary words) if the 1st !== readable word
+        const wordToTrack = word.filter(w => 
+            w["hawaiian_clean"] === target
+        )
+        if (wordToTrack.length > 0) {
+            trackWord = wordToTrack[0]
+        } else {
+            trackWord = target
+        }
+    } 
+    else {trackWord = target}
     
 
     function handleChangeToKnown() {
