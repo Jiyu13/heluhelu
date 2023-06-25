@@ -1,13 +1,6 @@
 import styled from "styled-components"
 
 
-
-const vocabStatusType = {
-    Known: 2,
-    Ignored: 3,
-}
-
-
 export function MarkNotFound( { word, PostAndDelete,checkStatus } ) {
     function handleChangeToKnown() {
         PostAndDelete(word, 2)
