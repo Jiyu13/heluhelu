@@ -17,14 +17,14 @@ export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
             w["hawaiian_clean"] === target
         )
         if (wordToTrack.length > 0) {
-            trackWord = wordToTrack[0]
+            trackWord = wordToTrack[0]["hawaiian_clean"]
         } else {
             trackWord = target
         }
     } 
     else {trackWord = target}
     
-
+    
     function handleChangeToKnown() {
         PostAndDelete(trackWord, 2)
     }
