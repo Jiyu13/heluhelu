@@ -17,7 +17,7 @@ body {
   font-family: "Helvetica", sans-serif;
 }
 
-input[type="submit"], button {
+/* input[type="submit"], button {
 	margin-top: 12px;
     margin-right: 12px;
     padding: 12px;
@@ -28,29 +28,11 @@ input[type="submit"], button {
 	background-color: #00B09B;
 	background-image: linear-gradient(to right, #00B09B, #96C93D);
 	opacity: 0.8;
-}
-input[type="submit"], button:hover {
+} */
+/* input[type="submit"], button:hover {
 	opacity: 1;
     cursor: pointer;
-}
-
-input[type="button"] {
-	margin-top: 12px;
-    margin-right: 12px;
-    width: 100px;
-    padding: 12px;
-	color: white;
-	font-weight: 700;
-	border-style: none;
-	border-radius: 8px;
-	background-color: #de801c;
-	opacity: 0.8;
-}
-
-input[type="button"]:hover {
-	opacity: 1;
-    cursor: pointer;
-}
+} */
 
 input[type="text"], textarea {
 	/* padding: 8px; 
