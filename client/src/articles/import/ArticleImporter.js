@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useContext } from "react";
 import { UserContext } from "../../components/UserContext";    
 import apiFetch from '../../api/ApiFetch';
+import { ButtonButtons, SubmitButtons } from '../../components/Buttons';
 
 
 
@@ -89,9 +90,9 @@ function ArticleImporter() {
 
 export default ArticleImporter;
 
-const ImportButton = styled.input``
+const ImportButton = styled(ButtonButtons)``
 
-export const SubmitButton = styled.input`
+const SubmitButton = styled(SubmitButtons)`
     width: 100px;
 `
 const PasteBox = styled.div`

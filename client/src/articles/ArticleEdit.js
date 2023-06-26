@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { SubmitButton } from "./import/ArticleImporter";
 import apiFetch from "../api/ApiFetch";
+import { SubmitButtons } from "../components/Buttons";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
     let navigate = useNavigate()
@@ -80,6 +80,9 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
 }
 
+const SubmitButton = styled(SubmitButtons) `
+    width: 100px;
+`
 
 const EditContainer = styled.div`
     text-align: center;

@@ -7,6 +7,7 @@ import apiFetch from "../api/ApiFetch"
 
 import add_icon from "../assets/images/add_icon.svg"
 import check_circle_icon from "../assets/images/check_circle_icon.svg"
+import { ButtonButtons, SubmitButtons } from "../components/Buttons"
 
 
 
@@ -69,8 +70,9 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
             <Word>
                 {word.word}:
                 <ButtonContainer>
-                    <Button type="button" value="Edit" onClick={handleEditClick}/>
-                    <Button type="button" value="Delete" onClick={handleDeleteCustomWord}/>
+                    <EditDelete type="submit" className="edit-delete" value="Edit" onClick={handleEditClick} />
+                    <EditDelete type="submit" className="edit-delete" value="Delete" onClick={handleDeleteCustomWord} />
+
                     <MarkStudyingImg
                         src={checkStatus(word.word) === 1 ? check_circle_icon :  add_icon} 
                         alt="mark studying button"
@@ -81,6 +83,8 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
                 
             </Word>
             <Translation>{word.translation}</Translation>
+            {/* <br></br> */}
+            
             {isEdit && (
                 <EditForm onSubmit={handleSubmit}>
                     <Label>Hawaiian:
@@ -106,7 +110,7 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
                     />
                     <br/>
                     </Label>
-                    <UpdateButton type="submit" value="Update" style={{"background-color": "rgb(8, 61, 116)", "color": "white"}}/>
+                    <UpdateButton type="submit" value="Update" />
                     <CancelButton type="button" value="Cancel" onClick={() => setIsEdit(!isEdit)}/>
                 </EditForm>
             )}
@@ -117,38 +121,49 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
     )
 }
 
+
+
+const EditDelete = styled(SubmitButtons)`
+    width: auto;
+    margin-top: 0;
+    margin-right: 5px;
+    font-weight: normal;
+    font-size: 15px;
+    padding: 3px 5px;
+    vertical-align: middle;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
+
 const MarkStudyingImg = styled.img`
     float: right;
     width: 25px;
     height: 25px;
+    margin-top: 5px;
     margin-right: 8px;
     cursor: pointer;
     border-radius: 50%;
+    vertical-align: middle;
 `
 
 
-const UpdateButton = styled.input`
-    width: 90%;
+const UpdateButton = styled(SubmitButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
+    margin-top: 0px;
+    padding: 6px 4px;
+
 `
 
-const CancelButton = styled.input`
-    width: 90%;
+const CancelButton = styled(ButtonButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 700;
+    margin-top: 0px;
+    padding: 6px 4px;
 `
 
 const TranslationInput = styled.textarea`
@@ -167,20 +182,10 @@ const Label = styled.label`
 `
 
 const EditForm = styled.form`
-    // max-width: 265px;
     border: 1px solid #eee;
-    margin-top: 35px;
+    margin-top: 15px;
     padding: 10px;
     text-align: center;
-`
-
-const Button = styled.input`
-    color: #2980b9;
-    cursor: pointer;
-    padding-left: 8px;
-    border: none;
-    background: none;
-    display: inline-block;
 `
 const ButtonContainer = styled.div`
     margin-left: auto;

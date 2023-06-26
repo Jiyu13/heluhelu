@@ -3,8 +3,8 @@ import { useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../../components/UserContext"
 import { Link, useNavigate } from "react-router-dom"
-import { SubmitButton } from "./ArticleImporter"
 import apiFetch from "../../api/ApiFetch"
+import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
 
 export function FileImporter() {
 
@@ -100,7 +100,10 @@ export function FileImporter() {
     )
 }
 
-const ImportButton = styled.input``
+const ImportButton = styled(ButtonButtons)``
+const SubmitButton = styled(SubmitButtons)`
+    width: 100px;
+`
 
 const FileBox = styled.div`
     background-color: rgb(204, 204, 204);

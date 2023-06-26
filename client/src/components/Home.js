@@ -3,6 +3,7 @@ import { ArticleList } from "../articles/ArticleList";
 
 import import_icon from "../assets/images/note_add_white_24dp.svg"
 import { Link } from "react-router-dom";
+import { ButtonElements } from "./Buttons";
 
 
 export function Home({articles, onDeleteArticle}) {   
@@ -30,11 +31,11 @@ export function Home({articles, onDeleteArticle}) {
 }
 
 // ------------------import btn---------------------------
-const ImportButton = styled.button`
+const ImportButton = styled(ButtonElements)`
+    margin-top: 12px;
     padding: 8px;
-    margin-right: 0;
     width: 130px;
-    cursor: pointer;
+    font-size: 1.2rem;
 `
 
 const ButtonSpan = styled.span`
