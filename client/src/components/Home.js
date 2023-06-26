@@ -35,11 +35,6 @@ const ImportButton = styled.button`
     margin-right: 0;
     width: 130px;
     cursor: pointer;
-    &:hover {
-        transform: scale(1.2);
-        transition-duration: 0.5s;
-        
-    }
 `
 
 const ButtonSpan = styled.span`
