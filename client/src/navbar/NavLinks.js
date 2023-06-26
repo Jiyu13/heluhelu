@@ -9,6 +9,8 @@ export function NavLinks() {
 
     const {articles, article} = useContext(UserContext)
     const currentArticle = article !== null ? article : articles?.[0]
+    // console.log(currentArticle.length)
+
 
     return (
         <>
@@ -23,11 +25,22 @@ export function NavLinks() {
                         <Link href="/stats">My Stats</Link>
                     </LinkItem>
                     
+                    
                     <LinkItem>
-                        <Link className="recent-reading" href={`/articles/${currentArticle?.id}`}>
-                            Currently Reading
-                            <HideTitle className="last-open-title">{currentArticle?.title}</HideTitle>
-                        </Link>
+                        {currentArticle ? 
+                            <Link 
+                                className="recent-reading"
+                                href={`/articles/${currentArticle?.id}`}
+                            >
+                                Currently Reading
+                                <HideTitle className="last-open-title">{currentArticle?.title}</HideTitle>
+                            </Link>
+                            :
+                            <Link className="recent-reading" style={{cursor: "pointer"}}>
+                                Currently Reading
+                                <HideTitle className="last-open-title">No current reading.</HideTitle>
+                            </Link>
+                        }    
                     </LinkItem>
 
                 </LinksWrapper>
