@@ -89,20 +89,11 @@ function ArticleImporter() {
 
 export default ArticleImporter;
 
-const ImportButton = styled.input`
-    margin-top: 12px;
+const ImportButton = styled.input``
+
+export const SubmitButton = styled.input`
     width: 100px;
-    padding: 8px;
-    background: #feca57;
-    color: white;
-    border-radius: 8px;
-    border: none;
-
-    &:hover {
-        background: #ff9f43; !important;
-    }
 `
-
 const PasteBox = styled.div`
     background-color: rgba(255, 255, 255, 0.4);
     padding: 18px;
@@ -135,22 +126,10 @@ const ArticleTitle = styled.input`
     background-color: #ddd;
     border: 2px solid #999;
     padding: 8px;
+    margin-top: 8px;
     margin-bottom: 8px;
     font-size: 17px;
     border-radius: 8px;
     outline: none;
     line-weight: 1.6;
-`
-
-
-export const SubmitButton = styled.input`
-    margin-top: 12px;
-    margin-right: 12px;
-    width: 100px;
-    padding: 8px;
-
-    &:hover {
-        background: rgb(8, 61, 116) !important;
-        color: white;
-      }
 `
