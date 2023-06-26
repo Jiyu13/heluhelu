@@ -34,7 +34,7 @@ function App() {
     apiFetch('/articles')
         .then(res => res.json())
         .then(articles => setArticles(articles))
-  }, [])
+  }, [user])
 
   
   // ========= check session - user remains logged in ========
