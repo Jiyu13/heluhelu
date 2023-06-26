@@ -204,12 +204,13 @@ export function Article() {
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
         setDictionaryOpen(true)
-        setTargetWord(newWord.replace("'", "ʻ"))
-        if (newWord === "") {
+        const cleanWord = newWord.replace("'", "ʻ").replace(/[^a-zā-ūʻ ]+/g, "")
+        setTargetWord(cleanWord)
+        if (cleanWord === "") {
             setChosen(null)
         }
         else {
-            apiFetch(`/search/${newWord}`)
+            apiFetch(`/search/${cleanWord}`)
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
@@ -235,20 +236,22 @@ export function Article() {
     }
 
     function PostAndDelete(word, wordStatus) {
+        // remove punctuations
+        const clean_word = word.replace(/[^a-zā-ūʻ ]+/g, "")
         const vocab= {
             user_id: user.id,
-            hawaiian_clean: word,
+            hawaiian_clean: clean_word,
             status: wordStatus
         }
 
-        apiFetch(`/vocabulary/${word}/${wordStatus}`, {
+        apiFetch(`/vocabulary/${clean_word}/${wordStatus}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(vocab)
         })
         .then(res => res.json())
         .then(data => {
-            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== word)
+            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== clean_word)
             if (!data.deleted) {
                 updatedVocabs.push(data)
             }
