@@ -112,7 +112,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 }
 
 const ArticlesListContainer = styled.div`
-    margin: 72px auto 0;
+    margin: 45px auto 0;
     max-width: 750px;
     text-align: center;
     font-size: 20px;
