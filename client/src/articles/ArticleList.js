@@ -54,7 +54,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
 
     return (
     <ArticlesListContainer>
-        {articles.length ?  
+        {articles?.length ?  
         <ArticlesListTable>
             <tbody>
             {articles.map(a =>
