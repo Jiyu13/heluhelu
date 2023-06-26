@@ -8,62 +8,47 @@ import { Link } from "react-router-dom";
 export function Home({articles, onDeleteArticle}) {   
 
     return (
-        <HomepageContainer>
+        <div>
             <HomepageTitle>Heluhelu</HomepageTitle>
             <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
             <HomepageButtonContainer className="upload-buttons">
-                
-                <ImportButton title="import text/article">
-                    <Link to={"/import/text"} style={{textDecoration: "none"}}>
-                        <span style={{display:"flex"}}>
-                            <ImportIcon src={import_icon}/>
-                            <InnerText>Import</InnerText>
-                            {/* <DropDownIcon src={drop_down}/> */}
-                        </span>
-                    </Link>
-                </ImportButton>
-                
-
+                <Link to={"/import/text"}>
+                    <ImportButton value="Import">
+                        <ButtonSpan>
+                            <img src={import_icon} alt="import new content"/>
+                        </ButtonSpan>
+                        <ButtonSpan>Import</ButtonSpan>
+                    </ImportButton>
+                </Link>
             </HomepageButtonContainer>
 
             <ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>
 
-        </HomepageContainer>
+        </div>
     ) 
 }
 
 // ------------------import btn---------------------------
 const ImportButton = styled.button`
-    background-color: #192a56;
-    border-radius: 8px;
-    display: inline-block;
-    align-items : center;
+    padding: 8px;
+    margin-right: 0;
+    width: 130px;
     cursor: pointer;
-    text-align: center;
-    pointer-events: auto;
-
     &:hover {
         transform: scale(1.2);
         transition-duration: 0.5s;
+        
     }
 `
 
-const ImportIcon = styled.img`
-    margin: 5px;
-`
-
-
-const InnerText = styled.span`
-    margin: 5px;
-    font-size: 1.2rem;
-    color: #fff;
-`
-
-// ------------------import btn---------------------------
-
-
-const HomepageContainer = styled.div`
+const ButtonSpan = styled.span`
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    &:first-child {
+        padding-right: 4px;
+    }
 `
 
 const HomepageTitle = styled.h1`
@@ -89,6 +74,4 @@ const HomepageText = styled.div`
 const HomepageButtonContainer = styled.div`
     display: block;
     text-align: center;
-    font-size: 20px;
-    line-weight: 1.6;
 `

@@ -100,19 +100,7 @@ export function FileImporter() {
     )
 }
 
-const ImportButton = styled.input`
-    margin-top: 12px;
-    width: 100px;
-    padding: 8px;
-    background: #feca57;
-    color: white;
-    border-radius: 8px;
-    border: none;
-
-    &:hover {
-        background: #ff9f43; !important;
-    }
-`
+const ImportButton = styled.input``
 
 const FileBox = styled.div`
     background-color: rgb(204, 204, 204);
