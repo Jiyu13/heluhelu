@@ -9,8 +9,6 @@ export function NavLinks() {
 
     const {articles, article} = useContext(UserContext)
     const currentArticle = article !== null ? article : articles?.[0]
-    // console.log(currentArticle.length)
-
 
     return (
         <>
