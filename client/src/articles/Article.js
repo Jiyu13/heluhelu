@@ -26,6 +26,7 @@ import { DropDown } from "../components/DropDown"
 
 
 import { MarkNotFound } from "../words/MarkNotFound"
+import { ButtonButtons, SubmitButtons } from "../components/Buttons"
 // import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
@@ -366,7 +367,7 @@ export function Article() {
                             <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                         </CustomForm>
                     )}
-
+                    <br/>
                     {/* {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&( */}
                     {isDictionaryOpen && chosen &&(
                         <WordTracker
@@ -481,28 +482,20 @@ const ExistWarning = styled.span`
     font-size: 12px;
 `
 
-const CancelButton = styled.input`
-    width: 90%;
+const CancelButton = styled(ButtonButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 700;
+    margin-top: 0px;
+    padding: 6px 4px;
 `
 
-const SaveButton = styled.input`
-    width: 90%;
+const SaveButton = styled(SubmitButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
+    margin-top: 0px;
+    padding: 6px 4px;
 `
 
 const TranslationInput = styled.input`
