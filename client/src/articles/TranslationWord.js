@@ -75,4 +75,5 @@ const Word = styled.div`
 const Translation = styled.div`
     display: inline;
     width: 100%;
+    white-space: pre-wrap;
 `
