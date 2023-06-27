@@ -14,7 +14,7 @@ export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
     if (word && (word?.length) !== 0) {
         // might need to compare it to word(array from dictionary words) if the 1st !== readable word
         const wordToTrack = word.filter(w => 
-            w["hawaiian_clean"] === target
+            w["hawaiian_clean"].toLowerCase() === target.toLowerCase()
         )
         if (wordToTrack.length > 0) {
             trackWord = wordToTrack[0]["hawaiian_clean"]
@@ -23,7 +23,6 @@ export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
         }
     } 
     else {trackWord = target}
-    
     
     function handleChangeToKnown() {
         PostAndDelete(trackWord, 2)
