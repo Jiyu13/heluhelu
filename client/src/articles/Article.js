@@ -22,7 +22,7 @@ import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
-import { ArticleStats } from "../stats/ArticleStats"
+import { DropDown } from "../components/DropDown"
 
 
 import { MarkNotFound } from "../words/MarkNotFound"
@@ -295,9 +295,10 @@ export function Article() {
                 </SideBar>
             
                 <ReadableArea>
+                    <header>
+                        <DropDown/>
+                    </header>
                     
-                    <ArticleStats/>
-
                     <ReadableContent>
                     {paragraphs?.map((p, index) => 
                         <ArticleParagraph 
