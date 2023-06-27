@@ -207,7 +207,7 @@ export function Article() {
     // ========= Search word ====================================================
     function updateDictionaryWord(newWord) {
         setDictionaryOpen(true)
-        const cleanWord = newWord.replace("'", "ʻ").replace(/[^a-zā-ūʻ ]+/g, "")
+        const cleanWord = newWord.replace("'", "ʻ").replace(/[^a-zA-Zā-ūĀ-Ūʻ ]+/g, "")
         setTargetWord(cleanWord)
         if (cleanWord === "") {
             setChosen(null)
@@ -240,7 +240,8 @@ export function Article() {
 
     function PostAndDelete(word, wordStatus) {
         // remove punctuations
-        const clean_word = word.replace(/[^a-zā-ūʻ ]+/g, "")
+        let clean_word = word.replace(/[^a-zA-Zā-ūĀ-Ūʻ ]+/g, "")
+        clean_word = dictionaryWords.filter(d_w => d_w["hawaiian_clean"].toLowerCase() === clean_word.toLowerCase())[0]["hawaiian_clean"]
         const vocab= {
             user_id: user.id,
             hawaiian_clean: clean_word,
