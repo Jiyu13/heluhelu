@@ -22,6 +22,9 @@ import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
+import { ArticleStats } from "../stats/ArticleStats"
+
+
 import { MarkNotFound } from "../words/MarkNotFound"
 // import { ProgressBar } from "./progress-bar/ProgressBar"
 
@@ -292,6 +295,9 @@ export function Article() {
                 </SideBar>
             
                 <ReadableArea>
+                    
+                    <ArticleStats/>
+
                     <ReadableContent>
                     {paragraphs?.map((p, index) => 
                         <ArticleParagraph 
@@ -567,6 +573,7 @@ const SideBarImage = styled.div`
 `
 
 const ReadableArea = styled.div`
+    display: block;
     max-width: 725px;
     width: 100%;
     background-color: #333;
