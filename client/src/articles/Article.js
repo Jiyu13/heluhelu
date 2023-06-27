@@ -284,7 +284,7 @@ export function Article() {
 
                     <a href="#"
                     style={{"width": "100%", "position": "fixed", "height": "50%"}}
-                    onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
+                    onClick={() => setDictionaryOpen(false)}
                     />
                 )}
 
