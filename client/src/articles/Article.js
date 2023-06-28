@@ -22,6 +22,9 @@ import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
 import { WordTracker } from "./dictionary-area/WordTracker";
 import apiFetch from "../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
+import { DropDown } from "../components/DropDown"
+
+
 import { MarkNotFound } from "../words/MarkNotFound"
 // import { ProgressBar } from "./progress-bar/ProgressBar"
 
@@ -281,7 +284,7 @@ export function Article() {
 
                     <a href="#"
                     style={{"width": "100%", "position": "fixed", "height": "50%"}}
-                    onClick={function(){if(isDictionaryOpen) {setDictionaryOpen(false)}}}
+                    onClick={() => setDictionaryOpen(false)}
                     />
                 )}
 
@@ -292,6 +295,10 @@ export function Article() {
                 </SideBar>
             
                 <ReadableArea>
+                    <header>
+                        <DropDown/>
+                    </header>
+                    
                     <ReadableContent>
                     {paragraphs?.map((p, index) => 
                         <ArticleParagraph 
@@ -567,6 +574,7 @@ const SideBarImage = styled.div`
 `
 
 const ReadableArea = styled.div`
+    display: block;
     max-width: 725px;
     width: 100%;
     background-color: #333;
