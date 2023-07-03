@@ -3,15 +3,15 @@ from app import app
 import datetime
 import uuid
 
-# def make_user():
+def make_user():
 #     User.query.delete()
 #     Article.query.delete()
 #     UserWord.query.delete()
 #     PageReadEvent.query.delete()
 #     Vocabulary.query.delete()
 
-#     username = "ziru"
-#     password = "Test12345!"
+    # username = "ziru"
+    # password = "Test12345!"
 
 #     # create a user
 #     new_user = User(
@@ -66,19 +66,20 @@ import uuid
 #     db.session.commit()
 
 #     # word tracker
-#     word1 = "maikaʻi"
-#     word2 = "loa"
-#     word3 = "Lānaʻi"
-#     word4= "ua"
-    
-#     vocabs = [
-#         Vocabulary(user_id=new_user.id, hawaiian_clean=word1, status=2), # known
-#         Vocabulary(user_id=new_user.id, hawaiian_clean=word2, status=1), # studying
-#         Vocabulary(user_id=new_user.id, hawaiian_clean=word3, status=3), # ignored
-#         Vocabulary(user_id=new_user.id, hawaiian_clean=word4, status=2),
-#     ]
-#     db.session.add_all(vocabs)
-#     db.session.commit()
+    for i in range(1400):
+        word1 = "maikaʻi"
+        word2 = "loa"
+        word3 = "Lānaʻi"
+        word4= "ua"
+        
+        vocabs = [
+            Vocabulary(user_id=1, hawaiian_clean=word1, status=2), # known
+            Vocabulary(user_id=1, hawaiian_clean=word2, status=1), # studying
+            Vocabulary(user_id=1, hawaiian_clean=word3, status=3), # ignored
+            Vocabulary(user_id=1, hawaiian_clean=word4, status=2),
+        ]
+        db.session.add_all(vocabs)
+        db.session.commit()
 
 
 def upload_dictionary():
@@ -132,5 +133,5 @@ def upload_dictionary():
 
 if __name__ == "__main__":
     with app.app_context():
-        # make_user()
-        upload_dictionary()
+        make_user()
+        # upload_dictionary()
