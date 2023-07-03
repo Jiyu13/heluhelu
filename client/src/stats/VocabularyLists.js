@@ -5,6 +5,8 @@ import { Vocabulary } from "./Vocabulary";
 import { Link } from "react-router-dom";
 import { StatsNavigation, StatsTitle } from "./MyStats";
 import { SubmitButtons } from "../components/Buttons";
+import { VocabInfoTable } from "./VocabInfoTable";
+
 
 export function VocabularyLists() {
     const { vocabularies } = useContext(UserContext)
@@ -29,6 +31,8 @@ export function VocabularyLists() {
                 </Link>
 
             </VocabStatsNavigation>
+
+            <VocabInfoTable vocabularies={vocabularies}/>
             
             <ContainerBody>
                 <VocabHeader>
@@ -60,10 +64,9 @@ const ContainerBody = styled.div`
     box-sizing: border-box;
     width: 75%;
     margin: 0 auto 30px;
-    border: 1px solid #bdc3c7;
     border-radius: 8px;
     padding-bottom: 1rem;
-    // background-color: #ecf0f1;
+    background-color: #FDF8E8;
 `
 
 const VocabHeader = styled.div`
@@ -75,9 +78,6 @@ const VocabHeader = styled.div`
     grid-auto-flow: column;  //makes items flow across columns, ie into a single row
     grid-gap: 0.25rem;
     padding: 1.5rem 1rem 1rem;
-    // border-top: none;
-    // border: 1px solid #bdc3c7;
-
 `
 
 const IdColumn = styled.div``

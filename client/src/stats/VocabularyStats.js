@@ -6,7 +6,7 @@ import { VocabularyLists } from "./VocabularyLists";
 export function VocabularyStats() {
 
     return (
-        <StatsContainer>  
+        <StatsContainer>
             <VocabularyLists/>      
         </StatsContainer>
     )
