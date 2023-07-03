@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { StatsTable } from "./StatsTable"
+import { ReadingStats } from "./ReadingStats"
 import apiFetch from "../api/ApiFetch"
+import { Link } from "react-router-dom"
 
 export function MyStats() {
-
     const [readEvents, setReadEvets] = useState(null)
+     
 
     useEffect(() => {
         apiFetch('/stats')
@@ -13,21 +14,33 @@ export function MyStats() {
         .then(data => setReadEvets(data))
     }, [])
 
+
     return (
         <>
             <StatsTitle>My Stats</StatsTitle>
-
-            <StatsTable readEvents={readEvents} setReadEvets={setReadEvets}/>
+            <div>
+                <Link to="/stats">Reading Stats</Link>
+                <Link to="/stats/vocabularies">Vocabulary Stats</Link>
+            </div>
+            
+            <StatsContainer>
+                <ReadingStats readEvents={readEvents} setReadEvets={setReadEvets}/>
+            </StatsContainer>
+            
         </>
         
     )
 }
 
-const StatsTitle = styled.h1`
+
+export const StatsTitle = styled.h1`
     margin-top: 72px;
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+`
+
+const StatsContainer = styled.div`
 `
