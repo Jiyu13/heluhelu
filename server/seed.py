@@ -8,7 +8,7 @@ def make_user():
 #     Article.query.delete()
 #     UserWord.query.delete()
 #     PageReadEvent.query.delete()
-#     Vocabulary.query.delete()
+    # Vocabulary.query.delete()
 
     # username = "ziru"
     # password = "Test12345!"
@@ -66,20 +66,20 @@ def make_user():
 #     db.session.commit()
 
 #     # word tracker
-    for i in range(1400):
-        word1 = "maikaʻi"
-        word2 = "loa"
-        word3 = "Lānaʻi"
-        word4= "ua"
-        
-        vocabs = [
-            Vocabulary(user_id=1, hawaiian_clean=word1, status=2), # known
-            Vocabulary(user_id=1, hawaiian_clean=word2, status=1), # studying
-            Vocabulary(user_id=1, hawaiian_clean=word3, status=3), # ignored
-            Vocabulary(user_id=1, hawaiian_clean=word4, status=2),
-        ]
-        db.session.add_all(vocabs)
-        db.session.commit()
+    # for i in range(1400):
+    word1 = "maikaʻi"
+    word2 = "loa"
+    word3 = "Lānaʻi"
+    word4= "ua"
+    
+    vocabs = [
+        Vocabulary(user_id=1, hawaiian_clean=word1, status=2), # known
+        Vocabulary(user_id=1, hawaiian_clean=word2, status=1), # studying
+        Vocabulary(user_id=1, hawaiian_clean=word3, status=3), # ignored
+        Vocabulary(user_id=1, hawaiian_clean=word4, status=2),
+    ]
+    db.session.add_all(vocabs)
+    db.session.commit()
 
 
 def upload_dictionary():
