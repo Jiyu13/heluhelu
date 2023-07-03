@@ -7,12 +7,17 @@ import { StatsNavigation, StatsTitle } from "./MyStats";
 import { SubmitButtons } from "../components/Buttons";
 import { VocabInfoTable } from "./VocabInfoTable";
 import { useState } from "react";
+import { useEffect } from "react";
 
 
 export function VocabularyLists() {
     const { vocabularies } = useContext(UserContext)
     
     const [filterResults, setFilterResult] = useState(vocabularies)
+
+    useEffect(() => {
+          setFilterResult(vocabularies)
+    }, [vocabularies])
 
     function handleFilterKnown() {
         const result = vocabularies?.filter(v => v["status"] === 2)
