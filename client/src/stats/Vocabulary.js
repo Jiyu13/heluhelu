@@ -5,7 +5,7 @@ import apiFetch from "../api/ApiFetch"
 
 export function Vocabulary( {vocab} ) {
     const [dictionaryDefinition, setDefinition] = useState(null)
-    const [customDefinition, setCcustomDefinition] = useState(null)
+    const [customDefinition, setCustomDefinition] = useState(null)
     // const [status, setStatus] = useState(vocab["status"])
 
 
@@ -27,7 +27,7 @@ export function Vocabulary( {vocab} ) {
             setDefinition(v.dictionary.filter(v => 
                 v["hawaiian_clean"] === word
             ))
-            setCcustomDefinition(v["custom"])
+            setCustomDefinition(v["custom"]["translation"])
         })
     }, [word])
 
@@ -50,7 +50,7 @@ export function Vocabulary( {vocab} ) {
             </DefinitionColumn>
             <CustomColumn>
                 {
-                    customDefinition ? customDefinition["word"] : "-"
+                    customDefinition ? customDefinition : "-"
                 }
             </CustomColumn>
 
