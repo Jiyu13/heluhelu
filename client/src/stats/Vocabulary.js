@@ -6,10 +6,20 @@ import apiFetch from "../api/ApiFetch"
 export function Vocabulary( {vocab} ) {
     const [dictionaryDefinition, setDefinition] = useState(null)
     const [customDefinition, setCcustomDefinition] = useState(null)
+    // const [status, setStatus] = useState(vocab["status"])
 
 
     const word = vocab["hawaiian_clean"]
+    let tag
+    if (vocab["status"] === 2) {
+        tag =  "Known"
+    } else if (vocab["status"] === 1) {
+        tag =  "Studying"
+    } else if (vocab["status"] === 3) {
+        tag = "Ignored"
+    }
 
+    
     useEffect(() => {
         apiFetch(`/search/${word}`)
         .then(res => res.json())
@@ -20,7 +30,6 @@ export function Vocabulary( {vocab} ) {
             setCcustomDefinition(v["custom"])
         })
     }, [word])
-
 
     return (
         <VocabContainer>
@@ -44,6 +53,10 @@ export function Vocabulary( {vocab} ) {
                     customDefinition ? customDefinition["word"] : "-"
                 }
             </CustomColumn>
+
+            <MarkTagColumn>
+                {tag}
+            </MarkTagColumn>
         </VocabContainer>
     )
 }
@@ -53,7 +66,7 @@ const VocabContainer = styled.div`
     width: 95%;
     display: grid;
     margin: 0.5rem auto;
-    grid-template-columns: 0.5fr 1fr 4fr 2fr;
+    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.6fr;
     grid-auto-flow: column;  //makes items flow across columns, ie into a single row
     border: 1px solid #bdc3c7;
     border-radius: 8px;
@@ -76,3 +89,6 @@ const DefinitionColumn = styled.div`
 const CustomColumn = styled.div`
     padding-right: 2rem;
 `
+
+
+const MarkTagColumn = styled.div``
