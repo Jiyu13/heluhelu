@@ -9,14 +9,15 @@ import { Article } from "../articles/Article";
 import { ArticleEdit } from "../articles/ArticleEdit";
 import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
-import { LoginForm } from "../account/LoginForm";
-import { SignupForm } from "../account/SignupForm";
+
 import { MyStats } from "../stats/MyStats";
 import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 import apiFetch from "../api/ApiFetch";
 import {FileImporter} from "../articles/import/FileImporter";
 import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
+import { LoginPage } from "../account/LoginPage";
+import { SignupPage } from "../account/SignupPage";
 
 const USER_NOT_SET = -1;
 
@@ -174,14 +175,14 @@ function App() {
               <Route
                 exact
                 path='/login'
-                element={<LoginForm/>}
+                element={<LoginPage/>}
               >
               </Route>
 
               <Route
                 exact
                 path='/signup'
-                element={<SignupForm/>}
+                element={<SignupPage/>}
               >
               </Route>
 
