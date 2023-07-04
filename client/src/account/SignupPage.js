@@ -142,7 +142,10 @@ const Input = styled.input`
     outline: none;
     font-size: 1.2em;
     padding: 0 35px 0 5px;
-    color: #fff;
+    
+    &::placeholder {
+        color: #fff;
+    }
 `
 const PasswordSuggestion = styled.div`
     margin: -15px 0px 15px;
