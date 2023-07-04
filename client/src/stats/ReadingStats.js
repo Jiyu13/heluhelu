@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { LineGraph } from "./LineGraph"
 
-export function StatsTable( {readEvents, setReadEvets} ) {
+export function ReadingStats( {readEvents, setReadEvets} ) {
 
     return (
         <>  
@@ -75,7 +75,7 @@ const TodayReading = styled.div`
 
 const GraphBox = styled.div`
     max-width: 600px;
-    margin: 0 auto 0px auto
+    margin: 0px auto 0px auto
 `
 
 const TRow = styled.tr``

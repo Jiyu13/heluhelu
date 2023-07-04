@@ -27,7 +27,7 @@ export const ButtonButtons = styled.input`
     font-weight: 700;
     border-style: none;
     border-radius: 8px;
-    background-color: #de801c;
+    background-color: #de801c;  // orange
     opacity: 0.8;
     
     &:hover {

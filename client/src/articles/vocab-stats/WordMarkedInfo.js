@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { UserContext } from "../../components/UserContext"
 import styled from "styled-components"
 
-export function VocabStats( {article} ) {
+export function WordMarkedInfo( {article} ) {
 
     const {splitText, vocabularies } = useContext(UserContext)
 
@@ -46,9 +46,7 @@ export function VocabStats( {article} ) {
     )
 }
 
-const WordStatsContainer = styled.div`
-   
-`
+const WordStatsContainer = styled.div``
 
 const WordContainer = styled.div`
     display: grid;

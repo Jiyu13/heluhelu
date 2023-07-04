@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
 import apiFetch from "../api/ApiFetch";
 import { ProgressBar } from "./progress-bar/ProgressBar";
-import { VocabStats } from "./vocab-stats/VocbStats";
+import { WordMarkedInfo } from "./vocab-stats/WordMarkedInfo";
 
 
 
@@ -72,7 +72,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                             <br/>
                             {/* ============== progress bar + vocab stats ========================= */}
                             <ProgressBar article={a} getCurrentPage={getCurrentPage}/>
-                            <VocabStats article={a}/>
+                            <WordMarkedInfo article={a}/>
                             {/* ============== progress bar + vocab stats  ========================= */}
                         </ArticleTitle>
                     </ArticleTitleCell>

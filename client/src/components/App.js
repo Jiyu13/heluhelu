@@ -16,6 +16,7 @@ import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 import apiFetch from "../api/ApiFetch";
 import {FileImporter} from "../articles/import/FileImporter";
 import ArticleImporter from "../articles/import/ArticleImporter";
+import { VocabularyStats } from "../stats/VocabularyStats";
 
 const USER_NOT_SET = -1;
 
@@ -117,6 +118,12 @@ function App() {
         <main>
             <NavBar/>
             <Routes >
+              <Route
+                exact
+                path="/stats/vocabularies"
+                element={<VocabularyStats/>}
+              >
+              </Route>
               <Route
                 exact
                 path='/stats'
