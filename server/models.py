@@ -86,9 +86,9 @@ class User(db.Model, SerializerMixin):
         if not len(_password_hash) >= 8: 
             raise ValueError("Password must be at least 8 characters long.")
         if not any(each in cap_alphabets for each in _password_hash):
-            raise ValueError("Password must contain at least one capitalised character.")
-        if not any(each in special_characters for each in _password_hash):
-            raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
+            raise ValueError("Password must contain at least one capital letter.")
+        # if not any(each in special_characters for each in _password_hash):
+        #     raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
         return _password_hash
 
     # ================= incorporate bcrypt to create a secure password. ====================
