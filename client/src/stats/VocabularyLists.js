@@ -6,11 +6,34 @@ import { Link } from "react-router-dom";
 import { StatsNavigation, StatsTitle } from "./MyStats";
 import { SubmitButtons } from "../components/Buttons";
 import { VocabInfoTable } from "./VocabInfoTable";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 export function VocabularyLists() {
     const { vocabularies } = useContext(UserContext)
+    
+    const [filterResults, setFilterResult] = useState(vocabularies)
 
+    useEffect(() => {
+          setFilterResult(vocabularies)
+    }, [vocabularies])
+
+    function handleFilterKnown() {
+        const result = vocabularies?.filter(v => v["status"] === 2)
+        setFilterResult(result)
+    }
+
+    function handleFilterStudying() {
+        const result = vocabularies?.filter(v => v["status"] === 1)
+        setFilterResult(result)
+    }
+
+    function handleFilterAll() {
+        setFilterResult(vocabularies)
+    }
+
+    console.log(vocabularies, filterResults)
     return (
         <PageContainer>
             {/* <VocabNavigation>
@@ -32,7 +55,11 @@ export function VocabularyLists() {
 
             </VocabStatsNavigation>
 
-            <VocabInfoTable vocabularies={vocabularies}/>
+            <VocabInfoTable 
+                handleFilterAll={handleFilterAll}
+                handleFilterKnown={handleFilterKnown}
+                handleFilterStudying={handleFilterStudying}
+            />
             
             <ContainerBody>
                 <VocabHeader>
@@ -40,9 +67,10 @@ export function VocabularyLists() {
                     <WordColumn>Word</WordColumn>
                     <DefinitionColumn>Definition</DefinitionColumn>
                     <CustomColumn>Custom Definition</CustomColumn>
+                    <MarkTagColumn>Mark Tag</MarkTagColumn>
                 </VocabHeader>
 
-                {vocabularies?.map(v => {
+                {filterResults?.map(v => {
                     return <Vocabulary key={v.id} vocab={v}/>
                 })}
             </ContainerBody>
@@ -74,16 +102,17 @@ const VocabHeader = styled.div`
     width: 95%;
     display: grid;
     margin: 0 auto;
-    grid-template-columns: 0.5fr 1fr 4fr 2fr;
+    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.6fr;
     grid-auto-flow: column;  //makes items flow across columns, ie into a single row
     grid-gap: 0.25rem;
     padding: 1.5rem 1rem 1rem;
 `
 
-const IdColumn = styled.div``
-const WordColumn= styled.div``
-const DefinitionColumn = styled.div``
-const CustomColumn = styled.div``
+const IdColumn = styled.div`font-weight: bold;`
+const WordColumn= styled.div`font-weight: bold;`
+const DefinitionColumn = styled.div`font-weight: bold;`
+const CustomColumn = styled.div`font-weight: bold;`
+const MarkTagColumn = styled.div`font-weight: bold;`
 
 
 // const VocabNavigation = styled.div`
