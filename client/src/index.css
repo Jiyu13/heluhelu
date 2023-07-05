@@ -17,33 +17,7 @@ body {
   font-family: "Helvetica", sans-serif;
 }
 
-/* input[type="submit"], button {
-	margin-top: 12px;
-    margin-right: 12px;
-    padding: 12px;
-	color: white;
-	font-weight: 700;
-	border-style: none;
-	border-radius: 8px;
-	background-color: #00B09B;
-	background-image: linear-gradient(to right, #00B09B, #96C93D);
-	opacity: 0.8;
-} */
-/* input[type="submit"], button:hover {
-	opacity: 1;
-    cursor: pointer;
-} */
 
-input[type="text"], textarea {
-	/* padding: 8px; 
-	margin-bottom: 8px;
-	font-size: 17px;
-	border-radius: 8px;
-	outline: none;
-	line-height: 1.6; */
-	/* background-color: #ddd;
-	border: 2px solid #999; */
-}
 
 h1 {
 	color: #222;
@@ -78,10 +52,21 @@ hr {
 	margin: 24px 50px 12px;
 }
 
+/* change autofill default setting */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important;
+}
+
+
 li:hover .recent-reading .last-open-title {
 	display: block;
 	color: grey;
 }
+
 
 
 /* table */

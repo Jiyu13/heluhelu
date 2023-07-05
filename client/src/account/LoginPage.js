@@ -155,6 +155,7 @@ const Input = styled.input`
     outline: none;
     font-size: 1.2em;
     padding: 0 35px 0 5px;
+    color: white;
     &::placeholder {
         color: #fff;
     }
