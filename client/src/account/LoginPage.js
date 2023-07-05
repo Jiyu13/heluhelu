@@ -2,12 +2,16 @@ import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
-import { Link, redirect, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { VisibilityIcon } from "./VisibilityIcon"
 
-export function LoginPage( {handleToSignup, errors, setErrors} ) {
+
+
+export function LoginPage( {handleToSignup, errors, setErrors, ToggleIcon, visible} ) {
     const { setUser } = useContext(UserContext)
-    
+    // const [showPassword, setShowPasswprd] = useState("password")
 
+    const inputType = visible ?  "text" : "password"
 
     const initialValue = {
         username: "",
@@ -40,9 +44,6 @@ export function LoginPage( {handleToSignup, errors, setErrors} ) {
                 res.json().then(error =>
                     setErrors(error["message"])
                 )
-                // setTimeout(function() {
-                //     setErrors(null)
-                // }, 5000)
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -58,9 +59,6 @@ export function LoginPage( {handleToSignup, errors, setErrors} ) {
         navigate('/') 
     }
 
-    
-
-    // console.log(errors)
     return (
 
         <BoxContainer>
@@ -86,9 +84,10 @@ export function LoginPage( {handleToSignup, errors, setErrors} ) {
                     />
                 </InputBox>
                 <InputBox>
+                    <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
                     <Input 
                         required 
-                        type="password" 
+                        type={inputType} 
                         placeholder="Password" 
                         name="password"
                         value={formData.password}
@@ -118,7 +117,6 @@ export function LoginPage( {handleToSignup, errors, setErrors} ) {
         </BoxContainer>
     )
 }
-
 
 
 const BoxContainer = styled.div`

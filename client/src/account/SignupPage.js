@@ -2,10 +2,12 @@ import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
-import { Link, redirect, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { VisibilityIcon } from "./VisibilityIcon"
 
-export function SignupPage( {handleToLogin, errors, setErrors} ) {
+export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visible} ) {
     const { setUser } = useContext(UserContext)
+    const inputType = visible ?  "text" : "password"
 
     const initialValue = {
         username: "",
@@ -77,9 +79,10 @@ export function SignupPage( {handleToLogin, errors, setErrors} ) {
                     />
                 </InputBox>
                 <InputBox>
+                    <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
                     <Input 
                         required 
-                        type="password" 
+                        type={inputType}
                         placeholder="Password" 
                         name="password"
                         value={formData.password}
@@ -94,13 +97,12 @@ export function SignupPage( {handleToLogin, errors, setErrors} ) {
                         <li>contains at least one capital letter</li>
                         {/* <li>contain at least one of these: !@#$%^&*</li> */}
                     </ul>
-                    <Text></Text>
                 </PasswordSuggestion>
                 <SignupButton>Create Account</SignupButton>
 
                 <Registery>
                     <p>Already have an account?</p>
-                    <SignUpLink >
+                    <SignUpLinkContainer >
                         <Link 
                             to="/login" 
                             onClick={handleToLogin}
@@ -108,7 +110,7 @@ export function SignupPage( {handleToLogin, errors, setErrors} ) {
                         >
                             Login
                         </Link>
-                    </SignUpLink>
+                    </SignUpLinkContainer>
                 </Registery>
             </FormContainer>
             
@@ -165,14 +167,10 @@ const PasswordSuggestion = styled.div`
     justify-content: center;
 `
 
-const Text = styled.p`
-    margin-right: 3px;
-    color: #fff;
-`
 const SignupButton = styled.button`
     width: 100%;
     height: 40px;
-    border-radius: 40px;
+    border-radius: 8px;
     border: none;
     outline: none;
     cursor: pointer;
@@ -187,7 +185,7 @@ const Registery = styled.div`
     text-align: center;
     margin: 25px 0 10px;
 `
-const SignUpLink = styled.a`
+const SignUpLinkContainer = styled.div`
     font-weight: 600;
 
     &:hover {

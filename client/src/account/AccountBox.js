@@ -11,6 +11,12 @@ import palm_tree from "../assets/images/palm_tree.jpg"
 export function AccountBox() {
     const [errors, setErrors] = useState(null)
     const [isLogin, setLogin] = useState("login")
+    const [visible, setVisible] = useState(false)
+
+    function ToggleIcon() {
+        setVisible(!visible)
+    }
+
 
     function handleToSignup() {
         setLogin("signup")
@@ -30,9 +36,9 @@ export function AccountBox() {
             }
             {
                 isLogin=== "login" ? 
-                <LoginPage handleToSignup={handleToSignup} errors={errors} setErrors={setErrors}/>
+                <LoginPage handleToSignup={handleToSignup} errors={errors} setErrors={setErrors} ToggleIcon={ToggleIcon} visible={visible}/>
                 :
-                <SignupPage handleToLogin={handleToLogin} errors={errors} setErrors={setErrors}/>
+                <SignupPage handleToLogin={handleToLogin} errors={errors} setErrors={setErrors} ToggleIcon={ToggleIcon} visible={visible}/>
             
             }
         </AppContainer>
