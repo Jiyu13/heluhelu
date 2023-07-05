@@ -242,7 +242,11 @@ export function Article() {
     function PostAndDelete(word, wordStatus) {
         // remove punctuations
         let clean_word = word.replace(/[^a-zA-Zā-ūĀ-Ūʻ ]+/g, "")
-        clean_word = dictionaryWords.filter(d_w => d_w["hawaiian_clean"].toLowerCase() === clean_word.toLowerCase())[0]["hawaiian_clean"]
+        
+        const filter_word = dictionaryWords.filter(d_w => d_w["hawaiian_clean"].toLowerCase() === clean_word.toLowerCase())
+        if (filter_word.length) {
+            clean_word = filter_word[0]["hawaiian_clean"]
+        } 
         const vocab= {
             user_id: user.id,
             hawaiian_clean: clean_word,
