@@ -4,8 +4,10 @@ import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 import { Link, redirect, useNavigate } from "react-router-dom"
 
-export function LoginPage( {handleToSignup} ) {
-    const { setUser, errors, setErrors } = useContext(UserContext)
+export function LoginPage( {handleToSignup, errors, setErrors} ) {
+    const { setUser } = useContext(UserContext)
+    
+
 
     const initialValue = {
         username: "",
@@ -38,9 +40,9 @@ export function LoginPage( {handleToSignup} ) {
                 res.json().then(error =>
                     setErrors(error["message"])
                 )
-                setTimeout(function() {
-                    setErrors(null)
-                }, 5000)
+                // setTimeout(function() {
+                //     setErrors(null)
+                // }, 5000)
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -56,11 +58,23 @@ export function LoginPage( {handleToSignup} ) {
         navigate('/') 
     }
 
+    
 
+    // console.log(errors)
     return (
+
         <BoxContainer>
             <FormContainer onSubmit={handleSubmit}>
                 <Title>Login</Title>
+                
+                {errors && (
+                    <ErrorContainer>
+                        <span>
+                            {errors}
+                        </span>
+                    </ErrorContainer>
+                )}
+
                 <InputBox>
                     <Input 
                         required 
@@ -81,8 +95,6 @@ export function LoginPage( {handleToSignup} ) {
                         onChange={handleInput}
                     />
                 </InputBox>
-
-                {errors && (<ErrorContainer>{errors}</ErrorContainer>)}
                 
                 <ForgetPassword>
                     <ForgetPasswordLink to="#">Forget your password?</ForgetPasswordLink>
@@ -106,6 +118,8 @@ export function LoginPage( {handleToSignup} ) {
         </BoxContainer>
     )
 }
+
+
 
 const BoxContainer = styled.div`
     position: relative; // relative to its normal position, which is AppContainer
@@ -174,6 +188,8 @@ const LoginButton = styled.button`
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
+    color: #fff;
+    background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
 `
 const Registery = styled.div`
     font-size: .9em;
@@ -189,4 +205,10 @@ const SignUpLink = styled.div`
     }
 `
 
-const ErrorContainer = styled.div``
+const ErrorContainer = styled.div`
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+    background-color: #FBFFB1;
+    border-top: 2px solid #d13128
+`

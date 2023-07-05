@@ -9,37 +9,7 @@ import palm_tree from "../assets/images/palm_tree.jpg"
 
 
 export function AccountBox() {
-    // const [isExpanded, setExpanded] = useState(false)
-    // const [active, setActive] = useState("login")
-
-    // // change and toggle the animation
-    // const playExpandingAnimation = () => {
-    //     setExpanded(true);
-    //     // set isExpanded to false 2.3s after
-    //     setTimeout(() => {
-    //         setExpanded(false);
-    //       }, expandingTransition.duration * 1000 - 1500);
-    // }
-
-    // // == create functions to switch to login and signup ====
-    // const switchToSignup = () => {
-    //     playExpandingAnimation();
-    //     setTimeout(() => {
-    //       setActive("signup");
-    //     }, 400);
-    // };
-    
-    // const switchToLogin = () => {
-    //     playExpandingAnimation();
-    //     setTimeout(() => {
-    //         setActive("login");
-    //     }, 400);
-    // };
-    // // ======================================================
-
-    // // create context values
-    // const contextValue = {switchToSignup, switchToLogin}
-
+    const [errors, setErrors] = useState(null)
     const [isLogin, setLogin] = useState("login")
 
     function handleToSignup() {
@@ -50,19 +20,30 @@ export function AccountBox() {
         setLogin("login")
     }
 
-
     return (
         <AppContainer>
             {
+                errors && (
+                    <EmptyDiv onClick={() => setErrors(null)}/>
+
+                )
+            }
+            {
                 isLogin=== "login" ? 
-                <LoginPage handleToSignup={handleToSignup}/>
+                <LoginPage handleToSignup={handleToSignup} errors={errors} setErrors={setErrors}/>
                 :
-                <SignupPage handleToLogin={handleToLogin}/>
+                <SignupPage handleToLogin={handleToLogin} errors={errors} setErrors={setErrors}/>
             
             }
         </AppContainer>
     )
 }
+
+const EmptyDiv = styled.div`
+    width: 100%; 
+    height: 100%;
+    position: fixed;
+`
 
 const AppContainer = styled.div`
   display: flex;

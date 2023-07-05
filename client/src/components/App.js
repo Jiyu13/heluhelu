@@ -27,7 +27,6 @@ function App() {
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
-  const [errors, setErrors] = useState(null)
   const [isLoading, setLoading] = useState(false)
 
 
@@ -103,7 +102,6 @@ function App() {
                             article, setArticle, 
                             articles, setArticles,
                             chosen, setChosen, 
-                            errors, setErrors,
                             isLoading, setLoading,
                             splitText, calculatePages,
                             vocabularies, setVocabularies

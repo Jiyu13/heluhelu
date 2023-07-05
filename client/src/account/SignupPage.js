@@ -4,8 +4,8 @@ import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 import { Link, redirect, useNavigate } from "react-router-dom"
 
-export function SignupPage( {handleToLogin} ) {
-    const { setUser, errors, setErrors } = useContext(UserContext)
+export function SignupPage( {handleToLogin, errors, setErrors} ) {
+    const { setUser } = useContext(UserContext)
 
     const initialValue = {
         username: "",
@@ -28,19 +28,16 @@ export function SignupPage( {handleToLogin} ) {
             password: formData.password
         }
 
-        apiFetch('/login', {
+        apiFetch('/signup', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(loginUser)
         })
         .then(res => {
-            if (res.status === 401) {
+            if (res.status === 422) {
                 res.json().then(error =>
                     setErrors(error["message"])
                 )
-                setTimeout(function() {
-                    setErrors(null)
-                }, 5000)
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -49,7 +46,6 @@ export function SignupPage( {handleToLogin} ) {
             }
         })
     }
-
     //  ========= go to home page after loging successfully ==============
     let navigate = useNavigate()
     function redirectHome() {
@@ -61,6 +57,15 @@ export function SignupPage( {handleToLogin} ) {
         <BoxContainer>
             <FormContainer onSubmit={handleSubmit}>
                 <Title>Sign Up</Title>
+
+                {errors && (
+                    <ErrorContainer>
+                        <span>
+                            {errors}
+                        </span>
+                    </ErrorContainer>
+                )}
+
                 <InputBox>
                     <Input 
                         required 
@@ -81,12 +86,17 @@ export function SignupPage( {handleToLogin} ) {
                         onChange={handleInput}
                     />
                 </InputBox>
-                {errors && (<ErrorContainer>{errors}</ErrorContainer>)}
 
                 <PasswordSuggestion>
-                    <Text>Must contaib</Text>
+                    <h4 style={{marginBottom: "7px"}}>Make sure your password:</h4>
+                    <ul style={{marginTop: "0px"}}>
+                        <li>is 8 characters or longer</li>
+                        <li>contains at least one capital letter</li>
+                        {/* <li>contain at least one of these: !@#$%^&*</li> */}
+                    </ul>
+                    <Text></Text>
                 </PasswordSuggestion>
-                <LoginButton>Create Account</LoginButton>
+                <SignupButton>Create Account</SignupButton>
 
                 <Registery>
                     <p>Already have an account?</p>
@@ -142,16 +152,16 @@ const Input = styled.input`
     outline: none;
     font-size: 1.2em;
     padding: 0 35px 0 5px;
-    
+
     &::placeholder {
         color: #fff;
     }
 `
 const PasswordSuggestion = styled.div`
     margin: -15px 0px 15px;
-    font-size: .9em;
-    color: #fff;
-    display: flex;
+    // font-size: .9em;
+    // color: #fff;
+    // display: flex;
     justify-content: center;
 `
 
@@ -159,7 +169,7 @@ const Text = styled.p`
     margin-right: 3px;
     color: #fff;
 `
-const LoginButton = styled.button`
+const SignupButton = styled.button`
     width: 100%;
     height: 40px;
     border-radius: 40px;
@@ -168,6 +178,8 @@ const LoginButton = styled.button`
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
+    color: #fff;
+    background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
 `
 const Registery = styled.div`
     font-size: .9em;
@@ -183,4 +195,10 @@ const SignUpLink = styled.a`
     }
 `
 
-const ErrorContainer = styled.div``
+const ErrorContainer = styled.div`
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+    background-color: #FBFFB1;
+    border-top: 2px solid #d13128
+`
