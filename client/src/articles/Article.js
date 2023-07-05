@@ -25,9 +25,7 @@ import { ArticleCompleted } from "./ArticleCompleted"
 import { DropDown } from "../components/DropDown"
 
 
-import { MarkNotFound } from "../words/MarkNotFound"
 import { ButtonButtons, SubmitButtons } from "../components/Buttons"
-// import { ProgressBar } from "./progress-bar/ProgressBar"
 
 const PAGE_SIZE = 250;
 
@@ -270,7 +268,7 @@ export function Article() {
 
     // toggle btn stylings
     function checkStatus(word) {
-        let result = vocabularies?.filter(vocab => vocab.hawaiian_clean === word)
+        let result = vocabularies?.filter(vocab => vocab.hawaiian_clean.toLowerCase() === word.toLowerCase())
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]
             return statusNumber
@@ -387,11 +385,6 @@ export function Article() {
                             <NotFound>
                                 No results found for '{targetWord}'.
                             </NotFound>
-                            {/* <MarkNotFound 
-                                word={targetWord} 
-                                PostAndDelete={PostAndDelete} 
-                                checkStatus={checkStatus}
-                            /> */}
                         </>
                         
                     )}
