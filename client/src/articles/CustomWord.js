@@ -62,7 +62,7 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
 
     let src
     let bgColor
-    if (checkStatus(word.word.toLowerCase()) === 1) {
+    if (checkStatus(word.word) === 1) {
         bgColor = "#2ecc71"
         src = check_circle_icon 
     } else {
@@ -81,7 +81,6 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
                     <EditDelete type="submit" className="edit-delete" value="Delete" onClick={handleDeleteCustomWord} />
 
                     <MarkStudyingImg
-                        // src={checkStatus(word.word) === 1 ? check_circle_icon :  add_icon}
                         src={src}
                         alt="mark studying button"
                         onClick={handleMarkStudying}
