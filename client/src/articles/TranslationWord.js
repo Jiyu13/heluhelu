@@ -16,14 +16,22 @@ export function TranslationWord( {word, translation, hawaiian_clean, PostAndDele
     }
 
     
-    const bgColor = (checkStatus(hawaiian_clean) === 1 ? "#2ecc71": "")
+    let src
+    let bgColor
+    if (checkStatus(hawaiian_clean) === 1) {
+        bgColor = "#2ecc71"
+        src = check_circle_icon 
+    } else {
+        bgColor = ""
+        src = add_icon
+    }
     
     return (
         <WordItem key={word.id}>
             <Word>
                 {word}:
                 <MarkStudyingImg 
-                    src={checkStatus(hawaiian_clean) === 1 ? check_circle_icon :  add_icon} 
+                    src={src} 
                     alt="mark studying button"
                     onClick={handleMarkStudying}
                     style={{backgroundColor: bgColor}}
