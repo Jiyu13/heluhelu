@@ -290,7 +290,7 @@ export function Article() {
                     /* eslint-disable jsx-a11y/anchor-has-content */
 
                     <a href="#"
-                    style={{"width": "100%", "position": "fixed", "height": "55%"}}
+                    style={{"width": "100%", "position": "fixed", "height": "30%"}}
                     onClick={() => setDictionaryOpen(false)}
                     />
                 )}

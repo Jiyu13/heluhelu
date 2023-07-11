@@ -124,7 +124,7 @@ export function DictionaryMobile(props) {
 
 const DictionaryArea = styled.div`
     // overflow: scroll;
-    height: 350px;
+    height: 70%;
     position: fixed;
     border-top: 2px solid rgb(204, 204, 204);
     border-radius: 8px 8px 0px 0px;
