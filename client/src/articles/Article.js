@@ -268,7 +268,10 @@ export function Article() {
 
     // toggle btn stylings
     function checkStatus(word) {
-        let result = vocabularies?.filter(vocab => vocab.hawaiian_clean.toLowerCase() === word.toLowerCase())
+        let result = vocabularies?.filter(vocab => 
+            vocab.hawaiian_clean.toLowerCase() === word.toLowerCase()
+        )
+
         if (result.length !== 0) {
             const statusNumber = result[0]["status"]
             return statusNumber
@@ -287,7 +290,7 @@ export function Article() {
                     /* eslint-disable jsx-a11y/anchor-has-content */
 
                     <a href="#"
-                    style={{"width": "100%", "position": "fixed", "height": "50%"}}
+                    style={{"width": "100%", "position": "fixed", "height": "55%"}}
                     onClick={() => setDictionaryOpen(false)}
                     />
                 )}
@@ -415,6 +418,31 @@ export function Article() {
                 </DictionaryArea>
                 )}
                 
+                {isMobile && isDictionaryOpen && (
+                    <DictionaryMobile 
+                        PostAndDelete={PostAndDelete} checkStatus={checkStatus}
+                        handleSearchChange={handleSearchChange}
+                        handleAddBtn={handleAddBtn}
+                        handleCustomSubmit={handleCustomSubmit}
+                        handleCustomWord={handleCustomWord}
+                        handleCancel={handleCancel}
+                        articleWords={articleWords}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        targetWord={targetWord}
+                        setTargetWord={setTargetWord}
+                        customWord={customWord} 
+                        setCustomWord={setCustomWord}
+                        initialValues={initialValues}
+                        formData={formData}
+                        setFormData={setFormData}
+                        wordExistError={wordExistError}
+                        pages={pages}
+                        showCustomForm={showCustomForm}
+                        isDictionaryOpen={isDictionaryOpen}
+                    />
+                )}
+
                 {currentPage === pages - 1 ?  
                     <SideBar onClick={handleFinishReading} >
                         <SideBarImage>
@@ -436,31 +464,6 @@ export function Article() {
                     </SideBar>    
                 }
             </ArticleContainer>
-
-            {isMobile && isDictionaryOpen && (
-                <DictionaryMobile 
-                    word={chosen} PostAndDelete={PostAndDelete} checkStatus={checkStatus}
-                    handleSearchChange={handleSearchChange}
-                    handleAddBtn={handleAddBtn}
-                    handleCustomSubmit={handleCustomSubmit}
-                    handleCustomWord={handleCustomWord}
-                    handleCancel={handleCancel}
-                    articleWords={articleWords}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    targetWord={targetWord}
-                    setTargetWord={setTargetWord}
-                    customWord={customWord} 
-                    setCustomWord={setCustomWord}
-                    initialValues={initialValues}
-                    formData={formData}
-                    setFormData={setFormData}
-                    wordExistError={wordExistError}
-                    pages={pages}
-                    showCustomForm={showCustomForm}
-
-                />
-            )}
             {finishReading && (<ArticleCompleted totolWords={totalWords}/>)}
             
         </>

@@ -12,8 +12,6 @@ import { ButtonButtons, SubmitButtons } from "../components/Buttons"
 
 
 export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
-
-
     const {user} = useContext(UserContext)
     const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState(word)
@@ -64,7 +62,7 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
 
     let src
     let bgColor
-    if (checkStatus(word.word) === 1) {
+    if (checkStatus(word.word.toLowerCase()) === 1) {
         bgColor = "#2ecc71"
         src = check_circle_icon 
     } else {

@@ -33,7 +33,6 @@ export function VocabularyLists() {
         setFilterResult(vocabularies)
     }
 
-    console.log(vocabularies, filterResults)
     return (
         <PageContainer>
             {/* <VocabNavigation>

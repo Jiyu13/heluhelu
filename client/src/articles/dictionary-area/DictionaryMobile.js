@@ -1,6 +1,5 @@
 import styled from "styled-components"
 
-import book_material_icon from "../../assets/images/book_material_icon.svg"
 import add_icon from "../../assets/images/add_icon.svg"
 
 
@@ -9,61 +8,47 @@ import { CustomWord } from "../CustomWord"
 import { useContext } from "react";
 import { UserContext } from "../../components/UserContext";
 import { WordTracker } from "./WordTracker";
+import { ButtonButtons, SubmitButtons } from "../../components/Buttons";
 
 
 
 export function DictionaryMobile(props) {
     
     const {
-           word, PostAndDelete, checkStatus,
+           PostAndDelete, checkStatus,
            handleSearchChange,
            handleAddBtn,
            handleCustomSubmit,
            handleCustomWord,
            handleCancel,
-           articleWords,
-           currentPage,
            targetWord,
            customWord, 
            setCustomWord,
            formData,
            wordExistError,
-           pages,
-           showCustomForm} = props
+           showCustomForm,
+           isDictionaryOpen} = props
 
     const {chosen} = useContext(UserContext)
+
     
     return (
         <DictionaryArea>
-            {/* <span style={{"font-size":"12px"}}>Total words: {articleWords?.length}</span> */}
-            <br/>
-            {/* <PagesContainer>
-                <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                <PageDisplay>pg: {currentPage + 1} of {pages}</PageDisplay>
-            </PagesContainer> */}
+            <SearchArea 
+                type="text"
+                value={targetWord}
+                onChange={handleSearchChange} 
+            />
 
-            <div>
-                <SearchArea 
-                    type="text"
-                    value={targetWord}
-                    onChange={handleSearchChange} 
+            {customWord ? "" :
+                <AddImage 
+                    src={add_icon} 
+                    alt="add custom word button" 
+                    onClick={handleAddBtn} 
+                    id={targetWord}
                 />
+            }
 
-                {customWord ? "" :
-                    <AddImage 
-                        src={add_icon} 
-                        alt="add custom word button" 
-                        onClick={handleAddBtn} 
-                        id={targetWord}
-                    />
-                }
-            </div>
-
-            {customWord === null && targetWord !== null && chosen?.length === 0 && (
-                <NotFound>
-                    No results found for '{targetWord}'.
-                </NotFound>
-            )}
             {showCustomForm && ( 
                 <CustomForm onSubmit={handleCustomSubmit}>
                     <Label>Hawaiian:
@@ -94,9 +79,32 @@ export function DictionaryMobile(props) {
                     <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                 </CustomForm>
             )}
+            {isDictionaryOpen && chosen &&(
+                <WordTracker
+                    target={targetWord} 
+                    word={chosen} 
+                    PostAndDelete={PostAndDelete} 
+                    checkStatus={checkStatus}
+                />
+            )}
+
+            {customWord === null && targetWord !== null && chosen?.length === 0 && (
+                <NotFound>
+                    No results found for '{targetWord}'.
+                </NotFound>
+            )}
+
+            
             <TranslationArea>
-                <WordTracker word={word} PostAndDelete={PostAndDelete} checkStatus={checkStatus}/>
-                {customWord && (<CustomWord key={customWord.id} word={customWord} setCustomWord={setCustomWord}/>)}
+                {customWord && (
+                    <CustomWord 
+                        key={customWord.id} 
+                        word={customWord} 
+                        setCustomWord={setCustomWord}
+                        checkStatus={checkStatus}
+                        PostAndDelete={PostAndDelete}
+                    />
+                )}
                 {chosen?.map(word => 
                     <TranslationWord 
                         key={word.id} 
@@ -126,6 +134,7 @@ const DictionaryArea = styled.div`
     background-color: #282828;
     color: #ddd;
     padding: 0 12px 12px 12px;
+    z-index: 999;
 `
 
 
@@ -134,28 +143,20 @@ const ExistWarning = styled.span`
     font-size: 12px;
 `
 
-const CancelButton = styled.input`
-    width: 90%;
+const CancelButton = styled(ButtonButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 700;
+    margin-top: 0px;
+    padding: 6px 4px;
 `
 
-const SaveButton = styled.input`
-    width: 90%;
+const SaveButton = styled(SubmitButtons)`
     min-width: 90px !important;
     max-width: 120px;  
     width: 0.1em; 
-    height: 2em;
-    margin-right: 15px;
-    border: 0;
+    margin-top: 0px;
+    padding: 6px 4px;
 `
 
 const TranslationInput = styled.input`
