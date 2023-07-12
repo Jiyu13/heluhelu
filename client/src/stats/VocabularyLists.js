@@ -101,7 +101,7 @@ const VocabHeader = styled.div`
     width: 95%;
     display: grid;
     margin: 0 auto;
-    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.6fr;
+    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.7fr;
     grid-auto-flow: column;  //makes items flow across columns, ie into a single row
     grid-gap: 0.25rem;
     padding: 1.5rem 1rem 1rem;

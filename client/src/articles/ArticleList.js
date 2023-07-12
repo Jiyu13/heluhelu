@@ -72,7 +72,7 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                             <br/>
                             {/* ============== progress bar + vocab stats ========================= */}
                             <ProgressBar article={a} getCurrentPage={getCurrentPage}/>
-                            <WordMarkedInfo article={a}/>
+                            {/* <WordMarkedInfo article={a}/> */}
                             {/* ============== progress bar + vocab stats  ========================= */}
                         </ArticleTitle>
                     </ArticleTitleCell>
@@ -161,7 +161,7 @@ const EditContainer = styled.div`
 `
 
 const Button = styled.a`
-    background-color: grey;
+    background-color: #d1d8e0;
     // z-index: 100;
     display: inline-block;
     position: relative;
@@ -177,7 +177,7 @@ const Button = styled.a`
     user-select: none; // Don't allow user to select text in buttons
 
     &:hover {
-        background: #575757;
+        background: #a5b1c2;
     }
 `
 

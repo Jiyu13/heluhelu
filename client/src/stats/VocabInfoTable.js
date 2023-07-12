@@ -102,7 +102,7 @@ const AllWordIndicator  = styled.div`
 const KnownWordIndicator = styled.div`
     width: 2rem;
     height: 1.15rem;
-    background-color: rgba(112, 161, 255, 0.5);
+    background-color: #fff; // rgba(112, 161, 255, 0.5)
     border-color: #338fff;
     border-radius: 10px;
 `

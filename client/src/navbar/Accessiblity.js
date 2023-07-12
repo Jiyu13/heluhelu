@@ -35,12 +35,12 @@ const ShowAccount = styled.div`
     border: 0;
     outline: 0;
     padding: 8px 1em;
-    color: #222;
+    color: #fff;
     font-size: 13px;
     font-weight: 600;
     border-radius: 20px;
     background-color: transparent;
-    border: 2px solid #00c9ff;
+    background-image: linear-gradient(to right, #00B09B, #96C93D);
     transition: all 240ms ease-in-out;
     cursor: pointer;
 `
@@ -48,11 +48,10 @@ const ShowAccount = styled.div`
 
 const AccessibilityContainer = styled.div`
     display: flex;
-    // margin-left: 10px;
+    margin-left: 10px;
 `;
 
 const LogoutButton = styled.div`
-    
     border: 0;
     outline: 0;
     padding: 8px 1em;
@@ -61,7 +60,7 @@ const LogoutButton = styled.div`
     font-weight: 600;
     border-radius: 20px;
     background-color: transparent;
-    border: 2px solid #00c9ff;
+    border: 2px solid #00B09B;
     transition: all 240ms ease-in-out;
     cursor: pointer;
 
@@ -69,7 +68,8 @@ const LogoutButton = styled.div`
     // transition color from #6adf76 to #00c9ff
     &:hover {
       color: #fff;
-      background-color: #00c9ff;
+      background-color: #00B09B;
+      background-image: linear-gradient(to right, #00B09B, #96C93D);
     }
 
     // apply the styling for all button except for the last one
