@@ -540,7 +540,7 @@ const ArticleContainer = styled.div`
     flex-direction: row;
     align-items: stretch;
     gap: 1px;
-    margin: 0 auto;
+    margin: 60px auto 0;
     box-sizing: border-box;
     width: 100%;
     min-height: 450px;

@@ -59,7 +59,8 @@ const NavBarContainer = styled.div`
     padding: 0 1.5em;
     // prevent padding from making 100% width extend beyond screen
     box-sizing: border-box;
-
+    position: fixed;
+    z-index: 1;
 `;
 
 const LeftSection = styled.div`
