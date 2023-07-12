@@ -181,7 +181,7 @@ const ForgetPasswordLink = styled.a`
 const LoginButton = styled.button`
     width: 100%;
     height: 40px;
-    border-radius: 40px;
+    border-radius: 8px;
     border: none;
     outline: none;
     cursor: pointer;

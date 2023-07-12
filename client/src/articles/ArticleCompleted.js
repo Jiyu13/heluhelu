@@ -2,12 +2,12 @@ import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import close_btn from "../assets/images/close_btn.svg"
 
 
-export function ArticleCompleted( {totolWords} ) {
+export function ArticleCompleted( {totalWords} ) {
 
     const {article} = useContext(UserContext)
 
@@ -28,11 +28,10 @@ export function ArticleCompleted( {totolWords} ) {
                 <Divider/>
                 <ContainerBody>
                     <ArticleStats>
-                        <TotalWords>Words Read - {totolWords}</TotalWords>
-                        <KnownnWords>Known Word</KnownnWords>
-                        <StudyingWords>Studying Word</StudyingWords>
+                        <TotalWords>Words Read - {totalWords}</TotalWords>
+                        {/* <KnownnWords>Known Word</KnownnWords>
+                        <StudyingWords>Studying Word</StudyingWords> */}
                     </ArticleStats>
-                    {/* <HomePageButton>Back To Home</HomePageButton> */}
                 </ContainerBody>
             </PopupContainer>
             <Overlay></Overlay>

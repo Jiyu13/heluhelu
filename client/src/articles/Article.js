@@ -320,8 +320,8 @@ export function Article() {
                 
                 {!isMobile && (
                 <DictionaryArea>
-                    <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
-                    <br/>
+                    {/* <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
+                    <br/> */}
                     <PagesContainer>
                         <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
                         <PageDisplay>pg: {currentPage+1} of {pages}</PageDisplay>
@@ -366,14 +366,17 @@ export function Article() {
                                 />
                                 <br/>
                             </Label>
+
                             {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
+
                             <br/>
                             <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
                             <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
                         </CustomForm>
                     )}
+
                     <br/>
-                    {/* {isDictionaryOpen && chosen && dictionaryWords.length !== 0 &&( */}
+
                     {isDictionaryOpen && chosen &&(
                         <WordTracker
                             target={targetWord} 
@@ -464,7 +467,7 @@ export function Article() {
                     </SideBar>    
                 }
             </ArticleContainer>
-            {finishReading && (<ArticleCompleted totolWords={totalWords}/>)}
+            {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
             
         </>
     )

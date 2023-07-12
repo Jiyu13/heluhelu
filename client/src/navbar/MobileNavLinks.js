@@ -18,35 +18,33 @@ export function MobileNavLinks() {
     const lastOpen = articles[0]
 
     return (
-        <>
-            <NavLinksContainer>
-                <MenuToggle isOpen={isOpen} toggle={() => setOpen(!isOpen)}/>
+        <NavLinksContainer>
+            <MenuToggle isOpen={isOpen} toggle={() => setOpen(!isOpen)}/>
 
-                {/* isOpen=true, grab LinksWrapper*/}
-                {isOpen && (
-                    <LinksWrapper>
-                        <LinkItem>
-                            <Link href="/">Home</Link>
-                        </LinkItem>
+            {/* isOpen=true, grab LinksWrapper*/}
+            {isOpen && (
+                <LinksWrapper>
+                    <LinkItem>
+                        <Link href="/">Home</Link>
+                    </LinkItem>
 
-                        <LinkItem>
-                            <Link href="/stats">My Stats</Link>
-                        </LinkItem>
+                    <LinkItem>
+                        <Link href="/stats">My Stats</Link>
+                    </LinkItem>
 
-                        <LinkItem>
-                            <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
-                            <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
-                        </LinkItem>
+                    <LinkItem>
+                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
+                        <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
+                    </LinkItem>
 
-                        <Marginer/>
-                        <Accessibility/>
-                    </LinksWrapper>
+                    <Marginer/>
+                    <Accessibility/>
+                </LinksWrapper>
 
-                )}
+            )}
 
-                
-            </NavLinksContainer>
-        </>
+            
+        </NavLinksContainer>
     )
 }
 
@@ -65,7 +63,7 @@ const LinksWrapper = styled.ul`
     margin: 0;
     padding: 0;
     display: flex;
-    height: 100%;
+    height: 30%;
     list-style: none;
 
     // make the menu to pop up and the ul more like a menu
@@ -74,7 +72,8 @@ const LinksWrapper = styled.ul`
     flex-direction: column;
     position: fixed;
     top: 65px;
-    left: 0;
+    left: 74%;
+    align-content: flex-end;
 `;
 
 // render a single link, click and redirect to a specific page
@@ -85,12 +84,13 @@ const LinkItem = styled.li`
     color: # 222;
     font-weight: 500;
     font-size: 16px;
-    // align-items: center;
-    // justify-content: center;
     display: flex;
     flex-direction: column;
-
     margin-bottom: 10px;
+
+    &:hover {
+        background-color: 
+    }
 `;
 
 const Link = styled.a`
