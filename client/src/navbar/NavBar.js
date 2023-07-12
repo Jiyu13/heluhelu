@@ -61,6 +61,8 @@ const NavBarContainer = styled.div`
     box-sizing: border-box;
     position: fixed;
     z-index: 1;
+    top: 0;
+    background-color: #fff;
 `;
 
 const LeftSection = styled.div`

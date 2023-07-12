@@ -102,6 +102,7 @@ const PasteBox = styled.div`
     font-size: 20px;
     line-height: 1.6;
     display: block;
+    margin: 90px auto 0;
 `
 
 const FormContainer = styled.form`

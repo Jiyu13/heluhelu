@@ -47,7 +47,7 @@ export function ArticleUUID() {
 
 const ShareContainer = styled.div`
     text-align: center;
-    margin: 0 auto;
+    margin: 90px auto 0;
     max-width: 800px;
     font-size: 20px;
     line-weight: 1.6;

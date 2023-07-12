@@ -48,7 +48,7 @@ const ShowAccount = styled.div`
 
 const AccessibilityContainer = styled.div`
     display: flex;
-    margin-left: 10px;
+    // margin-left: 10px;
 `;
 
 const LogoutButton = styled.div`

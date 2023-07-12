@@ -53,20 +53,6 @@ export function SharePage() {
                     }
                 }
             })
-            
-            // .then(res => {
-            //     if (res.ok) {res.json().then(data => {
-            //         setArticles([sharedArticle, ...articles])
-            //         // setUserArticles([...userArticles, data])
-            //         redirectArticles(data.article_id)
-            //     })} else  {
-            //         if (res.status === 404) {
-            //             window.alert("This article does not exist in the database, please try again")
-            //         } else if (res.status === 409) {
-            //             window.alert("Article already exists.")
-            //         }
-            //     }
-            // })
         } else {
             redirectHomePage()
         }
@@ -85,15 +71,6 @@ export function SharePage() {
             <ShareArticleTitle>{sharedArticle.title}</ShareArticleTitle>
             <br/>
 
-            {/* <># words: {sharedArticle?.text.split("\n").length}</>
-            <br/>
-            <># pages: </>
-            <br/>
-            <># From: </>
-            <br/>
-            <br/>
-            <br/> */}
-
             <YesButton onClick={handleAddUserArticle} value="yes">Yes / Add</YesButton>
             <NoButton onClick={handleAddUserArticle} value="no">No / Cancel</NoButton>
 
@@ -104,7 +81,7 @@ export function SharePage() {
 
 const ShareReciveContainer = styled.div`
     text-align: center;
-    margin: 0 auto;
+    margin: 90px auto 0;
     max-width: 800px;
     font-size: 20px;
     line-weight: 1.6;

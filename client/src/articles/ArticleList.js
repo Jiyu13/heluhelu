@@ -162,7 +162,7 @@ const EditContainer = styled.div`
 
 const Button = styled.a`
     background-color: grey;
-    z-index: 100;
+    // z-index: 100;
     display: inline-block;
     position: relative;
     top: -2px;

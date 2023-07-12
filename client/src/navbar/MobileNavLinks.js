@@ -14,8 +14,8 @@ export function MobileNavLinks() {
     // state to toggle the changes, when click show the actual ul menu, otherwise hidden by default
     const [isOpen, setOpen] = useState(false)
 
-    const {articles} = useContext(UserContext)
-    const lastOpen = articles[0]
+    const {articles, article} = useContext(UserContext)
+    const currentArticle = article !== null ? article : articles?.[0]
 
     return (
         <NavLinksContainer>
@@ -33,9 +33,27 @@ export function MobileNavLinks() {
                     </LinkItem>
 
                     <LinkItem>
-                        <Link className="recent-reading" href={`/articles/${lastOpen?.id}`}>Currently Reading</Link>
-                        <HideTitle className="last-open-title">{lastOpen?.title}</HideTitle>
-                    </LinkItem>
+
+                        {/* {currentArticle ? 
+                            <Link 
+                                className="recent-reading"
+                                href={`/articles/${currentArticle?.id}`}
+                            >
+                                Currently Reading
+                                <HideTitle className="last-open-title">{currentArticle?.title}</HideTitle>
+                            </Link>
+                            :
+                            <Link className="recent-reading" style={{cursor: "pointer"}}>
+                                Currently Reading
+                                <HideTitle className="last-open-title">No current reading.</HideTitle>
+                            </Link>
+                        }  */}
+                            <Link 
+                                href={`/articles/${currentArticle?.id}`}
+                            >
+                                Currently Reading
+                            </Link>
+                       </LinkItem>
 
                     <Marginer/>
                     <Accessibility/>
@@ -48,9 +66,12 @@ export function MobileNavLinks() {
     )
 }
 
-const HideTitle = styled.div`
-    display: none;
-`
+// const HideTitle = styled.div`
+//     display: none;
+//     // text-align: center;
+//     flex-wrap: pre-wrap;
+//     font-size: 14px;
+// `
 
 const NavLinksContainer = styled.div`
     height: 100%;
@@ -60,36 +81,42 @@ const NavLinksContainer = styled.div`
 `;
 
 const LinksWrapper = styled.ul`
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 30%;
-    list-style: none;
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    background-color: #ced6e0;
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: 150px;
+    height: 250px;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
 
-    // make the menu to pop up and the ul more like a menu
-    background-color: #fff;
-    width: 100%;
-    flex-direction: column;
-    position: fixed;
-    top: 65px;
-    left: 74%;
-    align-content: flex-end;
+    &:before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 20px;
+        height: 20px;
+        width: 20px;
+        background: var(--secondary-bg);
+        transform: rotate(45deg);
+    }
 `;
 
 // render a single link, click and redirect to a specific page
 const LinkItem = styled.li`
-    // height: 100%;
     width: 100%;
-    padding: 0 1.1em;
-    color: # 222;
+    padding: 0.5rem 0;
+    color: #222;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin: 10px auto;
 
     &:hover {
-        background-color: 
+        // border-bottom: 0.5px solid black;
+        // width: 90%;
     }
 `;
 
@@ -100,5 +127,8 @@ const Link = styled.a`
 `;
 
 const Marginer = styled.div`
-    height: 2em;
+    margin-top: 60px;
+    border-top: 1px solid black;
+    // rgba(255, 255, 255, 0.2);
+    height: 1rem;
 `;

@@ -9,7 +9,7 @@ import { ButtonElements } from "./Buttons";
 export function Home({articles, onDeleteArticle}) {   
 
     return (
-        <div>
+        <>
             <HomepageTitle>Heluhelu</HomepageTitle>
             <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
@@ -26,7 +26,7 @@ export function Home({articles, onDeleteArticle}) {
 
             <ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>
 
-        </div>
+        </>
     ) 
 }
 
@@ -54,12 +54,14 @@ const HomepageTitle = styled.h1`
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+    margin: 120px auto 0;
+
 `
 
 const HomepageText = styled.div`
     max-width: 700px;
     text-align: center;
-    margin: 0 auto 18px auto;
+    margin: 18px auto 18px auto;
     font-size: 14px;
     color: #999!important;
     line-height: 1.6;

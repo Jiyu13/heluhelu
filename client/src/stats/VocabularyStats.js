@@ -12,4 +12,6 @@ export function VocabularyStats() {
     )
 }
 
-const StatsContainer = styled.div``
+const StatsContainer = styled.div`
+    margin: 90px auto 0;
+`

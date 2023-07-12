@@ -39,7 +39,9 @@ export function MyStats() {
 
 const VocabStatsPage = styled(SubmitButtons)``
 
-const PageContainer = styled.div``
+const PageContainer = styled.div`
+    margin: 90px auto 0;
+`
 
 export const StatsNavigation = styled.div`
     display: flex;

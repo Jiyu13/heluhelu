@@ -87,7 +87,7 @@ const SubmitButton = styled(SubmitButtons) `
 const EditContainer = styled.div`
     text-align: center;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 90px auto 0;
     font-size: 20px;
     line-weight: 1.6;
 `

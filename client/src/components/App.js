@@ -114,8 +114,13 @@ function App() {
       {!user ? 
         <AccountBox/> 
         :
-        <main>
+        <> 
+          <header>
             <NavBar/>
+          </header>
+          
+          <main>
+            
             <Routes >
               <Route
                 exact
@@ -196,9 +201,10 @@ function App() {
                 element={<Home articles={articles} onDeleteArticle={onDeleteArticle}/>}
               >
               </Route>
-          </Routes>
+            </Routes>
 
-        </main>
+          </main>
+        </>
       }
     </UserContext.Provider>
   );
