@@ -110,6 +110,7 @@ const FileBox = styled.div`
     padding: 18px;
     text-align: center;
     display: block;
+    margin: 90px auto 0;
 `
 
 const FormContainer = styled.form`
