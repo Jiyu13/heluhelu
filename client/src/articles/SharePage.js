@@ -4,22 +4,21 @@ import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 
+import warning_white_24dp from "../assets/images/warning_white_24dp.svg"
+
 export function SharePage() {
 
     const {articles, setArticles } = useContext(UserContext)
     const { uuid } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
+    const [isExist, setExist] = useState(false)
+    const [ExistAlert, setAlert] = useState(null)
 
 
     let navigate = useNavigate()
     function redirectHomePage () {
         navigate('/')
     }
-
-    function redirectArticles(){
-        navigate(`/articles`)
-    }
-
 
     useEffect(() => {
         apiFetch(`/articles/${uuid}`)
@@ -36,22 +35,29 @@ export function SharePage() {
 
 
     function handleAddUserArticle(e) {
-
+        console.log(e.target.value)
         if (e.target.value === "yes") {
              apiFetch(`/articles`, {
                 method: "POST",
                 headers: {"Content-Type": 'application/json'},
                 body: JSON.stringify(newArticle)
             })
-            .then((res) => {
-                if (res.ok) {res.json().then(data => {
-                    setArticles([data, ...articles])
-                    redirectArticles()
-                })} else {
-                    if (res.status === 409) {
-                        window.alert("Article already exists.")
-                    }
-                }
+            // .then((res) => {
+            //     if (res.ok) {res.json().then(data => {
+            //         setArticles([data, ...articles])
+            //         redirectHomePage()
+            //     })} else {
+            //         if (res.status === 409) {
+            //             setExist(!isExist)
+            //             setAlert("Article already exists.")
+            //             window.alert("Article already exists.")
+            //         }
+            //     }
+            // })
+            .then(res => res.json())
+            .then(data => {
+                setArticles([data, ...articles])
+                redirectHomePage()
             })
         } else {
             redirectHomePage()
@@ -62,22 +68,44 @@ export function SharePage() {
 
     return (
         <ShareReciveContainer>
-            <br/>
-            <br/>
-            <>Would you like to add this article to your Reader account?</>
-            <br/>
-            <br/>
+            {/* {!isExist && ( */}
+                {/* <> */}
+                
+                    <br/>
+                    <br/>
+                    <>Would you like to add this article to your Reader account?</>
+                    <br/>
+                    <br/>
 
-            <ShareArticleTitle>{sharedArticle.title}</ShareArticleTitle>
-            <br/>
+                    <ShareArticleTitle>{sharedArticle.title}</ShareArticleTitle>
+                    <br/>
 
-            <YesButton onClick={handleAddUserArticle} value="yes">Yes / Add</YesButton>
-            <NoButton onClick={handleAddUserArticle} value="no">No / Cancel</NoButton>
+                    <YesButton onClick={handleAddUserArticle} value="yes">Yes / Add</YesButton>
+                    <NoButton onClick={handleAddUserArticle} value="no">No / Cancel</NoButton>
+                {/* </>
+            )} */}
+            {/* {isExist && (
+                <AlertContaier>
+                    <img src={{warning_white_24dp}} alt="Article Exists Warning"/>
+                    <p>Article already exists.</p>
+                </AlertContaier>
+            ) */}
+
+            {/* } */}
 
         </ShareReciveContainer>
     )
 
 }
+
+// const AlertContaier = styled.div`
+//     background-color: gray;
+//     width: 60%;
+//     margin: auto;
+//     border-radius: 8px;
+//     padding: 20px 0;
+//     opacity: 0.8;
+// `
 
 const ShareReciveContainer = styled.div`
     text-align: center;

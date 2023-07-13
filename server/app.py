@@ -104,23 +104,25 @@ class Articles(Resource):
     def post(self):
         user_id = session["user_id"]
 
-        title = request.get_json()["title"]
-        article = Article.query.filter_by(user_id=user_id, title=title).first()
+        # title = request.get_json()["title"]
+        # article = Article.query.filter_by(user_id=user_id, title=title).first()
+        # article = Article.query.filter_by(user_id=user_id).first()
+        # print(article)
         # ================= check by title to see if article exists ===================
-        if article: 
-            return make_response({"message": "article already exists"}, 409)
-        else:
-            new_article = Article(
-                user_id=user_id,
-                uuid=str(uuid.uuid4()),
-                text=request.get_json()['text'],
-                title=request.get_json()["title"],
-                check_finished=False,
-            )
-            db.session.add(new_article)
-            db.session.commit()
+        # if article: 
+            # return make_response({"message": "article already exists"}, 409)
+        # else:
+        new_article = Article(
+            user_id=user_id,
+            uuid=str(uuid.uuid4()),
+            text=request.get_json()['text'],
+            title=request.get_json()["title"],
+            check_finished=False,
+        )
+        db.session.add(new_article)
+        db.session.commit()
 
-            return make_response(new_article.to_dict(), 201)
+        return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
 
