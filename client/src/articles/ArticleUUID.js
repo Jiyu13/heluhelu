@@ -16,7 +16,7 @@ export function ArticleUUID() {
         .then(data => setSharedArticle(data))
     }, [id])
 
-    const url = `http://127.0.0.1:3000/article/share_receive/${sharedArticle.uuid}`
+    const url = window.location.protocol + "//" + window.location.host + `/article/share_receive/${sharedArticle.uuid}`
 
     const handleFocus = (e) => {
         e.target.select();

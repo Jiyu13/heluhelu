@@ -35,7 +35,6 @@ export function SharePage() {
 
 
     function handleAddUserArticle(e) {
-        console.log(e.target.value)
         if (e.target.value === "yes") {
              apiFetch(`/articles`, {
                 method: "POST",
