@@ -1,19 +1,12 @@
 import styled from "styled-components"
 import filter_24dp from "../assets/images/filter_24dp.svg"
-import { useContext } from "react"
-import { UserContext } from "../components/UserContext"
 
 
-export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilterStudying} ) {
-    const { vocabularies } = useContext(UserContext)
-    
-    function searchVocabs(status) {
-        return vocabularies?.filter(v => v["status"] === status).map(v => v["hawaiian_clean"].toLowerCase())
+export function MobileVocabularyTable( { handleSelectFilter} ) {
+
+    function handleChange(e) {
+        handleSelectFilter(e.target.value)
     }
-
-
-    const knownVocab = searchVocabs(2)?.length
-    const studyingvocab = searchVocabs(1)?.length
     
     return  (
         <InfoContainer>
@@ -22,23 +15,13 @@ export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilt
                 <FilterByText style={{fontSize: "3px"}}>
                     Filter By:
                 </FilterByText>
-                
             </FilterBy>
-            <InfoItem onClick={handleFilterAll}>
-                <AllWordIndicator/>
-                <WordText>All Vocabs</WordText>
-                <WordCount>{vocabularies?.length}</WordCount>
-            </InfoItem>
-            <InfoItem onClick={handleFilterKnown}>
-                <KnownWordIndicator/>
-                <WordText>Known</WordText>
-                <WordCount>{knownVocab}</WordCount>
-            </InfoItem>
-            <InfoItem onClick={handleFilterStudying}>
-                <StudyingdIndicator/>
-                <WordText>Studying</WordText>
-                <WordCount>{studyingvocab}</WordCount>
-            </InfoItem>
+            <SelectBar onChange={handleChange}>
+                <option disabled>Select a Tag</option>
+                <option>All Vocabs</option>
+                <option>Known</option>
+                <option>Studying</option>
+            </SelectBar>
         </InfoContainer>
 
     )
@@ -47,16 +30,21 @@ export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilt
 const InfoContainer = styled.div`
     box-sizing: border-box;
     width: 90%;
+    height: 60px;
     margin: 15px auto 0px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 0.5fr 1fr;
     background-image:  linear-gradient(to right, #FDAB73, #AEC28F);
     border-radius: 8px;
+    // justify-content: center;
+    align-items: center;
+    text-align: center;
 `
 const FilterBy = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 10px;
 `
 
 const FilterByText = styled.span`
@@ -65,6 +53,10 @@ const FilterByText = styled.span`
     font-size: .875rem !important;
     font-weight: bold;
     white-space: nowrap; // make "All Words" stay in the same line
+`
+
+const SelectBar = styled.select`
+    width: 40%;
 `
 
 const InfoItem = styled.div`

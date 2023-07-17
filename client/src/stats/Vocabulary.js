@@ -6,7 +6,6 @@ import apiFetch from "../api/ApiFetch"
 export function Vocabulary( {vocab} ) {
     const [dictionaryDefinition, setDefinition] = useState(null)
     const [customDefinition, setCustomDefinition] = useState(null)
-    // const [status, setStatus] = useState(vocab["status"])
 
 
     const word = vocab["hawaiian_clean"]
@@ -71,7 +70,7 @@ const VocabContainer = styled.div`
     border: 1px solid #bdc3c7;
     border-radius: 8px;
     grid-gap: 0.25rem;
-    padding: 1.5rem 1rem 1rem;
+    padding: 1.5rem 0.5rem 1rem;
 
     &:hover {
         border: 2px solid #2c3e50;
@@ -89,6 +88,5 @@ const DefinitionColumn = styled.div`
 const CustomColumn = styled.div`
     padding-right: 2rem;
 `
-
 
 const MarkTagColumn = styled.div``

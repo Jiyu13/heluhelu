@@ -4,10 +4,13 @@ import { ReadingStats } from "./ReadingStats"
 import apiFetch from "../api/ApiFetch"
 import { Link } from "react-router-dom"
 import { SubmitButtons } from "../components/Buttons"
+import { useMediaQuery } from "react-responsive"
+import { DeviceSize } from "../navbar/responsive"
 
 export function MyStats() {
     const [readEvents, setReadEvets] = useState(null)
      
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
 
     useEffect(() => {
         apiFetch('/stats')
@@ -18,13 +21,22 @@ export function MyStats() {
 
     return (
         <PageContainer>
-            
-            <StatsNavigation >
-                <StatsTitle>Reading Stats</StatsTitle>
-                {/* <Link to="/stats">Reading Stats</Link> */}
+            {isMobile && (
                 <Link to="/stats/vocabularies">
                     <VocabStatsPage type="button" value="Vocabulary Stats" />
                 </Link>
+            )}
+            
+            <StatsNavigation >
+                
+
+                <StatsTitle>Reading Stats</StatsTitle>
+                {!isMobile && (
+                    <Link to="/stats/vocabularies">
+                        <VocabStatsPage type="button" value="Vocabulary Stats" />
+                    </Link>
+                )}
+                
 
             </StatsNavigation>
             
@@ -41,6 +53,7 @@ const VocabStatsPage = styled(SubmitButtons)``
 
 const PageContainer = styled.div`
     margin: 90px auto 0;
+    text-align: center;
 `
 
 export const StatsNavigation = styled.div`

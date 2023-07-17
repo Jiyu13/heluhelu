@@ -8,12 +8,17 @@ import { SubmitButtons } from "../components/Buttons";
 import { VocabInfoTable } from "./VocabInfoTable";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
+import { DeviceSize } from "../navbar/responsive";
+import { MobileVocabularyTable } from "./MobileVocabularyTable";
 
 
 export function VocabularyLists() {
     const { vocabularies } = useContext(UserContext)
     
     const [filterResults, setFilterResult] = useState(vocabularies)
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
+
 
     useEffect(() => {
           setFilterResult(vocabularies)
@@ -33,32 +38,52 @@ export function VocabularyLists() {
         setFilterResult(vocabularies)
     }
 
+    function handleSelectFilter(tag) {
+        if (tag === "All Vocabs") {
+            handleFilterAll()
+        } else if (tag === "Known") {
+            handleFilterKnown()
+        } else if (tag === "Studying") {
+            handleFilterStudying()
+        }
+    }
+
     return (
         <PageContainer>
-            {/* <VocabNavigation>
-                <NavUnorderList>
-                    <NavList>
-                        <ListLink href="/stats">Reading Stats</ListLink>
-                    </NavList>
-                    <NavList>
-                        <ListLink href="/stats/vocabularies">Vocabulary Stats</ListLink>
-                    </NavList>
-                </NavUnorderList>
-            </VocabNavigation> */}
+            {isMobile && (
+                <div style={{textAlign: "center"}}>
+                    
+                        <Link to="/stats">
+                            <ReadingStatsPage type="button" value="Reading Stats" />
+                        </Link>
+                
+                </div>
+             )}
+            
+
             <VocabStatsNavigation >
                 <VocabStatsTitle>Vocabulary Stats</VocabStatsTitle>
-                {/* <Link to="/stats">Reading Stats</Link> */}
-                <Link to="/stats">
-                    <ReadingStatsPage type="button" value="Reading Stats" />
-                </Link>
+                {!isMobile && (
+                    <Link to="/stats">
+                        <ReadingStatsPage type="button" value="Reading Stats" />
+                    </Link>
+                )}
+                
 
             </VocabStatsNavigation>
 
-            <VocabInfoTable 
-                handleFilterAll={handleFilterAll}
-                handleFilterKnown={handleFilterKnown}
-                handleFilterStudying={handleFilterStudying}
-            />
+            {isMobile ? 
+                <MobileVocabularyTable 
+                    handleSelectFilter={handleSelectFilter}
+                />
+                :
+                <VocabInfoTable 
+                    handleFilterAll={handleFilterAll}
+                    handleFilterKnown={handleFilterKnown}
+                    handleFilterStudying={handleFilterStudying}
+                />
+            }
+            
             
             <ContainerBody>
                 <VocabHeader>
@@ -89,7 +114,7 @@ const ReadingStatsPage = styled(SubmitButtons)``
 
 const ContainerBody = styled.div`
     box-sizing: border-box;
-    width: 75%;
+    width: 90%;
     margin: 0 auto 30px;
     border-radius: 8px;
     padding-bottom: 1rem;
@@ -101,39 +126,28 @@ const VocabHeader = styled.div`
     width: 95%;
     display: grid;
     margin: 0 auto;
-    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.7fr;
-    grid-auto-flow: column;  //makes items flow across columns, ie into a single row
+    grid-template-columns: 0.5fr 1fr 4fr 2fr 0.6fr;
+    grid-auto-flow: column;  //makes items flow across columns, into a single row
     grid-gap: 0.25rem;
-    padding: 1.5rem 1rem 1rem;
+    padding: 1.5rem 0.5rem 1rem;
 `
 
-const IdColumn = styled.div`font-weight: bold;`
-const WordColumn= styled.div`font-weight: bold;`
-const DefinitionColumn = styled.div`font-weight: bold;`
-const CustomColumn = styled.div`font-weight: bold;`
-const MarkTagColumn = styled.div`font-weight: bold;`
-
-
-// const VocabNavigation = styled.div`
-//     box-sizing: border-box;
-//     width: 75%;
-//     margin 0 auto -1rem;
-//     // border-bottom: 1px solid #bdc3c7;
-// `
-
-// const NavUnorderList = styled.ul`
-//     list-style-position: inside;
-//     padding-left: 0;
-// `
-// const NavList = styled.li`
-//     border-sizing: border-box;
-//     display: inline-block;
-// `
-// const ListLink = styled.a`
-//     padding: 0.5rem 1.5rem;
-//     border: 1px solid #bdc3c7;
-//     text-decoration: none;
-//     border-top-left-radius: 0.5rem;
-//     border-top-right-radius: 0.5rem;
-//     // margin-bottom: -1px;
-// `
+const IdColumn = styled.div`
+    font-weight: bold;
+    padding-right: 2rem;
+`
+const WordColumn= styled.div`
+    font-weight: bold;
+    padding-right: 2rem;
+`
+const DefinitionColumn = styled.div`
+    font-weight: bold;
+    padding-right: 2rem;
+`
+const CustomColumn = styled.div`
+    font-weight: bold;
+    padding-right: 2rem;
+`
+const MarkTagColumn = styled.div`
+    font-weight: bold;
+`
