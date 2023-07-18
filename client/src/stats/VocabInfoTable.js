@@ -114,11 +114,3 @@ const StudyingdIndicator = styled.div`
     border-color: #338fff;
     border-radius: 10px;
 `
-
-// const IgnoredWordIndicator = styled.div`
-//     width: 2rem;
-//     height: 1.15rem;
-//     background-color: white;
-//     border-color: #338fff;
-//     border-radius: 10px;
-// `
