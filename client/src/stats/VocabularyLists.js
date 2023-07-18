@@ -134,11 +134,11 @@ const VocabHeader = styled.div`
 
 const IdColumn = styled.div`
     font-weight: bold;
-    padding-right: 2rem;
+    // padding-right: 2rem;
 `
 const WordColumn= styled.div`
     font-weight: bold;
-    padding-right: 2rem;
+    // padding-right: 2rem;
 `
 const DefinitionColumn = styled.div`
     font-weight: bold;
@@ -146,7 +146,7 @@ const DefinitionColumn = styled.div`
 `
 const CustomColumn = styled.div`
     font-weight: bold;
-    padding-right: 2rem;
+    // padding-right: 2rem;
 `
 const MarkTagColumn = styled.div`
     font-weight: bold;
