@@ -26,6 +26,7 @@ import { DropDown } from "../components/DropDown"
 
 
 import { ButtonButtons, SubmitButtons } from "../components/Buttons"
+import { ArticleInfo } from "./ArticleInfo"
 
 const PAGE_SIZE = 250;
 
@@ -44,6 +45,9 @@ export function Article() {
     const [currentPage, setCurrentPage] = useState(0)
     const [finishReading, setFinishReading] = useState(null)
     // const [haveReadPages, setReadPages] = useState(0)
+
+    const [showInfo, setShowInfo] = useState(false)
+
 
     const {
             article, setArticle,
@@ -303,7 +307,7 @@ export function Article() {
             
                 <ReadableArea>
                     <header>
-                        <DropDown/>
+                        <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
                     </header>
                     
                     <ReadableContent>
@@ -467,6 +471,7 @@ export function Article() {
                     </SideBar>    
                 }
             </ArticleContainer>
+            {showInfo && (<ArticleInfo article={article}/>)}
             {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
             
         </>
