@@ -11,13 +11,13 @@ import { ArticleUUID } from "../articles/ArticleUUID";
 import { SharePage } from "../articles/SharePage";
 
 import { MyStats } from "../stats/MyStats";
-import { DictionaryMobile } from "../articles/dictionary-area/DictionaryMobile";
 import apiFetch from "../api/ApiFetch";
 import {FileImporter} from "../articles/import/FileImporter";
 import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
+import { ArticleInfo } from "../articles/ArticleInfo";
 
 const USER_NOT_SET = -1;
 
@@ -154,6 +154,13 @@ function App() {
                 element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
               >
               </Route>
+
+              <Route
+                exact
+                path='/articles/:article_id/info'
+                element={<ArticleInfo key={article?.id}/>}
+              >
+              </Route>
               
               <Route
                 exact
@@ -188,12 +195,6 @@ function App() {
                 element={<SignupPage/>}
               >
               </Route>
-
-              <Route
-                exact
-                path='/mobile/:id'
-                element={<DictionaryMobile key={article?.id}/>}
-              ></Route>
 
               <Route
                 exact
