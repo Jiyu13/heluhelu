@@ -125,6 +125,66 @@ class Articles(Resource):
         return make_response(new_article.to_dict(), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
+# ======================= article =========================================
+class ArticleInfo(Resource):
+    def get(self, article_id):
+        article = Article.query.filter_by(id=article_id, user_id=session["user_id"]).first()
+
+        # get word from UserWOrd objects
+        customs = UserWord.query.filter_by(user_id=session["user_id"]).all()
+        custom_words = []
+        for c in customs:
+            custom_words.append(c.word)
+
+        # get vocabs from Vocabulary objects and catalogue them
+        vocabularies = Vocabulary.query.filter_by(user_id=session["user_id"]).all()
+        # Unknown: 0, Studying: 1, Known: 2, Ignored: 3,
+        studyings = []
+        knowns = []
+        ingoreds = []
+        for v in vocabularies:
+            if v.status == 1:
+                studyings.append(v.hawaiian_clean)
+            if v.status == 2:
+                knowns.append(v.hawaiian_clean)
+            if v.status == 3:
+                ingoreds.append(v.hawaiian_clean)
+
+
+        total_words = []
+        total_custom = []
+        studying_total = []
+        known_total = []
+        ingored_total = []
+        
+        for word in article.text.split():
+            # re.sub(r"[^a-zA-Z0-9ʻ ]", "", clean_word)
+            clean_word = re.sub(r"[^a-zA-Z0-9ʻ ]", "", word)
+            print(clean_word)
+            if clean_word != "":
+                total_words.append(clean_word)
+
+                lower = clean_word.lower()
+                capitalized = clean_word.capitalize()
+
+                if lower in custom_words or capitalized in custom_words:
+                    total_custom.append(clean_word)
+                if lower in studyings or capitalized in studyings:
+                    studying_total.append(clean_word)
+                if lower in knowns or capitalized in knowns:
+                    known_total.append(clean_word)
+                if lower in ingoreds or capitalized in ingoreds:
+                    ingored_total.append(clean_word)
+
+        response = {
+            "total_words": total_words,
+            "total_custom": total_custom,
+            "studying_total": studying_total,
+            "known_total": known_total,
+            "ingored_total": ingored_total
+        }
+        return make_response(response, 201)
+api.add_resource(ArticleInfo, "/articles/<int:article_id>/info")
 
 class ArticleFinish(Resource):
     def patch(self, article_id):
