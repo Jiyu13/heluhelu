@@ -306,9 +306,14 @@ export function Article() {
                 </SideBar>
             
                 <ReadableArea>
-                    <header>
+                    <HeaderContainer>
+                        <PagesContainer>
+                            <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                            <PageDisplay>pg: {currentPage+1} / {pages}</PageDisplay>
+                        </PagesContainer>
                         <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
-                    </header>
+                    </HeaderContainer>
+                    
                     
                     <ReadableContent>
                     {paragraphs?.map((p, index) => 
@@ -326,25 +331,26 @@ export function Article() {
                 <DictionaryArea>
                     {/* <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
                     <br/> */}
-                    <PagesContainer>
-                        <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                        <PageDisplay>pg: {currentPage+1} of {pages}</PageDisplay>
-                    </PagesContainer>
-
-                    <SearchArea 
-                        type="text"
-                        value={targetWord}
-                        onChange={handleSearchChange}
-                    />
-
-                    {customWord ? "" :
-                        <AddImage 
-                            src={add_icon} 
-                            alt="add custom word button" 
-                            onClick={handleAddBtn} 
-                            id={targetWord}
+                    <DictionaryAreaHeader>
+                        <SearchArea 
+                            type="text"
+                            value={targetWord}
+                            onChange={handleSearchChange}
                         />
-                    }
+
+                        {customWord ? "" :
+                            <ImageContainer>
+                                <AddImage 
+                                    src={add_icon} 
+                                    alt="add custom word button" 
+                                    onClick={handleAddBtn} 
+                                    id={targetWord}
+                                />
+                            </ImageContainer>
+                            
+                        }
+                    </DictionaryAreaHeader>
+                    
 
                     {showCustomForm && ( 
                         <CustomForm onSubmit={handleCustomSubmit}>
@@ -471,12 +477,20 @@ export function Article() {
                     </SideBar>    
                 }
             </ArticleContainer>
-            {showInfo && (<ArticleInfo article={article}/>)}
+            {showInfo && (<ArticleInfo article={article} setShowInfo={setShowInfo} showInfo={showInfo}/>)}
             {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
             
         </>
     )
 }
+
+
+
+const HeaderContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 6px;
+`
 
 const FinishReadingImg = styled.img`
     border-radius: 50%;
@@ -532,13 +546,27 @@ const NotFound = styled.div`
     margin: 45px 0;
     font-size: 25px;
 `
-
-const AddImage = styled.img`
-    width: 25px;
+// ================ search bar + add custom word button ============= 
+const DictionaryAreaHeader = styled.div`
+    display: flex;
+    margin-top: 12px;
+`
+const SearchArea = styled.input`
+    border-radius: 8px;
     height: 25px;
-    margin-left: 6px;
+    font-size: 25px;
+    max-width: 150px;
+` 
+
+const ImageContainer = styled.div`
+    margin-left: 8px;
+    margin-top: 5px;
+`
+const AddImage = styled.img`
+    height: 25px;
     cursor: pointer;
 `
+// ==============================================
 
 const ArticleContainer = styled.div`
     display: flex;
@@ -589,7 +617,7 @@ const ReadableArea = styled.div`
 const ReadableContent = styled.div`
     font-size: 20px;
     line-height: 1.6;
-    padding: 8px;
+    padding: 0 8px 8px;
 `
 
 const DictionaryArea = styled.div`
@@ -599,43 +627,32 @@ const DictionaryArea = styled.div`
     min-width: 250px;
     flex-basis: 25%;
     box-sizing: border-box;
-    padding: 0 12px 12px 12px;
+    padding: 0 12px 12px;
     line-height: 1.6;
 
     overflow: auto;
 `
 
-const SearchArea = styled.input`
-    width: 90%;
-    border-radius: 8px;
-    height: 20px;
-    font-size: 25px;
-    max-width: 150px;
-` 
+
 
 const TranslationArea = styled.div``
 
 const PagesContainer = styled.div`
-    font-size: 20px;
-    line-weight: 1.6;
-    display: block;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
 `
 
 const PageDisplay = styled.div`
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 15px;
     line-weight: 1;
     display: inline-block;
     vertical-align: top;
-    padding-top:8px;
-    padding-bottom: 10px;
     margin-left: 8px;
 `
 
 const BookIcon = styled.div`
-    margin-top: 6px;
     display: inline-block;
     vertical-align: top;
-    width: 30xpx;
-    height: 25px;
+    height: 20px;
 `
