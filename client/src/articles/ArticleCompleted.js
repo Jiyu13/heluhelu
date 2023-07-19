@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
-import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import close_btn from "../assets/images/close_btn.svg"
@@ -34,7 +33,7 @@ export function ArticleCompleted( {totalWords} ) {
                     </ArticleStats>
                 </ContainerBody>
             </PopupContainer>
-            <Overlay></Overlay>
+            {/* <Overlay></Overlay> */}
         </>
     )
 }
@@ -85,24 +84,20 @@ const ContainerBody = styled.div`
     padding: 10px 20px;
 `
 
-
-const Overlay = styled.div`
-    background-color: rgba(0, 0, 0, .5);
-    position: fixed;
-    // opacity: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    // pointer-events: none;
-`
-
-
-
-
 const ArticleStats = styled.div``
 const TotalWords = styled.div``
-const KnownnWords = styled.div``
-const StudyingWords = styled.div``
-const HomePageButton = styled.button``
+// const KnownnWords = styled.div``
+// const StudyingWords = styled.div``
+// const HomePageButton = styled.button``
+
+// const Overlay = styled.div`
+//     background-color: rgba(0, 0, 0, .5);
+//     position: fixed;
+//     // opacity: 0;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     // pointer-events: none;
+// `
 
