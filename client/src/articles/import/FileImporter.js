@@ -5,8 +5,11 @@ import { UserContext } from "../../components/UserContext"
 import { Link, useNavigate } from "react-router-dom"
 import apiFetch from "../../api/ApiFetch"
 import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
+import { DeviceSize } from "../../responsive"
+import { useMediaQuery } from "react-responsive"
 
 export function FileImporter() {
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
     const [importText, setImportText] = useState(null)
     const [fileName, setFileName] = useState(null)
@@ -65,11 +68,11 @@ export function FileImporter() {
         <FileBox>
             
             <FormContainer onSubmit={handleSubmit}>
-                <SubmitButton type="submit" value="Save" />
+                {/* <SubmitButton type="submit" value="Save" />
                 <Link to="/import/text">
                     <ImportButton type="button" value="Import Text" />
                 </Link>
-                <br/>
+                <br/> */}
 
                 <TitleText>
                     Give this document a title:
@@ -90,15 +93,45 @@ export function FileImporter() {
                     name='filename'
                     onChange={handleOnChange}
                 />
+                <SupportedFileText>Accepted file types: 
+                    <span style={{color: "red", fontSize: "0.875rem"}}>.TXT.</span>
+                </SupportedFileText>
                 <br/>
-                <b>Accepted file types: .txt.</b>
-                <br/>
-                <br/>
+                {isMobile ?
+                    <>
+                        <MobileSubmitButton type="submit" value="Save" />
+                        <Link to="/import/text">
+                            <MobileImportButton type="button" value="Import Text" />
+                        </Link>
+                    </>
+                    :
+                    <>
+                        <SubmitButton type="submit" value="Save" />
+                        <Link to="/import/text">
+                            <ImportButton type="button" value="Import Text" />
+                        </Link>
+                    </>
+                }
                 
             </FormContainer>
         </FileBox>
     )
 }
+
+const SupportedFileText = styled.p`
+    font-size: 0.875rem;
+`
+
+const MobileImportButton = styled(ButtonButtons)`
+    width: 48%;
+    float: right;
+    margin-right: 0px;
+`
+
+const MobileSubmitButton = styled(SubmitButtons)`
+    width: 48%;
+    float: left;
+` 
 
 const ImportButton = styled(ButtonButtons)``
 const SubmitButton = styled(SubmitButtons)`
@@ -106,44 +139,49 @@ const SubmitButton = styled(SubmitButtons)`
 `
 
 const FileBox = styled.div`
-    background-color: rgb(204, 204, 204);
-    padding: 18px;
+    // background-color: rgb(204, 204, 204);
+    // padding: 18px;
+    // font-size: 20px;
     text-align: center;
-    display: block;
+    max-width: 800px;
     margin: 90px auto 0;
+    line-height: 1.6;
+    
 `
 
 const FormContainer = styled.form`
-    margin: 0;
-    padding: 0;
+    width: 100%;
     display: block;
 `
 
 const ImportFileInput = styled.input`
-    padding: 12px;
-    margin-bottom: 12px;
-    width: 90%;
-    max-width: 700px;
-    font-size: 18px;
-    border: 2px solid #eee;
+    background-color: #ddd;
     border-radius: 8px;
+
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
+    border: 2px solid #eee;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
 `
 
 const TitleText = styled.div`
-    margin-top: 12px;
-    font-size: 15px;
+    margin: 12px 0 6px 0;
+    font-size: 18px;
     font-weight: Bold;
+    line-weight: 1.6;
+    text-align: center;
 `
 
 const FileTitle = styled.input`
-    width: 90%;
-    max-width: 700px;
     background-color: #ddd;
-    border: 2px solid #999;
-    padding: 8px;
-    margin-bottom: 8px;
-    font-size: 17px;
     border-radius: 8px;
-    outline: none;
-    line-weight: 1.6;
+
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
+    border: 2px solid #999;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
 `

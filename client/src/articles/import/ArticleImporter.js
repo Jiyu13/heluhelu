@@ -5,11 +5,13 @@ import { useContext } from "react";
 import { UserContext } from "../../components/UserContext";    
 import apiFetch from '../../api/ApiFetch';
 import { ButtonButtons, SubmitButtons } from '../../components/Buttons';
+import { useMediaQuery } from 'react-responsive';
+import { DeviceSize } from '../../responsive';
 
 
 
 function ArticleImporter() {
-
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
     const {articles, setArticles} = useContext(UserContext)
 
     let navigate = useNavigate()
@@ -57,13 +59,7 @@ function ArticleImporter() {
     return (
         <PasteBox>
             <FormContainer onSubmit={handleSubmit}>
-
-                <SubmitButton type="submit" value="Save" />
-                <Link to="/import/file">
-                    <ImportButton type="button" value="Import File" />
-                </Link>
-                
-                <br/>
+                <LabelTag>Title:</LabelTag>
                 <ArticleTitle 
                     required
                     type="text"
@@ -73,6 +69,7 @@ function ArticleImporter() {
                     onChange={handleOnChange}
                 />
                 <br/>
+                <LabelTag>Content:</LabelTag>
                 <FormTextarea
                     required
                     placeholder="Paste your Hawaiian text here..."
@@ -82,6 +79,21 @@ function ArticleImporter() {
 
                 />
                 <br/>
+                {isMobile ?
+                    <>
+                        <MobileSubmitButton type="submit" value="Save" />
+                        <Link to="/import/file">
+                            <MobileImportButton type="button" value="Import File" />
+                        </Link>
+                    </>
+                    :
+                    <>
+                        <SubmitButton type="submit" value="Save" />
+                        <Link to="/import/file">
+                            <ImportButton type="button" value="Import File" />
+                        </Link>
+                    </>
+                }
                 
             </FormContainer>
         </PasteBox>
@@ -90,48 +102,65 @@ function ArticleImporter() {
 
 export default ArticleImporter;
 
-const ImportButton = styled(ButtonButtons)``
+const MobileImportButton = styled(ButtonButtons)`
+    width: 49%;
+    float: right;
+    margin-right: 0px;
+`
+
+const MobileSubmitButton = styled(SubmitButtons)`
+    width: 48%;
+    float: left;
+` 
+
+const ImportButton = styled(ButtonButtons)`
+    
+`
 
 const SubmitButton = styled(SubmitButtons)`
     width: 100px;
 `
 const PasteBox = styled.div`
-    background-color: rgba(255, 255, 255, 0.4);
-    padding: 18px;
+    max-width: 800px;
     text-align: center;
     font-size: 20px;
     line-height: 1.6;
-    display: block;
     margin: 90px auto 0;
 `
 
 const FormContainer = styled.form`
-    margin: 0;
-    padding: 0;
+    width: 100%;
     display: block;
 `
 
-const FormTextarea = styled.textarea`   
-    padding: 12px;
-    margin-bottom: 12px;
-    width: 90%;
-    max-width: 800px;
-    height: 240px;
-    font-size: 18px;
+const FormTextarea = styled.textarea`
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
     border: 2px solid #ccc;
-    border-radius: 8px;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
+    height: 450px;
+    line-height: 1.6;
+    overflow: auto;
 `
 
 const ArticleTitle = styled.input`
-    width: 90%;
-    max-width: 800px;
     background-color: #ddd;
-    border: 2px solid #999;
-    padding: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    font-size: 17px;
     border-radius: 8px;
-    outline: none;
+
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
+    border: 2px solid #ccc;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
+`
+
+const LabelTag = styled.div`
+    margin: 12px 0 6px 0;
+    font-size: 18px;
+    font-weight: Bold;
     line-weight: 1.6;
+    text-align: center;
 `

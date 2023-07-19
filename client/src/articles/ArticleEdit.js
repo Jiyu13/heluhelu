@@ -134,7 +134,7 @@ const PopupText = styled.strong`
 
 const EditForm = styled.form`
     display: block;
-    text-align: center;
+    // text-align: center;
     width: 100%;
 `
  
