@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import apiFetch from "../api/ApiFetch";
 import { SubmitButtons } from "../components/Buttons";
 
 import check_white_24dp from "../assets/images/check_white_24dp.svg"
 
-export function ArticleEdit( {onUpdatedArticle, setArticles, articles} ) {
+export function ArticleEdit( {onUpdatedArticle} ) {
 
     const [isChanged, setChanged] = useState(false)
-
-    // let navigate = useNavigate()
-    // // function redirectArticles() {
-    // //     navigate('/')
-    // // }
-
 
     // ================ fetch article ===================
     const {id} = useParams()
