@@ -152,16 +152,18 @@ class ArticleInfo(Resource):
 
 
         total_words = []
+        unique_words = []
         total_custom = []
         studying_total = []
         known_total = []
         ingored_total = []
         
         for word in article.text.split():
-            # re.sub(r"[^a-zA-Z0-9ʻ ]", "", clean_word)
-            clean_word = re.sub(r"[^a-zA-Z0-9ʻ ]", "", word)
-            print(clean_word)
+            clean_word = re.sub(r"[^a-zA-Zā-ūĀ-Ūʻ]", "", word)
+            
             if clean_word != "":
+                if clean_word.lower() not in unique_words:
+                    unique_words.append(clean_word.lower())
                 total_words.append(clean_word)
 
                 lower = clean_word.lower()
@@ -178,6 +180,7 @@ class ArticleInfo(Resource):
 
         response = {
             "total_words": total_words,
+            "unique_words": unique_words,
             "total_custom": total_custom,
             "studying_total": studying_total,
             "known_total": known_total,
