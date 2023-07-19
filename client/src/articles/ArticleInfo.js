@@ -50,7 +50,6 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                 <ArticleStats>
                     <TotalContainer>
                         <TotalWords style={{backgroundColor: "#b9d7e3"}}>{totalWords?.length} Total Words</TotalWords>
-                        {/* <TotalWords>|</TotalWords> */}
                         <UniquelWords style={{backgroundColor: "#4ba67f"}}>{uniqueWords?.length} Unique Words</UniquelWords>
                     </TotalContainer>
                     
