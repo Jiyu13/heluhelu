@@ -34,7 +34,7 @@ const LogoText = styled.h2`
 
 export function Logo() {
     return (
-        <Link to ="/" style={{textDecoration:'none'}}>
+        <a href ="/" style={{textDecoration:'none'}}>
             <LogoWrapper>
                 <LogoImg>
                     <img src={logo} alt="Hawaiian Reader Logo"/>
@@ -42,6 +42,6 @@ export function Logo() {
 
                 <LogoText>heluhelu</LogoText>
             </LogoWrapper>
-        </Link>
+        </a>
     )
 }
