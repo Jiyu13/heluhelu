@@ -5,9 +5,12 @@ import apiFetch from "../api/ApiFetch";
 import { SubmitButtons } from "../components/Buttons";
 
 import check_white_24dp from "../assets/images/check_white_24dp.svg"
+import { useMediaQuery } from "react-responsive";
+import { DeviceSize } from "../responsive";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
 
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
     const [isChanged, setChanged] = useState(false)
 
     // ================ fetch article ===================
@@ -79,8 +82,13 @@ export function ArticleEdit( {onUpdatedArticle} ) {
                     onChange={handleOnchange}
                 />
                 <br/>
-
+                
+                {isMobile ? 
+                <MobileSubmitButton type="submit" value="Submit"/>
+                :
                 <SubmitButton type="submit" value="Submit"/>
+                }
+                
             </EditForm>
         </EditContainer>
     )
@@ -88,7 +96,9 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 }
 
 
-
+const MobileSubmitButton = styled(SubmitButtons) `
+    width: 100%;
+`
 
 const SubmitButton = styled(SubmitButtons) `
     width: 100px;
@@ -103,14 +113,13 @@ const EditContainer = styled.div`
 `
 
 const PopupContainer = styled.div`
-    max-width: 800px;
+    width: 100%;
     display: flex;
-    // justify-content: center;
     margin: 0 auto 20px;
     color: #fff; 
     border-radius: 8px;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     line-weight: 1.6;
     background: #52baf1;
     box-shadow: rgba(0,0,0,.1) 0 3px 5px, #15a1ec 0 0 0 1px inset;
@@ -124,35 +133,36 @@ const PopupText = styled.strong`
 `
 
 const EditForm = styled.form`
-    margin: 0;
-    padding: 0;
     display: block;
     text-align: center;
+    width: 100%;
 `
  
 const LabelTag = styled.div`
     margin: 12px 0 6px 0;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: Bold;
     line-weight: 1.6;
     text-align: center;
 `
 
 const TitleInput = styled.input`
-    width: 95%;
-    max-width: 800px;
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
     border: 2px solid #ccc;
-    padding: 12px;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
 `
 
 const ContentTextarea = styled.textarea`
-    padding: 12px;
-    margin-button: 12px;
-    width: 95%;
-    max-width: 800px;
-    height: 350px;
-    font-size: 18px;
+    box-sizing: border-box;  // make it right aligned with popup
+    width: 100%;
     border: 2px solid #ccc;
+    padding: 12px 0 12px 5px;
+    font-size: 18px;
+    margin-bottom: 12px;
+    height: 450px;
     line-height: 1.6;
     overflow: auto;
 `
