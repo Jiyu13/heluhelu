@@ -46,17 +46,40 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                 </CloseButton>
             </ContainerHeader>
 
-            <Divider/>
-
             <ContainerBody>
                 <ArticleStats>
-                    <TotalWords>Total words: {totalWords?.length}</TotalWords>
-                    <TotalWords>Unique words: {uniqueWords?.length}</TotalWords>
-                    <NewWords>New Words: {newWords}</NewWords>
-                    <KnownWords>Known words: {totalKnowns?.length}</KnownWords>
-                    <StudyingWords>Studying Words: {totalStudyings?.length}</StudyingWords>
-                    <IgnoredWords>Ignored Words: {totalIgnoreds?.length}</IgnoredWords>
-                    <CustomWords>Custom Words: {totalCustoms?.length}</CustomWords>
+                    <TotalContainer>
+                        <TotalWords style={{backgroundColor: "#b9d7e3"}}>{totalWords?.length} Total Words</TotalWords>
+                        {/* <TotalWords>|</TotalWords> */}
+                        <UniquelWords style={{backgroundColor: "#4ba67f"}}>{uniqueWords?.length} Unique Words</UniquelWords>
+                    </TotalContainer>
+                    
+                    <NewWordsContainer>
+                        <NewWords>New words ({Math.floor((newWords / totalWords?.length) * 100) }%): </NewWords>
+                        <WordNumber>{newWords}</WordNumber>
+                    </NewWordsContainer>
+
+                    <KnownWordsContainer>
+                        <KnownWords>Known words: </KnownWords>
+                        <WordNumber>{totalKnowns?.length}</WordNumber>
+                    </KnownWordsContainer>
+                    
+
+                    <StudyingWordsContainer>
+                        <StudyingWords>Studying words: </StudyingWords>
+                        <WordNumber>{totalStudyings?.length}</WordNumber>
+                    </StudyingWordsContainer>
+
+                    <IgnoredWordsContainer>
+                        <IgnoredWords>Ignored words: </IgnoredWords>
+                        <WordNumber>{totalIgnoreds?.length}</WordNumber>
+                    </IgnoredWordsContainer>
+
+                    <CustomWordsContainer>
+                        <CustomWords>Custom words: </CustomWords>
+                        <WordNumber>{totalCustoms?.length}</WordNumber>
+                    </CustomWordsContainer>
+
                 </ArticleStats>
             </ContainerBody>
         </PopupContainer>
@@ -80,7 +103,7 @@ const PopupContainer = styled.div`
     background-color: white;
     border-radius: 10px;
     z-index: 10;
-    width: 350px;
+    width: 300px;
     max-width: 80%;
 `
 const ContainerHeader = styled.div`
@@ -102,32 +125,67 @@ const CloseButton = styled.button`
     background-color: transparent;
 `
 
-const Divider = styled.hr`
-    width: 90%;
-    text-align: center;
-    background-color: black;
-    height: 1px;
-`
-
 const ButtonImage = styled.img`
     width: 20px;
     height: 20px;
 `
 
 const ContainerBody = styled.div`
-    padding: 10px 20px;
+    padding: 0 10px 20px;
 `
 
 const ArticleStats = styled.div``
 
+const TotalContainer = styled.div`
+    display: flex;
+    width: 90%;
+    margin: auto;
+`
+
 // const InfoContainer = styled.div``
 // const ArticleTitle = styled.div``
-const TotalWords = styled.div``
-const NewWords = styled.div``
-const KnownWords = styled.div``
-const StudyingWords = styled.div``
-const IgnoredWords = styled.div``
-const CustomWords = styled.div``
+const TotalWords = styled.div`
+    padding: 10px 0;
+    margin: 0 5px;
+    text-align: center;
+    width: 50%;
+    border-radius: 8px;
+`
+const UniquelWords = styled.div`
+    padding: 10px 0;
+    margin: 0 5px;
+    text-align: center;
+    width: 50%;
+    border-radius: 8px;
+
+`
+const WordNumber = styled(UniquelWords)`
+    text-align: left;
+`
+const NewWordsContainer = styled(TotalContainer)`
+`
+const NewWords = styled(TotalWords)`
+    text-align: right;
+`
+
+const KnownWordsContainer = styled(TotalContainer)``
+const KnownWords = styled(TotalWords)`
+    text-align: right;
+`
+const StudyingWordsContainer = styled(TotalContainer)``
+const StudyingWords = styled(TotalWords)`
+    text-align: right;
+`
+const IgnoredWordsContainer = styled(TotalContainer)``
+const IgnoredWords = styled(TotalWords)`
+    text-align: right;
+`
+const CustomWordsContainer = styled(TotalContainer)`
+    border: none;
+`
+const CustomWords = styled(TotalWords)`
+    text-align: right;
+`
 
 
 

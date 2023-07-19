@@ -170,7 +170,8 @@ class ArticleInfo(Resource):
                 capitalized = clean_word.capitalize()
 
                 if lower in custom_words or capitalized in custom_words:
-                    total_custom.append(clean_word)
+                    if clean_word not in total_custom:
+                        total_custom.append(clean_word)
                 if lower in studyings or capitalized in studyings:
                     studying_total.append(clean_word)
                 if lower in knowns or capitalized in knowns:
