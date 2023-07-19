@@ -4,11 +4,16 @@ import styled from "styled-components";
 import apiFetch from "../api/ApiFetch";
 import { SubmitButtons } from "../components/Buttons";
 
-export function ArticleEdit( {onUpdatedArticle} ) {
-    let navigate = useNavigate()
-    function redirectArticles() {
-        navigate('/')
-    }
+import check_white_24dp from "../assets/images/check_white_24dp.svg"
+
+export function ArticleEdit( {onUpdatedArticle, setArticles, articles} ) {
+
+    const [isChanged, setChanged] = useState(false)
+
+    // let navigate = useNavigate()
+    // // function redirectArticles() {
+    // //     navigate('/')
+    // // }
 
 
     // ================ fetch article ===================
@@ -45,7 +50,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
         .then(res => res.json())
         .then(updatedArticle => {
             onUpdatedArticle(updatedArticle)
-            redirectArticles()
+            setChanged(!isChanged)
         })
     }
 
@@ -53,6 +58,14 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
     return (
         <EditContainer>
+            {isChanged && (
+                <PopupContainer>
+                    <PopupImage src={check_white_24dp} alt="changed successfully icon"/>
+                    <PopupText>Changes saved.</PopupText>
+                </PopupContainer>
+
+            )}
+
             <EditForm onSubmit={handleSubmit}>
                 <LabelTag>Title:</LabelTag>
                 <TitleInput
@@ -80,6 +93,9 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
 }
 
+
+
+
 const SubmitButton = styled(SubmitButtons) `
     width: 100px;
 `
@@ -92,6 +108,27 @@ const EditContainer = styled.div`
     line-weight: 1.6;
 `
 
+const PopupContainer = styled.div`
+    max-width: 800px;
+    display: flex;
+    // justify-content: center;
+    margin: 0 auto 20px;
+    color: #fff; 
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    line-weight: 1.6;
+    background: #52baf1;
+    box-shadow: rgba(0,0,0,.1) 0 3px 5px, #15a1ec 0 0 0 1px inset;
+`
+
+const PopupImage = styled.img`
+    margin-left: 20px;
+`
+const PopupText = styled.strong`
+    margin: 20px 5px;
+`
+
 const EditForm = styled.form`
     margin: 0;
     padding: 0;
@@ -100,7 +137,7 @@ const EditForm = styled.form`
 `
  
 const LabelTag = styled.div`
-    margin-top: 12px;
+    margin: 12px 0 6px 0;
     font-size: 15px;
     font-weight: Bold;
     line-weight: 1.6;
@@ -110,6 +147,8 @@ const LabelTag = styled.div`
 const TitleInput = styled.input`
     width: 95%;
     max-width: 800px;
+    border: 2px solid #ccc;
+    padding: 12px;
 `
 
 const ContentTextarea = styled.textarea`
@@ -123,7 +162,3 @@ const ContentTextarea = styled.textarea`
     line-height: 1.6;
     overflow: auto;
 `
-
-// const SubmitButton = styled.input`
-//     margin-top: 12px;
-// `
