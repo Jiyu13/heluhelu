@@ -1,32 +1,31 @@
 import styled from "styled-components"
 import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { UserContext } from "../components/UserContext"
+import { UserContext } from "../../components/UserContext"
 
-import book_material_icon from "../assets/images/book_material_icon.svg"
-import left_arrow_icon from "../assets/images/arrowleft.svg"
-import right_arrow_icon from "../assets/images/arrowright.svg"
-import add_icon from "../assets/images/add_icon.svg"
-import finish_reading_icon from "../assets/images/finish_reading_icon.svg"
+import book_material_icon from "../../assets/images/book_material_icon.svg"
+import left_arrow_icon from "../../assets/images/arrowleft.svg"
+import right_arrow_icon from "../../assets/images/arrowright.svg"
+import add_icon from "../../assets/images/add_icon.svg"
+import finish_reading_icon from "../../assets/images/finish_reading_icon.svg"
 
 
 
-import { ArticleParagraph } from "./ArticleParagraph"
-import { TranslationWord } from "./TranslationWord";
+import { ArticleParagraph } from "../ArticleParagraph"
+import { TranslationWord } from "../TranslationWord";
 import { useState } from "react"
-import { CustomWord } from "./CustomWord"
+import { CustomWord } from "../CustomWord"
 
-import { DeviceSize } from "../responsive"
+import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
-import { DictionaryMobile } from "./dictionary-area/DictionaryMobile"
-import { WordTracker } from "./dictionary-area/WordTracker";
-import apiFetch from "../api/ApiFetch"
+import { DictionaryMobile } from "../dictionary-area/DictionaryMobile"
+import { WordTracker } from "../dictionary-area/WordTracker";
+import apiFetch from "../../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
-import { DropDown } from "../components/DropDown"
 
-
-import { ButtonButtons, SubmitButtons } from "../components/Buttons"
+import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
 import { ArticleInfo } from "./ArticleInfo"
+import {DropDown} from "./DropDown"
 
 const PAGE_SIZE = 250;
 

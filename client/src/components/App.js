@@ -5,10 +5,10 @@ import { UserContext } from "./UserContext";
 
 import {Home} from "./Home";
 import NavBar from "../navbar/NavBar";
-import { Article } from "../articles/Article";
-import { ArticleEdit } from "../articles/ArticleEdit";
-import { ArticleUUID } from "../articles/ArticleUUID";
-import { SharePage } from "../articles/SharePage";
+import { Article } from "../articles/article/Article";
+import { ArticleEdit } from "../articles/article/ArticleEdit";
+import { ArticleUUID } from "../articles/share/ArticleUUID";
+import { SharePage } from "../articles/share/SharePage";
 
 import { MyStats } from "../stats/MyStats";
 import apiFetch from "../api/ApiFetch";
@@ -17,7 +17,7 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
-import { ArticleInfo } from "../articles/ArticleInfo";
+import { ArticleInfo } from "../articles/article/ArticleInfo";
 
 const USER_NOT_SET = -1;
 

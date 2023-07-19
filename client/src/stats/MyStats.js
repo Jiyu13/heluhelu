@@ -5,7 +5,7 @@ import apiFetch from "../api/ApiFetch"
 import { Link } from "react-router-dom"
 import { SubmitButtons } from "../components/Buttons"
 import { useMediaQuery } from "react-responsive"
-import { DeviceSize } from "../navbar/responsive"
+import { DeviceSize } from "../responsive"
 
 export function MyStats() {
     const [readEvents, setReadEvets] = useState(null)

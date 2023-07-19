@@ -1,9 +1,9 @@
 import { useContext } from "react"
 import styled from "styled-components"
-import { UserContext } from "../components/UserContext"
+import { UserContext } from "../../components/UserContext"
 import { Link } from "react-router-dom"
 
-import close_btn from "../assets/images/close_btn.svg"
+import close_btn from "../../assets/images/close_btn.svg"
 
 
 export function ArticleCompleted( {totalWords} ) {

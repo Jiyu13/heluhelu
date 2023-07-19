@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import apiFetch from "../api/ApiFetch";
-import { SubmitButtons } from "../components/Buttons";
+import apiFetch from "../../api/ApiFetch";
+import { SubmitButtons } from "../../components/Buttons";
 
-import check_white_24dp from "../assets/images/check_white_24dp.svg"
+import check_white_24dp from "../../assets/images/check_white_24dp.svg"
 import { useMediaQuery } from "react-responsive";
-import { DeviceSize } from "../responsive";
+import { DeviceSize } from "../../responsive";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
 
@@ -84,9 +84,9 @@ export function ArticleEdit( {onUpdatedArticle} ) {
                 <br/>
                 
                 {isMobile ? 
-                <MobileSubmitButton type="submit" value="Submit"/>
+                <MobileSubmitButton type="submit" value="Save"/>
                 :
-                <SubmitButton type="submit" value="Submit"/>
+                <SubmitButton type="submit" value="Save"/>
                 }
                 
             </EditForm>

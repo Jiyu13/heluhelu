@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
-import { UserContext } from "../components/UserContext"
-import apiFetch from "../api/ApiFetch"
+import { UserContext } from "../../components/UserContext"
+import apiFetch from "../../api/ApiFetch"
 
-import warning_white_24dp from "../assets/images/warning_white_24dp.svg"
+import warning_white_24dp from "../../assets/images/warning_white_24dp.svg"
 
 export function SharePage() {
 

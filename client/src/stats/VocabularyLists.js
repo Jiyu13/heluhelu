@@ -9,7 +9,7 @@ import { VocabInfoTable } from "./VocabInfoTable";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
-import { DeviceSize } from "../navbar/responsive";
+import { DeviceSize } from "../responsive";
 import { MobileVocabularyTable } from "./MobileVocabularyTable";
 
 

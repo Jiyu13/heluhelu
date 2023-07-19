@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 import { NavLinks } from "./NavLinks";
 import { Accessibility } from "./Accessiblity";
 import { MobileNavLinks } from "./MobileNavLinks";
-import { DeviceSize } from './responsive';
+import { DeviceSize } from '../responsive';
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 

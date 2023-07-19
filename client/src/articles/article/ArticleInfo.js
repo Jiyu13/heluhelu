@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 
 import styled from "styled-components"
-import apiFetch from "../api/ApiFetch"
+import apiFetch from "../../api/ApiFetch"
 
-import close_btn from "../assets/images/close_btn.svg"
+import close_btn from "../../assets/images/close_btn.svg"
 
 
 export function ArticleInfo( {article, setShowInfo, showInfo} ) {
