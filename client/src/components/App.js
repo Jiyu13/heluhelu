@@ -5,8 +5,12 @@ import { UserContext } from "./UserContext";
 
 import {Home} from "./Home";
 import NavBar from "../navbar/NavBar";
-import { Article } from "../articles/article/Article";
-import { ArticleEdit } from "../articles/article/ArticleEdit";
+
+import { Article } from "../articles/article-page/Article";
+import { ArticleEdit } from "../articles/article-list-page/ArticleEdit";
+import { ArticleInfo } from "../articles/article-page/ArticleInfo";
+
+
 import { ArticleUUID } from "../articles/share/ArticleUUID";
 import { SharePage } from "../articles/share/SharePage";
 
@@ -17,7 +21,7 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
-import { ArticleInfo } from "../articles/article/ArticleInfo";
+// import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
 
 const USER_NOT_SET = -1;
 
@@ -115,96 +119,101 @@ function App() {
         <AccountBox/> 
         :
         <> 
-          <header>
-            <NavBar/>
-          </header>
-          
-          <main>
-            
-            <Routes >
-              <Route
-                exact
-                path="/stats/vocabularies"
-                element={<VocabularyStats/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/stats'
-                element={<MyStats/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/article/share_receive/:uuid'
-                element={<SharePage/>}
-              >
-              </Route>
+            <header>
+              <NavBar/>
+            </header>
+            <main>
+              <Routes >
+                <Route
+                  exact
+                  path="/stats/vocabularies"
+                  element={<VocabularyStats/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/stats'
+                  element={<MyStats/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/article/share_receive/:uuid'
+                  element={<SharePage/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/article/share/:id'
-                element={<ArticleUUID/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/share/:id'
+                  element={<ArticleUUID/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/article/edit/:id'
-                element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/edit/:id'
+                  element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/articles/:article_id/info'
-                element={<ArticleInfo key={article?.id}/>}
-              >
-              </Route>
-              
-              <Route
-                exact
-                path='/articles/:id'
-                element={<Article key={article?.id}/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/articles/:article_id/info'
+                  element={<ArticleInfo key={article?.id}/>}
+                >
+                </Route>
+                
+                <Route
+                  exact
+                  path='/articles/:id'
+                  element={<Article key={article?.id}/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/import/text'
-                element={<ArticleImporter/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/import/file'
-                element={<FileImporter/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/import/text'
+                  element={<ArticleImporter/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/import/file'
+                  element={<FileImporter/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/login'
-                element={<LoginPage/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/login'
+                  element={<LoginPage/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/signup'
-                element={<SignupPage/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/signup'
+                  element={<SignupPage/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/'
-                element={<Home articles={articles} onDeleteArticle={onDeleteArticle}/>}
-              >
-              </Route>
-            </Routes>
-
-          </main>
+                <Route
+                  exact
+                  path='/'
+                  element={
+                    <Home 
+                      articles={articles} 
+                      onDeleteArticle={onDeleteArticle}
+                      // showDeletePopup={showDeletePopup} 
+                      // setDeletePopup={setDeletePopup}
+                      // handleYes={handleYes}
+                    />
+                  }
+                >
+                </Route>
+              </Routes>
+            </main>
         </>
       }
     </UserContext.Provider>

@@ -1,15 +1,30 @@
 import styled from "styled-components";
-import { ArticleList } from "../articles/ArticleList";
+import { ArticleList } from "../articles/article-list-page/ArticleList";
 
 import import_icon from "../assets/images/note_add_white_24dp.svg"
 import { Link } from "react-router-dom";
 import { ButtonElements } from "./Buttons";
+import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
+import { useState } from "react";
 
 
-export function Home({articles, onDeleteArticle}) {   
+export function Home({articles, handleYes, onDeleteArticle}) {
+    
+    // ====================== handle click delete btn " Yes" =======================
+    const [showDeletePopup, setDeletePopup] = useState(false)
+    const [articleID, setArticleID] = useState(null)
+
 
     return (
-        <>
+        <>  
+            {showDeletePopup && ( 
+                <DeleteConfirmation 
+                    articleID={articleID}
+                    setDeletePopup={setDeletePopup}
+                    onDeleteArticle={onDeleteArticle}
+                />
+            )} 
+
             <HomepageTitle>Heluhelu</HomepageTitle>
             <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
@@ -24,7 +39,14 @@ export function Home({articles, onDeleteArticle}) {
                 </Link>
             </HomepageButtonContainer>
 
-            <ArticleList articles={articles} onDeleteArticle={onDeleteArticle}/>
+            <ArticleList 
+                articles={articles}
+                onDeleteArticle={onDeleteArticle}
+                showDeletePopup={showDeletePopup}
+                setDeletePopup={setDeletePopup}
+                handleYes={handleYes}
+                setArticleID={setArticleID}
+            />
 
         </>
     ) 

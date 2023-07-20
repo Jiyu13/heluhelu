@@ -1,28 +1,28 @@
 import {Link} from "react-router-dom";
 import styled from "styled-components"
-
-import edit_icon from "../assets/images/edit_icon.svg"
-import delete_icon from "../assets/images/delete_icon.svg"
-import share_icon from "../assets/images/share_icon.svg"
 import { useContext } from "react";
-import { UserContext } from "../components/UserContext";
-import apiFetch from "../api/ApiFetch";
-import { ProgressBar } from "./progress-bar/ProgressBar";
-import { WordMarkedInfo } from "./vocab-stats/WordMarkedInfo";
+
+
+import edit_icon from "../../assets/images/edit_icon.svg"
+import delete_icon from "../../assets/images/delete_icon.svg"
+import share_icon from "../../assets/images/share_icon.svg"
+
+import { UserContext } from "../../components/UserContext";
+import { ProgressBar } from "../progress-bar/ProgressBar";
+// import { WordMarkedInfo } from "./vocab-stats/WordMarkedInfo";
 
 
 
-export function ArticleList( {articles, onDeleteArticle} ) {
+export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
     const { user, splitText, calculatePages } = useContext(UserContext)
 
-    function handleDelete(e) {
-        const article_id = parseInt(e.target.id)
-        apiFetch(`/article/${article_id}`, {
-            method: "DELETE",
-        })
-        .then(() => {
-            onDeleteArticle(article_id)})
+    
+    
+
+    function handleShowDeletePopup(e) {
+        setDeletePopup(true)
+        setArticleID(e.target.id)
     }
 
     
@@ -85,7 +85,12 @@ export function ArticleList( {articles, onDeleteArticle} ) {
                                 </Link>
                             </Button>
                             <Button >
-                                <ButtonImage src={delete_icon} alt="delete icon" id={a.id} onClick={handleDelete}/>
+                                <ButtonImage 
+                                    src={delete_icon} 
+                                    alt="delete icon" 
+                                    id={a.id} 
+                                    onClick={handleShowDeletePopup}
+                                />
                             </Button>
 
                             <Button>
