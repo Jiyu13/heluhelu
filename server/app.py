@@ -92,6 +92,15 @@ api.add_resource(Users, '/users', endpoint="users")
 
 
 # ========================================= Articles ==========================================
+class GetFirstArticle(Resource):
+    def get(self):
+        user_id = session["user_id"]
+        if user_id:
+            article = Article.query.filter_by(user_id=user_id).order_by(Article.update_at.desc())[0]
+            return make_response(article.to_dict(), 200)
+api.add_resource(GetFirstArticle, '/articles/first')
+
+
 class Articles(Resource):
     def get(self):
         user_id = session["user_id"]
