@@ -102,7 +102,6 @@ function App() {
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
-                            // chosen, setChosen, 
                             isLoading, setLoading,
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
