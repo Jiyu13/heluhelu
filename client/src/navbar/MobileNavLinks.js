@@ -77,7 +77,7 @@ const NavLinksContainer = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    z-index: 1;
+    // z-index: 1;
 `;
 
 const LinksWrapper = styled.ul`
