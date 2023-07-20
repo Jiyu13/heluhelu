@@ -60,7 +60,7 @@ const NavBarContainer = styled.div`
     // prevent padding from making 100% width extend beyond screen
     box-sizing: border-box;
     position: fixed;
-    z-index: 1;
+    // z-index: 1;
     top: 0;
     background-color: #fff;
 `;
