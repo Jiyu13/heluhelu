@@ -1,20 +1,17 @@
-import { useContext } from "react"
 import { useState } from "react"
 import styled from "styled-components"
-import { UserContext } from "../../components/UserContext"
 import { Link, useNavigate } from "react-router-dom"
 import apiFetch from "../../api/ApiFetch"
 import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
 import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
 
-export function FileImporter() {
+export function FileImporter( {articles, setArticles} ) {
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
     const [importText, setImportText] = useState(null)
     const [fileName, setFileName] = useState(null)
 
-    const { articles, setArticles} = useContext(UserContext)
 
     let navigate = useNavigate()
     function redirectArticles () {

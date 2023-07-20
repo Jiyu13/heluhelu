@@ -1,18 +1,16 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
-import { UserContext } from "../../components/UserContext"
 import apiFetch from "../../api/ApiFetch"
 
-import warning_white_24dp from "../../assets/images/warning_white_24dp.svg"
+// import warning_white_24dp from "../../assets/images/warning_white_24dp.svg"
 
-export function SharePage() {
+export function SharePage({ articles, setArticles }) {
 
-    const {articles, setArticles } = useContext(UserContext)
     const { uuid } = useParams()
     const [sharedArticle, setSharedArticle] = useState("")
-    const [isExist, setExist] = useState(false)
-    const [ExistAlert, setAlert] = useState(null)
+    // const [isExist, setExist] = useState(false)
+    // const [ExistAlert, setAlert] = useState(null)
 
 
     let navigate = useNavigate()

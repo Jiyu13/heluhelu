@@ -14,8 +14,8 @@ export function MobileNavLinks() {
     // state to toggle the changes, when click show the actual ul menu, otherwise hidden by default
     const [isOpen, setOpen] = useState(false)
 
-    const {articles, article} = useContext(UserContext)
-    const currentArticle = article !== null ? article : articles?.[0]
+    const {firstArticle, article} = useContext(UserContext)
+    const currentArticle = article !== null ? article : firstArticle
 
     return (
         <NavLinksContainer>

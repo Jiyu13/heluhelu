@@ -15,10 +15,7 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
-    const { user, splitText, calculatePages } = useContext(UserContext)
-
-    
-    
+    const { user, splitText, calculatePages } = useContext(UserContext)    
 
     function handleShowDeletePopup(e) {
         setDeletePopup(true)
@@ -57,7 +54,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
         {articles?.length ?  
         <ArticlesListTable>
             <tbody>
-            {articles.map(a =>
+            {articles?.map(a =>
                 <tr key={a.id}>
                     <ArticleTitleCell>  
 

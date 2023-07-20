@@ -6,14 +6,22 @@ import { Link } from "react-router-dom";
 import { ButtonElements } from "./Buttons";
 import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
 import { useState } from "react";
+import { useEffect } from "react";
+import apiFetch from "../api/ApiFetch";
 
 
-export function Home({articles, handleYes, onDeleteArticle}) {
+export function Home({ articles, setArticles, onDeleteArticle}) {
     
     // ====================== handle click delete btn " Yes" =======================
     const [showDeletePopup, setDeletePopup] = useState(false)
     const [articleID, setArticleID] = useState(null)
 
+    // ========= get all articles of current user =================================
+    useEffect(() => {
+        apiFetch('/articles')
+        .then(res => res.json())
+        .then(data => setArticles(data))
+    }, [])
 
     return (
         <>  
@@ -41,10 +49,7 @@ export function Home({articles, handleYes, onDeleteArticle}) {
 
             <ArticleList 
                 articles={articles}
-                onDeleteArticle={onDeleteArticle}
-                showDeletePopup={showDeletePopup}
                 setDeletePopup={setDeletePopup}
-                handleYes={handleYes}
                 setArticleID={setArticleID}
             />
 

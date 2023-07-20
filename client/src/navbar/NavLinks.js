@@ -6,9 +6,9 @@ import { UserContext } from "../components/UserContext";
 
 
 export function NavLinks() {
-
-    const {articles, article} = useContext(UserContext)
-    const currentArticle = article !== null ? article : articles?.[0]
+    const {article, firstArticle} = useContext(UserContext)
+    
+    const currentArticle = article !== null ? article : firstArticle
 
     return (
         <>

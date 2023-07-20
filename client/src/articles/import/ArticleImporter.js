@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { useContext } from "react";
-import { UserContext } from "../../components/UserContext";    
+import styled from 'styled-components'; 
 import apiFetch from '../../api/ApiFetch';
 import { ButtonButtons, SubmitButtons } from '../../components/Buttons';
 import { useMediaQuery } from 'react-responsive';
@@ -10,9 +8,8 @@ import { DeviceSize } from '../../responsive';
 
 
 
-function ArticleImporter() {
+function ArticleImporter({ articles, setArticles }) {
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
-    const {articles, setArticles} = useContext(UserContext)
 
     let navigate = useNavigate()
     function redirectArticles () {

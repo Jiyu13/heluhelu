@@ -32,15 +32,6 @@ function App() {
   const [user, setUser] = useState(USER_NOT_SET);
   const [chosen, setChosen] = useState([])
   const [isLoading, setLoading] = useState(false)
-
-
-  // ========= get all articles of current user =================================
-  useEffect(() => {
-    apiFetch('/articles')
-        .then(res => res.json())
-        .then(articles => setArticles(articles))
-  }, [user])
-
   
   // ========= check session - user remains logged in ========
   useEffect(() => {
@@ -53,6 +44,14 @@ function App() {
       }
     });
   }, []);
+
+  // =========== fetch the first article in articles list =========
+  const [firstArticle, setFirstArticle] = useState(null)
+  useEffect(() => {
+      apiFetch(`/articles/first`)
+      .then(r => r.json())
+      .then(data => setFirstArticle(data))
+  }, [])
 
   // ========= update article ===============================
   function onUpdatedArticle(updatedArticle) {
@@ -104,11 +103,11 @@ function App() {
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
-                            articles, setArticles,
                             chosen, setChosen, 
                             isLoading, setLoading,
                             splitText, calculatePages,
-                            vocabularies, setVocabularies
+                            vocabularies, setVocabularies,
+                            firstArticle
                           }
 
   if(user === USER_NOT_SET) return;
@@ -139,7 +138,12 @@ function App() {
                 <Route
                   exact
                   path='/article/share_receive/:uuid'
-                  element={<SharePage/>}
+                  element={
+                    <SharePage
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
                 >
                 </Route>
 
@@ -174,13 +178,23 @@ function App() {
                 <Route
                   exact
                   path='/import/text'
-                  element={<ArticleImporter/>}
+                  element={
+                    <ArticleImporter
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
                 >
                 </Route>
                 <Route
                   exact
                   path='/import/file'
-                  element={<FileImporter/>}
+                  element={
+                    <FileImporter
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
                 >
                 </Route>
 
@@ -203,11 +217,10 @@ function App() {
                   path='/'
                   element={
                     <Home 
-                      articles={articles} 
+                      user={user}
+                      articles={articles}
+                      setArticles={setArticles}
                       onDeleteArticle={onDeleteArticle}
-                      // showDeletePopup={showDeletePopup} 
-                      // setDeletePopup={setDeletePopup}
-                      // handleYes={handleYes}
                     />
                   }
                 >
