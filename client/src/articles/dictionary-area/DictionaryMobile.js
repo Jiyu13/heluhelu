@@ -5,8 +5,6 @@ import add_icon from "../../assets/images/add_icon.svg"
 
 import { TranslationWord } from "../TranslationWord";
 import { CustomWord } from "../CustomWord"
-import { useContext } from "react";
-import { UserContext } from "../../components/UserContext";
 import { WordTracker } from "./WordTracker";
 import { ButtonButtons, SubmitButtons } from "../../components/Buttons";
 
@@ -15,6 +13,7 @@ import { ButtonButtons, SubmitButtons } from "../../components/Buttons";
 export function DictionaryMobile(props) {
     
     const {
+           chosen,
            PostAndDelete, checkStatus,
            handleSearchChange,
            handleAddBtn,
@@ -28,8 +27,6 @@ export function DictionaryMobile(props) {
            wordExistError,
            showCustomForm,
            isDictionaryOpen} = props
-
-    const {chosen} = useContext(UserContext)
 
     
     return (
@@ -123,7 +120,6 @@ export function DictionaryMobile(props) {
 }
 
 const DictionaryArea = styled.div`
-    // overflow: scroll;
     height: 70%;
     position: fixed;
     border-top: 2px solid rgb(204, 204, 204);
@@ -133,7 +129,7 @@ const DictionaryArea = styled.div`
     box-sizing: border-box;
     background-color: #282828;
     color: #ddd;
-    padding: 0 12px 12px 12px;
+    padding: 0 12px 0px 12px;
     z-index: 999;
 `
 
@@ -204,30 +200,5 @@ const SearchArea = styled.input`
 
 const TranslationArea = styled.div`
     overflow-y: scroll;
-    height: 370px;
-`
-
-const PagesContainer = styled.div`
-    font-size: 20px;
-    line-weight: 1.6;
-    display: block;
-`
-
-const PageDisplay = styled.div`
-    font-size: 12px;
-    font-weight: 700;
-    line-weight: 1;
-    display: inline-block;
-    vertical-align: top;
-    padding-top:8px;
-    padding-bottom: 10px;
-    margin-left: 8px;
-`
-
-const BookIcon = styled.div`
-    margin-top: 6px;
-    display: inline-block;
-    vertical-align: top;
-    width: 30xpx;
-    height: 25px;
+    height: 95%;
 `

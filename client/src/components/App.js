@@ -30,7 +30,6 @@ function App() {
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
-  const [chosen, setChosen] = useState([])
   const [isLoading, setLoading] = useState(false)
   
   // ========= check session - user remains logged in ========
@@ -103,7 +102,7 @@ function App() {
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
-                            chosen, setChosen, 
+                            // chosen, setChosen, 
                             isLoading, setLoading,
                             splitText, calculatePages,
                             vocabularies, setVocabularies,

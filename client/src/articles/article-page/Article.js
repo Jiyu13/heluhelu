@@ -35,6 +35,7 @@ export function Article() {
 
     const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
+    const [chosen, setChosen] = useState([])  // the first 5 words from dictionary_words
     const [customWord, setCustomWord] = useState(null)
     const [targetWord, setTargetWord] = useState(null)
     const [isDictionaryOpen, setDictionaryOpen] = useState(false)
@@ -49,8 +50,7 @@ export function Article() {
 
 
     const {
-            article, setArticle,
-            user, chosen, setChosen, 
+            article, setArticle, user, 
             setErrors, splitText, calculatePages,
             vocabularies, setVocabularies
         } = useContext(UserContext)
@@ -432,6 +432,7 @@ export function Article() {
                 
                 {isMobile && isDictionaryOpen && (
                     <DictionaryMobile 
+                        chosen={chosen}
                         PostAndDelete={PostAndDelete} checkStatus={checkStatus}
                         handleSearchChange={handleSearchChange}
                         handleAddBtn={handleAddBtn}
