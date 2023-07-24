@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom"
 import { UserContext } from "../../components/UserContext"
 
 import book_material_icon from "../../assets/images/book_material_icon.svg"
-import left_arrow_icon from "../../assets/images/arrowleft.svg"
-import right_arrow_icon from "../../assets/images/arrowright.svg"
 import add_icon from "../../assets/images/add_icon.svg"
-import finish_reading_icon from "../../assets/images/finish_reading_icon.svg"
 
 
 
@@ -26,6 +23,8 @@ import { ArticleCompleted } from "./ArticleCompleted"
 import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
 import { ArticleInfo } from "./ArticleInfo"
 import {DropDown} from "./DropDown"
+import { LeftSidebar } from "../sidebars/LeftSidebar"
+import { RightSidebar } from "../sidebars/RightSidebar"
 
 const PAGE_SIZE = 250;
 
@@ -298,11 +297,7 @@ export function Article() {
                     />
                 )}
 
-                <SideBar onClick={handlePrevPage} style={{visibility: leftArrow}}>
-                    <SideBarImage>
-                        <img src={left_arrow_icon} alt="left arrow icon"/>
-                    </SideBarImage>
-                </SideBar>
+                <LeftSidebar handlePrevPage={handlePrevPage} leftArrow={leftArrow}/>
             
                 <ReadableArea>
                     <HeaderContainer>
@@ -456,26 +451,13 @@ export function Article() {
                     />
                 )}
 
-                {currentPage === pages - 1 ?  
-                    <SideBar onClick={handleFinishReading} >
-                        <SideBarImage>
-                            <FinishReadingImg 
-                                src={finish_reading_icon} 
-                                alt="finish reading icon"
-                                style={{backgroundColor: bgColor}}
-                            />
-                        </SideBarImage>
-                    </SideBar>
-                    :
-                    <SideBar onClick={handleNextPage} >
-                        <SideBarImage>
-                            <img 
-                                src={right_arrow_icon} 
-                                alt="right arrow icon"
-                            />
-                        </SideBarImage>
-                    </SideBar>    
-                }
+                <RightSidebar 
+                    handleNextPage={handleNextPage}
+                    currentPage={currentPage}
+                    pages={pages}
+                    bgColor={bgColor}
+                    handleFinishReading={handleFinishReading}
+                />
             </ArticleContainer>
             {showInfo && (<ArticleInfo article={article} setShowInfo={setShowInfo} showInfo={showInfo}/>)}
             {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
