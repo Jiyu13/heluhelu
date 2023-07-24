@@ -34,7 +34,7 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
         
         return () => clearTimeout(timer)
 
-    }, [])
+    }, [setArticles])
 
     
     return (
