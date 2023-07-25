@@ -1,5 +1,5 @@
 // import more_icon from "../assets/images/more_horiz_white_48dp.svg"
-import info_white_48dp from "../../assets/images/info_white_48dp.svg"
+import info_white_24dp from "../../assets/images/info_white_24dp.svg"
 
 import styled from "styled-components";
 import { useState } from "react";
@@ -23,7 +23,7 @@ export function DropDown( {showInfo, setShowInfo} ) {
     return (
         <MenuContainer>
             <MenuTrigger>
-                <MenuImage src={info_white_48dp} alt="article info icon" onClick={handleShowInfo}/>
+                <MenuImage src={info_white_24dp} alt="article info icon" onClick={handleShowInfo}/>
             </MenuTrigger>
         </MenuContainer>
         // <MenuContainer>
