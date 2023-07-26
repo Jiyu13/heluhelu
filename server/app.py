@@ -139,7 +139,7 @@ class ArticleInfo(Resource):
     def get(self, article_id):
         article = Article.query.filter_by(id=article_id, user_id=session["user_id"]).first()
 
-        # get word from UserWOrd objects
+        # get word from UserWord objects
         customs = UserWord.query.filter_by(user_id=session["user_id"]).all()
         custom_words = []
         for c in customs:
@@ -306,6 +306,12 @@ api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 
 # =============================== user words ============================================
 class UserWords(Resource):
+    def get(self):
+        user_id = session["user_id"]
+        custom_words = UserWord.query.filter_by(user_id=user_id).all()
+        custom_words_dict = [word.to_dict(rules=("-user",)) for word in custom_words]
+        return make_response(custom_words_dict, 200)
+
     def post(self):
         word = request.get_json()["word"]
         translation=request.get_json()["translation"]

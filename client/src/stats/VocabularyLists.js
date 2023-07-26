@@ -1,41 +1,49 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../components/UserContext";
 import styled from "styled-components";
-import { Vocabulary } from "./Vocabulary";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+
+import { CustomWordLists } from "./CustomWordLists";
+import { Vocabulary } from "./Vocabulary";
 import { StatsNavigation, StatsTitle } from "./MyStats";
 import { SubmitButtons } from "../components/Buttons";
 import { VocabInfoTable } from "./VocabInfoTable";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
+
 import { DeviceSize } from "../responsive";
 import { MobileVocabularyTable } from "./MobileVocabularyTable";
 
 
 export function VocabularyLists() {
-    const { vocabularies } = useContext(UserContext)
+    const { vocabularies, } = useContext(UserContext)
     
+    const [showCustomWords, setShowCustomWords] = useState(false)
     const [filterResults, setFilterResult] = useState(vocabularies)
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
-
 
     useEffect(() => {
           setFilterResult(vocabularies)
     }, [vocabularies])
 
+    function handleGetCustomWords() {
+        setShowCustomWords(!showCustomWords)
+    }
+
     function handleFilterKnown() {
         const result = vocabularies?.filter(v => v["status"] === 2)
         setFilterResult(result)
+        setShowCustomWords(false)
     }
 
     function handleFilterStudying() {
         const result = vocabularies?.filter(v => v["status"] === 1)
         setFilterResult(result)
+        setShowCustomWords(false)
     }
 
     function handleFilterAll() {
         setFilterResult(vocabularies)
+        setShowCustomWords(false)
     }
 
     function handleSelectFilter(tag) {
@@ -75,29 +83,40 @@ export function VocabularyLists() {
             {isMobile ? 
                 <MobileVocabularyTable 
                     handleSelectFilter={handleSelectFilter}
+                    // customWords={customWords} 
+                    // setCustomWords={setCustomWords}
                 />
                 :
                 <VocabInfoTable 
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
+                    handleGetCustomWords={handleGetCustomWords}
+                    // customWords={customWords} 
+                    // setCustomWords={setCustomWords}
                 />
             }
             
             
-            <ContainerBody>
-                <VocabHeader>
-                    <IdColumn>ID</IdColumn>
-                    <WordColumn>Word</WordColumn>
-                    <DefinitionColumn>Definition</DefinitionColumn>
-                    <CustomColumn>Custom Definition</CustomColumn>
-                    <MarkTagColumn>Mark Tag</MarkTagColumn>
-                </VocabHeader>
+            {!showCustomWords && (
+                <ContainerBody>
+                    <VocabHeader>
+                        <IdColumn>ID</IdColumn>
+                        <WordColumn>Word</WordColumn>
+                        <DefinitionColumn>Definition</DefinitionColumn>
+                        <CustomColumn>Custom Definition</CustomColumn>
+                        <MarkTagColumn>Mark Tag</MarkTagColumn>
+                    </VocabHeader>
 
-                {filterResults?.map(v => {
-                    return <Vocabulary key={v.id} vocab={v}/>
-                })}
+                    {filterResults?.map(v => {
+                        return <Vocabulary key={v.id} vocab={v}/>
+                    })}
             </ContainerBody>
+            )}
+        
+            {showCustomWords && (
+                <CustomWordLists/>
+            )}
             
         </PageContainer>
     )

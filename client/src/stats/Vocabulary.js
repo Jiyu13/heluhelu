@@ -26,7 +26,7 @@ export function Vocabulary( {vocab} ) {
             setDefinition(v.dictionary.filter(v => 
                 v["hawaiian_clean"] === word
             ))
-            setCustomDefinition(v["custom"]["translation"])
+            setCustomDefinition(v["custom"]?.["translation"])
         })
     }, [word])
 

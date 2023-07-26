@@ -4,7 +4,11 @@ import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
 
 
-export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilterStudying} ) {
+
+export function VocabInfoTable( props ) {
+
+    const {handleFilterAll, handleFilterKnown, handleFilterStudying, customWords, handleGetCustomWords} = props
+    
     const { vocabularies } = useContext(UserContext)
     
     function searchVocabs(status) {
@@ -14,7 +18,7 @@ export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilt
 
     const knownVocab = searchVocabs(2)?.length
     const studyingvocab = searchVocabs(1)?.length
-    
+    console.log(customWords)
     return  (
         <InfoContainer>
             <FilterBy>
@@ -39,6 +43,12 @@ export function VocabInfoTable( { handleFilterAll, handleFilterKnown, handleFilt
                 <WordText>Studying</WordText>
                 <WordCount>{studyingvocab}</WordCount>
             </InfoItem>
+
+            <InfoItem onClick={handleGetCustomWords}>
+                <CustomWordsIndicator/>
+                <WordText>Custom Words</WordText>
+                <WordCount>{customWords?.length}</WordCount>
+            </InfoItem>
         </InfoContainer>
 
     )
@@ -49,7 +59,7 @@ const InfoContainer = styled.div`
     width: 90%;
     margin: 15px auto 0px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     background-image:  linear-gradient(to right, #FDAB73, #AEC28F);
     border-radius: 8px;
 `
@@ -108,6 +118,14 @@ const KnownWordIndicator = styled.div`
 `
 
 const StudyingdIndicator = styled.div`
+    width: 2rem;
+    height: 1.15rem;
+    background-color: rgba(255, 221, 89, 0.5);
+    border-color: #338fff;
+    border-radius: 10px;
+`
+
+const CustomWordsIndicator = styled.div`
     width: 2rem;
     height: 1.15rem;
     background-color: rgba(255, 221, 89, 0.5);
