@@ -2,7 +2,9 @@ import styled from "styled-components"
 import filter_24dp from "../assets/images/filter_24dp.svg"
 
 
-export function MobileVocabularyTable( { handleSelectFilter, customWords, setCustomWords } ) {
+export function MobileVocabularyTable( { handleSelectFilter, 
+        // customWords, setCustomWords 
+    } ) {
 
     function handleChange(e) {
         handleSelectFilter(e.target.value)
@@ -21,7 +23,7 @@ export function MobileVocabularyTable( { handleSelectFilter, customWords, setCus
                 <option>All Vocabs</option>
                 <option>Known</option>
                 <option>Studying</option>
-                <option>Custom Words</option>
+                {/* <option>Custom Words</option> */}
             </SelectBar>
         </InfoContainer>
 

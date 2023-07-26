@@ -2,23 +2,34 @@ import styled from "styled-components"
 import filter_24dp from "../assets/images/filter_24dp.svg"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
+// import { useEffect } from "react"
+// import apiFetch from "../api/ApiFetch"
+// import { useState } from "react"
 
 
 
 export function VocabInfoTable( props ) {
 
-    const {handleFilterAll, handleFilterKnown, handleFilterStudying, customWords, handleGetCustomWords} = props
+    const {
+        handleFilterAll, handleFilterKnown, handleFilterStudying, customWords, 
+        // setCustomWords, handleGetCustomWords
+    } = props
     
     const { vocabularies } = useContext(UserContext)
-    
+
+    // useEffect(() => {
+    //     apiFetch("/user_words")
+    //     .then(res => res.json())
+    //     .then(data => setCustomWords(data))
+    // }, [])
+
     function searchVocabs(status) {
         return vocabularies?.filter(v => v["status"] === status).map(v => v["hawaiian_clean"].toLowerCase())
     }
 
-
+    console.log(customWords)
     const knownVocab = searchVocabs(2)?.length
     const studyingvocab = searchVocabs(1)?.length
-    console.log(customWords)
     return  (
         <InfoContainer>
             <FilterBy>
@@ -44,11 +55,11 @@ export function VocabInfoTable( props ) {
                 <WordCount>{studyingvocab}</WordCount>
             </InfoItem>
 
-            <InfoItem onClick={handleGetCustomWords}>
+            {/* <InfoItem onClick={handleGetCustomWords}>
                 <CustomWordsIndicator/>
                 <WordText>Custom Words</WordText>
                 <WordCount>{customWords?.length}</WordCount>
-            </InfoItem>
+            </InfoItem> */}
         </InfoContainer>
 
     )

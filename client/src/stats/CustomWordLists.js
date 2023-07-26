@@ -4,14 +4,9 @@ import styled from "styled-components"
 import apiFetch from "../api/ApiFetch"
 import { CustomWord } from "./CustomWord"
 
-export function CustomWordLists() {
-    const [customWords, setCustomWords] = useState(null)
-    useEffect(() => {
-        apiFetch("/user_words")
-        .then(res => res.json())
-        .then(data => setCustomWords(data))
-    }, [])
-
+export function CustomWordLists(
+    {customWords, setCustomWords}
+    ) {
 
     return  (
         <ContainerBody>

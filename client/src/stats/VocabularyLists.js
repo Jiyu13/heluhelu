@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
-import { CustomWordLists } from "./CustomWordLists";
+// import { CustomWordLists } from "./CustomWordLists";
 import { Vocabulary } from "./Vocabulary";
 import { StatsNavigation, StatsTitle } from "./MyStats";
 import { SubmitButtons } from "../components/Buttons";
@@ -12,38 +12,43 @@ import { VocabInfoTable } from "./VocabInfoTable";
 
 import { DeviceSize } from "../responsive";
 import { MobileVocabularyTable } from "./MobileVocabularyTable";
+// import apiFetch from "../api/ApiFetch";
 
 
 export function VocabularyLists() {
     const { vocabularies, } = useContext(UserContext)
     
-    const [showCustomWords, setShowCustomWords] = useState(false)
+    // const [customWords, setCustomWords] = useState(null)
+
+    // const [showCustomWords, setShowCustomWords] = useState(false)
     const [filterResults, setFilterResult] = useState(vocabularies)
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
+
+
 
     useEffect(() => {
           setFilterResult(vocabularies)
     }, [vocabularies])
 
-    function handleGetCustomWords() {
-        setShowCustomWords(true)
-    }
+    // function handleGetCustomWords() {
+    //     setShowCustomWords(true)
+    // }
 
     function handleFilterKnown() {
         const result = vocabularies?.filter(v => v["status"] === 2)
         setFilterResult(result)
-        setShowCustomWords(false)
+        // setShowCustomWords(false)
     }
 
     function handleFilterStudying() {
         const result = vocabularies?.filter(v => v["status"] === 1)
         setFilterResult(result)
-        setShowCustomWords(false)
+        // setShowCustomWords(false)
     }
 
     function handleFilterAll() {
         setFilterResult(vocabularies)
-        setShowCustomWords(false)
+        // setShowCustomWords(false)
     }
 
     function handleSelectFilter(tag) {
@@ -53,10 +58,11 @@ export function VocabularyLists() {
             handleFilterKnown()
         } else if (tag === "Studying") {
             handleFilterStudying()
-        } else {
-            // tag === "Custom Words"
-            handleGetCustomWords()
-        }
+        } 
+        // else {
+        //     // tag === "Custom Words"
+        //     handleGetCustomWords()
+        // }
     }
 
     return (
@@ -94,14 +100,14 @@ export function VocabularyLists() {
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
-                    handleGetCustomWords={handleGetCustomWords}
+                    // handleGetCustomWords={handleGetCustomWords}
                     // customWords={customWords} 
                     // setCustomWords={setCustomWords}
                 />
             }
             
             
-            {!showCustomWords && (
+            {/* {!showCustomWords && ( */}
                 <ContainerBody>
                     <VocabHeader>
                         <IdColumn>ID</IdColumn>
@@ -115,11 +121,11 @@ export function VocabularyLists() {
                         return <Vocabulary key={v.id} vocab={v}/>
                     })}
             </ContainerBody>
-            )}
+            {/* )} */}
         
-            {showCustomWords && (
-                <CustomWordLists/>
-            )}
+            {/* {showCustomWords && (
+                <CustomWordLists customWords={customWords} setCustomWords={setCustomWords}/>
+            )} */}
             
         </PageContainer>
     )
