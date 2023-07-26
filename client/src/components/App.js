@@ -30,7 +30,6 @@ function App() {
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
-  const [isLoading, setLoading] = useState(false)
   
   // ========= check session - user remains logged in ========
   useEffect(() => {
@@ -102,7 +101,6 @@ function App() {
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
-                            isLoading, setLoading,
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
                             firstArticle
@@ -158,18 +156,11 @@ function App() {
                   element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
                 >
                 </Route>
-
-                <Route
-                  exact
-                  path='/articles/:article_id/info'
-                  element={<ArticleInfo key={article?.id}/>}
-                >
-                </Route>
                 
                 <Route
                   exact
                   path='/articles/:id'
-                  element={<Article key={article?.id}/>}
+                  element={<Article/>}
                 >
                 </Route>
 

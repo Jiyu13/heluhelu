@@ -9,8 +9,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import apiFetch from "../api/ApiFetch";
 
+import { SkeletonHomePage } from "../skeleton-screens/SkeletonHomePage";
+
 
 export function Home({ articles, setArticles, onDeleteArticle}) {
+
+    const [isLoading, setLoading] = useState(false)
+
     
     // ====================== handle click delete btn " Yes" =======================
     const [showDeletePopup, setDeletePopup] = useState(false)
@@ -18,11 +23,20 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
 
     // ========= get all articles of current user =================================
     useEffect(() => {
-        apiFetch('/articles')
-        .then(res => res.json())
-        .then(data => setArticles(data))
-    }, [])
+        setLoading(true)
 
+        const timer = setTimeout(() => {
+            apiFetch('/articles')
+            .then(res => res.json())
+            .then(data => setArticles(data))
+            setLoading(false)
+        }, 2000)
+        
+        return () => clearTimeout(timer)
+
+    }, [setArticles])
+
+    
     return (
         <>  
             {showDeletePopup && ( 
@@ -32,27 +46,30 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
                     onDeleteArticle={onDeleteArticle}
                 />
             )} 
+            {isLoading && <SkeletonHomePage/>}
+            {!isLoading && (
+                <>
+                    <HomepageTitle>Heluhelu</HomepageTitle>
+                    <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
-            <HomepageTitle>Heluhelu</HomepageTitle>
-            <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
+                    <HomepageButtonContainer>
+                        <Link to={"/import/text"}>
+                            <ImportButton value="Import">
+                                <ButtonSpan>
+                                    <img src={import_icon} alt="import new content"/>
+                                </ButtonSpan>
+                                <ButtonSpan>Import</ButtonSpan>
+                            </ImportButton>
+                        </Link>
+                    </HomepageButtonContainer>
 
-            <HomepageButtonContainer className="upload-buttons">
-                <Link to={"/import/text"}>
-                    <ImportButton value="Import">
-                        <ButtonSpan>
-                            <img src={import_icon} alt="import new content"/>
-                        </ButtonSpan>
-                        <ButtonSpan>Import</ButtonSpan>
-                    </ImportButton>
-                </Link>
-            </HomepageButtonContainer>
-
-            <ArticleList 
-                articles={articles}
-                setDeletePopup={setDeletePopup}
-                setArticleID={setArticleID}
-            />
-
+                    <ArticleList 
+                        articles={articles}
+                        setDeletePopup={setDeletePopup}
+                        setArticleID={setArticleID}
+                    />
+                </>
+            )}
         </>
     ) 
 }
