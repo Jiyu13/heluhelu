@@ -156,18 +156,11 @@ function App() {
                   element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
                 >
                 </Route>
-
-                <Route
-                  exact
-                  path='/articles/:article_id/info'
-                  element={<ArticleInfo key={article?.id}/>}
-                >
-                </Route>
                 
                 <Route
                   exact
                   path='/articles/:id'
-                  element={<Article key={article?.id}/>}
+                  element={<Article/>}
                 >
                 </Route>
 

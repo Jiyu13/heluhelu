@@ -6,36 +6,47 @@ import { ArticleParagraph } from "./ArticleParagraph"
 import { useContext } from "react"
 import { UserContext } from "../../components/UserContext"
 
+import 'react-loading-skeleton/dist/skeleton.css'
+import { SkeletonArticlePage } from "../../skeleton-screens/SkeletonArticlePage"
 
-export function ArticleReadableAre({
+
+
+export function ArticleReadableArea({
     currentPage, pages, paragraphs, 
     showInfo, setShowInfo,
-    updateDictionaryWord, setWordExistError
+    updateDictionaryWord, setWordExistError,
+    isLoading
     }) {
 
     const {article} = useContext(UserContext)
-
     return (
         <ReadableArea>
-            <HeaderContainer>
-                <PagesContainer>
-                    <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                    <PageDisplay>pg: {currentPage+1} / {pages}</PageDisplay>
-                </PagesContainer>
-                <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
-            </HeaderContainer>
-            
-            
-            <ReadableContent>
-            {paragraphs?.map((p, index) => 
-                <ArticleParagraph 
-                    key={index} 
-                    words={p.split(" ")} 
-                    onWordClicked={updateDictionaryWord} 
-                    setWordExistError={setWordExistError}
-                />
+            {isLoading && (
+                <SkeletonArticlePage/>
+
             )}
-            </ReadableContent>
+            {!isLoading && (
+                <>
+                    <HeaderContainer>
+                        <PagesContainer>
+                            <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                            <PageDisplay>pg: {currentPage+1} / {pages}</PageDisplay>
+                        </PagesContainer>
+                        <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
+                    </HeaderContainer>
+                
+                    <ReadableContent>
+                    {paragraphs?.map((p, index) => 
+                        <ArticleParagraph 
+                            key={index} 
+                            words={p.split(" ")} 
+                            onWordClicked={updateDictionaryWord} 
+                            setWordExistError={setWordExistError}
+                        />
+                    )}
+                    </ReadableContent>
+                </>
+            )}
         </ReadableArea>
     )
 }

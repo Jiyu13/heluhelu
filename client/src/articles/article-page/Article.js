@@ -2,35 +2,28 @@ import styled from "styled-components"
 import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../../components/UserContext"
-
-import book_material_icon from "../../assets/images/book_material_icon.svg"
-import add_icon from "../../assets/images/add_icon.svg"
-
-
-
-import { ArticleParagraph } from "./ArticleParagraph"
-import { TranslationWord } from "../TranslationWord";
 import { useState } from "react"
-import { CustomWord } from "../CustomWord"
+
 
 import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
-import { DictionaryMobile } from "../dictionary-area/DictionaryMobile"
-import { WordTracker } from "../dictionary-area/WordTracker";
+
 import apiFetch from "../../api/ApiFetch"
 import { ArticleCompleted } from "./ArticleCompleted"
-
+import { DictionaryMobile } from "../dictionary-area/DictionaryMobile"
 import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
 import { ArticleInfo } from "./ArticleInfo"
-import {DropDown} from "./DropDown"
 import { LeftSidebar } from "../sidebars/LeftSidebar"
 import { RightSidebar } from "../sidebars/RightSidebar"
+import { Disctionary } from "../dictionary-area/Distionary"
+import { ArticleReadableArea } from "./ArticleReadableArea"
 
 const PAGE_SIZE = 250;
 
 export function Article() {
 
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
+    const [isLoading, setLoading] = useState(false)
 
     const [showCustomForm, setCustomForm] = useState(false)
     const [wordExistError, setWordExistError] = useState(null)
@@ -47,21 +40,27 @@ export function Article() {
 
     const [showInfo, setShowInfo] = useState(false)
 
-
     const {
-            article, setArticle, user, 
+            article, setArticle, 
+            user, 
             setErrors, splitText, calculatePages,
             vocabularies, setVocabularies
         } = useContext(UserContext)
     
     const { id } = useParams()
     useEffect(() => {
-        apiFetch(`/articles/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            setCurrentPage(data.current_page)
-            setArticle(data.article)
-        })
+        setLoading(true)
+
+        const timer = setTimeout(() => {
+            apiFetch(`/articles/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setCurrentPage(data.current_page)
+                setArticle(data.article)
+                setLoading(false)
+            })
+        }, 1000)
+        return () => clearTimeout(timer)
         // eslint-disable-next-line
     }, [id]) 
 
@@ -154,55 +153,17 @@ export function Article() {
 
 
     // ========= handle adding custom translation for word ======================
-    function handleAddBtn(e) {
-        const word = e.target.id
-        setFormData({...formData, word: word})
-        setCustomForm(!showCustomForm)
-    }
-
     const initialValues = {
         word: "",
         translation: ""
     }
     
     const [formData, setFormData] = useState(initialValues)
-    
-    function handleCustomWord(e) {
-        const value = e.target.value
-        const name = e.target.name
-        setFormData({...formData, [name]: value})
-    }
-    
-    function handleCustomSubmit(e) {
-        e.preventDefault()
-        
-        const newCustomWord = {
-            word: formData.word,
-            translation: formData.translation,
-            user_id: user.id
-        }
 
-        apiFetch('/user_words', {
-            method: "POST",
-            headers: {"Content-Type": 'application/json'},
-            body: JSON.stringify(newCustomWord)
-        })
-        .then(res => {
-            if (res.ok) {
-                res.json().then(newWord => {
-                    setCustomWord(newWord)
-                    setCustomForm(!showCustomForm)
-                    setFormData(initialValues)
-                })
-            } else {
-                if (res.status === 422) {
-                    res.json().then(error => {
-                        setWordExistError(error)
-                    })
-                }
-                
-            }
-        })
+    function handleAddBtn(e) {
+        const word = e.target.id
+        setFormData({...formData, word: word})
+        setCustomForm(!showCustomForm)
     }
 
     // ========= Search word ====================================================
@@ -232,11 +193,6 @@ export function Article() {
     function handleSearchChange(e) {
         const newWord = e.target.value
         updateDictionaryWord(newWord)
-    }
-
-    function handleCancel() {
-        setCustomForm(false)
-        setFormData(initialValues)
     }
 
     function PostAndDelete(word, wordStatus) {
@@ -298,156 +254,59 @@ export function Article() {
                 )}
 
                 <LeftSidebar handlePrevPage={handlePrevPage} leftArrow={leftArrow}/>
-            
-                <ReadableArea>
-                    <HeaderContainer>
-                        <PagesContainer>
-                            <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
-                            <PageDisplay>pg: {currentPage+1} / {pages}</PageDisplay>
-                        </PagesContainer>
-                        <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
-                    </HeaderContainer>
-                    
-                    
-                    <ReadableContent>
-                    {paragraphs?.map((p, index) => 
-                        <ArticleParagraph 
-                            key={index} 
-                            words={p.split(" ")} 
-                            onWordClicked={updateDictionaryWord} 
-                            setWordExistError={setWordExistError}
-                        />
-                    )}
-                    </ReadableContent>
-                </ReadableArea>
+                
+                <ArticleReadableArea 
+                    currentPage={currentPage}
+                    pages={pages}
+                    paragraphs={paragraphs} 
+                    showInfo={showInfo}
+                    setShowInfo={setShowInfo}
+                    updateDictionaryWord={updateDictionaryWord}
+                    setWordExistError={setWordExistError}
+                    isLoading={isLoading}
+                />
                 
                 {!isMobile && (
-                <DictionaryArea>
-                    {/* <span style={{fontSize:"12px"}}>Total words: {articleWords?.length}</span>
-                    <br/> */}
-                    <DictionaryAreaHeader>
-                        <SearchArea 
-                            type="text"
-                            value={targetWord}
-                            onChange={handleSearchChange}
-                        />
+                    <Disctionary 
+                        chosen={chosen}
+                        PostAndDelete={PostAndDelete} 
+                        checkStatus={checkStatus}
+                        handleSearchChange={handleSearchChange}
+                        handleAddBtn={handleAddBtn}
+                        targetWord={targetWord}
+                        customWord={customWord} 
+                        setCustomWord={setCustomWord}
+                        formData={formData}
+                        wordExistError={wordExistError}
+                        showCustomForm={showCustomForm}
+                        isDictionaryOpen={isDictionaryOpen}
 
-                        {customWord ? "" :
-                            <ImageContainer>
-                                <AddImage 
-                                    src={add_icon} 
-                                    alt="add custom word button" 
-                                    onClick={handleAddBtn} 
-                                    id={targetWord}
-                                />
-                            </ImageContainer>
-                            
-                        }
-                    </DictionaryAreaHeader>
-                    
-
-                    {showCustomForm && ( 
-                        <CustomForm onSubmit={handleCustomSubmit}>
-                            <Label>Hawaiian:
-                                <br/>
-                                <WordInput
-                                    required
-                                    disabled
-                                    type="text"
-                                    name="word"
-                                    value={formData.word}
-                                />
-                            </Label>
-                            <br/>
-                            <Label>Translation:
-                                <br/>
-                                <TranslationInput
-                                    required
-                                    type="text"
-                                    name="translation"
-                                    value={formData.translation}
-                                    onChange={handleCustomWord}
-                                />
-                                <br/>
-                            </Label>
-
-                            {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
-
-                            <br/>
-                            <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
-                            <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
-                        </CustomForm>
-                    )}
-
-                    <br/>
-
-                    {isDictionaryOpen && chosen &&(
-                        <WordTracker
-                            target={targetWord} 
-                            word={chosen} 
-                            PostAndDelete={PostAndDelete} 
-                            checkStatus={checkStatus}
-                        />
-                    )}
-
-                    {customWord === null && targetWord !== null && chosen?.length === 0 && (
-                        <>
-                            <NotFound>
-                                No results found for '{targetWord}'.
-                            </NotFound>
-                        </>
-                        
-                    )}
-
-                    <TranslationArea>
-                        
-                        {customWord && (
-                            <CustomWord 
-                                key={customWord.id} 
-                                word={customWord} 
-                                setCustomWord={setCustomWord} 
-                                PostAndDelete={PostAndDelete} 
-                                checkStatus={checkStatus}
-                            />
-                        )}
-                        {chosen?.map((word, index) => 
-                            <TranslationWord 
-                                key={word.id} 
-                                word={word.hawaiian} 
-                                translation={word.translation} 
-                                hawaiian_clean={word.hawaiian_clean}
-                                PostAndDelete={PostAndDelete}
-                                checkStatus={checkStatus}
-                            />
-                        )}
-                        
-                    </TranslationArea>
-                </DictionaryArea>
+                        initialValues={initialValues}
+                        setFormData={setFormData}
+                        setCustomForm={setCustomForm}
+                        setWordExistError={setWordExistError}
+                    />
                 )}
                 
                 {isMobile && isDictionaryOpen && (
                     <DictionaryMobile 
                         chosen={chosen}
-                        PostAndDelete={PostAndDelete} checkStatus={checkStatus}
+                        PostAndDelete={PostAndDelete} 
+                        checkStatus={checkStatus}
                         handleSearchChange={handleSearchChange}
                         handleAddBtn={handleAddBtn}
-                        handleCustomSubmit={handleCustomSubmit}
-                        handleCustomWord={handleCustomWord}
-                        handleCancel={handleCancel}
-                        articleWords={articleWords}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
                         targetWord={targetWord}
-                        setTargetWord={setTargetWord}
                         customWord={customWord} 
                         setCustomWord={setCustomWord}
-                        initialValues={initialValues}
                         formData={formData}
-                        setFormData={setFormData}
                         wordExistError={wordExistError}
-                        pages={pages}
                         showCustomForm={showCustomForm}
                         isDictionaryOpen={isDictionaryOpen}
+
+                        initialValues={initialValues}
+                        setFormData={setFormData}
+                        setCustomForm={setCustomForm}
+                        setWordExistError={setWordExistError} 
                     />
                 )}
 
