@@ -39,17 +39,17 @@ export function VocabInfoTable( props ) {
                 </FilterByText>
                 
             </FilterBy>
-            <InfoItem onClick={handleFilterAll}>
+            <InfoItem href="#" onClick={handleFilterAll}>
                 <AllWordIndicator/>
                 <WordText>All Vocabs</WordText>
                 <WordCount>{vocabularies?.length}</WordCount>
             </InfoItem>
-            <InfoItem onClick={handleFilterKnown}>
+            <InfoItem href="#" onClick={handleFilterKnown}>
                 <KnownWordIndicator/>
                 <WordText>Known</WordText>
                 <WordCount>{knownVocab}</WordCount>
             </InfoItem>
-            <InfoItem onClick={handleFilterStudying}>
+            <InfoItem href="#" onClick={handleFilterStudying}>
                 <StudyingdIndicator/>
                 <WordText>Studying</WordText>
                 <WordCount>{studyingvocab}</WordCount>
@@ -88,16 +88,21 @@ const FilterByText = styled.span`
     white-space: nowrap; // make "All Words" stay in the same line
 `
 
-const InfoItem = styled.div`
+const InfoItem = styled.a`
     display: grid;
     grid-template-columns: auto 1fr 1fr;
     grid-column-gap: 5px;
     justify-content: center;
     align-items: center;
-    margin:20px auto;
+    margin: 0px auto;
+    color: grey;
+    cursor: pointer;
+    text-decoration: none;
+    height: 60px;
 
-    &:hover {
-        cursor: pointer;
+    &:focus {
+        color: black; 
+        border-top: 3px solid black;
     }
 ` 
 
