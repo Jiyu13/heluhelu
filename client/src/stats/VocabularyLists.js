@@ -26,7 +26,7 @@ export function VocabularyLists() {
     }, [vocabularies])
 
     function handleGetCustomWords() {
-        setShowCustomWords(!showCustomWords)
+        setShowCustomWords(true)
     }
 
     function handleFilterKnown() {
@@ -53,6 +53,9 @@ export function VocabularyLists() {
             handleFilterKnown()
         } else if (tag === "Studying") {
             handleFilterStudying()
+        } else {
+            // tag === "Custom Words"
+            handleGetCustomWords()
         }
     }
 
