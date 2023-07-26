@@ -88,13 +88,11 @@ const Mark = styled.span`
 const ShowStatus = styled.span`
     display: inline-block;
     border: 2px solid transparent;
-    cursor: pointer;
     font-size: inherit;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
     line-height: 1.6;
     padding: 2px 6px;
-    &:hover {
-        background-color: rgba(112, 161, 255, .8)!important;
-    }
 `
 
 const TrackerContainer = styled.div`
