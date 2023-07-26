@@ -30,7 +30,7 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
             .then(res => res.json())
             .then(data => setArticles(data))
             setLoading(false)
-        }, 2000)
+        }, 1500)
         
         return () => clearTimeout(timer)
 

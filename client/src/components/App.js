@@ -27,7 +27,7 @@ const USER_NOT_SET = -1;
 
 function App() {
 
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState(null)
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
   

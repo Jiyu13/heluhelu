@@ -51,7 +51,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
     return (
     <ArticlesListContainer>
-        {articles?.length ?  
+        {articles?.length > 0 && (  
         <ArticlesListTable>
             <tbody>
             {articles?.map(a =>
@@ -107,11 +107,13 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
             </tbody>
 
         </ArticlesListTable>
-        : <h2>You don't have any articles.</h2> }
+        )}
+
+        {articles?.length === 0 && (<h2>You don't have any articles.</h2>)}
 
     </ArticlesListContainer> 
-    )
-}
+    
+)}
 
 const ArticlesListContainer = styled.div`
     margin: 45px auto 0;
