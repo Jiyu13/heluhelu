@@ -114,9 +114,10 @@ const ExistWarning = styled.span`
     font-size: 12px;
 `
 
-const TranslationInput = styled.input`
+const TranslationInput = styled.textarea`
     width: 90%;
     max-width: 235px;
+    height: 100px;
 `
 
 const WordInput = styled.input`

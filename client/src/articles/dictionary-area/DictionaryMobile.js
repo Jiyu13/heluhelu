@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import add_icon from "../../assets/images/add_icon.svg"
 import { TranslationWord } from "../TranslationWord";
-import { CustomWord } from "../CustomWord"
+import {  CustomWordUpdate } from "../CustomWordUpdate"
 import { WordTracker } from "./WordTracker";
 import { CustomeWordForm } from "../../custom-word/CustomWordForm";
 
@@ -75,7 +75,7 @@ export function DictionaryMobile(props) {
             
             <TranslationArea>
                 {customWord && (
-                    <CustomWord 
+                    <CustomWordUpdate 
                         key={customWord.id} 
                         word={customWord} 
                         setCustomWord={setCustomWord}

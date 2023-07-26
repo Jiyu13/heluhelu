@@ -11,7 +11,7 @@ import { ButtonButtons, SubmitButtons } from "../components/Buttons"
 
 
 
-export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
+export function CustomWordUpdate({word, setCustomWord, PostAndDelete, checkStatus}) {
     const {user} = useContext(UserContext)
     const [isEdit, setIsEdit] = useState(false)
     const [formData, setFormData] = useState(word)
@@ -110,7 +110,7 @@ export function CustomWord({word, setCustomWord, PostAndDelete, checkStatus}) {
                     <br/>
                     <TranslationInput
                         required
-                        type="text"
+                        type="textarea"
                         name="translation"
                         value={formData.translation}
                         onChange={handleOnchange}
@@ -176,6 +176,7 @@ const CancelButton = styled(ButtonButtons)`
 const TranslationInput = styled.textarea`
     width: 90%;
     max-width: 235px;
+    height: 100px;
 `
 
 const WordInput = styled.input`

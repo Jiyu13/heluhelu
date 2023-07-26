@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CustomeWordForm } from "../../custom-word/CustomWordForm";
 import { WordTracker } from "./WordTracker";
 import { TranslationWord } from "../TranslationWord";
-import { CustomWord } from "../CustomWord";
+import { CustomWordUpdate } from "../CustomWordUpdate";
 import add_icon from "../../assets/images/add_icon.svg"
 
 
@@ -87,7 +87,7 @@ export function Disctionary(props) {
             <TranslationArea>
                 
                 {customWord && (
-                    <CustomWord 
+                    <CustomWordUpdate
                         key={customWord.id} 
                         word={customWord} 
                         setCustomWord={setCustomWord} 
