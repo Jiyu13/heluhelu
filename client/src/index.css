@@ -72,13 +72,14 @@ li:hover .recent-reading .last-open-title {
 
 /* table */
 .styled-table thead tr {
-	background: #083d74;
-    color: #ccc;
-    text-align: left;
+  background: #083d74;
+  background-image:  linear-gradient(to right, #FDAB73, #AEC28F);
+  color: #000000;
+  text-align: left;
 }
 
 .styled-table th {
-	color: #fff;
+	color: #000000;
 }
 
 .styled-table th, .styled-table td{

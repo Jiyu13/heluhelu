@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { LineGraph } from "./LineGraph"
 
-export function ReadingStats( {readEvents, setReadEvets} ) {
+export function ReadingStats( {readEvents} ) {
 
     return (
         <>  
@@ -13,10 +13,8 @@ export function ReadingStats( {readEvents, setReadEvets} ) {
             <GraphBox>
                 <LineGraph/>
             </GraphBox>
-            <br/>
-            <br/>
-            <TableBox>
-                <h2>Reading Stats</h2>
+            <hr style={{width: "30%", height: "5px", margin: "56px auto"}}/>
+            <TableBox>                
                 <TableContainer>
                     <Table className="styled-table">
                         <thead>
@@ -58,7 +56,7 @@ export function ReadingStats( {readEvents, setReadEvets} ) {
                             </TRow>
                         </tbody>
                     </Table>
-                    <span>* one page = 250 words of text</span>
+                    <span style={{fontSize: "1rem"}}>* one page = 250 words of text</span>
                 </TableContainer>
             </TableBox>
             <br/>
@@ -93,7 +91,6 @@ const Table = styled.table`
 
 
 const TableContainer = styled.div`
-    // overflow-x: scroll;
     width: 99%;
     box-sizing: border-box;
     max-width: 600px;
