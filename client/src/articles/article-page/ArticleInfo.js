@@ -4,6 +4,7 @@ import styled from "styled-components"
 import apiFetch from "../../api/ApiFetch"
 
 import close_btn from "../../assets/images/close_btn.svg"
+import { ArticleInfoChart } from "./ArticleInfoChart"
 
 
 export function ArticleInfo( {article, setShowInfo, showInfo} ) {
@@ -45,6 +46,16 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                     <ButtonImage src={close_btn} alt="close icon"/>
                 </CloseButton>
             </ContainerHeader>
+
+            <ChartContainer>
+                <ArticleInfoChart 
+                    totalWords={totalWords}
+                    totalKnowns={totalKnowns}
+                    totalStudyings={totalStudyings}
+                    totalIgnoreds={totalIgnoreds}
+                    newWords={newWords} 
+                />
+            </ChartContainer>
 
             <ContainerBody>
                 <ArticleStats>
@@ -93,7 +104,12 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
     // </InfoContainer>
     )
 }
-
+const ChartContainer = styled.div`
+    width: 40%;
+    height: 40%;
+    display: flex;
+    margin: 0px auto;
+`
 const PopupContainer = styled.div`
     position: fixed;
     top: 50%;
