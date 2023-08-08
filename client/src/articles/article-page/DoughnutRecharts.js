@@ -1,12 +1,14 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { DoughnutChartLegend } from './DoughnutChartLegend';
+import styled from 'styled-components';
 
 
 export function DoughnutRecharts(props) {
     const { totalWords, totalKnowns, totalStudyings, totalIgnoreds, newWords, newUnique,
             uniqueWords, studyingUnique, knownUnique, ignoredUnique,
     } = props
-    
+
     const data = [
         { value: newWords, name: "New Words"},
         { value: totalStudyings?.length, name: "Studying"},
@@ -49,47 +51,34 @@ export function DoughnutRecharts(props) {
     const renderLegend = (props) => {
       const {payload} = props
       return (
-        <ul>
-          {
-            payload.map((entry, index) => {
-              return (
-                <li
-                  key={`item-${index}`}
-                  style={{
-                    fontWeight: "bold",
-                    color:`${entry.color}`,
-                    marginBottom: "8px"
-                  }}
-                >
-                  { entry.value === "Known + Ignored" && (
-                    `Known: ${totalKnowns?.length} (${knownUnique?.length}), Ignored: ${totalIgnoreds?.length} (${ignoredUnique?.length})`)
-                  }
-                  { entry.value === "Studying" && (
-                    `${entry.value}: ${entry.payload.value} (${studyingUnique?.length})`
-                  )}
-                  { entry.value === "New Words" && (
-                    `New: ${entry.payload.value} (${newUnique})`
-                  )}
-                </li>
-              )
-            })
-          }
-        </ul>
-      )
+        <GridContainer>
+              <DoughnutChartLegend 
+                payload={payload}
+                totalKnowns={totalKnowns}
+                knownUnique={knownUnique} 
+                totalIgnoreds={totalIgnoreds} 
+                ignoredUnique={ignoredUnique}
+                studyingUnique={studyingUnique}
+                newUnique={newUnique}
+              />
 
+        </GridContainer>
+        
+      )
     }
+
 
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={300} height={300}>
+        <PieChart width={300} height={340}>
           <Pie
             cx="50%"
             cy="50%"
             data={data}
             labelLine={false}
             label={renderCustomizedLabel}
-            innerRadius={75}
-            outerRadius={130}
+            innerRadius={68}
+            outerRadius={125}
             fill="#8884d8"
             dataKey="value"
           >
@@ -99,25 +88,21 @@ export function DoughnutRecharts(props) {
           </Pie>
           <Tooltip content={customTooltip} />
           <text 
-            // x, y, to 50%, center the text horizontally & vertically
             x='50%' 
-            y='32%'
-            scaleToFit={true}
+            y='43%'
             textAnchor="middle"  // horizontal alignment of the text to the middle, ensure the text os centered along its x-axis
             dominantBaseline="middle" // ensure the text is centered along its y-axis. In SVG, it determines the vertical alignment of the text
-            verticalAnchor='middle'
             style={{ fontSize: "1.2rem", fontWeight: 'bold', fill: '#777'}}
           >
             Total {totalWords?.length}
           </text>
           <text
               x='50%'
-              y='41%'
+              y='52%'
               style={{ fontSize: "1rem", fontWeight: 'bold', fill: '#777' }}
               width={200}
               scaleToFit={true}
               textAnchor='middle'
-              verticalAnchor='middle'
           >
               (Unique {uniqueWords?.length})
             </text>
@@ -126,23 +111,16 @@ export function DoughnutRecharts(props) {
             layout="vertical"
             verticalAlign='bottom'
             content={renderLegend}
-            // payload={[
-            //   { value: `New Words: ${newWords} (${newUnique})`, type: 'square', color: "rgb(112, 161, 255)" },
-            //   { 
-            //     value: `Studying: ${totalStudyings?.length} (${studyingUnique?.length})`, 
-            //     type: 'square', 
-            //     color: "rgb(255, 221, 89)",
-            //     style: {marginTop: "8px"}
-            //   },
-            //   { value: `Known: ${totalKnowns?.length} (${knownUnique?.length}) + 
-            //            Ignored: ${totalIgnoreds?.length} (${ignoredUnique?.length})`, 
-            //     type: 'square', 
-            //     color: 'rgb(75, 166, 127)' 
-            //   },
-            // ]}
           />
           
         </PieChart>
       </ResponsiveContainer>
     );
 }
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-areas: "new studying known";
+  gap: 10px;
+  align-items: center;
+`

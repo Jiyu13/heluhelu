@@ -4,7 +4,6 @@ import styled from "styled-components"
 import apiFetch from "../../api/ApiFetch"
 
 import close_btn from "../../assets/images/close_btn.svg"
-// import { ArticleInfoChart } from "./ArticleInfoChart"
 import {DoughnutRecharts} from "./DoughnutRecharts"
 
 
@@ -73,63 +72,21 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                     knownUnique={knownUnique}
                     ignoredUnique={ignoredUnique}
                 />
-                {/* <ArticleInfoChart 
-                    totalWords={totalWords}
-                    totalKnowns={totalKnowns}
-                    totalStudyings={totalStudyings}
-                    totalIgnoreds={totalIgnoreds}
-                    newWords={newWords} 
-                /> */}
             </ChartContainer>
 
             <CustomWordsContainer>
                 <CustomWords>Custom words: </CustomWords>
                 <WordNumber>{totalCustoms?.length}</WordNumber>
             </CustomWordsContainer>
-
-            {/* <ContainerBody>
-                <ArticleStats>
-                    <TotalContainer>
-                        <TotalWords style={{backgroundColor: "#b9d7e3"}}>{totalWords?.length} Total Words</TotalWords>
-                        <UniquelWords style={{backgroundColor: "#4ba67f"}}>{uniqueWords?.length} Unique Words</UniquelWords>
-                    </TotalContainer>
-                    
-                    <NewWordsContainer>
-                        <NewWords>New words:</NewWords>
-                        <WordNumber>{newWords} ({newUnique})</WordNumber>
-                    </NewWordsContainer>
-
-                    <KnownWordsContainer>
-                        <KnownWords>Known words: </KnownWords>
-                        <WordNumber>{totalKnowns?.length} ({knownUnique?.length})</WordNumber>
-                    </KnownWordsContainer>
-                    
-
-                    <StudyingWordsContainer>
-                        <StudyingWords>Studying words: </StudyingWords>
-                        <WordNumber>{totalStudyings?.length} ({studyingUnique?.length})</WordNumber>
-                    </StudyingWordsContainer>
-
-                    <IgnoredWordsContainer>
-                        <IgnoredWords>Ignored words: </IgnoredWords>
-                        <WordNumber>{totalIgnoreds?.length} ({ignoredUnique?.length})</WordNumber>
-                    </IgnoredWordsContainer>
-
-                    <CustomWordsContainer>
-                        <CustomWords>Custom words: </CustomWords>
-                        <WordNumber>{totalCustoms?.length}</WordNumber>
-                    </CustomWordsContainer>
-
-                </ArticleStats>
-            </ContainerBody> */}
         </PopupContainer>
     )
 }
 const ChartContainer = styled.div`
     width: 300px;
-    height: 390px;
+    height: 340px;
     display: flex;
-    margin: 0 auto;
+    margin: -25px auto 0;
+
 `
 const PopupContainer = styled.div`
     position: fixed;
@@ -143,11 +100,10 @@ const PopupContainer = styled.div`
     max-width: 80%;
 `
 const ContainerHeader = styled.div`
-    padding: 20px 20px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-item: center;
-
 `
 const Title = styled.div`
     font-size: 1.2rem;
@@ -166,20 +122,12 @@ const ButtonImage = styled.img`
     height: 20px;
 `
 
-const ContainerBody = styled.div`
-    padding: 0 10px 20px;
-`
-
-const ArticleStats = styled.div``
-
 const TotalContainer = styled.div`
     display: flex;
     width: 90%;
     margin: auto;
 `
 
-// const InfoContainer = styled.div``
-// const ArticleTitle = styled.div``
 const TotalWords = styled.div`
     padding: 10px 0;
     margin: 0 5px;
