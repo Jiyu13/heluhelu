@@ -4,7 +4,8 @@ import styled from "styled-components"
 import apiFetch from "../../api/ApiFetch"
 
 import close_btn from "../../assets/images/close_btn.svg"
-import { ArticleInfoChart } from "./ArticleInfoChart"
+// import { ArticleInfoChart } from "./ArticleInfoChart"
+import {DoughnutRecharts} from "./DoughnutRecharts"
 
 
 export function ArticleInfo( {article, setShowInfo, showInfo} ) {
@@ -16,6 +17,13 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
     const [totalKnowns, setTotalKnowns] = useState(null)
     const [totalIgnoreds, setTotalIgnoreds] = useState(null)
 
+    const [studyingUnique, setStudyingUnique] = useState(null)
+    const [knownUnique, setKnownUnique] = useState(null)
+    const [ignoredUnique, setIgnoredUnique] = useState(null)
+
+    const [newWords, setNewWords] = useState(null)
+    const [newUnique, setNewUnique] = useState(null)
+
     useEffect(() => {
         apiFetch(`/articles/${article.id}/info`)
         .then(res => res.json())
@@ -26,14 +34,19 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
             setTotalStudyings(data["studying_total"])
             setTotalKnowns(data["known_total"])
             setTotalIgnoreds(data["ingored_total"])
-        
+
+            setStudyingUnique(data["studying_unique"])
+            setKnownUnique(data["known_unique"])
+            setIgnoredUnique(data["ignored_unique"])
+            
+            setNewWords(data["new_words"])
+            setNewUnique(data["new_unique"])
         })
     }, [article])
 
     function handleClose() {
         setShowInfo(!showInfo)
     }
-    const newWords = totalWords?.length - totalKnowns?.length - totalStudyings?.length - totalIgnoreds?.length
     
     return (
         <PopupContainer>
@@ -48,16 +61,33 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
             </ContainerHeader>
 
             <ChartContainer>
-                <ArticleInfoChart 
+                <DoughnutRecharts
+                    totalWords={totalWords}
+                    totalKnowns={totalKnowns}
+                    totalStudyings={totalStudyings}
+                    totalIgnoreds={totalIgnoreds}
+                    newWords={newWords}
+                    newUnique={newUnique}
+                    uniqueWords={uniqueWords}
+                    studyingUnique={studyingUnique}
+                    knownUnique={knownUnique}
+                    ignoredUnique={ignoredUnique}
+                />
+                {/* <ArticleInfoChart 
                     totalWords={totalWords}
                     totalKnowns={totalKnowns}
                     totalStudyings={totalStudyings}
                     totalIgnoreds={totalIgnoreds}
                     newWords={newWords} 
-                />
+                /> */}
             </ChartContainer>
 
-            <ContainerBody>
+            <CustomWordsContainer>
+                <CustomWords>Custom words: </CustomWords>
+                <WordNumber>{totalCustoms?.length}</WordNumber>
+            </CustomWordsContainer>
+
+            {/* <ContainerBody>
                 <ArticleStats>
                     <TotalContainer>
                         <TotalWords style={{backgroundColor: "#b9d7e3"}}>{totalWords?.length} Total Words</TotalWords>
@@ -65,24 +95,24 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                     </TotalContainer>
                     
                     <NewWordsContainer>
-                        <NewWords>New words ({Math.floor((newWords / totalWords?.length) * 100) }%): </NewWords>
-                        <WordNumber>{newWords}</WordNumber>
+                        <NewWords>New words:</NewWords>
+                        <WordNumber>{newWords} ({newUnique})</WordNumber>
                     </NewWordsContainer>
 
                     <KnownWordsContainer>
                         <KnownWords>Known words: </KnownWords>
-                        <WordNumber>{totalKnowns?.length}</WordNumber>
+                        <WordNumber>{totalKnowns?.length} ({knownUnique?.length})</WordNumber>
                     </KnownWordsContainer>
                     
 
                     <StudyingWordsContainer>
                         <StudyingWords>Studying words: </StudyingWords>
-                        <WordNumber>{totalStudyings?.length}</WordNumber>
+                        <WordNumber>{totalStudyings?.length} ({studyingUnique?.length})</WordNumber>
                     </StudyingWordsContainer>
 
                     <IgnoredWordsContainer>
                         <IgnoredWords>Ignored words: </IgnoredWords>
-                        <WordNumber>{totalIgnoreds?.length}</WordNumber>
+                        <WordNumber>{totalIgnoreds?.length} ({ignoredUnique?.length})</WordNumber>
                     </IgnoredWordsContainer>
 
                     <CustomWordsContainer>
@@ -91,24 +121,15 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                     </CustomWordsContainer>
 
                 </ArticleStats>
-            </ContainerBody>
+            </ContainerBody> */}
         </PopupContainer>
-    
-    // <InfoContainer>
-    //     <ArticleTitle></ArticleTitle>
-    //     <TotalWords></TotalWords>
-    //     <NewWords></NewWords>
-    //     <KnownWords></KnownWords>
-    //     <StudyingWords></StudyingWords>
-    //     <CustomWords></CustomWords>
-    // </InfoContainer>
     )
 }
 const ChartContainer = styled.div`
-    width: 40%;
-    height: 40%;
+    width: 300px;
+    height: 390px;
     display: flex;
-    margin: 0px auto;
+    margin: 0 auto;
 `
 const PopupContainer = styled.div`
     position: fixed;
