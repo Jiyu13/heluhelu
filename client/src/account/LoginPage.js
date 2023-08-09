@@ -149,13 +149,13 @@ const InputBox = styled.div`
     border-bottom: 2px solid #fff;
 `
 const Input = styled.input`
-    width: 100px;
+    width: 100%;
     height: 50px;
     background: transparent;
     border: none;
     outline: none;
     font-size: 1.2em;
-    padding: 0 35px 0 5px;
+    padding: 0 0 0 5px;
     color: white;
     &::placeholder {
         color: #fff;
