@@ -74,18 +74,18 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                 />
             </ChartContainer>
 
-            <CustomWordsContainer>
+            {/* <CustomWordsContainer>
                 <CustomWords>Custom words: </CustomWords>
                 <WordNumber>{totalCustoms?.length}</WordNumber>
-            </CustomWordsContainer>
+            </CustomWordsContainer> */}
         </PopupContainer>
     )
 }
 const ChartContainer = styled.div`
     width: 300px;
-    height: 340px;
+    height: 200px;
     display: flex;
-    margin: -25px auto 0;
+    margin: 0px auto 20px;
 
 `
 const PopupContainer = styled.div`
@@ -146,26 +146,10 @@ const UniquelWords = styled.div`
 const WordNumber = styled(UniquelWords)`
     text-align: left;
 `
-const NewWordsContainer = styled(TotalContainer)`
-`
-const NewWords = styled(TotalWords)`
-    text-align: right;
-`
 
-const KnownWordsContainer = styled(TotalContainer)``
-const KnownWords = styled(TotalWords)`
-    text-align: right;
-`
-const StudyingWordsContainer = styled(TotalContainer)``
-const StudyingWords = styled(TotalWords)`
-    text-align: right;
-`
-const IgnoredWordsContainer = styled(TotalContainer)``
-const IgnoredWords = styled(TotalWords)`
-    text-align: right;
-`
 const CustomWordsContainer = styled(TotalContainer)`
     border: none;
+    margin: 5px auto;
 `
 const CustomWords = styled(TotalWords)`
     text-align: right;
