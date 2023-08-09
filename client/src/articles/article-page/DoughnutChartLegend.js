@@ -14,22 +14,22 @@ export function DoughnutChartLegend(props) {
             <NewWords>
                 <LegendSpan style={{border: `2px solid ${newWordPayload.color}`}} />
                 <DataDiv>
-                    <DataSpan>{`${newWordPayload.payload.value} (${newUnique})`}</DataSpan>
-                    <DataSpan style={{fontSize:"0.6rem"}}>{`${newWordPayload.value}`}</DataSpan>
+                    <DataSpan style={{fontWeight: "bold"}}>{`${newWordPayload.payload.value} (${newUnique})`}</DataSpan>
+                    <DataSpan style={{fontSize:"0.7rem"}}>{`${newWordPayload.value}`}</DataSpan>
                 </DataDiv>
             </NewWords>
             <Studying>
                 <LegendSpan style={{border: `2px solid ${studyingPayload.color}`}} />
                 <DataDiv>
-                    <DataSpan>{`${studyingPayload.payload.value} (${studyingUnique?.length})`}</DataSpan>
+                    <DataSpan style={{fontWeight: "bold"}}>{`${studyingPayload.payload.value} (${studyingUnique?.length})`}</DataSpan>
                     <DataSpan style={{fontSize:"0.7rem"}}>{`${studyingPayload.value}`}</DataSpan>
                 </DataDiv>
             </Studying>
             <Known>
                 <LegendSpan style={{border: `2px solid ${knownPayload.color}`}} />
                 <DataDiv>
-                    <DataSpan style={{fontSize:"0.75rem"}}>{`Known: ${totalKnowns?.length} (${knownUnique?.length})`}</DataSpan>
-                    <DataSpan style={{fontSize:"0.75rem"}}>{`Ignored: ${totalIgnoreds?.length} (${ignoredUnique?.length})`}</DataSpan>
+                    <DataSpan style={{fontSize:"0.75rem"}}>Known: <strong>{`${totalKnowns?.length} (${knownUnique?.length})`}</strong></DataSpan>
+                    <DataSpan style={{fontSize:"0.75rem"}}>Ignored: <strong>{`${totalIgnoreds?.length} (${ignoredUnique?.length})`}</strong></DataSpan>
                 </DataDiv>
             </Known>
         </>
