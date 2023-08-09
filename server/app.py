@@ -162,10 +162,17 @@ class ArticleInfo(Resource):
 
         total_words = []
         unique_words = []
+
         total_custom = []
+
         studying_total = []
+        studying_unique = []
+
         known_total = []
+        known_unique = []
+
         ingored_total = []
+        ignored_unique = []
         
         for word in article.text.split():
             clean_word = re.sub(r"[^a-zA-Zā-ūĀ-Ūʻ]", "", word)
@@ -181,20 +188,29 @@ class ArticleInfo(Resource):
                 if lower in custom_words or capitalized in custom_words:
                     if clean_word not in total_custom:
                         total_custom.append(clean_word)
+
                 if lower in studyings or capitalized in studyings:
                     studying_total.append(clean_word)
+                    if lower not in studying_unique or capitalized in studying_unique:
+                        studying_unique.append(clean_word)
                 if lower in knowns or capitalized in knowns:
                     known_total.append(clean_word)
+                    if lower not in known_unique or capitalized in known_unique:
+                        known_unique.append(clean_word)
                 if lower in ingoreds or capitalized in ingoreds:
                     ingored_total.append(clean_word)
-
+                    if lower not in ignored_unique or capitalized not in ignored_unique:
+                        ignored_unique.append(clean_word)
+        new_words = len(total_words) - len(studying_total) - len(known_total) - len(ingored_total)
+        new_unique = len(unique_words) - len(studying_unique) - len(known_unique) - len(ignored_unique)
         response = {
             "total_words": total_words,
             "unique_words": unique_words,
             "total_custom": total_custom,
-            "studying_total": studying_total,
-            "known_total": known_total,
-            "ingored_total": ingored_total
+            "studying_total": studying_total, "studying_unique": studying_unique,
+            "known_total": known_total, "known_unique": known_unique,
+            "ingored_total": ingored_total, "ignored_unique": ignored_unique,
+            "new_words": new_words, "new_unique": new_unique
         }
         return make_response(response, 201)
 api.add_resource(ArticleInfo, "/articles/<int:article_id>/info")
