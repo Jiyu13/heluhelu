@@ -141,10 +141,10 @@ const StudyingdIndicator = styled.div`
     border-radius: 10px;
 `
 
-const CustomWordsIndicator = styled.div`
-    width: 2rem;
-    height: 1.15rem;
-    background-color: rgba(255, 221, 89, 0.5);
-    border-color: #338fff;
-    border-radius: 10px;
-`
+// const CustomWordsIndicator = styled.div`
+//     width: 2rem;
+//     height: 1.15rem;
+//     background-color: rgba(255, 221, 89, 0.5);
+//     border-color: #338fff;
+//     border-radius: 10px;
+// `

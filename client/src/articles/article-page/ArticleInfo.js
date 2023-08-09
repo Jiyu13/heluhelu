@@ -11,6 +11,7 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
 
     const [totalWords, setTotalWords] = useState(null)
     const [uniqueWords, setUniqueWords] = useState(null)
+    // eslint-disable-next-line
     const [totalCustoms, setTotalCustoms] = useState(null)
     const [totalStudyings, setTotalStudyings] = useState(null)
     const [totalKnowns, setTotalKnowns] = useState(null)
@@ -122,38 +123,13 @@ const ButtonImage = styled.img`
     height: 20px;
 `
 
-const TotalContainer = styled.div`
-    display: flex;
-    width: 90%;
-    margin: auto;
-`
-
-const TotalWords = styled.div`
-    padding: 10px 0;
-    margin: 0 5px;
-    text-align: center;
-    width: 50%;
-    border-radius: 8px;
-`
-const UniquelWords = styled.div`
-    padding: 10px 0;
-    margin: 0 5px;
-    text-align: center;
-    width: 50%;
-    border-radius: 8px;
-
-`
-const WordNumber = styled(UniquelWords)`
-    text-align: left;
-`
-
-const CustomWordsContainer = styled(TotalContainer)`
-    border: none;
-    margin: 5px auto;
-`
-const CustomWords = styled(TotalWords)`
-    text-align: right;
-`
+// const CustomWordsContainer = styled(TotalContainer)`
+//     border: none;
+//     margin: 5px auto;
+// `
+// const CustomWords = styled(TotalWords)`
+//     text-align: right;
+// `
 
 
 
