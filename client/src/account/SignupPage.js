@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { VisibilityIcon } from "./VisibilityIcon"
 
 export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visible} ) {
@@ -43,17 +43,10 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
             } else {
                 res.json().then(user => {
                     setUser(user)
-                    redirectHome()
                 })
             }
         })
     }
-    //  ========= go to home page after loging successfully ==============
-    let navigate = useNavigate()
-    function redirectHome() {
-        navigate('/') 
-    }
-
 
     return (
         <BoxContainer>
