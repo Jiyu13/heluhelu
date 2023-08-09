@@ -186,20 +186,20 @@ class ArticleInfo(Resource):
                 capitalized = clean_word.capitalize()
 
                 if lower in custom_words or capitalized in custom_words:
-                    if clean_word not in total_custom:
+                    if lower not in total_custom and capitalized not in total_custom:
                         total_custom.append(clean_word)
 
                 if lower in studyings or capitalized in studyings:
                     studying_total.append(clean_word)
-                    if lower not in studying_unique or capitalized in studying_unique:
+                    if lower not in studying_unique and capitalized not in studying_unique:
                         studying_unique.append(clean_word)
                 if lower in knowns or capitalized in knowns:
                     known_total.append(clean_word)
-                    if lower not in known_unique or capitalized in known_unique:
+                    if lower not in known_unique and capitalized not in known_unique:
                         known_unique.append(clean_word)
                 if lower in ingoreds or capitalized in ingoreds:
                     ingored_total.append(clean_word)
-                    if lower not in ignored_unique or capitalized not in ignored_unique:
+                    if lower not in ignored_unique and capitalized not in ignored_unique:
                         ignored_unique.append(clean_word)
         new_words = len(total_words) - len(studying_total) - len(known_total) - len(ingored_total)
         new_unique = len(unique_words) - len(studying_unique) - len(known_unique) - len(ignored_unique)
