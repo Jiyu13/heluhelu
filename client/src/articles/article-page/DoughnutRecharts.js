@@ -70,10 +70,10 @@ export function DoughnutRecharts(props) {
 
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={300} height={340}>
+        <PieChart width={300} height={250}>
           <Pie
             cx="50%"
-            cy="50%"
+            cy="80%"
             data={data}
             labelLine={false}
             label={renderCustomizedLabel}
@@ -81,6 +81,8 @@ export function DoughnutRecharts(props) {
             outerRadius={125}
             fill="#8884d8"
             dataKey="value"
+            startAngle={0}
+            endAngle={180}
           >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -89,7 +91,7 @@ export function DoughnutRecharts(props) {
           <Tooltip content={customTooltip} />
           <text 
             x='50%' 
-            y='43%'
+            y='50%'
             textAnchor="middle"  // horizontal alignment of the text to the middle, ensure the text os centered along its x-axis
             dominantBaseline="middle" // ensure the text is centered along its y-axis. In SVG, it determines the vertical alignment of the text
             style={{ fontSize: "1.2rem", fontWeight: 'bold', fill: '#777'}}
@@ -98,7 +100,7 @@ export function DoughnutRecharts(props) {
           </text>
           <text
               x='50%'
-              y='52%'
+              y='65%'
               style={{ fontSize: "1rem", fontWeight: 'bold', fill: '#777' }}
               width={200}
               scaleToFit={true}
@@ -107,7 +109,6 @@ export function DoughnutRecharts(props) {
               (Unique {uniqueWords?.length})
             </text>
           <Legend
-            wrapperStyle={{fontSize: "0.9rem"}}
             layout="vertical"
             verticalAlign='bottom'
             content={renderLegend}
