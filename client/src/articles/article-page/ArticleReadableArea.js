@@ -15,12 +15,13 @@ export function ArticleReadableArea({
     currentPage, pages, paragraphs, 
     showInfo, setShowInfo,
     updateDictionaryWord, setWordExistError,
-    isLoading
+    isLoading,
+    divRef
     }) {
 
     const {article} = useContext(UserContext)
     return (
-        <ReadableArea>
+        <ReadableArea ref={divRef}>
             {isLoading && (
                 <SkeletonArticlePage/>
 

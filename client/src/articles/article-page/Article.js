@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "../../components/UserContext"
 import { useState } from "react"
@@ -78,6 +78,9 @@ export function Article() {
     // ===== handle show next/prev page container & update current_page =========
     const leftArrow = currentPage === 0 ? "hidden" : "visible"
 
+    // scroll to the top of the page 
+    const divRef = useRef(null)
+
     function handlePrevPage() {
         if (currentPage > 0){
             const prevPage = currentPage - 1
@@ -93,9 +96,9 @@ export function Article() {
         if (totalWords >= currentPage*250){
             setTotalWords(totalWords - 250)
         }
+        divRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-
     function handleNextPage() {
         if (currentPage < pages - 1) {
             const nextPage = currentPage + 1
@@ -104,6 +107,7 @@ export function Article() {
             handleWordsRead(250)  
             setTotalWords(totalWords + 250)
         }
+        divRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function handleWordsRead(wordsRead) {
@@ -263,6 +267,7 @@ export function Article() {
                     updateDictionaryWord={updateDictionaryWord}
                     setWordExistError={setWordExistError}
                     isLoading={isLoading}
+                    divRef={divRef}
                 />
                 
                 {!isMobile && (
