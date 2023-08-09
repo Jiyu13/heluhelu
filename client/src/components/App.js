@@ -94,7 +94,7 @@ function App() {
       .then(data => {
         setVocabularies(data)
       })
-  }, [])
+  }, [user])
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
