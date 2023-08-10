@@ -4,6 +4,7 @@ import { TranslationWord } from "../TranslationWord";
 import {  CustomWordUpdate } from "../CustomWordUpdate"
 import { WordTracker } from "./WordTracker";
 import { CustomeWordForm } from "../../custom-word/CustomWordForm";
+import { handleFocus } from "./handleFocus";
 
 
 export function DictionaryMobile(props) {
@@ -36,6 +37,7 @@ export function DictionaryMobile(props) {
                 type="text"
                 value={targetWord}
                 onChange={handleSearchChange} 
+                onFocus={handleFocus}
             />
 
             {customWord ? "" :

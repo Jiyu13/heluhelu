@@ -4,6 +4,7 @@ import { WordTracker } from "./WordTracker";
 import { TranslationWord } from "../TranslationWord";
 import { CustomWordUpdate } from "../CustomWordUpdate";
 import add_icon from "../../assets/images/add_icon.svg"
+import { handleFocus } from "./handleFocus";
 
 
 export function Disctionary(props) {
@@ -27,7 +28,6 @@ export function Disctionary(props) {
      
      } = props
 
-
     return (
         <DictionaryArea>
             <DictionaryAreaHeader>
@@ -35,6 +35,7 @@ export function Disctionary(props) {
                     type="text"
                     value={targetWord}
                     onChange={handleSearchChange}
+                    onFocus={handleFocus}
                 />
 
                 {customWord ? "" :
