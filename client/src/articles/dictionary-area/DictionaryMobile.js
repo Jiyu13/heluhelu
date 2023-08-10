@@ -59,6 +59,7 @@ export function DictionaryMobile(props) {
                     setCustomForm={setCustomForm}
                     setWordExistError={setWordExistError} 
                     wordExistError={wordExistError}
+                    PostAndDelete={PostAndDelete}
                 />
             )}
             {isDictionaryOpen && chosen &&(

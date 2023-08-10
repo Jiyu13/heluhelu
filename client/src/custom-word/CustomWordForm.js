@@ -9,7 +9,8 @@ export function CustomeWordForm({
     formData, setFormData, 
     setCustomWord, 
     showCustomForm, setCustomForm,
-    setWordExistError, wordExistError
+    setWordExistError, wordExistError,
+    PostAndDelete
     }) {
 
     const { user } = useContext(UserContext)
@@ -45,6 +46,7 @@ export function CustomeWordForm({
                     setCustomWord(newWord)
                     setCustomForm(!showCustomForm)
                     setFormData(initialValues)
+                    PostAndDelete(newWord.word, 1)
                 })
             } else {
                 if (res.status === 422) {

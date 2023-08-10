@@ -62,6 +62,7 @@ export function Disctionary(props) {
                     setCustomForm={setCustomForm}
                     setWordExistError={setWordExistError} 
                     wordExistError={wordExistError}
+                    PostAndDelete={PostAndDelete}
                 />
             )}
 
