@@ -73,10 +73,19 @@ export function WordTracker( {
                 <br/>
                 <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
                 <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignoring Word": "Ignore This Word"}</Mark>
+                <a 
+                    href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
+                    target="_blank" 
+                    rel='noreferrer noopener'
+                >
+                    <OtherSearch>Search Wehe²Wiki²</OtherSearch>
+                </a>
+                
             </TrackerContainer>
         </WordTrackerBox>
     )
 }
+
 
 
 
@@ -97,6 +106,14 @@ const Mark = styled.span`
 
     &:hover {
         background-color: rgba(63, 158, 66,.6)!important;
+    }
+`
+const OtherSearch = styled(Mark)`
+    color: rgb(221, 221, 221);
+    background-color: rgba(255,188,62, 0.5);
+
+    &:hover {
+        background-color: rgba(255,188,62, 0.7)!important;
     }
 `
 
