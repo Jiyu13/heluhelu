@@ -306,11 +306,12 @@ export function Article() {
                         wordExistError={wordExistError}
                         showCustomForm={showCustomForm}
                         isDictionaryOpen={isDictionaryOpen}
-
+                        isMobile={isMobile}
+                        setDictionaryOpen={setDictionaryOpen}
                         initialValues={initialValues}
                         setFormData={setFormData}
                         setCustomForm={setCustomForm}
-                        setWordExistError={setWordExistError} 
+                        setWordExistError={setWordExistError}
                     />
                 )}
 

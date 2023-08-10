@@ -3,16 +3,25 @@ import styled from "styled-components"
 
 import add_icon from "../assets/images/add_icon.svg"
 import check_circle_icon from "../assets/images/check_circle_icon.svg"
+import { closeMobileDictionary } from "./dictionary-area/closeMobileDictionary"
 
 
 
-export function TranslationWord( {word, translation, hawaiian_clean, PostAndDelete, checkStatus} ) {
+export function TranslationWord( {
+    word, translation, hawaiian_clean, PostAndDelete, checkStatus,
+    isMobile, isDictionaryOpen, setDictionaryOpen
+} ) {
 
     const [isReadMore, setReadMore] = useState(false)
 
 
     function handleMarkStudying() {
         PostAndDelete(hawaiian_clean, 1)
+        closeMobileDictionary(
+            isMobile,
+            isDictionaryOpen,
+            setDictionaryOpen
+        )
     }
 
     

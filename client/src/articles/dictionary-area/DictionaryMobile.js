@@ -19,7 +19,9 @@ export function DictionaryMobile(props) {
            formData,
            wordExistError,
            showCustomForm,
+           isMobile,
            isDictionaryOpen,
+           setDictionaryOpen,
            initialValues,
            setFormData,
            setCustomForm,
@@ -63,6 +65,9 @@ export function DictionaryMobile(props) {
                     word={chosen} 
                     PostAndDelete={PostAndDelete} 
                     checkStatus={checkStatus}
+                    isMobile={isMobile}
+                    isDictionaryOpen={isDictionaryOpen}
+                    setDictionaryOpen={setDictionaryOpen}
                 />
             )}
 
@@ -91,6 +96,9 @@ export function DictionaryMobile(props) {
                         hawaiian_clean={word.hawaiian_clean}
                         PostAndDelete={PostAndDelete}
                         checkStatus={checkStatus}
+                        isMobile={isMobile}
+                        isDictionaryOpen={isDictionaryOpen}
+                        setDictionaryOpen={setDictionaryOpen}
                     />
                 )}
                 

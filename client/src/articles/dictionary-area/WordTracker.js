@@ -1,6 +1,11 @@
 import styled from "styled-components"
+import { closeMobileDictionary } from "./closeMobileDictionary"
 
-export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
+export function WordTracker( {
+    target, word, PostAndDelete, checkStatus,
+    isMobile, isDictionaryOpen, setDictionaryOpen
+    } 
+) {
     // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
         Unknown: 0, 
@@ -26,10 +31,20 @@ export function WordTracker( {target, word, PostAndDelete, checkStatus} ) {
     
     function handleChangeToKnown() {
         PostAndDelete(trackWord, 2)
+        closeMobileDictionary(
+            isMobile,
+            isDictionaryOpen,
+            setDictionaryOpen
+        )
     }
 
     function handleIgnoredWord() {
         PostAndDelete(trackWord, 3)
+        closeMobileDictionary(
+            isMobile,
+            isDictionaryOpen,
+            setDictionaryOpen
+        )
     }
 
 
