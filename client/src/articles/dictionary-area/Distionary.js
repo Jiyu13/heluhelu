@@ -33,7 +33,7 @@ export function Disctionary(props) {
             <DictionaryAreaHeader>
                 <SearchArea 
                     type="text"
-                    value={targetWord}
+                    value={targetWord || ""}
                     onChange={handleSearchChange}
                     onFocus={handleFocus}
                 />
