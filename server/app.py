@@ -63,18 +63,19 @@ class DictionariesWordsByWord(Resource):
         hawaiians = DictionaryWord.query.filter(
                 DictionaryWord.hawaiian_clean.istartswith(clean_word.lower())
             ).limit(5)
-            
+        
         # get tranlastion from user_words
-        custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
-        
-        if custom_word:
-            custom_word = custom_word.to_dict()
-        
+        # custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
+        # ======== doesnt' consider case sensitive ===========================================================
+        # custom_word_copy = UserWord.query.filter(func.lower(UserWord.word) == func.lower(clean_word)).first()
+        custom_word_ilike = UserWord.query.filter(func.lower(UserWord.word).ilike(func.lower(clean_word))).first()
+        if custom_word_ilike:
+            custom_word_ilike = custom_word_ilike.to_dict()
         if hawaiians:
             hawaiian_dict =[hawaiian.to_dict() for hawaiian in hawaiians]
             return make_response(jsonify({
                 "dictionary": hawaiian_dict,
-                "custom": custom_word
+                "custom": custom_word_ilike
                 }
                 ), 200)
         
