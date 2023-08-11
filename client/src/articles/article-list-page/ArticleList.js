@@ -83,7 +83,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                             </Button>
 
                             <Button>
-                                <Link>
+                                <Link to={`/article/word_stats/${a.id}/${a.title}`}>
                                     <ButtonImage src={info_black_48dp} alt="article info icon"/>
                                 </Link>
                             </Button>
