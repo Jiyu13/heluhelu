@@ -355,9 +355,9 @@ class UniqueWordsByArticle(Resource):
                     else:
                         unknown_unique[clean_word] += 1
         response = {
-            "studying_unique": studying_unique,
-            "known_unique": known_unique,
-            "unknown_unique": unknown_unique
+            "studying_unique": sorted(studying_unique.items(), key=lambda item: item[1], reverse=True),
+            "known_unique": sorted(known_unique.items(), key=lambda item: item[1], reverse=True),
+            "unknown_unique": sorted(unknown_unique.items(), key=lambda item: item[1], reverse=True)
         }
 
         return make_response(response, 201)
