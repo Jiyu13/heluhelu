@@ -131,19 +131,23 @@ const NotFound = styled.div`
 `
 
 const AddImage = styled.img`
+    float: right;
     width: 25px;
     height: 25px;
-    margin-right: 6px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-right: 25px;
     cursor: pointer;
-    float: right;
+    border-radius: 50%;
 `
 
 const SearchArea = styled.input`
-    width: 90%;
     border-radius: 8px;
     height: 20px;
     font-size: 25px;
-    max-width: 150px;
+    width: 84%;
+    margin-top: 12px;
+    margin-bottom: 12px;
 ` 
 
 const TranslationArea = styled.div`

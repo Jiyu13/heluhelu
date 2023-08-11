@@ -123,7 +123,7 @@ const SearchArea = styled.input`
     border-radius: 8px;
     height: 25px;
     font-size: 25px;
-    max-width: 150px;
+    width: 100%;
 ` 
 
 const ImageContainer = styled.div`
