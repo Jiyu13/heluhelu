@@ -5,12 +5,13 @@ import styled from 'styled-components';
 
 
 export function DoughnutRecharts(props) {
-    const { totalWords, totalKnowns, totalStudyings, totalIgnoreds, newWords, newUnique,
-            uniqueWords, studyingUnique, knownUnique, ignoredUnique,
+    const { totalWords, totalStudyings, totalKnowns, totalIgnoreds, 
+            totalUnique, studyingUnique, knownUnique, ignoredUnique,
+            totalNew, newUnique, 
     } = props
 
     const data = [
-        { value: newWords, name: "New Words"},
+        { value: totalNew, name: "New Words"},
         { value: totalStudyings?.length, name: "Studying"},
         { value: totalKnowns?.length + totalIgnoreds?.length, name: "Known + Ignored", },
     ]
@@ -106,7 +107,7 @@ export function DoughnutRecharts(props) {
               scaleToFit={true}
               textAnchor='middle'
           >
-              (Unique {uniqueWords?.length})
+              (Unique {totalUnique?.length})
             </text>
           <Legend
             layout="vertical"
