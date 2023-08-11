@@ -58,15 +58,18 @@ export function ShowArticleUniqueWords() {
                 </FilterBy>
                 {/*  */}
                 <NavItem href="#" onClick={handleFilterNewUnique}>
+                    {/* {`/article/word_stats/${id}/${article_title}/new`} */}
                     <Indicator style={{backgroundColor: "rgb(112, 161, 255"}}/>
                     <WordText>New Words</WordText>
                 </NavItem>
                 <NavItem href="#" onClick={handleFilterKnownUnique}>
+                    {/* {`/article/word_stats/${id}/${article_title}/known`} */}
                     {/* rgb(75, 166, 127); */}
                     <Indicator style={{backgroundColor: "rgb(75, 166, 127)"}}/>
                     <WordText>Knowns</WordText>
                 </NavItem>
                 <NavItem href="#" onClick={handleFilterStudyingUnique}>
+                    {/* {`/article/word_stats/${id}/${article_title}/known`} */}
                     {/* rgb(243, 170, 96) */}
                     <Indicator style={{backgroundColor: "rgb(243, 170, 96)"}}/>
                     <WordText>Studyings</WordText>

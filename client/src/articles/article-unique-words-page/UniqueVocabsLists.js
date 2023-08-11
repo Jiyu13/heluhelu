@@ -6,7 +6,6 @@ export function ArticleVocabsLists( props ){
 
     const {filterResults,} = props
 
-
     return(
         <Container>
             <Header>
@@ -16,8 +15,8 @@ export function ArticleVocabsLists( props ){
 
             </Header>
             {/* 'unknownUnique &&' to handle undefined objects */}
-            {filterResults && Object.entries(filterResults).map(([key, value], index) => {
-                return <ArticlVocabs key={index} order={index} word={key} times={value}/>
+            {filterResults?.map((data, index) => {
+                return <ArticlVocabs key={index} order={index} word={data[0]} times={data[1]}/>
             })}
         </Container>
     )
