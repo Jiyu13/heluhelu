@@ -10,7 +10,7 @@ import {DoughnutRecharts} from "./DoughnutRecharts"
 export function ArticleInfo( {article, setShowInfo, showInfo} ) {
 
     const [totalWords, setTotalWords] = useState(null)
-    const [uniqueWords, setUniqueWords] = useState(null)
+    const [totalUnique, setTotalUnique] = useState(null)
     // eslint-disable-next-line
     const [totalCustoms, setTotalCustoms] = useState(null)
     const [totalStudyings, setTotalStudyings] = useState(null)
@@ -21,7 +21,7 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
     const [knownUnique, setKnownUnique] = useState(null)
     const [ignoredUnique, setIgnoredUnique] = useState(null)
 
-    const [newWords, setNewWords] = useState(null)
+    const [totalNew, setTotalNew] = useState(null)
     const [newUnique, setNewUnique] = useState(null)
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
         .then(res => res.json())
         .then(data => {
             setTotalWords(data["total_words"])
-            setUniqueWords(data["unique_words"])
+            setTotalUnique(data["total_unique"])
             setTotalCustoms(data["total_custom"])
             setTotalStudyings(data["studying_total"])
             setTotalKnowns(data["known_total"])
@@ -39,7 +39,7 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
             setKnownUnique(data["known_unique"])
             setIgnoredUnique(data["ignored_unique"])
             
-            setNewWords(data["new_words"])
+            setTotalNew(data["total_new"])
             setNewUnique(data["new_unique"])
         })
     }, [article])
@@ -66,9 +66,9 @@ export function ArticleInfo( {article, setShowInfo, showInfo} ) {
                     totalKnowns={totalKnowns}
                     totalStudyings={totalStudyings}
                     totalIgnoreds={totalIgnoreds}
-                    newWords={newWords}
+                    totalNew={totalNew}
                     newUnique={newUnique}
-                    uniqueWords={uniqueWords}
+                    totalUnique={totalUnique}
                     studyingUnique={studyingUnique}
                     knownUnique={knownUnique}
                     ignoredUnique={ignoredUnique}
