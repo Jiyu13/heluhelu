@@ -140,7 +140,7 @@ const VocabStatsTitle = styled(StatsTitle)``
 const ReadingStatsPage = styled(SubmitButtons)``
 
 
-const ContainerBody = styled.div`
+export const ContainerBody = styled.div`
     box-sizing: border-box;
     width: 90%;
     margin: 0 auto 30px;
@@ -149,7 +149,7 @@ const ContainerBody = styled.div`
     background-color: #FDF8E8;
 `
 
-const VocabHeader = styled.div`
+export const VocabHeader = styled.div`
     box-sizing: border-box;
     width: 95%;
     display: grid;
