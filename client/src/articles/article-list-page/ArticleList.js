@@ -6,6 +6,7 @@ import { useContext } from "react";
 import edit_icon from "../../assets/images/edit_icon.svg"
 import delete_icon from "../../assets/images/delete_icon.svg"
 import share_icon from "../../assets/images/share_icon.svg"
+import info_black_48dp from "../../assets/images/info_black_48dp.svg"
 
 import { UserContext } from "../../components/UserContext";
 import { ProgressBar } from "../progress-bar/ProgressBar";
@@ -15,13 +16,12 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
-    const { user, splitText, calculatePages } = useContext(UserContext)    
+    const { user, splitText, calculatePages } = useContext(UserContext)
 
     function handleShowDeletePopup(e) {
         setDeletePopup(true)
         setArticleID(e.target.id)
     }
-
     
     // ============== check how many pages has been read ==============
     function getCurrentPage(article) {
@@ -81,6 +81,13 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                                     <ButtonImage src={edit_icon} alt="edit icon"/>
                                 </Link>
                             </Button>
+
+                            <Button>
+                                <Link to={`/article/word_stats/${a.id}/${a.title}`}>
+                                    <ButtonImage src={info_black_48dp} alt="article info icon"/>
+                                </Link>
+                            </Button>
+
                             <Button >
                                 <ButtonImage 
                                     src={delete_icon} 
@@ -96,6 +103,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                                 </Link>
                                 
                             </Button>
+                            
 
                         </EditContainer>
 
@@ -134,7 +142,6 @@ const ArticlesListTable = styled.table`
 `
 
 const ArticleTitleCell = styled.td`
-    // vertical-align: top;
     border: 3px solid rgb(227, 231, 239);
     border-radius: 1.25rem;
 `
@@ -144,37 +151,30 @@ const ArticleTitle = styled.div`
     font-size: 21px;
     text-align: left;
     vertical-align: top;
-    // text-decoration: none;
-    // color: #ccc;
-    // display: block;
-    // margin-bottom: 10px;
 `
 
 const EditCell = styled.td`
-    vertical-align: top;
     width: 100px;
     border-radius: 8px;
 `
 
 const EditContainer = styled.div`
-    margin-top: 4px;
     text-align: right;
     width: 100px;
     font-size: 20px;
     line-height: 1.6;
 `
 
-const Button = styled.a`
+const Button = styled.button`
     background-color: #d1d8e0;
-    // z-index: 100;
     display: inline-block;
     position: relative;
-    top: -2px;
     vertical-align: top;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     padding: 4px;
     border-radius: 3px;
+    border: none;
     text-align: center;
     margin-bottom: 4px;
     margin-right: 4px;
@@ -189,8 +189,7 @@ const ButtonImage = styled.img`
     width: 28px;
     height: 28px;
     opacity: 0.5;
-    padding: 0;
-    margin: 3px 0 0 0;
+    margin: 2px 0;
     overflow-clip-margin: content-box;
     overflow: clip;
 `

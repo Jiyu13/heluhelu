@@ -144,7 +144,7 @@ class ArticleInfo(Resource):
         customs = UserWord.query.filter_by(user_id=session["user_id"]).all()
         custom_words = []
         for c in customs:
-            custom_words.append(c.word)
+            custom_words.append(c.word.lower())
 
         # get vocabs from Vocabulary objects and catalogue them
         vocabularies = Vocabulary.query.filter_by(user_id=session["user_id"]).all()
@@ -154,11 +154,11 @@ class ArticleInfo(Resource):
         ingoreds = []
         for v in vocabularies:
             if v.status == 1:
-                studyings.append(v.hawaiian_clean)
+                studyings.append(v.hawaiian_clean.lower())
             if v.status == 2:
-                knowns.append(v.hawaiian_clean)
+                knowns.append(v.hawaiian_clean.lower())
             if v.status == 3:
-                ingoreds.append(v.hawaiian_clean)
+                ingoreds.append(v.hawaiian_clean.lower())
 
 
         total_words = []
@@ -174,44 +174,40 @@ class ArticleInfo(Resource):
 
         ingored_total = []
         ignored_unique = []
-        
+
         for word in article.text.split():
-            clean_word = re.sub(r"[^a-zA-Zā-ūĀ-Ūʻ]", "", word)
+            clean_word = re.sub(r"[^a-zA-Zā-ūĀ-Ūʻ]", "", word).lower()
             
             if clean_word != "":
-                if clean_word.lower() not in unique_words:
-                    unique_words.append(clean_word.lower())
+                if clean_word not in unique_words:
+                    unique_words.append(clean_word)
                 total_words.append(clean_word)
 
-                lower = clean_word.lower()
-                capitalized = clean_word.capitalize()
-
-                if lower in custom_words or capitalized in custom_words:
-                    if lower not in total_custom and capitalized not in total_custom:
+                if clean_word in custom_words:
+                    if clean_word not in total_custom:
                         total_custom.append(clean_word)
 
-                if lower in studyings or capitalized in studyings:
+                if clean_word in studyings:
                     studying_total.append(clean_word)
-                    if lower not in studying_unique and capitalized not in studying_unique:
+                    if clean_word not in studying_unique:
                         studying_unique.append(clean_word)
-                if lower in knowns or capitalized in knowns:
+                elif clean_word in knowns:
                     known_total.append(clean_word)
-                    if lower not in known_unique and capitalized not in known_unique:
+                    if clean_word not in known_unique:
                         known_unique.append(clean_word)
-                if lower in ingoreds or capitalized in ingoreds:
+                elif clean_word in ingoreds:
                     ingored_total.append(clean_word)
-                    if lower not in ignored_unique and capitalized not in ignored_unique:
+                    if clean_word not in ignored_unique:
                         ignored_unique.append(clean_word)
         new_words = len(total_words) - len(studying_total) - len(known_total) - len(ingored_total)
         new_unique = len(unique_words) - len(studying_unique) - len(known_unique) - len(ignored_unique)
         response = {
-            "total_words": total_words,
-            "unique_words": unique_words,
+            "total_words": total_words, "total_unique": unique_words,
             "total_custom": total_custom,
             "studying_total": studying_total, "studying_unique": studying_unique,
             "known_total": known_total, "known_unique": known_unique,
             "ingored_total": ingored_total, "ignored_unique": ignored_unique,
-            "new_words": new_words, "new_unique": new_unique
+            "total_new": new_words, "new_unique": new_unique
         }
         return make_response(response, 201)
 api.add_resource(ArticleInfo, "/articles/<int:article_id>/info")
@@ -224,7 +220,27 @@ class ArticleFinish(Resource):
         db.session.commit()
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleFinish, '/article/<int:article_id>/check_finish')
-        
+
+class ArticleByID(Resource):
+    def get(self, id):
+        user_id = session["user_id"]
+        article = Article.query.filter_by(id=id, user_id=user_id).first()
+
+        if not article:
+            response_body = {
+                "message": "This article does not exist in the database, please try again"
+            }
+            return make_response(jsonify(response_body), 404)
+
+        article.update_at = datetime.utcnow()
+        db.session.commit()
+
+        response = {
+            "article": article.to_dict(),
+            "current_page": article.current_page
+        }
+        return make_response(response, 200)
+api.add_resource(ArticleByID, '/articles/<int:id>')    
 
 class ArticleByArticleId(Resource):
     def patch(self, article_id):
@@ -281,30 +297,6 @@ class ArticleByUUID(Resource):
         return make_response(article.to_dict(), 200)
 api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 
-
-
-class ArticleByID(Resource):
-    def get(self, id):
-        user_id = session["user_id"]
-        article = Article.query.filter_by(id=id, user_id=user_id).first()
-
-        if not article:
-            response_body = {
-                "message": "This article does not exist in the database, please try again"
-            }
-            return make_response(jsonify(response_body), 404)
-
-        article.update_at = datetime.utcnow()
-        db.session.commit()
-
-        response = {
-            "article": article.to_dict(),
-            "current_page": article.current_page
-        }
-        return make_response(response, 200)
-api.add_resource(ArticleByID, '/articles/<int:id>')
-
-
 class ArticleEdit(Resource):
     def patch(self, id):
         try:
@@ -319,6 +311,57 @@ class ArticleEdit(Resource):
             response = make_response({"error": "article not found"}, 404)
         return response
 api.add_resource(ArticleEdit, '/article/edit/<int:id>')
+
+class UniqueWordsByArticle(Resource):
+    def get(self, article_title, article_id):
+        article = Article.query.filter_by(user_id=session["user_id"], id=article_id, title=article_title).first()
+        vocabularies = Vocabulary.query.filter_by(user_id=session["user_id"]).all()
+
+        studyings = []
+        knowns = []
+        ignoreds = []
+        for v in vocabularies:
+            if v.status == 1:
+                studyings.append(v.hawaiian_clean.lower())
+            if v.status == 2:
+                knowns.append(v.hawaiian_clean.lower())
+            if v.status == 3:
+                ignoreds.append(v.hawaiian_clean.lower())
+
+        studying_unique = {}
+        known_unique = {}
+        unknown_unique = {}
+        for word in article.text.split():
+            clean_word = re.sub(r"[^a-zA-Zā-ūĀ-Ūʻ]", "", word).lower()
+            if clean_word != "":
+                if clean_word in studyings:
+                    # calculate how many time the word appears
+                    if clean_word not in studying_unique:
+                        studying_unique[clean_word] = 1
+                    else:
+                        studying_unique[clean_word] += 1
+                elif clean_word in knowns:
+                    # calculate how many time the word appears
+                    if clean_word not in known_unique:
+                        known_unique[clean_word] = 1
+                    else:
+                        known_unique[clean_word] += 1
+                elif clean_word in ignoreds:
+                    continue
+                else:
+                    # print(clean_word)
+                    if clean_word not in unknown_unique:
+                        unknown_unique[clean_word] = 1
+                    else:
+                        unknown_unique[clean_word] += 1
+        response = {
+            "studying_unique": sorted(studying_unique.items(), key=lambda item: item[1], reverse=True),
+            "known_unique": sorted(known_unique.items(), key=lambda item: item[1], reverse=True),
+            "unknown_unique": sorted(unknown_unique.items(), key=lambda item: item[1], reverse=True)
+        }
+
+        return make_response(response, 201)
+api.add_resource(UniqueWordsByArticle, '/article/word_stats/<int:article_id>/<string:article_title>')
 
 
 # =============================== user words ============================================

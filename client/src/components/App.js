@@ -19,6 +19,7 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
+import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
 // import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
 
 const USER_NOT_SET = -1;
@@ -129,6 +130,14 @@ function App() {
                   element={<MyStats/>}
                 >
                 </Route>
+
+                <Route
+                  exact
+                  path='/article/word_stats/:id/:article_title'
+                  element={<ShowArticleUniqueWords/>}
+                >
+                </Route>
+
                 <Route
                   exact
                   path='/article/share_receive/:uuid'
