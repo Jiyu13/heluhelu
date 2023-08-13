@@ -1,15 +1,45 @@
 import styled from "styled-components"
 import { ArticleWord } from "./ArticleWord"
+import { useState } from "react"
 
-export function ArticleParagraph({words, onWordClicked, setWordExistError}) {
+export function ArticleParagraph({words, updateDictionaryWord, setWordExistError}) {
 
+    const [sentence, setSentence] = useState(null)
+
+    // build the sentence from the clicked word
+    function handleGetSentence(value, index) {
+        
+        let start = index - 1
+        let end = index + 1
+        let string = words[index]
+        while (start >= 0) {
+            const word = words[start]
+            if (word.includes(".") ||word.includes("!") ||word.includes("?") ) break
+            string = words[start] + " " + string
+            start--
+        }
+        
+        while (end <= words.length) {
+            const word = words[end]
+            if (word.includes(".") ||word.includes("!") ||word.includes("?") ) {
+                string = string + " " + words[end]
+                break
+            }
+            string = string + " " + words[end]
+            end ++
+        }
+        setSentence(string)
+        updateDictionaryWord(value)
+    }
+    console.log(sentence)
     return (
         <ParagraphContainer>
                 {words.map((word, index) => 
                     <ArticleWord 
                         key={index} 
                         word={word} 
-                        onWordClicked={onWordClicked}
+                        index={index}
+                        onWordClicked={handleGetSentence}
                         setWordExistError={setWordExistError}
                     />
                 )}

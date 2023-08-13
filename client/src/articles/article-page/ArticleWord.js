@@ -3,12 +3,13 @@ import styled from "styled-components"
 import { UserContext } from "../../components/UserContext"
 
 
-export function ArticleWord({ word, onWordClicked, setWordExistError }) {
+export function ArticleWord({ word, index, onWordClicked, setWordExistError }) {
     const {vocabularies} = useContext(UserContext)
 
     function handleClick(e) {
             setWordExistError(null)
-            onWordClicked(e.target.innerHTML)
+            const value = e.target.innerHTML
+            onWordClicked(value, index)
     }
 
     const word_clean = word.toLowerCase().replace("'", "ʻ").replace(/[^a-zā-ūĀ-Ūʻ]+/g, "")       // replace all that's not [a-zā-ūʻ]

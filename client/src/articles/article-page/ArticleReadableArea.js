@@ -41,7 +41,7 @@ export function ArticleReadableArea({
                         <ArticleParagraph 
                             key={index} 
                             words={p.split(" ")} 
-                            onWordClicked={updateDictionaryWord} 
+                            updateDictionaryWord={updateDictionaryWord} 
                             setWordExistError={setWordExistError}
                         />
                     )}
