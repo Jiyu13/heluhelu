@@ -72,13 +72,13 @@ export function WordTracker( {
                 <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
                 <br/>
                 <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
-                <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignoring Word": "Ignore This Word"}</Mark>
+                <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignored": "Mark Ignore"}</Mark>        
                 <a 
                     href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
                     target="_blank" 
                     rel='noreferrer noopener'
                 >
-                    <OtherSearch>Search Wehe²Wiki²</OtherSearch>
+                    <OtherSearch>Wehe²Wiki²</OtherSearch>
                 </a>
                 
             </TrackerContainer>
@@ -87,10 +87,7 @@ export function WordTracker( {
 }
 
 
-
-
 const Mark = styled.span`
-    width: 146px;
     font-size: 14px;
     display: inline-block;
     color: inherit;
