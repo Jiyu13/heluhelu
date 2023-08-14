@@ -16,7 +16,7 @@ export function ArticleParagraph({words, setSentence, updateDictionaryWord, setW
             start--
         }
         
-        while (end <= words.length) {
+        while (end < words.length) {
             const word = words[end]
             if (word.includes(".") ||word.includes("!") ||word.includes("?") ) {
                 string = string + " " + words[end]
