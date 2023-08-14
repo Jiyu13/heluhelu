@@ -20,7 +20,6 @@ import { VocabularyStats } from "../stats/VocabularyStats";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
 import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
-// import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
 
 const USER_NOT_SET = -1;
 

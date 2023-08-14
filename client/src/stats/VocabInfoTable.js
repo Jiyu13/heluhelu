@@ -2,9 +2,6 @@ import styled from "styled-components"
 import filter_24dp from "../assets/images/filter_24dp.svg"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
-// import { useEffect } from "react"
-// import apiFetch from "../api/ApiFetch"
-// import { useState } from "react"
 
 
 
@@ -12,16 +9,9 @@ export function VocabInfoTable( props ) {
 
     const {
         handleFilterAll, handleFilterKnown, handleFilterStudying, customWords, 
-        // setCustomWords, handleGetCustomWords
     } = props
     
     const { vocabularies } = useContext(UserContext)
-
-    // useEffect(() => {
-    //     apiFetch("/user_words")
-    //     .then(res => res.json())
-    //     .then(data => setCustomWords(data))
-    // }, [])
 
     function searchVocabs(status) {
         return vocabularies?.filter(v => v["status"] === status).map(v => v["hawaiian_clean"].toLowerCase())
@@ -54,12 +44,6 @@ export function VocabInfoTable( props ) {
                 <WordText>Studying</WordText>
                 <WordCount>{studyingvocab}</WordCount>
             </InfoItem>
-
-            {/* <InfoItem onClick={handleGetCustomWords}>
-                <CustomWordsIndicator/>
-                <WordText>Custom Words</WordText>
-                <WordCount>{customWords?.length}</WordCount>
-            </InfoItem> */}
         </InfoContainer>
 
     )
@@ -143,11 +127,3 @@ export const StudyingdIndicator = styled.div`
     border-color: #338fff;
     border-radius: 10px;
 `
-
-// const CustomWordsIndicator = styled.div`
-//     width: 2rem;
-//     height: 1.15rem;
-//     background-color: rgba(255, 221, 89, 0.5);
-//     border-color: #338fff;
-//     border-radius: 10px;
-// `

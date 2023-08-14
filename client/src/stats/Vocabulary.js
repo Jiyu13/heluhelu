@@ -77,16 +77,13 @@ const VocabContainer = styled.div`
     }
 `
 const IdColumn = styled.div`
-    // padding-right: 2rem;
 `
 const WordColumn= styled.div`
-    // padding-right: 2rem;
 `
 const DefinitionColumn = styled.div`
     padding-right: 2rem;
 `
 const CustomColumn = styled.div`
-    // padding-right: 2rem;
 `
 
 const MarkTagColumn = styled.div``

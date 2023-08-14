@@ -2,9 +2,7 @@ import styled from "styled-components"
 import filter_24dp from "../assets/images/filter_24dp.svg"
 
 
-export function MobileVocabularyTable( { handleSelectFilter, 
-        // customWords, setCustomWords 
-    } ) {
+export function MobileVocabularyTable( { handleSelectFilter } ) {
 
     function handleChange(e) {
         handleSelectFilter(e.target.value)
@@ -23,7 +21,6 @@ export function MobileVocabularyTable( { handleSelectFilter,
                 <option>All Vocabs</option>
                 <option>Known</option>
                 <option>Studying</option>
-                {/* <option>Custom Words</option> */}
             </SelectBar>
         </InfoContainer>
 
@@ -39,7 +36,6 @@ const InfoContainer = styled.div`
     grid-template-columns: 0.5fr 1fr;
     background-image:  linear-gradient(to right, #FDAB73, #AEC28F);
     border-radius: 8px;
-    // justify-content: center;
     align-items: center;
     text-align: center;
 `
