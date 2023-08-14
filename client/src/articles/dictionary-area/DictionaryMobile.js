@@ -46,6 +46,7 @@ export function DictionaryMobile(props) {
                     alt="add custom word button" 
                     onClick={handleAddBtn} 
                     id={targetWord}
+                    style={{marginRight: "5px"}}
                 />
             }
 
