@@ -33,13 +33,16 @@ export function SkeletonHomePage() {
                                     <EditCell>
                                         <EditContainer>
                                             <Button>
-                                            <   Skeleton height={40} width={40}/>
+                                            <Skeleton height={40} width={40}/>
                                             </Button>
                                             <Button>
-                                            <   Skeleton height={40} width={40}/>
+                                            <Skeleton height={40} width={40}/>
                                             </Button>
                                             <Button>
-                                            <   Skeleton height={40} width={40}/>
+                                            <Skeleton height={40} width={40}/>
+                                            </Button>
+                                            <Button>
+                                            <Skeleton height={40} width={40}/>
                                             </Button>
                                         </EditContainer>
                                     </EditCell>
