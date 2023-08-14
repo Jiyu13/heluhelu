@@ -67,7 +67,6 @@ export function WordTracker( {
             styling = "rgba(112, 161, 255, 0.5)"
     }
     
-    console.log(sentence)
     return (
         <WordTrackerBox>
             <TrackerContainer>
