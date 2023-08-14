@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import { closeMobileDictionary } from "./closeMobileDictionary"
+import g_translate_white_24dp from "../../assets/images/g_translate_white_24dp.svg"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
-    isMobile, isDictionaryOpen, setDictionaryOpen
+    isMobile, isDictionaryOpen, setDictionaryOpen,
+    sentence
     } 
 ) {
     // word is an array (empty array/object/function is truthy in js)
@@ -65,6 +67,7 @@ export function WordTracker( {
             styling = "rgba(112, 161, 255, 0.5)"
     }
     
+    console.log(sentence)
     return (
         <WordTrackerBox>
             <TrackerContainer>
@@ -78,7 +81,18 @@ export function WordTracker( {
                     target="_blank" 
                     rel='noreferrer noopener'
                 >
-                    <OtherSearch>Wehe²Wiki²</OtherSearch>
+                    <WeheSearch>Wehe²Wiki²</WeheSearch>
+                </a>
+
+                <a 
+                    href={`https://translate.google.com/?sl=haw&tl=en&text=${sentence}&op=translate`} 
+                    target="_blank" 
+                    rel='noreferrer noopener'
+                    style={{ textDecoration: "none" }}
+                >
+                    <GoogleSearch>
+                        <GTranslateImg src={g_translate_white_24dp} alt="google translate"/>
+                    </GoogleSearch>
                 </a>
                 
             </TrackerContainer>
@@ -105,13 +119,24 @@ const Mark = styled.span`
         background-color: rgba(63, 158, 66,.6)!important;
     }
 `
-const OtherSearch = styled(Mark)`
+const WeheSearch = styled(Mark)`
     color: rgb(221, 221, 221);
     background-color: rgba(255,188,62, 0.5);
 
     &:hover {
         background-color: rgba(255,188,62, 0.7)!important;
     }
+`
+
+const GoogleSearch = styled(WeheSearch)`
+    padding: 0;
+`
+
+const GTranslateImg = styled.img`
+    width: 39px;
+
+    display: inline-block;
+    vertical-align: middle;
 `
 
 const ShowStatus = styled.span`
