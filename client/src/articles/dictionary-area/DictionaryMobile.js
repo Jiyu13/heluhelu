@@ -146,7 +146,7 @@ const SearchArea = styled.input`
     border-radius: 8px;
     height: 20px;
     font-size: 25px;
-    width: 84%;
+    width: 82%;
     margin-top: 12px;
     margin-bottom: 12px;
 ` 
