@@ -39,6 +39,8 @@ export function Article() {
 
     const [showInfo, setShowInfo] = useState(false)
 
+    const [sentence, setSentence] = useState(null)
+
     const {
             article, setArticle, 
             user, 
@@ -268,6 +270,8 @@ export function Article() {
                     setWordExistError={setWordExistError}
                     isLoading={isLoading}
                     divRef={divRef}
+                    sentence={sentence}
+                    setSentence={setSentence}
                 />
                 
                 {!isMobile && (
@@ -289,6 +293,7 @@ export function Article() {
                         setFormData={setFormData}
                         setCustomForm={setCustomForm}
                         setWordExistError={setWordExistError}
+                        sentence={sentence}
                     />
                 )}
                 
@@ -312,6 +317,7 @@ export function Article() {
                         setFormData={setFormData}
                         setCustomForm={setCustomForm}
                         setWordExistError={setWordExistError}
+                        sentence={sentence}
                     />
                 )}
 

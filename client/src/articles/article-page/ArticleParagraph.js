@@ -1,10 +1,7 @@
 import styled from "styled-components"
 import { ArticleWord } from "./ArticleWord"
-import { useState } from "react"
 
-export function ArticleParagraph({words, updateDictionaryWord, setWordExistError}) {
-
-    const [sentence, setSentence] = useState(null)
+export function ArticleParagraph({words, setSentence, updateDictionaryWord, setWordExistError}) {
 
     // build the sentence from the clicked word
     function handleGetSentence(value, index) {
@@ -31,7 +28,6 @@ export function ArticleParagraph({words, updateDictionaryWord, setWordExistError
         setSentence(string)
         updateDictionaryWord(value)
     }
-    console.log(sentence)
     return (
         <ParagraphContainer>
                 {words.map((word, index) => 

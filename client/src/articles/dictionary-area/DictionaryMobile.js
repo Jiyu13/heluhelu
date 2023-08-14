@@ -26,8 +26,8 @@ export function DictionaryMobile(props) {
            initialValues,
            setFormData,
            setCustomForm,
-           setWordExistError
-        
+           setWordExistError,
+           sentence
         } = props
 
     
@@ -71,6 +71,7 @@ export function DictionaryMobile(props) {
                     isMobile={isMobile}
                     isDictionaryOpen={isDictionaryOpen}
                     setDictionaryOpen={setDictionaryOpen}
+                    sentence={sentence}
                 />
             )}
 

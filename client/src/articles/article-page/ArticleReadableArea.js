@@ -16,7 +16,8 @@ export function ArticleReadableArea({
     showInfo, setShowInfo,
     updateDictionaryWord, setWordExistError,
     isLoading,
-    divRef
+    divRef,
+    setSentence
     }) {
 
     const {article} = useContext(UserContext)
@@ -43,6 +44,7 @@ export function ArticleReadableArea({
                             words={p.split(" ")} 
                             updateDictionaryWord={updateDictionaryWord} 
                             setWordExistError={setWordExistError}
+                            setSentence={setSentence}
                         />
                     )}
                     </ReadableContent>

@@ -24,8 +24,8 @@ export function Disctionary(props) {
         initialValues,
         setFormData,
         setCustomForm,
-        setWordExistError
-     
+        setWordExistError,
+        sentence
      } = props
 
     return (
@@ -74,6 +74,7 @@ export function Disctionary(props) {
                     word={chosen} 
                     PostAndDelete={PostAndDelete} 
                     checkStatus={checkStatus}
+                    sentence={sentence}
                 />
             )}
 
