@@ -101,7 +101,7 @@ const Indicator = styled.div`
 `
 const IndicatorMobile = styled(Indicator)`
     width: 8px;
-    height: 2rem;
+    height: 1.2rem;
 `
 
 
