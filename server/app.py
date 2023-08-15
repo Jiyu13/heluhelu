@@ -68,7 +68,10 @@ class DictionariesWordsByWord(Resource):
         # custom_word = UserWord.query.filter_by(word=clean_word, user_id=session["user_id"]).first()
         # ======== doesnt' consider case sensitive ===========================================================
         # custom_word_copy = UserWord.query.filter(func.lower(UserWord.word) == func.lower(clean_word)).first()
-        custom_word_ilike = UserWord.query.filter(func.lower(UserWord.word).ilike(func.lower(clean_word))).first()
+        custom_word_ilike = UserWord.query.filter(
+            User.user_id==session["user_id"],
+            func.lower(UserWord.word).ilike(func.lower(clean_word))
+        ).first()
         if custom_word_ilike:
             custom_word_ilike = custom_word_ilike.to_dict()
         if hawaiians:
