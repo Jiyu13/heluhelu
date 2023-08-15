@@ -207,13 +207,15 @@ export function Article() {
         const filter_word = dictionaryWords.filter(d_w => d_w["hawaiian_clean"].toLowerCase() === clean_word.toLowerCase())
         if (filter_word.length) {
             clean_word = filter_word[0]["hawaiian_clean"]
-        } 
+        }
+        else {
+            clean_word = clean_word.toLowerCase()
+        }
         const vocab= {
             user_id: user.id,
             hawaiian_clean: clean_word,
             status: wordStatus
         }
-
         apiFetch(`/vocabulary/${clean_word}/${wordStatus}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},

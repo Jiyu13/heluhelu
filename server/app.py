@@ -72,7 +72,7 @@ class DictionariesWordsByWord(Resource):
             UserWord.user_id==session["user_id"],
             func.lower(UserWord.word).ilike(func.lower(clean_word))
         ).first()
-        print("=======custom",custom_word_ilike)
+
         if custom_word_ilike:
             custom_word_ilike = custom_word_ilike.to_dict()
         if hawaiians:
@@ -518,7 +518,7 @@ api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 class VocabularyByStatus(Resource):
     def post(self, word, status):
-        """save word into db, status 1->studing, 2->known, 3->igonred"""
+        """save word into db, status 1->studying, 2->known, 3->ignored"""
         user_id = session["user_id"]
         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
         if vocab:
