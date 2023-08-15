@@ -8,9 +8,12 @@ import { StatsNavigation, StatsTitle } from "../../stats/MyStats"
 import { FilterBy, FilterByText, InfoContainer, WordText } from "../../stats/VocabInfoTable"
 
 import filter_24dp from "../../assets/images/filter_24dp.svg"
-
+import { DeviceSize } from "../../responsive"
+import { useMediaQuery } from "react-responsive"
 
 export function ShowArticleUniqueWords() {
+    const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
+
     const { article_title, id } = useParams()
 
     const [studyingUnique, setStudyingUnique] = useState(null)
@@ -52,20 +55,32 @@ export function ShowArticleUniqueWords() {
                 <FilterBy>
                     <img src={filter_24dp} alt="filter icon"/>
                     <FilterByText style={{fontSize: "3px"}}>
-                        Filter By:
+                        {isMobile ? "Filter" : "Filter By"}
                     </FilterByText>
                     
                 </FilterBy>
                 <NavItem href="#" onClick={handleFilterNewUnique}>
-                    <Indicator style={{backgroundColor: "rgb(112, 161, 255"}}/>
+                    {isMobile ? 
+                        <IndicatorMobile style={{backgroundColor: "rgb(112, 161, 255"}}/>
+                        :
+                        <Indicator style={{backgroundColor: "rgb(112, 161, 255"}}/>
+                    }
                     <WordText>New Words</WordText>
                 </NavItem>
                 <NavItem href="#" onClick={handleFilterKnownUnique}>
-                    <Indicator style={{backgroundColor: "rgb(75, 166, 127)"}}/>
+                    {isMobile ? 
+                        <IndicatorMobile style={{backgroundColor: "rgb(75, 166, 127)"}}/>
+                        :
+                        <Indicator style={{backgroundColor: "rgb(75, 166, 127)"}}/>
+                    }
                     <WordText>Knowns</WordText>
                 </NavItem>
                 <NavItem href="#" onClick={handleFilterStudyingUnique}>
-                    <Indicator style={{backgroundColor: "rgb(243, 170, 96)"}}/>
+                {isMobile ? 
+                        <IndicatorMobile style={{backgroundColor: "rgb(243, 170, 96)"}}/>
+                        :
+                        <Indicator style={{backgroundColor: "rgb(243, 170, 96)"}}/>
+                    }
                     <WordText>Studyings</WordText>
                 </NavItem>
             </NavigationContainer>
@@ -84,6 +99,12 @@ const Indicator = styled.div`
     border-radius: 10px;
     margin-right: 5px;
 `
+const IndicatorMobile = styled(Indicator)`
+    width: 8px;
+    height: 2rem;
+`
+
+
 const NavItem = styled.a`
     display: flex;
     margin: auto auto;
