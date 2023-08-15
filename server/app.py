@@ -520,10 +520,10 @@ class VocabularyByStatus(Resource):
     def post(self, word, status):
         """save word into db, status 1->studying, 2->known, 3->ignored"""
         user_id = session["user_id"]
+        word = word.lower()
         vocab = Vocabulary.query.filter_by(hawaiian_clean=word, user_id=user_id).first()
         if vocab:
             if vocab.status == status:
-                
                 db.session.delete(vocab)
                 db.session.commit()
                 return make_response({"deleted": True})

@@ -208,9 +208,6 @@ export function Article() {
         if (filter_word.length) {
             clean_word = filter_word[0]["hawaiian_clean"]
         }
-        else {
-            clean_word = clean_word.toLowerCase()
-        }
         const vocab= {
             user_id: user.id,
             hawaiian_clean: clean_word,
@@ -223,7 +220,7 @@ export function Article() {
         })
         .then(res => res.json())
         .then(data => {
-            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== clean_word)
+            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== clean_word.toLowerCase())
             if (!data.deleted) {
                 updatedVocabs.push(data)
             }
