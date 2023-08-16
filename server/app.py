@@ -101,8 +101,13 @@ class GetFirstArticle(Resource):
     def get(self):
         user_id = session["user_id"]
         if user_id:
-            article = Article.query.filter_by(user_id=user_id).order_by(Article.update_at.desc())[0]
-            return make_response(article.to_dict(), 200)
+            articles = Article.query.filter_by(user_id=user_id).all()
+            if len(articles) != 0:
+                first_article = Article.query.filter_by(user_id=user_id).order_by(Article.update_at.desc())[0]
+                return make_response(first_article.to_dict(), 200)
+            else:
+                response = {"message": "You don't have any articles."}
+                return make_response(jsonify(response), 500)
 api.add_resource(GetFirstArticle, '/articles/first')
 
 

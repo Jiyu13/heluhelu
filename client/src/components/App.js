@@ -28,6 +28,7 @@ function App() {
   const [articles, setArticles] = useState(null)
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
+  const [errorMessage, setErrorMessage] = useState(null)
   
   // ========= check session - user remains logged in ========
   useEffect(() => {
@@ -45,8 +46,15 @@ function App() {
   const [firstArticle, setFirstArticle] = useState(null)
   useEffect(() => {
       apiFetch(`/articles/first`)
-      .then(r => r.json())
-      .then(data => setFirstArticle(data))
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((data) => setFirstArticle(data))
+        } else {
+          r.json().then((data) => {
+            setErrorMessage(data["message"])
+          })
+        }
+      });
   }, [])
 
   // ========= update article ===============================
@@ -101,7 +109,7 @@ function App() {
                             article, setArticle, 
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
-                            firstArticle
+                            firstArticle, errorMessage
                           }
 
   if(user === USER_NOT_SET) return;
