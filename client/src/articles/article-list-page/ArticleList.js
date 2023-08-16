@@ -16,7 +16,7 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
-    const { user, splitText, calculatePages, errorMessage } = useContext(UserContext)
+    const { user, splitText, calculatePages } = useContext(UserContext)
 
     function handleShowDeletePopup(e) {
         setDeletePopup(true)
@@ -117,7 +117,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
         </ArticlesListTable>
         )}
 
-        {articles?.length === 0 && (<h2>{errorMessage}</h2>)}
+        {articles?.length === 0 && (<h2>You don't have any articles.</h2>)}
 
     </ArticlesListContainer> 
     
