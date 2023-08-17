@@ -6,72 +6,46 @@ import 'react-loading-skeleton/dist/skeleton.css'
 export function SkeletonHomePage() {
     return (
         <SkeletonTheme baseColor="#dfe4ea" enableAnimation={false}>
-            <main> 
-                <HomepageTitle>
-                    <Skeleton height={55} width={200}/>
-                </HomepageTitle>
-                <HomepageText>
-                    <Skeleton height={50} width={680}/>
-                </HomepageText>
-                <HomepageText>
-                    <Skeleton height={45} width={130}/>
-                </HomepageText> 
-                <ArticlesListContainer>
-                    <ArticlesListTable>
-                    <tbody>
-                        {Array(5)
-                            .fill()
-                            .map((item, index) => (
-                                <tr key={index}>
-                                    <ArticleTitleCell >
-                                            <ArticleTitle>
-                                                <Skeleton height={23} width={120}/>
-                                                <br/>
-                                                <Skeleton height={5} width={200}/>
-                                            </ArticleTitle>
-                                    </ArticleTitleCell>
-                                    <EditCell>
-                                        <EditContainer>
-                                            <Button>
-                                            <Skeleton height={40} width={40}/>
-                                            </Button>
-                                            <Button>
-                                            <Skeleton height={40} width={40}/>
-                                            </Button>
-                                            <Button>
-                                            <Skeleton height={40} width={40}/>
-                                            </Button>
-                                            <Button>
-                                            <Skeleton height={40} width={40}/>
-                                            </Button>
-                                        </EditContainer>
-                                    </EditCell>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                    </ArticlesListTable>
-                </ArticlesListContainer>
-            </main>
+    
+            <ArticlesListContainer>
+                <ArticlesListTable>
+                <tbody>
+                    {Array(5)
+                        .fill()
+                        .map((item, index) => (
+                            <tr key={index}>
+                                <ArticleTitleCell >
+                                        <ArticleTitle>
+                                            <Skeleton height={23} width={120}/>
+                                            <br/>
+                                            <Skeleton height={5} width={200}/>
+                                        </ArticleTitle>
+                                </ArticleTitleCell>
+                                <EditCell>
+                                    <EditContainer>
+                                        <Button>
+                                        <Skeleton height={40} width={40}/>
+                                        </Button>
+                                        <Button>
+                                        <Skeleton height={40} width={40}/>
+                                        </Button>
+                                        <Button>
+                                        <Skeleton height={40} width={40}/>
+                                        </Button>
+                                        <Button>
+                                        <Skeleton height={40} width={40}/>
+                                        </Button>
+                                    </EditContainer>
+                                </EditCell>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+                </ArticlesListTable>
+            </ArticlesListContainer>
         </SkeletonTheme>
     )
 }
-
-const HomepageTitle = styled.h1`
-    margin-top: 72px;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin: 120px auto 0;
-`
-
-const HomepageText = styled.div`
-    max-width: 700px;
-    text-align: center;
-    margin: 18px auto 18px auto;
-    display: block;
-`
 
 const ArticlesListContainer = styled.div`
     margin: 45px auto 0;

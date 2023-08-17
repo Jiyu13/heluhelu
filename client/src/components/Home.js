@@ -46,29 +46,26 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
                     onDeleteArticle={onDeleteArticle}
                 />
             )} 
+
+            <HomepageTitle>Heluhelu</HomepageTitle>
+            <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
+
+            <HomepageButtonContainer>
+                <Link to={"/import/text"}>
+                    <ImportButton value="Import">
+                        <ButtonSpan>
+                            <img src={import_icon} alt="import new content"/>
+                        </ButtonSpan>
+                        <ButtonSpan>Import</ButtonSpan>
+                    </ImportButton>
+                </Link>
+            </HomepageButtonContainer>
             {isLoading && <SkeletonHomePage/>}
-            {!isLoading && (
-                <>
-                    <HomepageTitle>Heluhelu</HomepageTitle>
-                    <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
-
-                    <HomepageButtonContainer>
-                        <Link to={"/import/text"}>
-                            <ImportButton value="Import">
-                                <ButtonSpan>
-                                    <img src={import_icon} alt="import new content"/>
-                                </ButtonSpan>
-                                <ButtonSpan>Import</ButtonSpan>
-                            </ImportButton>
-                        </Link>
-                    </HomepageButtonContainer>
-
-                    <ArticleList 
-                        articles={articles}
-                        setDeletePopup={setDeletePopup}
-                        setArticleID={setArticleID}
-                    />
-                </>
+            {!isLoading && ( <ArticleList 
+                articles={articles}
+                setDeletePopup={setDeletePopup}
+                setArticleID={setArticleID}
+            />
             )}
         </>
     ) 
