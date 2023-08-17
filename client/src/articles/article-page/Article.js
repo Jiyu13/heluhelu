@@ -220,7 +220,7 @@ export function Article() {
         })
         .then(res => res.json())
         .then(data => {
-            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean !== clean_word.toLowerCase())
+            const updatedVocabs = vocabularies.filter((vocab) => vocab.hawaiian_clean.toLowerCase() !== clean_word.toLowerCase())
             if (!data.deleted) {
                 updatedVocabs.push(data)
             }
