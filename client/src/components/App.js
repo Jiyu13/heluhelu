@@ -74,7 +74,7 @@ function App() {
   function onDeleteArticle(article_id) {
 
     const updatedArticles = articles.filter(a => {
-      return a.id !== article_id
+      return a.id !== parseInt(article_id)
     })
     setArticles(updatedArticles)
   }
