@@ -173,10 +173,13 @@ def read_articles_csv(file_name):
 
 
 def read_dictionary_words_csv(file_name):
+    # DictionaryWord.query.delete()
+    # db.session.commit()
     all_words = []
     with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
         csv_file = csv.reader(f, delimiter=",")
         for id, hawaiian, hawaiian_clean, translation, dictionary_id in csv_file:
+            # print(id)
             w_t = DictionaryWord(
                 hawaiian=hawaiian,
                 hawaiian_clean=hawaiian_clean,
@@ -237,8 +240,11 @@ if __name__ == "__main__":
         # make_user()
         # upload_dictionary()
         # read_articles_csv("articles.csv")
-        # read_dictionary_words_csv("dictionary_words.csv")
+
+        read_dictionary_words_csv("dictionary_words.csv")
+
+
         # read_page_read_events_csv("page_read_events.csv")
         # user_words_csv("user_words.csv")
-        vocabularies_csv("vocabularies.csv")
+        # vocabularies_csv("vocabularies.csv")
 
