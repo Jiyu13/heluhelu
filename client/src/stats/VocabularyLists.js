@@ -38,15 +38,15 @@ export function VocabularyLists() {
         setFilterResult(vocabularies)
     }
 
-    function handleSelectFilter(tag) {
-        if (tag === "All Vocabs") {
-            handleFilterAll()
-        } else if (tag === "Known") {
-            handleFilterKnown()
-        } else if (tag === "Studying") {
-            handleFilterStudying()
-        }
-    }
+    // function handleSelectFilter(tag) {
+    //     if (tag === "All Vocabs") {
+    //         handleFilterAll()
+    //     } else if (tag === "Known") {
+    //         handleFilterKnown()
+    //     } else if (tag === "Studying") {
+    //         handleFilterStudying()
+    //     }
+    // }
 
     return (
         <PageContainer>
@@ -74,7 +74,10 @@ export function VocabularyLists() {
 
             {isMobile ? 
                 <MobileVocabularyTable 
-                    handleSelectFilter={handleSelectFilter}
+                    // handleSelectFilter={handleSelectFilter}
+                    handleFilterAll={handleFilterAll}
+                    handleFilterKnown={handleFilterKnown}
+                    handleFilterStudying={handleFilterStudying}
                 />
                 :
                 <VocabInfoTable 

@@ -8,7 +8,7 @@ import { UserContext } from "../components/UserContext"
 export function VocabInfoTable( props ) {
 
     const {
-        handleFilterAll, handleFilterKnown, handleFilterStudying, customWords, 
+        handleFilterAll, handleFilterKnown, handleFilterStudying, 
     } = props
     
     const { vocabularies } = useContext(UserContext)
@@ -17,7 +17,6 @@ export function VocabInfoTable( props ) {
         return vocabularies?.filter(v => v["status"] === status).map(v => v["hawaiian_clean"].toLowerCase())
     }
 
-    console.log(customWords)
     const knownVocab = searchVocabs(2)?.length
     const studyingvocab = searchVocabs(1)?.length
     return  (
