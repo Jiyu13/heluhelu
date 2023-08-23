@@ -40,7 +40,7 @@ export function Vocabulary( {vocab} ) {
     )
 }
 
-const VocabContainer = styled.div`
+export const VocabContainer = styled.div`
     box-sizing: border-box;
     width: 95%;
     display: grid;
