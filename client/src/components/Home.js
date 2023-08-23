@@ -24,15 +24,17 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
     // ========= get all articles of current user =================================
     useEffect(() => {
         setLoading(true)
-
-        const timer = setTimeout(() => {
-            apiFetch('/articles')
-            .then(res => res.json())
-            .then(data => setArticles(data))
-            setLoading(false)
-        }, 1500)
-        
-        return () => clearTimeout(timer)
+        async function fetchData() {
+            try {
+                const response = await apiFetch('/articles')
+                const data = await response.json()
+                setArticles(data)
+                setLoading(false)
+            } catch (error) {
+                console.log("Error fetching data", error)
+            } 
+        }
+        fetchData()
 
     }, [setArticles])
 

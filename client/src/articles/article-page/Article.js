@@ -51,17 +51,25 @@ export function Article() {
     const { id } = useParams()
     useEffect(() => {
         setLoading(true)
-
-        const timer = setTimeout(() => {
-            apiFetch(`/articles/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setCurrentPage(data.current_page)
-                setArticle(data.article)
-                setLoading(false)
-            })
-        }, 1000)
-        return () => clearTimeout(timer)
+        async function fetchData() {
+            const response = await apiFetch(`/articles/${id}`)
+            const data = await response.json()
+            setCurrentPage(data.current_page)
+            setArticle(data.article)
+            setLoading(false)
+        }
+        // const timer = setTimeout(() => {
+        //     apiFetch(`/articles/${id}`)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         setCurrentPage(data.current_page)
+        //         setArticle(data.article)
+        //         setLoading(false)
+        //     })
+        // }, 1000)
+        // return () => clearTimeout(timer)
+        // // eslint-disable-next-line
+        fetchData()
         // eslint-disable-next-line
     }, [id]) 
 
