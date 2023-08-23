@@ -9,7 +9,7 @@ import string
 class Dictionary(db.Model, SerializerMixin):
     __tablename__ = 'dictionaries'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     title = db.Column(db.String, nullable=False, unique=True)
     # is_enabled = db.Column(db.Boolean)  # check whether a dictionary is active or not
 
@@ -28,7 +28,7 @@ class Dictionary(db.Model, SerializerMixin):
 class DictionaryWord(db.Model, SerializerMixin):
     __tablename__ = "dictionary_words"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     hawaiian = db.Column(db.String, nullable=False)
     hawaiian_clean = db.Column(db.String)
 
@@ -43,7 +43,7 @@ class DictionaryWord(db.Model, SerializerMixin):
 class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     current_page = db.Column(db.Integer, default=0)
@@ -63,7 +63,7 @@ class Article(db.Model, SerializerMixin):
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -116,7 +116,7 @@ class User(db.Model, SerializerMixin):
 class UserWord(db.Model, SerializerMixin):
     __tablename__ = "user_words"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     word = db.Column(db.String, nullable=False)
     translation = db.Column(db.String, nullable=False)
 
@@ -132,7 +132,7 @@ class UserWord(db.Model, SerializerMixin):
 class PageReadEvent(db.Model, SerializerMixin):
     __tablename__ = "page_read_events"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     date = db.Column(db.DateTime, server_default=db.func.now())
     words_read = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -147,7 +147,7 @@ class Vocabulary(db.Model, SerializerMixin):
     """status -> 1: studying; 2: known; 3: ignored"""
     __tablename__ = "vocabularies"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     hawaiian_clean = db.Column(db.String)
     status = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))

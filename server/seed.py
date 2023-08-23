@@ -131,7 +131,114 @@ def upload_dictionary():
     db.session.commit()
 
 
+def make_user(username, password_hash):
+    # create a user
+    new_user = User(
+        username=username,
+    )
+    new_user._password_hash = password_hash
+    db.session.add(new_user)
+    db.session.commit()
+    # print(new_user.id)
+
+def read_user_csv():
+    with open("instance-bkp/sql-backup/users.csv", "r") as f:
+        csv_file = csv.reader(f, delimiter=',', quotechar='"')
+        for id, name, password_hash in csv_file:
+            print(name, password_hash)
+            make_user(name, password_hash)
+
+def read_articles_csv(file_name):
+    # Article.query.delete()
+    with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
+        # delimiter: A one-character string used to separate fields
+        # quotechar: A one-character string used to quote fields containing special characters, quotechar='"' - default
+        csv_file = csv.reader(f, delimiter=',')
+        for id, uuid, title, text, check_finished, created_at, update_at, user_id, current_page in csv_file:
+            if user_id == '5':
+                continue
+            # print(id, user_id, title)
+            new_article = Article(
+                    user_id=user_id,
+                    uuid=uuid,
+                    current_page=current_page,
+                    text=text,
+                    title=title,
+                    check_finished=True if check_finished == 1 else False,
+                    created_at=created_at,
+                    update_at=update_at
+            )
+            db.session.add(new_article)
+            db.session.commit()
+
+
+def read_dictionary_words_csv(file_name):
+    all_words = []
+    with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
+        csv_file = csv.reader(f, delimiter=",")
+        for id, hawaiian, hawaiian_clean, translation, dictionary_id in csv_file:
+            w_t = DictionaryWord(
+                hawaiian=hawaiian,
+                hawaiian_clean=hawaiian_clean,
+                translation=translation,
+                dictionary_id=dictionary_id
+            )
+            all_words.append(w_t)
+        db.session.add_all(all_words)
+        db.session.commit()
+
+def read_page_read_events_csv(file_name):
+    page_events = []
+    with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
+        csv_file = csv.reader(f, delimiter=",")
+        # for line in csv_file:
+        #     print(line)
+        for id, date, words_read, user_id in csv_file:
+            new_event = PageReadEvent(
+                user_id=user_id,
+                date=date,
+                words_read=words_read
+            )
+            page_events.append(new_event)
+        db.session.add_all(page_events)
+        db.session.commit()
+
+def user_words_csv(file_name):
+    all_user_words = []
+    with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
+        csv_file = csv.reader(f, delimiter=",")
+        for id, word, translation, user_id in csv_file:
+            new_user_word = UserWord(
+                word=word,
+                translation=translation,
+                user_id=user_id
+            )
+            all_user_words.append(new_user_word)
+        db.session.add_all(all_user_words)
+        db.session.commit()
+
+def vocabularies_csv(file_name):
+    all_vocabs = []
+    with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
+        csv_file = csv.reader(f, delimiter=",")
+        for id, hawaiian_clean, status, user_id in csv_file:
+            new_vocab = Vocabulary(
+                hawaiian_clean=hawaiian_clean,
+                status=status,
+                user_id=user_id
+            )
+            all_vocabs.append(new_vocab)
+        db.session.add_all(all_vocabs)
+        db.session.commit()
+
+import csv
 if __name__ == "__main__":
     with app.app_context():
-        make_user()
+        # make_user()
         # upload_dictionary()
+        # read_articles_csv("articles.csv")
+        # read_dictionary_words_csv("dictionary_words.csv")
+        # read_page_read_events_csv("page_read_events.csv")
+        # user_words_csv("user_words.csv")
+        vocabularies_csv("vocabularies.csv")
+
