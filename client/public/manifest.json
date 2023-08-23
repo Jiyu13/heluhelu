@@ -1,6 +1,6 @@
 {
   "short_name": "Heluhelu",
-  "name": "Heluhelu - Hawaiian Reader",
+  "name": "Heluhelu",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "heluhelulogo-white.png",
+      "src": "logoblack192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "heluhelulogo-white.png",
+      "src": "logoblack512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
