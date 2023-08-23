@@ -13,8 +13,10 @@ import { DeviceSize } from "../responsive";
 import { MobileVocabularyTable } from "./MobileVocabularyTable";
 
 import apiFetch from "../api/ApiFetch";
+import { SkeletonVocabStatsList } from "../skeleton-screens/SkeletonVocabStatsList";
 
 export function VocabularyLists() {
+    const [isLoading, setLoading] = useState(false)
     const [filterResults, setFilterResult] = useState(null)
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
 
@@ -22,12 +24,20 @@ export function VocabularyLists() {
     const [vocabStats, setVocabStats] = useState(null)
 
     useEffect(() => {
-        apiFetch("/vocabularies_translations")
-        .then(res => res.json())
-        .then(data => {
-            setVocabStats(data)
-            setFilterResult(data)
-        })
+        setLoading(false)
+        async function fetchData() {
+            try {
+                const response = await apiFetch("/vocabularies_translations")
+                const data = await response.json()
+                setVocabStats(data)
+                setFilterResult(data)
+                setLoading(true)
+            } catch(error) {
+                console.log("Error fetching data", error)
+            } 
+
+        }
+        fetchData()
     }, [])
 
 
@@ -94,10 +104,17 @@ export function VocabularyLists() {
                     <CustomColumn>Custom Definition</CustomColumn>
                     <MarkTagColumn>Mark Tag</MarkTagColumn>
                 </VocabHeader>
-
-                {filterResults?.map((v, index) => {
-                    return <Vocabulary key={index} vocab={v}/>
-                })}
+                {
+                    isLoading && (
+                        <>
+                            {filterResults?.map((v, index) => {
+                                return <Vocabulary key={index} vocab={v}/>
+                            })}
+                        </>
+                    )
+                }
+                { !isLoading && (<SkeletonVocabStatsList />)}
+                
             </ContainerBody>        
         </PageContainer>
     )
