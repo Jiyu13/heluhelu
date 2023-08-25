@@ -4,7 +4,6 @@ import { TranslationSentences } from "./TranslationSentences"
 export function Vocabulary( {vocab} ) {
     const translations = vocab["translation"].split("\n").filter(t => t !== "")
     const customs = vocab["custom"].split(';')
-    console.log(customs)
     let tag
     if (vocab["vocabulary"]["status"] === 2) {
         tag =  "Known"

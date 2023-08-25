@@ -5,7 +5,6 @@ export function DoughnutChartLegend(props) {
         payload,
         totalKnowns,knownUnique, totalIgnoreds, ignoredUnique, studyingUnique, newUnique
     } = props
-    // console.log(payload[0].value.toUpperCase())
     const newWordPayload = payload[0]
     const studyingPayload = payload[1]
     const knownPayload = payload[2]

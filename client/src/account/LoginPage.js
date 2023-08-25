@@ -56,7 +56,6 @@ export function LoginPage( {handleToSignup, errors, setErrors, ToggleIcon, visib
     //  ========= go to home page after loging successfully ==============
     let navigate = useNavigate()
     function redirectHome() {
-        console.log('redirect to home')
         navigate('/') 
     }
 
