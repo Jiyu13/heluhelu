@@ -237,7 +237,7 @@ class ArticleByID(Resource):
 
         if not article:
             response_body = {
-                "message": "This article does not exist in the database, please try again"
+                "message": "The article you're looking for doesn't exist."
             }
             return make_response(jsonify(response_body), 404)
 

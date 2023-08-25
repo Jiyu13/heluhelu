@@ -16,6 +16,7 @@ import { LeftSidebar } from "../sidebars/LeftSidebar"
 import { RightSidebar } from "../sidebars/RightSidebar"
 import { Disctionary } from "../dictionary-area/Distionary"
 import { ArticleReadableArea } from "./ArticleReadableArea"
+import { ArticleErrorPage } from "../../error-pages/ArticleErrorPage"
 
 const PAGE_SIZE = 250;
 
@@ -40,6 +41,8 @@ export function Article() {
     const [showInfo, setShowInfo] = useState(false)
 
     const [sentence, setSentence] = useState(null)
+    const [isError, setIsError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const {
             article, setArticle, 
@@ -53,22 +56,22 @@ export function Article() {
         setLoading(true)
         async function fetchData() {
             const response = await apiFetch(`/articles/${id}`)
-            const data = await response.json()
-            setCurrentPage(data.current_page)
-            setArticle(data.article)
-            setLoading(false)
+            if (response.ok) {
+                const data = await response.json()
+                setCurrentPage(data.current_page)
+                setArticle(data.article)
+                setLoading(false)
+            } else {
+                
+                // console.log(response)
+                // const status = response.status
+                // const statusText = response.statusText
+                const data = await response.json()
+                // console.log(status, statusText, data)
+                setIsError(true)
+                setErrorMessage(data["message"])
+            }
         }
-        // const timer = setTimeout(() => {
-        //     apiFetch(`/articles/${id}`)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         setCurrentPage(data.current_page)
-        //         setArticle(data.article)
-        //         setLoading(false)
-        //     })
-        // }, 1000)
-        // return () => clearTimeout(timer)
-        // // eslint-disable-next-line
         fetchData()
         // eslint-disable-next-line
     }, [id]) 
@@ -252,98 +255,103 @@ export function Article() {
 
     const bgColor = article?.check_finished ? "#A1C181" : ""
     return (
-        <>
-            <ArticleContainer>
+        <>  
+            {isError && (<ArticleErrorPage errorMessage={errorMessage}/>)}
+            {!isError && (
+                <>
+                    <ArticleContainer>
 
-                {isMobile && isDictionaryOpen && (
-                    /* eslint-disable jsx-a11y/anchor-is-valid */
-                    /* eslint-disable jsx-a11y/anchor-has-content */
+                        {isMobile && isDictionaryOpen && (
+                            /* eslint-disable jsx-a11y/anchor-is-valid */
+                            /* eslint-disable jsx-a11y/anchor-has-content */
 
-                    <a href="#"
-                    style={{"width": "100%", "position": "fixed", "height": "30%"}}
-                    onClick={() => setDictionaryOpen(false)}
-                    />
-                )}
+                            <a href="#"
+                            style={{"width": "100%", "position": "fixed", "height": "30%"}}
+                            onClick={() => setDictionaryOpen(false)}
+                            />
+                        )}
 
-                <LeftSidebar handlePrevPage={handlePrevPage} leftArrow={leftArrow}/>
-                
-                <ArticleReadableArea 
-                    currentPage={currentPage}
-                    pages={pages}
-                    paragraphs={paragraphs} 
-                    showInfo={showInfo}
-                    setShowInfo={setShowInfo}
-                    updateDictionaryWord={updateDictionaryWord}
-                    setWordExistError={setWordExistError}
-                    isLoading={isLoading}
-                    divRef={divRef}
-                    sentence={sentence}
-                    setSentence={setSentence}
-                />
-                
-                {!isMobile && (
-                    <Disctionary 
-                        chosen={chosen}
-                        PostAndDelete={PostAndDelete} 
-                        checkStatus={checkStatus}
-                        handleSearchChange={handleSearchChange}
-                        handleAddBtn={handleAddBtn}
-                        targetWord={targetWord}
-                        customWord={customWord} 
-                        setCustomWord={setCustomWord}
-                        formData={formData}
-                        wordExistError={wordExistError}
-                        showCustomForm={showCustomForm}
-                        isDictionaryOpen={isDictionaryOpen}
+                        <LeftSidebar handlePrevPage={handlePrevPage} leftArrow={leftArrow}/>
+                        
+                        <ArticleReadableArea 
+                            currentPage={currentPage}
+                            pages={pages}
+                            paragraphs={paragraphs} 
+                            showInfo={showInfo}
+                            setShowInfo={setShowInfo}
+                            updateDictionaryWord={updateDictionaryWord}
+                            setWordExistError={setWordExistError}
+                            isLoading={isLoading}
+                            divRef={divRef}
+                            sentence={sentence}
+                            setSentence={setSentence}
+                        />
+                        
+                        {!isMobile && (
+                            <Disctionary 
+                                chosen={chosen}
+                                PostAndDelete={PostAndDelete} 
+                                checkStatus={checkStatus}
+                                handleSearchChange={handleSearchChange}
+                                handleAddBtn={handleAddBtn}
+                                targetWord={targetWord}
+                                customWord={customWord} 
+                                setCustomWord={setCustomWord}
+                                formData={formData}
+                                wordExistError={wordExistError}
+                                showCustomForm={showCustomForm}
+                                isDictionaryOpen={isDictionaryOpen}
 
-                        initialValues={initialValues}
-                        setFormData={setFormData}
-                        setCustomForm={setCustomForm}
-                        setWordExistError={setWordExistError}
-                        sentence={sentence}
-                    />
-                )}
-                
-                {isMobile && isDictionaryOpen && (
-                    <DictionaryMobile 
-                        chosen={chosen}
-                        PostAndDelete={PostAndDelete} 
-                        checkStatus={checkStatus}
-                        handleSearchChange={handleSearchChange}
-                        handleAddBtn={handleAddBtn}
-                        targetWord={targetWord}
-                        customWord={customWord} 
-                        setCustomWord={setCustomWord}
-                        formData={formData}
-                        wordExistError={wordExistError}
-                        showCustomForm={showCustomForm}
-                        isDictionaryOpen={isDictionaryOpen}
-                        isMobile={isMobile}
-                        setDictionaryOpen={setDictionaryOpen}
-                        initialValues={initialValues}
-                        setFormData={setFormData}
-                        setCustomForm={setCustomForm}
-                        setWordExistError={setWordExistError}
-                        sentence={sentence}
-                    />
-                )}
+                                initialValues={initialValues}
+                                setFormData={setFormData}
+                                setCustomForm={setCustomForm}
+                                setWordExistError={setWordExistError}
+                                sentence={sentence}
+                            />
+                        )}
+                        
+                        {isMobile && isDictionaryOpen && (
+                            <DictionaryMobile 
+                                chosen={chosen}
+                                PostAndDelete={PostAndDelete} 
+                                checkStatus={checkStatus}
+                                handleSearchChange={handleSearchChange}
+                                handleAddBtn={handleAddBtn}
+                                targetWord={targetWord}
+                                customWord={customWord} 
+                                setCustomWord={setCustomWord}
+                                formData={formData}
+                                wordExistError={wordExistError}
+                                showCustomForm={showCustomForm}
+                                isDictionaryOpen={isDictionaryOpen}
+                                isMobile={isMobile}
+                                setDictionaryOpen={setDictionaryOpen}
+                                initialValues={initialValues}
+                                setFormData={setFormData}
+                                setCustomForm={setCustomForm}
+                                setWordExistError={setWordExistError}
+                                sentence={sentence}
+                            />
+                        )}
 
-                <RightSidebar 
-                    handleNextPage={handleNextPage}
-                    currentPage={currentPage}
-                    pages={pages}
-                    bgColor={bgColor}
-                    handleFinishReading={handleFinishReading}
-                />
-            </ArticleContainer>
-            {showInfo && (<ArticleInfo article={article} setShowInfo={setShowInfo} showInfo={showInfo}/>)}
-            {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
+                        <RightSidebar 
+                            handleNextPage={handleNextPage}
+                            currentPage={currentPage}
+                            pages={pages}
+                            bgColor={bgColor}
+                            handleFinishReading={handleFinishReading}
+                        />
+                    </ArticleContainer>
+                    {showInfo && (<ArticleInfo article={article} setShowInfo={setShowInfo} showInfo={showInfo}/>)}
+                    {finishReading && (<ArticleCompleted totalWords={totalWords}/>)}
+                </>
+            )}
             
         </>
     )
 }
 
-const ArticleContainer = styled.div`
+export const ArticleContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: stretch;
