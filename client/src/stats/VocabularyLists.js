@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../components/UserContext";
+import { useState, useEffect } from "react";
+
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -12,41 +12,39 @@ import { VocabInfoTable } from "./VocabInfoTable";
 import { DeviceSize } from "../responsive";
 import { MobileVocabularyTable } from "./MobileVocabularyTable";
 
+import apiFetch from "../api/ApiFetch";
 
 export function VocabularyLists() {
-    const { vocabularies, } = useContext(UserContext)
-    const [filterResults, setFilterResult] = useState(vocabularies)
+    const [filterResults, setFilterResult] = useState(null)
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
 
 
+    const [vocabStats, setVocabStats] = useState(null)
 
     useEffect(() => {
-          setFilterResult(vocabularies)
-    }, [vocabularies])
+        apiFetch("/vocabularies_translations")
+        .then(res => res.json())
+        .then(data => {
+            setVocabStats(data)
+            setFilterResult(data)
+        })
+    }, [])
+
 
     function handleFilterKnown() {
-        const result = vocabularies?.filter(v => v["status"] === 2)
+        const result = vocabStats?.filter(v => v["vocabulary"]["status"] === 2)
         setFilterResult(result)
     }
 
     function handleFilterStudying() {
-        const result = vocabularies?.filter(v => v["status"] === 1)
+        const result = vocabStats?.filter(v => v["vocabulary"]["status"] === 1)
         setFilterResult(result)
     }
 
     function handleFilterAll() {
-        setFilterResult(vocabularies)
+        setFilterResult(vocabStats)
     }
 
-    // function handleSelectFilter(tag) {
-    //     if (tag === "All Vocabs") {
-    //         handleFilterAll()
-    //     } else if (tag === "Known") {
-    //         handleFilterKnown()
-    //     } else if (tag === "Studying") {
-    //         handleFilterStudying()
-    //     }
-    // }
 
     return (
         <PageContainer>
@@ -74,13 +72,14 @@ export function VocabularyLists() {
 
             {isMobile ? 
                 <MobileVocabularyTable 
-                    // handleSelectFilter={handleSelectFilter}
+                    filterResults={filterResults}
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
                 />
                 :
                 <VocabInfoTable 
+                    filterResults={filterResults}
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
@@ -96,8 +95,8 @@ export function VocabularyLists() {
                     <MarkTagColumn>Mark Tag</MarkTagColumn>
                 </VocabHeader>
 
-                {filterResults?.map(v => {
-                    return <Vocabulary key={v.id} vocab={v}/>
+                {filterResults?.map((v, index) => {
+                    return <Vocabulary key={index} vocab={v}/>
                 })}
             </ContainerBody>        
         </PageContainer>

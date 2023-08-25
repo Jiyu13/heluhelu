@@ -509,6 +509,30 @@ class PageEventByMonth(Resource):
         return response
 api.add_resource(PageEventByMonth, '/stats/month/<int:current_month>')
 
+# ============================= vocabulary + translation ===================
+class GetVocabulariesTranslations(Resource):
+    def get(self):
+        user_id = session["user_id"]
+        vocabularies = Vocabulary.query.filter_by(user_id=user_id).all()
+        result = []
+        for v in vocabularies:
+            clean_word = DictionaryWord.query.filter_by(hawaiian_clean=v.hawaiian_clean).first()
+            custom_definition = UserWord.query.filter(
+                UserWord.user_id==session["user_id"],
+                UserWord.word.ilike(v.hawaiian_clean)
+            ).first()
+            vocab_translation = {
+                "vocabulary": v.to_dict(rules=("-user",)),
+                "translation": clean_word.translation if clean_word else "-",
+                "custom": custom_definition.translation if custom_definition else "-",
+            }
+            result.append(vocab_translation)
+
+        return make_response(result, 200)
+
+api.add_resource(GetVocabulariesTranslations, "/vocabularies_translations", endpoint="vocabularies_translations")
+
+
 
 # ============================== Vocabulary tracking ============================
 # Unknown: 0, Studying: 1, Known: 2, Ignored: 3,

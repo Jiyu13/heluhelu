@@ -1,56 +1,36 @@
-import { useEffect } from "react"
-import { useState } from "react"
 import styled from "styled-components"
-import apiFetch from "../api/ApiFetch"
+import { TranslationSentences } from "./TranslationSentences"
 
 export function Vocabulary( {vocab} ) {
-    const [dictionaryDefinition, setDefinition] = useState(null)
-    const [customDefinition, setCustomDefinition] = useState(null)
-
-
-    const word = vocab["hawaiian_clean"]
+    const translations = vocab["translation"].split("\n").filter(t => t !== "")
+    const customs = vocab["custom"].split(';')
+    console.log(customs)
     let tag
-    if (vocab["status"] === 2) {
+    if (vocab["vocabulary"]["status"] === 2) {
         tag =  "Known"
-    } else if (vocab["status"] === 1) {
+    } else if (vocab["vocabulary"]["status"] === 1) {
         tag =  "Studying"
-    } else if (vocab["status"] === 3) {
+    } else if (vocab["vocabulary"]["status"] === 3) {
         tag = "Ignored"
     }
 
-    
-    useEffect(() => {
-        apiFetch(`/search/${word}`)
-        .then(res => res.json())
-        .then(v => {
-            setDefinition(v.dictionary.filter(v => 
-                v["hawaiian_clean"] === word
-            ))
-            setCustomDefinition(v["custom"]?.["translation"])
-        })
-    }, [word])
-
     return (
         <VocabContainer>
-            <IdColumn>{vocab.id}</IdColumn>
-            <WordColumn>{vocab["hawaiian_clean"]}</WordColumn>
+            <IdColumn>{vocab["vocabulary"].id}</IdColumn>
+            <WordColumn>{vocab["vocabulary"]["hawaiian_clean"]}</WordColumn>
             <DefinitionColumn>
-                {
-                    dictionaryDefinition?.map((d, idx) => {
-                        return (
-                            <div key={idx}>
-                                <div>{d["translation"]}</div>
-                                <br/>
-                            </div>
-                            
-                        )
-                    })
-                }
+            
+                <div>
+                    {translations?.map((sentence, index) => {
+                            return <TranslationSentences key={index} sentence={sentence}/>
+                        }
+                    )} 
+                </div>
             </DefinitionColumn>
             <CustomColumn>
-                {
-                    customDefinition ? customDefinition : "-"
-                }
+                {customs?.map((custom, index) => {
+                    return <div key={index}>{custom};</div>
+                })}
             </CustomColumn>
 
             <MarkTagColumn>
