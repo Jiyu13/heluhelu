@@ -5,17 +5,18 @@ import import_icon from "../assets/images/note_add_white_24dp.svg"
 import { Link } from "react-router-dom";
 import { ButtonElements } from "./Buttons";
 import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import apiFetch from "../api/ApiFetch";
 
 import { SkeletonHomePage } from "../skeleton-screens/SkeletonHomePage";
+import { UserContext } from "./UserContext";
 
 
 export function Home({ articles, setArticles, onDeleteArticle}) {
 
     const [isLoading, setLoading] = useState(false)
-
+    const { user } = useContext(UserContext)
     
     // ====================== handle click delete btn " Yes" =======================
     const [showDeletePopup, setDeletePopup] = useState(false)
@@ -41,33 +42,37 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
     
     return (
         <>  
-            {showDeletePopup && ( 
-                <DeleteConfirmation 
-                    articleID={articleID}
-                    setDeletePopup={setDeletePopup}
-                    onDeleteArticle={onDeleteArticle}
-                />
-            )} 
+            {user && (
+                <>  
+                    {showDeletePopup && ( 
+                        <DeleteConfirmation 
+                            articleID={articleID}
+                            setDeletePopup={setDeletePopup}
+                            onDeleteArticle={onDeleteArticle}
+                        />
+                    )} 
 
-            <HomepageTitle>Heluhelu</HomepageTitle>
-            <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
+                    <HomepageTitle>Heluhelu</HomepageTitle>
+                    <HomepageText>Load your Hawaiian texts and get started reading! Click on words you don't know to see their definitions and keep track of your vocabulary as you read!</HomepageText>
 
-            <HomepageButtonContainer>
-                <Link to={"/import/text"}>
-                    <ImportButton value="Import">
-                        <ButtonSpan>
-                            <img src={import_icon} alt="import new content"/>
-                        </ButtonSpan>
-                        <ButtonSpan>Import</ButtonSpan>
-                    </ImportButton>
-                </Link>
-            </HomepageButtonContainer>
-            {isLoading && <SkeletonHomePage/>}
-            {!isLoading && ( <ArticleList 
-                articles={articles}
-                setDeletePopup={setDeletePopup}
-                setArticleID={setArticleID}
-            />
+                    <HomepageButtonContainer>
+                        <Link to={"/import/text"}>
+                            <ImportButton value="Import">
+                                <ButtonSpan>
+                                    <img src={import_icon} alt="import new content"/>
+                                </ButtonSpan>
+                                <ButtonSpan>Import</ButtonSpan>
+                            </ImportButton>
+                        </Link>
+                    </HomepageButtonContainer>
+                    {isLoading && <SkeletonHomePage/>}
+                    {!isLoading && ( <ArticleList 
+                        articles={articles}
+                        setDeletePopup={setDeletePopup}
+                        setArticleID={setArticleID}
+                    />
+                    )}
+                </>
             )}
         </>
     ) 
