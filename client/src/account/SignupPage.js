@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
@@ -68,7 +68,6 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                     if (error["email_format"]) {
                         setEmailFormatError(error["email_format"])
                     }
-                    console.log(error)
                 })
             } else {
                 res.json().then(user => {
