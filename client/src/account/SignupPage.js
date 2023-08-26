@@ -11,7 +11,8 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     const [usernameError, setUsernameError] = useState(null)
     const [lengthError, setLengthError] = useState(null)
     const [capitalLetterError, setCapitalLetterError] = useState(null)
-    const [emailError, setEmailError] = useState(null)
+    const [emailExistError, setEmailExistError] = useState(null)
+    const [emailFormatError, setEmailFormatError] = useState(null)
 
     const { setUser } = useContext(UserContext)
     const inputType = visible ?  "text" : "password"
@@ -33,9 +34,11 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     function handleSubmit(e) {
         e.preventDefault()
         setUsernameError(null)
-        setCapitalLetterError(null)
-        setEmailError(null)
         setLengthError(null)
+        setCapitalLetterError(null)
+        setEmailFormatError(null)
+        setEmailExistError(null)
+        
         const loginUser = {
             username: formData.username,
             email: formData.email,
@@ -52,13 +55,21 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                 res.json().then(error =>{
                     if (error["username"]){
                         setUsernameError(error["username"])
-                    } else {
-                        setLengthError(error["message"][0]["length"])
-                        setCapitalLetterError(error["message"][0]["capital_letter"])
-                        setEmailError(error["message"][0]["email"])
+                    } 
+                    if (error["email_exist"]) {
+                        setEmailExistError(error["email_exist"])
                     }
-                }
-                )
+                    if (error["length"]) {
+                        setLengthError(error["length"])
+                    }
+                    if (error["capital_letter"]) {
+                        setCapitalLetterError(error["capital_letter"])
+                    }
+                    if (error["email_format"]) {
+                        setEmailFormatError(error["email_format"])
+                    }
+                    console.log(error)
+                })
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -114,10 +125,17 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                         onChange={handleInput}
                     />
                 
-                    {emailError && (
+                    {emailFormatError && (
                         <ErrorContainer>
                             <span>
-                                {emailError}
+                                {emailFormatError}
+                            </span>
+                        </ErrorContainer>
+                    )}
+                    {emailExistError && (
+                        <ErrorContainer>
+                            <span>
+                                {emailExistError}
                             </span>
                         </ErrorContainer>
                     )}
@@ -133,21 +151,22 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                         value={formData.password}
                         onChange={handleInput}
                     />
+                
+                    {lengthError && (
+                        <ErrorContainer>
+                            <span>
+                                {lengthError}
+                            </span>
+                        </ErrorContainer>
+                    )}
+                    {capitalLetterError && (
+                        <ErrorContainer>
+                            <span>
+                                {capitalLetterError}
+                            </span>
+                        </ErrorContainer>
+                    )}
                 </InputBox>
-                {lengthError && (
-                    <ErrorContainer>
-                        <span>
-                            {lengthError}
-                        </span>
-                    </ErrorContainer>
-                )}
-                {capitalLetterError && (
-                    <ErrorContainer>
-                        <span>
-                            {capitalLetterError}
-                        </span>
-                    </ErrorContainer>
-                )}
 
                 <PasswordSuggestion>
                     <h4 style={{marginBottom: "7px"}}>Make sure your password:</h4>

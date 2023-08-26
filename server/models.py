@@ -91,7 +91,7 @@ class User(db.Model, SerializerMixin):
         # $: anchors the end string
         email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         if not re.match(email_pattern, email):
-            self.validation_errors["email"] = "Invalid email format."
+            self.validation_errors["email_format"] = "Invalid email format."
         return email
 
     @validates('_password_hash')
