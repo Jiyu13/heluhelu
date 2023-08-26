@@ -67,7 +67,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
+    email = db.Column(db.String(120), nullable=True, unique=True)
 
     # one-to-many: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
