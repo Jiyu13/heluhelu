@@ -600,7 +600,7 @@ class Signup(Resource):
                 try:
                     new_user = User(username=username, _password_hash=password, email=email)
                     new_user.password_hash = password
-                    
+
                     new_user.after_validate()
                     
                     db.session.add(new_user)
@@ -618,15 +618,20 @@ class Login(Resource):
     def post(self):
         username = request.get_json()["username"]
         password = request.get_json()["password"]
-        user = User.query.filter_by(username=username).first()
+
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        if bool(re.match(email_pattern, username)):
+            user = User.query.filter_by(email=username).first()
+        else:
+            user = User.query.filter_by(username=username).first()
         
         if user:
             if user.authenticate(password):
                 session["user_id"] = user.id
                 session.modified = True
                 return make_response(user.to_dict(), 201)
-            return make_response({"message": "Invalid username or password"}, 401)
-        return make_response({"message": "Invalid username or password"}, 401)
+            return make_response({"message": "Invalid username/email or password"}, 401)
+        return make_response({"message": "Invalid username/email or password"}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
 

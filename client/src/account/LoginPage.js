@@ -77,7 +77,7 @@ export function LoginPage( {handleToSignup, errors, setErrors, ToggleIcon, visib
                     <Input 
                         required 
                         type="text" 
-                        placeholder="Username" 
+                        placeholder="Username or email" 
                         name="username"
                         value={formData.username}
                         onChange={handleInput}
