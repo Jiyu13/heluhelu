@@ -118,7 +118,7 @@ class Articles(Resource):
             articles = Article.query.filter_by(user_id=user_id).all()
             articles = sorted(articles, key=lambda x: x.update_at, reverse=True)
             articles_dict = [article.to_dict(rules=("-user",)) for article in articles]
-            return make_response(articles_dict, 200)
+            return make_response(jsonify(articles_dict), 200)
 
     def post(self):
         user_id = session["user_id"]
@@ -141,7 +141,7 @@ class Articles(Resource):
         db.session.add(new_article)
         db.session.commit()
 
-        return make_response(new_article.to_dict(), 201)
+        return make_response(jsonify(new_article.to_dict()), 201)
 api.add_resource(Articles, '/articles', endpoint="articles")
 
 # ======================= article =========================================
@@ -218,7 +218,7 @@ class ArticleInfo(Resource):
             "ingored_total": ingored_total, "ignored_unique": ignored_unique,
             "total_new": new_words, "new_unique": new_unique
         }
-        return make_response(response, 201)
+        return make_response(jsonify(response), 201)
 api.add_resource(ArticleInfo, "/articles/<int:article_id>/info")
 
 class ArticleFinish(Resource):
@@ -227,7 +227,7 @@ class ArticleFinish(Resource):
         article = Article.query.filter_by(id=article_id, user_id=current_user).first()
         article.check_finished = 1
         db.session.commit()
-        return make_response(article.to_dict(), 200)
+        return make_response(jsonify(article.to_dict()), 200)
 api.add_resource(ArticleFinish, '/article/<int:article_id>/check_finish')
 
 class ArticleByID(Resource):
@@ -248,7 +248,7 @@ class ArticleByID(Resource):
             "article": article.to_dict(),
             "current_page": article.current_page
         }
-        return make_response(response, 200)
+        return make_response(jsonify(response), 200)
 api.add_resource(ArticleByID, '/articles/<int:id>')    
 
 class ArticleByArticleId(Resource):
@@ -257,7 +257,7 @@ class ArticleByArticleId(Resource):
         article = Article.query.filter_by(id=article_id, user_id=current_user).first()
         article.current_page = request.get_json()["current_page"]
         db.session.commit()
-        return make_response(article.to_dict(), 200)
+        return make_response(jsonify(article.to_dict()), 200)
 
     def delete(self, article_id):
         current_user = session["user_id"]
@@ -277,7 +277,7 @@ class ArticleSharedPageByID(Resource):
             }
             return make_response(jsonify(response_body), 404)
 
-        return make_response(article.to_dict(), 200)
+        return make_response(jsonify(article.to_dict()), 200)
 api.add_resource(ArticleSharedPageByID, '/article/share/<int:id>')
 
 
@@ -290,7 +290,7 @@ class ArticleReceivePage(Resource):
             }
             return make_response(jsonify(response_body), 404)
 
-        return make_response(article.to_dict(), 200)
+        return make_response(jsonify(article.to_dict()), 200)
 api.add_resource(ArticleReceivePage, '/article/share_receive/<string:uuid>')
 
 
@@ -303,7 +303,7 @@ class ArticleByUUID(Resource):
             }
             return make_response(jsonify(response_body), 404)
 
-        return make_response(article.to_dict(), 200)
+        return make_response(jsonify(article.to_dict()), 200)
 api.add_resource(ArticleByUUID, '/articles/<string:uuid>')
 
 class ArticleEdit(Resource):
@@ -315,7 +315,7 @@ class ArticleEdit(Resource):
             article.update_at = datetime.utcnow()
             db.session.add(article)
             db.session.commit()
-            response = make_response(article.to_dict(), 200)
+            response = make_response(jsonify(article.to_dict()), 200)
         except:
             response = make_response({"error": "article not found"}, 404)
         return response
@@ -379,7 +379,7 @@ class UserWords(Resource):
         user_id = session["user_id"]
         custom_words = UserWord.query.filter_by(user_id=user_id).all()
         custom_words_dict = [word.to_dict(rules=("-user",)) for word in custom_words]
-        return make_response(custom_words_dict, 200)
+        return make_response(jsonify(custom_words_dict), 200)
 
     def post(self):
         word = request.get_json()["word"]
@@ -397,7 +397,7 @@ class UserWords(Resource):
         )
         db.session.add(new_user_word)
         db.session.commit()
-        return make_response(new_user_word.to_dict(), 201)
+        return make_response(jsonify(new_user_word.to_dict()), 201)
 api.add_resource(UserWords, '/user_words', endpoint="user_words")
 
 
@@ -408,7 +408,7 @@ class UserWordByID(Resource):
             setattr(custom_word, attr, request.get_json()[attr])
         db.session.add(custom_word)
         db.session.commit()
-        response = make_response(custom_word.to_dict(), 200)
+        response = make_response(jsonify(custom_word.to_dict()), 200)
         return response
     
     def delete(self, id):
@@ -479,7 +479,7 @@ class PageReadEvents(Resource):
         db.session.add(new_read_event)
         db.session.commit()
         response = new_read_event.to_dict()
-        return make_response(response, 201)
+        return make_response(jsonify(response), 201)
 api.add_resource(PageReadEvents, "/stats", endpoint="stats")
 
 
@@ -528,7 +528,7 @@ class GetVocabulariesTranslations(Resource):
             }
             result.append(vocab_translation)
 
-        return make_response(result, 200)
+        return make_response(jsonify(result), 200)
 
 api.add_resource(GetVocabulariesTranslations, "/vocabularies_translations", endpoint="vocabularies_translations")
 
@@ -541,7 +541,7 @@ class GetVocabularies(Resource):
         user_id = session["user_id"]
         vocabularies = Vocabulary.query.filter_by(user_id=user_id).all()
         vocabularies_dict = [vocab.to_dict() for vocab in vocabularies]
-        return make_response(vocabularies_dict, 200)
+        return make_response(jsonify(vocabularies_dict), 200)
 api.add_resource(GetVocabularies, "/vocabularies", endpoint="vocabularies")
 
 
@@ -559,7 +559,7 @@ class VocabularyByStatus(Resource):
             else:
                 vocab.status = status
                 db.session.commit()
-                response = make_response(vocab.to_dict(), 200)
+                response = make_response(jsonify(vocab.to_dict()), 200)
                 return response
         else:
             vocab = Vocabulary(
@@ -569,7 +569,7 @@ class VocabularyByStatus(Resource):
             )
             db.session.add(vocab)
             db.session.commit()
-            response = make_response(vocab.to_dict(), 201)
+            response = make_response(jsonify(vocab.to_dict()), 201)
             return response    
 
 api.add_resource(VocabularyByStatus, "/vocabulary/<string:word>/<int:status>") 
@@ -581,7 +581,7 @@ class CheckSession(Resource):
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
             if user:
-                return make_response(user.to_dict(), 200)
+                return make_response(jsonify(user.to_dict()), 200)
         return make_response({'message': '401: Not Authorized'}, 401)
     
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -611,12 +611,12 @@ class Signup(Resource):
                 db.session.add(new_user)
                 db.session.commit()
                 session["user_id"] = new_user.id
-                return new_user.to_dict(), 201 
+                return make_response(jsonify(new_user.to_dict()), 201)
             except ValueError as e:
                 for error_dict in e.args:
                     for key, value in error_dict.items():
                         errors[key] = value
-        return make_response(errors, 422)
+        return make_response(jsonify(errors), 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
 
@@ -635,7 +635,7 @@ class Login(Resource):
             if user.authenticate(password):
                 session["user_id"] = user.id
                 session.modified = True
-                return make_response(user.to_dict(), 201)
+                return make_response(jsonify(user.to_dict()), 201)
             return make_response({"message": "Invalid username/email or password"}, 401)
         return make_response({"message": "Invalid username/email or password"}, 401)
 api.add_resource(Login, '/login', endpoint='login')
