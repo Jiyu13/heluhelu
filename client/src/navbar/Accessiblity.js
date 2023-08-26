@@ -4,11 +4,17 @@ import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
+import { useNavigate } from "react-router-dom";
 
 
 export function Accessibility() {
 
     const {setUser, user} = useContext(UserContext)
+
+    let navigate = useNavigate()
+    function redirectHome() {
+        navigate('/') 
+    }
 
     // =========== logout =================================
     function handleLogout() {
@@ -17,6 +23,7 @@ export function Accessibility() {
       })
       .then(() => {
         setUser(null)
+        redirectHome()
       })
     }
 
