@@ -82,14 +82,12 @@ export function VocabularyLists() {
 
             {isMobile ? 
                 <MobileVocabularyTable 
-                    filterResults={filterResults}
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
                 />
                 :
                 <VocabInfoTable 
-                    filterResults={filterResults}
                     handleFilterAll={handleFilterAll}
                     handleFilterKnown={handleFilterKnown}
                     handleFilterStudying={handleFilterStudying}
