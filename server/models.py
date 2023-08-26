@@ -5,6 +5,7 @@ from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 import string
+import re
 
 class Dictionary(db.Model, SerializerMixin):
     __tablename__ = 'dictionaries'
@@ -66,6 +67,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
 
     # one-to-many: a user has many dictionaries and articles
     dictionaries = db.relationship("Dictionary", backref="user")
@@ -78,18 +80,65 @@ class User(db.Model, SerializerMixin):
 
     serialize_rules = ('-dictionaries', "-articles", "-user_articles", "-vocabularies", '-page_read_events', "-words", "-_password_hash")
 
-    # ================= password validation ==========================================
+    # ================ email + password validation =============================================
+    validation_errors = {}
+    @validates('email')
+    def validate_email(self, key, email):
+        # [a-zA-Z0-9._%+-]+: matches 1+ occurrences of a-zA-Z, digits, ., _, %, +, - -> part before @ symbol
+        # [a-zA-Z0-9]+: matches 1+ occurrences of a-zA-Z, digits, -, -> domain name part
+        # \.: matches a dot, need to be escaped with a \
+        # [a-zA-Z]{2,}: mathces 2+ occurrences of letters, -. -> top-level domain(TLD) part
+        # $: anchors the end string
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        if not re.match(email_pattern, email):
+            self.validation_errors["email"] = "Invalid email format."
+        return email
+
     @validates('_password_hash')
     def validate_password(self, key, _password_hash):
         cap_alphabets = list(string.ascii_uppercase)
-        special_characters = list(string.punctuation)
+        # special_characters = list(string.punctuation)
         if not len(_password_hash) >= 8: 
-            raise ValueError("Password must be at least 8 characters long.")
+           self.validation_errors["length"] = "Must be 8 or more characters."
         if not any(each in cap_alphabets for each in _password_hash):
-            raise ValueError("Password must contain at least one capital letter.")
+            self.validation_errors["capital_letter"] = "Must contain at least one capital letter."
         # if not any(each in special_characters for each in _password_hash):
         #     raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
         return _password_hash
+    
+    def after_validate(self):
+        if self.validation_errors:
+            errors = self.validation_errors.copy()
+            # clear the error list
+            self.validation_errors.clear()
+            raise ValueError(errors)
+
+    # # ================ email validation =============================================
+    # @validates('email')
+    # def validate_email(self, key, email):
+    #     # [a-zA-Z0-9._%+-]+: matches 1+ occurrences of a-zA-Z, digits, ., _, %, +, - -> part before @ symbol
+    #     # [a-zA-Z0-9]+: matches 1+ occurrences of a-zA-Z, digits, -, -> domain name part
+    #     # \.: matches a dot, need to be escaped with a \
+    #     # [a-zA-Z]{2,}: mathces 2+ occurrences of letters, -. -> top-level domain(TLD) part
+    #     # $: anchors the end string
+    #     email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    #     if not re.match(email_pattern, email):
+    #         raise ValueError({"email": "Invalid email format."})
+    #     return email
+
+
+    # # ================= password validation ==========================================
+    # @validates('_password_hash')
+    # def validate_password(self, key, _password_hash):
+    #     cap_alphabets = list(string.ascii_uppercase)
+    #     special_characters = list(string.punctuation)
+    #     if not len(_password_hash) >= 8: 
+    #         raise ValueError({"length": "Password must be at least 8 characters long."})
+    #     if not any(each in cap_alphabets for each in _password_hash):
+    #         raise ValueError({"capital letter": "Password must contain at least one capital letter."})
+    #     # if not any(each in special_characters for each in _password_hash):
+    #     #     raise ValueError("Password must contain at least one of these characters: " + string.punctuation)
+    #     return _password_hash
 
     # ================= incorporate bcrypt to create a secure password. ====================
     @hybrid_property

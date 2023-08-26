@@ -179,6 +179,7 @@ const ForgetPasswordLink = styled.a`
     }
 `
 const LoginButton = styled.button`
+    margin-top: 15px;
     width: 100%;
     height: 40px;
     border-radius: 8px;

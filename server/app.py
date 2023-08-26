@@ -591,22 +591,26 @@ class Signup(Resource):
     def post(self): 
         username = request.get_json()["username"]
         password = request.get_json()["password"]
+        email = request.get_json()["email"]
 
-        if username and password:
+        if username and password and email:
             user = User.query.filter_by(username=username).first()
             # check if user already exists in db
             if not user:
                 try:
-                    new_user = User(username=username, _password_hash=password)
+                    new_user = User(username=username, _password_hash=password, email=email)
                     new_user.password_hash = password
+                    
+                    new_user.after_validate()
+                    
                     db.session.add(new_user)
                     db.session.commit()
 
                     session["user_id"] = new_user.id
                     return new_user.to_dict(), 201 
                 except ValueError as e:
-                    return make_response({"message": [e.__str__()]}, 422)
-        return make_response({'message': 'Username already exists, please try again!'}, 422)
+                    return make_response({"message": e.args}, 422)
+        return make_response({'username': 'Username already exists, please try again!'}, 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
 
