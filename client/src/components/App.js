@@ -112,7 +112,36 @@ function App() {
   return (
     <UserContext.Provider value={userContextValue}>
       {!user ? 
-        <AccountBox/> 
+        <>
+          <AccountBox/>
+          {/* <Routes>
+            <Route
+              exact
+              path='/login'
+              element={<LoginPage/>}
+            >
+            </Route>
+
+            <Route
+              exact
+              path='/signup'
+              element={<SignupPage/>}
+            >
+            </Route>
+            <Route
+              exact
+              path='/'
+              element={
+                <Home 
+                  articles={articles}
+                  setArticles={setArticles}
+                  onDeleteArticle={onDeleteArticle}
+                />
+              }
+            >
+            </Route>
+          </Routes> */}
+        </>
         :
         <> 
             <header>
@@ -196,7 +225,7 @@ function App() {
                 >
                 </Route>
 
-                <Route
+                {/* <Route
                   exact
                   path='/login'
                   element={<LoginPage/>}
@@ -208,7 +237,7 @@ function App() {
                   path='/signup'
                   element={<SignupPage/>}
                 >
-                </Route>
+                </Route> */}
 
                 <Route
                   exact
