@@ -589,24 +589,34 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 # ============================== account =========================================
 class Signup(Resource):
     def post(self): 
-        username = request.get_json()["username"]
+        username_input = request.get_json()["username"]
         password = request.get_json()["password"]
+        email_input = request.get_json()["email"]
+        username = User.query.filter_by(username=username_input).first()
+        email = User.query.filter_by(email=email_input).first()
+        
+        errors = {}
+        if username or email:
+            if username:
+                errors["username"] = "Username already exists."
+            if email:
+                errors["email_exist"] = "Email already exists."
+        else:
+            try:
+                new_user = User(username=username_input, _password_hash=password, email=email_input)
+                new_user.password_hash = password
 
-        if username and password:
-            user = User.query.filter_by(username=username).first()
-            # check if user already exists in db
-            if not user:
-                try:
-                    new_user = User(username=username, _password_hash=password)
-                    new_user.password_hash = password
-                    db.session.add(new_user)
-                    db.session.commit()
-
-                    session["user_id"] = new_user.id
-                    return new_user.to_dict(), 201 
-                except ValueError as e:
-                    return make_response({"message": [e.__str__()]}, 422)
-        return make_response({'message': 'Username already exists, please try again!'}, 422)
+                new_user.after_validate()
+                
+                db.session.add(new_user)
+                db.session.commit()
+                session["user_id"] = new_user.id
+                return new_user.to_dict(), 201 
+            except ValueError as e:
+                for error_dict in e.args:
+                    for key, value in error_dict.items():
+                        errors[key] = value
+        return make_response(errors, 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
 
 
@@ -614,15 +624,20 @@ class Login(Resource):
     def post(self):
         username = request.get_json()["username"]
         password = request.get_json()["password"]
-        user = User.query.filter_by(username=username).first()
+
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        if bool(re.match(email_pattern, username)):
+            user = User.query.filter_by(email=username).first()
+        else:
+            user = User.query.filter_by(username=username).first()
         
         if user:
             if user.authenticate(password):
                 session["user_id"] = user.id
                 session.modified = True
                 return make_response(user.to_dict(), 201)
-            return make_response({"message": "Invalid username or password"}, 401)
-        return make_response({"message": "Invalid username or password"}, 401)
+            return make_response({"message": "Invalid username/email or password"}, 401)
+        return make_response({"message": "Invalid username/email or password"}, 401)
 api.add_resource(Login, '/login', endpoint='login')
 
 

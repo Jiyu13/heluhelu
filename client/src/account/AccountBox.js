@@ -38,7 +38,7 @@ export function AccountBox() {
                 isLogin=== "login" ? 
                 <LoginPage handleToSignup={handleToSignup} errors={errors} setErrors={setErrors} ToggleIcon={ToggleIcon} visible={visible}/>
                 :
-                <SignupPage handleToLogin={handleToLogin} errors={errors} setErrors={setErrors} ToggleIcon={ToggleIcon} visible={visible}/>
+                <SignupPage handleToLogin={handleToLogin} ToggleIcon={ToggleIcon} visible={visible}/>
             
             }
         </AppContainer>

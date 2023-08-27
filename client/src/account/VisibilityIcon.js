@@ -17,7 +17,7 @@ export function VisibilityIcon( {ToggleIcon, visible} ) {
     )
 }
 
-const IconContainer = styled.div`
+export const IconContainer = styled.div`
     position: absolute;
     right: 8px;   // the right margin edge to the right edge of it's container block is 8px
     top: 15px;

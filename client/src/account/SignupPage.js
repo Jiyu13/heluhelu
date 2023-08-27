@@ -1,16 +1,25 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 import { Link, useNavigate } from "react-router-dom"
-import { VisibilityIcon } from "./VisibilityIcon"
+import { IconContainer, VisibilityIcon } from "./VisibilityIcon"
+import email_white_24dp from '../assets/images/email_white_24dp.svg'
+import person_white_24dp from "../assets/images/person_white_24dp.svg"
 
-export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visible} ) {
+export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
+    const [usernameError, setUsernameError] = useState(null)
+    const [lengthError, setLengthError] = useState(null)
+    const [capitalLetterError, setCapitalLetterError] = useState(null)
+    const [emailExistError, setEmailExistError] = useState(null)
+    const [emailFormatError, setEmailFormatError] = useState(null)
+
     const { setUser } = useContext(UserContext)
     const inputType = visible ?  "text" : "password"
 
     const initialValue = {
         username: "",
+        email: "",
         password: "",
     }
 
@@ -24,9 +33,15 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
 
     function handleSubmit(e) {
         e.preventDefault()
-
+        setUsernameError(null)
+        setLengthError(null)
+        setCapitalLetterError(null)
+        setEmailFormatError(null)
+        setEmailExistError(null)
+        
         const loginUser = {
             username: formData.username,
+            email: formData.email,
             password: formData.password
         }
 
@@ -37,9 +52,24 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
         })
         .then(res => {
             if (res.status === 422) {
-                res.json().then(error =>
-                    setErrors(error["message"])
-                )
+                res.json().then(error =>{
+                    if (error["username"]){
+                        setUsernameError(error["username"])
+                    } 
+                    if (error["email_exist"]) {
+                        setEmailExistError(error["email_exist"])
+                    }
+                    if (error["length"]) {
+                        setLengthError(error["length"])
+                    }
+                    if (error["capital_letter"]) {
+                        setCapitalLetterError(error["capital_letter"])
+                    }
+                    if (error["email_format"]) {
+                        setEmailFormatError(error["email_format"])
+                    }
+                    console.log(error)
+                })
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -48,27 +78,22 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
             }
         })
     }
+
     //  ========= go to home page after loging successfully ==============
     let navigate = useNavigate()
     function redirectHome() {
         navigate('/') 
     }
 
-
     return (
         <BoxContainer>
             <FormContainer onSubmit={handleSubmit}>
                 <Title>Sign Up</Title>
 
-                {errors && (
-                    <ErrorContainer>
-                        <span>
-                            {errors}
-                        </span>
-                    </ErrorContainer>
-                )}
-
                 <InputBox>
+                    <UserIconContainer>
+                        <img src={person_white_24dp} alt="user icon"/>
+                    </UserIconContainer>
                     <Input 
                         required 
                         type="text" 
@@ -77,7 +102,45 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
                         value={formData.username}
                         onChange={handleInput}
                     />
+                    
+                    {usernameError && (
+                        <ErrorContainer>
+                            <span>
+                                {usernameError}
+                            </span>
+                        </ErrorContainer>
+                    )}
                 </InputBox>
+                <InputBox>
+                    <EmailIconContainer>
+                        <img src={email_white_24dp} alt="email icon"/>
+                    </EmailIconContainer>
+                    
+                    <Input 
+                        required 
+                        type="text"
+                        placeholder="Email" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInput}
+                    />
+                
+                    {emailFormatError && (
+                        <ErrorContainer>
+                            <span>
+                                {emailFormatError}
+                            </span>
+                        </ErrorContainer>
+                    )}
+                    {emailExistError && (
+                        <ErrorContainer>
+                            <span>
+                                {emailExistError}
+                            </span>
+                        </ErrorContainer>
+                    )}
+                </InputBox>
+
                 <InputBox>
                     <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
                     <Input 
@@ -88,12 +151,28 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
                         value={formData.password}
                         onChange={handleInput}
                     />
+                
+                    {lengthError && (
+                        <ErrorContainer>
+                            <span>
+                                {lengthError}
+                            </span>
+                        </ErrorContainer>
+                    )}
+                    {capitalLetterError && (
+                        <ErrorContainer>
+                            <span>
+                                {capitalLetterError}
+                            </span>
+                        </ErrorContainer>
+                    )}
                 </InputBox>
 
                 <PasswordSuggestion>
                     <h4 style={{marginBottom: "7px"}}>Make sure your password:</h4>
                     <ul style={{marginTop: "0px"}}>
-                        <li>is 8 characters or longer</li>
+                        
+                        <li>is 8 characters or longer</li> 
                         <li>contains at least one capital letter</li>
                         {/* <li>contain at least one of these: !@#$%^&*</li> */}
                     </ul>
@@ -118,10 +197,12 @@ export function SignupPage( {handleToLogin, errors, setErrors, ToggleIcon, visib
     )
 }
 
+const UserIconContainer = styled(IconContainer)``
+const EmailIconContainer = styled(IconContainer)``
 const BoxContainer = styled.div`
     position: relative; // relative to its normal position, which is AppContainer
     width: 400px;
-    height: 450px;
+    height: 600px;
     background: transparent;
     display: flex;
     justify-content: center;
@@ -162,12 +243,13 @@ const Input = styled.input`
 const PasswordSuggestion = styled.div`
     margin: -15px 0px 15px;
     // font-size: .9em;
-    // color: #fff;
+    color: #bdc3c7;
     // display: flex;
     justify-content: center;
 `
 
 const SignupButton = styled.button`
+    margin-top: 15px;
     width: 100%;
     height: 40px;
     border-radius: 8px;
@@ -196,6 +278,7 @@ const SignUpLinkContainer = styled.div`
 const ErrorContainer = styled.div`
     text-align: center;
     padding: 5px;
+    padding-top: 0px;
     margin: 0;
     background-color: #FBFFB1;
     border-top: 2px solid #d13128
