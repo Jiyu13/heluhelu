@@ -160,6 +160,11 @@ const Input = styled.input`
         color: #fff;
     }
 
+    &:hover, &:focus, &:active, &:-webkit-autofill {
+        -webkit-text-fill-color: white;
+        transition: background-color 5000s ease-in-out 0s;  // This is a trick to keep the background color after the autofill is applied
+    }
+
 `
 const ForgetPassword = styled.div`
     margin: -15px 0px 15px;

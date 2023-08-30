@@ -113,7 +113,10 @@ const Input = styled.input`
     margin-bottom: 12px;
     width: 100%;
     box-sizing: border-box;
-    -webkit-text-fill-color: black !important;
+    &:hover, &:focus, &:active, &:-webkit-autofill {
+        -webkit-text-fill-color: black;
+        transition: background-color 5000s ease-in-out 0s;  // This is a trick to keep the background color after the autofill is applied
+    }
 `
 
 const Label = styled.div`
