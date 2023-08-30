@@ -10,6 +10,8 @@ import re
 import uuid
 from datetime import datetime, timedelta
 
+from functions.fetch_profile_color import profile_color
+
 class Dictionaries(Resource):
     def get(self):
         dictionaries = Dictionary.query.all()
@@ -675,7 +677,6 @@ class CheckSession(Resource):
         if session.get('user_id'):
             user = User.query.filter_by(id=session['user_id']).first()
             if user:
-                user_dict = user.to_dict()
                 user_hash = hash(user.username)
                 colors = ("#1abc9c", 
                         "#2980b9", 
@@ -695,7 +696,10 @@ class CheckSession(Resource):
                         "#FC427B",
                         "#CAD3C8",
                         "#FEA47F")
+                user_dict = user.to_dict()
                 user_dict["profile_color"] = colors[user_hash % len(colors)]
+                # user_dict = user.to_dict()
+                print(user_dict)
                 return make_response(jsonify(user_dict), 200)
         return make_response({'message': '401: Not Authorized'}, 401)
     
@@ -722,18 +726,20 @@ class Signup(Resource):
                 new_user.password_hash = password
 
                 new_user.after_validate()
-                
                 db.session.add(new_user)
                 db.session.commit()
+
+                new_user_dict = new_user.to_dict()
+                colour = profile_color(new_user.username)
+                new_user_dict["profile_color"] = colour
                 session["user_id"] = new_user.id
-                return make_response(jsonify(new_user.to_dict()), 201)
+                return make_response(jsonify(new_user_dict), 201)
             except ValueError as e:
                 for error_dict in e.args:
                     for key, value in error_dict.items():
                         errors[key] = value
         return make_response(jsonify(errors), 422)
 api.add_resource(Signup, '/signup', endpoint='signup')
-
 
 class Login(Resource):
     def post(self):
@@ -750,7 +756,12 @@ class Login(Resource):
             if user.authenticate(password):
                 session["user_id"] = user.id
                 session.modified = True
-                return make_response(jsonify(user.to_dict()), 201)
+
+                user_dict = user.to_dict()
+                colour = profile_color(user.username)
+                user_dict["profile_color"] = colour
+
+                return make_response(jsonify(user_dict), 201)
             return make_response({"message": "Invalid username/email or password"}, 401)
         return make_response({"message": "Invalid username/email or password"}, 401)
 api.add_resource(Login, '/login', endpoint='login')

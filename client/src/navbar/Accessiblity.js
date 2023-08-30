@@ -35,11 +35,11 @@ export function Accessibility() {
         redirectHome()
       })
     }
-
+  
     return (
         <NavLinksContainer>
             <MenuTrigger onClick={handleClick}>
-              <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
+              <ProfileAvatar style={{backgroundColor: `${user?.profile_color}`}}>
                 <FirstLetter>{user.username[0]}</FirstLetter>
               </ProfileAvatar>
               {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
