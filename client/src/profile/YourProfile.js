@@ -112,6 +112,7 @@ const Input = styled.input`
     margin-bottom: 12px;
     width: 100%;
     box-sizing: border-box;
+    -webkit-text-fill-color: black !important;
 `
 
 const Label = styled.div`
