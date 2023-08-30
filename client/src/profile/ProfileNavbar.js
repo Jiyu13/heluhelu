@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export function ProfileNavbar( {page, setPage} ) {
+export function ProfileNavbar( {page, setPage, setIsChanged} ) {
 
     let bgColor = "#f1f2f6"
 
@@ -8,6 +8,7 @@ export function ProfileNavbar( {page, setPage} ) {
         e.preventDefault();
         const value = e.currentTarget.getAttribute("data-value")
         setPage(value)
+        setIsChanged(false)
     }
 
     return (
@@ -17,21 +18,21 @@ export function ProfileNavbar( {page, setPage} ) {
                 data-value="profile" 
                 style={{backgroundColor: page === "profile" ? bgColor : ""}}
             >
-                <Link href="/profile">Profile</Link>
+                <Link href="/profile/#">Profile</Link>
             </LinkItem>
             <LinkItem 
                 onClick={handleSwitchPage} 
-                data-value="password" 
-                style={{backgroundColor: page === "password" ? bgColor : ""}}
+                data-value="change_password" 
+                style={{backgroundColor: page === "change_password" ? bgColor : ""}}
             >
-                <Link href="/settings/change_password">Password</Link>
+                <Link href="/profile/#">Password</Link>
             </LinkItem>
             <LinkItem 
                 onClick={handleSwitchPage} 
                 data-value="delete_account" 
                 style={{backgroundColor: page === "delete_account" ? bgColor : ""}}
             >
-                <Link href="/settings/deactivate">Delete Account</Link>
+                <Link href="/profile/#">Delete Account</Link>
             </LinkItem>
         </NavbarContainer>
     )

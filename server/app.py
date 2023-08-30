@@ -123,7 +123,36 @@ class CheckUserInfo(Resource):
                     for key, value in error_dict.items():
                         errors[key] = value
         return make_response(jsonify(errors), 422)
-api.add_resource(CheckUserInfo, '/<int:id>/check_info', endpoint="check_info")
+api.add_resource(CheckUserInfo, '/<int:id>/check_info')
+
+class ChangePassword(Resource):
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        old_password = request.get_json()["old_password"]
+        new_password = request.get_json()["new_password"]
+        confirm_password = request.get_json()["confirm_password"]
+        errors = {}
+        if new_password != confirm_password:
+            errors["not_match"] = "Passwords do not match."
+        else:
+            if not user.authenticate(old_password):
+                errors["incorrect"] = "Password is incorrect!"
+            else:
+                try:
+                    user.validate_password(key="_password_hash", _password_hash=new_password)
+                    user.after_validate()
+                    user.password_hash = new_password
+                    db.session.add(user)
+                    session.modified = True  # manually inform Flask that the session has been modified
+                    db.session.commit()
+                    response = {"message": "Password updated successfully!"}
+                    return make_response(jsonify(response), 200)
+                except ValueError as e:
+                    for error_dict in e.args:
+                        for key, value in error_dict.items():
+                            errors[key] = value
+        return make_response(jsonify(errors), 422)
+api.add_resource(ChangePassword, '/<int:id>/change_password')
 
 # ========================================= Articles ==========================================
 class GetFirstArticle(Resource):

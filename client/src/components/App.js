@@ -19,6 +19,8 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
 import { ProfilePage } from "../profile/ProfilePage";
+import { ChangePassword } from "../profile/ChangePassword";
+import { YourProfile } from "../profile/YourProfile";
 
 const USER_NOT_SET = -1;
 

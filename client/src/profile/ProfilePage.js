@@ -3,6 +3,7 @@ import { YourProfile } from "./YourProfile"
 import { useState } from "react"
 import { ProfileNavbar } from "./ProfileNavbar"
 import { ChangesSave } from "../components/ChangesSave"
+import { ChangePassword } from "./ChangePassword"
 
 export function ProfilePage() {
 
@@ -20,12 +21,14 @@ export function ProfilePage() {
                     <h3>Account</h3>
                     <p>Set your account settings down below</p>
                     
-                    <ProfileNavbar page={page} setPage={setPage}/>
+                    <ProfileNavbar page={page} setPage={setPage} setIsChanged={setIsChanged}/>
                 </ProfileHeader>
                 <ProfileBody>
-
                     {page === "profile" && (
                         <YourProfile setIsChanged={setIsChanged}/>
+                    )}
+                    {page === "change_password" && (
+                        <ChangePassword setIsChanged={setIsChanged}/>
                     )}
                 </ProfileBody>
             </PageWrapper>
