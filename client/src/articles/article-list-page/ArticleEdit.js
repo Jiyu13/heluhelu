@@ -4,9 +4,9 @@ import styled from "styled-components";
 import apiFetch from "../../api/ApiFetch";
 import { SubmitButtons } from "../../components/Buttons";
 
-import check_white_24dp from "../../assets/images/check_white_24dp.svg"
 import { useMediaQuery } from "react-responsive";
 import { DeviceSize } from "../../responsive";
+import { ChangesSave } from "../../components/ChangesSave";
 
 export function ArticleEdit( {onUpdatedArticle} ) {
 
@@ -55,13 +55,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
     return (
         <EditContainer>
-            {isChanged && (
-                <PopupContainer>
-                    <PopupImage src={check_white_24dp} alt="changed successfully icon"/>
-                    <PopupText>Changes saved.</PopupText>
-                </PopupContainer>
-
-            )}
+            <ChangesSave isChanged={isChanged}/>
 
             <EditForm onSubmit={handleSubmit}>
                 <LabelTag>Title:</LabelTag>
@@ -110,26 +104,6 @@ const EditContainer = styled.div`
     margin: 90px auto 0;
     font-size: 20px;
     line-weight: 1.6;
-`
-
-const PopupContainer = styled.div`
-    width: 100%;
-    display: flex;
-    margin: 0 auto 20px;
-    color: #fff; 
-    border-radius: 8px;
-    text-align: center;
-    font-size: 15px;
-    line-weight: 1.6;
-    background: #52baf1;
-    box-shadow: rgba(0,0,0,.1) 0 3px 5px, #15a1ec 0 0 0 1px inset;
-`
-
-const PopupImage = styled.img`
-    margin-left: 20px;
-`
-const PopupText = styled.strong`
-    margin: 20px 5px;
 `
 
 const EditForm = styled.form`

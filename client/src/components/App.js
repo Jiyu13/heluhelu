@@ -17,9 +17,8 @@ import apiFetch from "../api/ApiFetch";
 import {FileImporter} from "../articles/import/FileImporter";
 import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
-import { LoginPage } from "../account/LoginPage";
-import { SignupPage } from "../account/SignupPage";
 import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
+import { ProfilePage } from "../profile/ProfilePage";
 
 const USER_NOT_SET = -1;
 
@@ -238,6 +237,12 @@ function App() {
                   element={<SignupPage/>}
                 >
                 </Route> */}
+                <Route
+                  exact
+                  path='/profile'
+                  element={<ProfilePage/>}
+                >
+                </Route>
 
                 <Route
                   exact

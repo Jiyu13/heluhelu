@@ -73,7 +73,7 @@ export function MobileNavLinks() {
 //     font-size: 14px;
 // `
 
-const NavLinksContainer = styled.div`
+export const NavLinksContainer = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
