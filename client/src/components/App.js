@@ -19,8 +19,6 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
 import { ProfilePage } from "../profile/ProfilePage";
-import { ChangePassword } from "../profile/ChangePassword";
-import { YourProfile } from "../profile/YourProfile";
 
 const USER_NOT_SET = -1;
 
@@ -113,36 +111,7 @@ function App() {
   return (
     <UserContext.Provider value={userContextValue}>
       {!user ? 
-        <>
-          <AccountBox/>
-          {/* <Routes>
-            <Route
-              exact
-              path='/login'
-              element={<LoginPage/>}
-            >
-            </Route>
-
-            <Route
-              exact
-              path='/signup'
-              element={<SignupPage/>}
-            >
-            </Route>
-            <Route
-              exact
-              path='/'
-              element={
-                <Home 
-                  articles={articles}
-                  setArticles={setArticles}
-                  onDeleteArticle={onDeleteArticle}
-                />
-              }
-            >
-            </Route>
-          </Routes> */}
-        </>
+        <AccountBox/>
         :
         <> 
             <header>
