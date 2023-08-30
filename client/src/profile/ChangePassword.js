@@ -6,12 +6,19 @@ import { SubmitButtons } from "../components/Buttons"
 import { useForm } from "react-hook-form"
 import apiFetch from "../api/ApiFetch"
 import { useState } from "react"
+import { VisibilityIcon } from "./ProfileVisibilityIcon"
+import visibility_black_24dp from "../assets/images/visibility_black_24dp.svg"
+import visibility_off_black_24dp from "../assets/images/visibility_off_black_24dp.svg"
+
 
 export function ChangePassword( {setIsChanged} ) {
 
     const { user } = useContext(UserContext)
     const { register, handleSubmit, formState: {errors}, reset } = useForm()
     const [errorMessages, setErrorMessages] = useState(null)
+    const [visibleOld, setVisibleOld] = useState(false)
+    const [visibleNew, setVisibleNew] = useState(false)
+    const [visibleConfirm, setVisibleConfirm] = useState(false)
 
     function onSubmit(data) {
         apiFetch(`/${user.id}/change_password`, {
@@ -35,15 +42,29 @@ export function ChangePassword( {setIsChanged} ) {
 
     }
 
+    function ToggleIconOld() {
+        setVisibleOld(!visibleOld)
+    }
 
+    function ToggleIconNew() {
+        setVisibleNew(!visibleNew)
+    }
+    function ToggleIconConfirm() {
+        setVisibleConfirm(!visibleConfirm)
+    }
     return (
         <ProfileContainer>
             <ProfileWrapper onSubmit={handleSubmit(onSubmit)}>
                     <Item>
                         <Label>Old password</Label>
+                        <VisibilityIconBlack
+                            ToggleIcon={ToggleIconOld} 
+                            visible={visibleOld} 
+                            canSee={visibility_black_24dp}
+                            cannotSee={visibility_off_black_24dp}
+                        />
                         <Input 
-                            type="password"
-                            name="old_password"
+                            type={visibleOld ?  "text" : "password"}
                             // defaultValue={user.}
                             {...register("old_password", {
                                 required: "Password is required",
@@ -66,9 +87,14 @@ export function ChangePassword( {setIsChanged} ) {
                                 contains at least one capital letter.
                             </ConstrainItem>
                         </PasswordConstrains>
+                        <VisibilityIconBlack 
+                            ToggleIcon={ToggleIconNew} 
+                            visible={visibleNew} 
+                            canSee={visibility_black_24dp}
+                            cannotSee={visibility_off_black_24dp}
+                        />
                         <Input 
-                            type="password"
-                            name="new_password"
+                            type={visibleNew ?  "text" : "password"}
                             // defaultValue={user.email}
                             {...register("new_password", {
                                 required: "password is required"
@@ -82,8 +108,14 @@ export function ChangePassword( {setIsChanged} ) {
 
                     <Item>
                         <Label>Confirm password</Label>
+                        <VisibilityIconBlack 
+                            ToggleIcon={ToggleIconConfirm} 
+                            visible={visibleConfirm} 
+                            canSee={visibility_black_24dp}
+                            cannotSee={visibility_off_black_24dp}
+                        />
                         <Input 
-                            type="password"
+                            type={visibleConfirm ?  "text" : "password"}
                             name="confirm_password"
                             // defaultValue={user.email}
                             {...register("confirm_password", {
@@ -105,6 +137,8 @@ export function ChangePassword( {setIsChanged} ) {
         </ProfileContainer>
     )
 }
+
+const VisibilityIconBlack = styled(VisibilityIcon)``
 
 const ErrorContainer = styled.div`
     color: red;
@@ -146,6 +180,7 @@ const Label = styled.div`
 `
 
 const Item = styled.div`
+    position: relative;
 `
 
 const ProfileWrapper = styled.form`
