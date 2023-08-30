@@ -47,7 +47,7 @@ const LinkItem = styled.li`
     align-items: center;
     justify-content: center;
     display: flex;
-    border-radius: 2px;
+    border-radius: 20px;
     line-height: 1.5em;
     font-size: 14px;
     color: #3e3e3e;
