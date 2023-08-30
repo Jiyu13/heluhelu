@@ -87,7 +87,7 @@ class DictionariesWordsByWord(Resource):
         return make_response(jsonify(response), 404)
 api.add_resource(DictionariesWordsByWord, '/search/<string:clean_word>')
 
-
+# ========================= User ===========================================================
 class Users(Resource):
     def get(self):
         users = User.query.all()
@@ -95,6 +95,35 @@ class Users(Resource):
         return make_response(users_dict, 200)
 api.add_resource(Users, '/users', endpoint="users")
 
+class CheckUserInfo(Resource):
+    def patch(self, id):
+        username_input = request.get_json()["username"]
+        email_input = request.get_json()["email"]
+
+        errors = {}
+        username = User.query.filter(User.id != id, User.username==username_input).all()
+        email = User.query.filter(User.id != id, User.email==email_input).all()
+        if username or email:
+            if username :
+                errors["username"] = "Oops...This name has been taken."
+            if email:
+                errors["email"] = "Oops...This email has been taken."
+            # print(errors)
+        else:
+            try:
+                user = User.query.filter_by(id=id).first()
+                user.username = username_input
+                user.email = email_input
+                db.session.add(user)
+                db.session.commit()
+                response = make_response(jsonify(user.to_dict()), 200)
+                return response
+            except ValueError as e:
+                for error_dict in e.args:
+                    for key, value in error_dict.items():
+                        errors[key] = value
+        return make_response(jsonify(errors), 422)
+api.add_resource(CheckUserInfo, '/<int:id>/check_info', endpoint="check_info")
 
 # ========================================= Articles ==========================================
 class GetFirstArticle(Resource):
