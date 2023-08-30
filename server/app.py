@@ -138,7 +138,14 @@ class UserById(Resource):
             return make_response(jsonify(response), 200)
 
     def delete(self, id):
+        user_id = session["user_id"]
         current_user = User.query.filter_by(id=id).first()
+        db.session.delete(current_user)
+
+        articles = Article.query.filter_by(user_id=user_id).delete()
+        vocabularies = Vocabulary.query.filter_by(user_id=user_id).delete()
+        custom_words = UserWord.query.filter_by(user_id=user_id).delete()
+        page_events = PageReadEvent.query.filter_by(user_id=user_id).delete()
         db.session.delete(current_user)
         db.session.commit()
         return make_response()
