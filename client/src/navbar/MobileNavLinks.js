@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
-import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
+// import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
 import logout_black_24dp from "../assets/images/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/person_black_24dp.svg"
 import home_black_24dp from "../assets/images/home_black_24dp.svg"
 import equalizer_black_24dp from "../assets/images/equalizer_black_24dp.svg"
 import book_black_24dp from "../assets/images/book_black_24dp.svg"
+import { FirstLetter, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
@@ -54,7 +55,10 @@ export function MobileNavLinks() {
     return (
         <NavLinksContainer>
             <MenuTrigger onClick={handleClick}>
-              <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg>
+            <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
+                <FirstLetter>{user.username[0]}</FirstLetter>
+              </ProfileAvatar>
+              {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
 
             {isOpen && (
@@ -132,26 +136,19 @@ const MenuDropdownList = styled.div`
     transform: rotate(45deg);
   }
 `
-const ProfileImg = styled.img`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  transition: transform .2s;
-  cursor: pointer;
+// const ProfileImg = styled.img`
+//   width: 24px;
+//   height: 24px;
+//   border-radius: 50%;
+//   transition: transform .2s;
+//   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.5);
-  }
-`
+//   &:hover {
+//     transform: scale(1.5);
+//   }
+// `
 const MenuTrigger = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
 `
-
-export const NavLinksContainer = styled.div`
-    height: 100%;
-    display: flex;
-    align-items: center;
-    // z-index: 1;
-`;

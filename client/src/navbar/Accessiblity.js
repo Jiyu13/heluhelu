@@ -7,9 +7,8 @@ import apiFetch from "../api/ApiFetch";
 import { useNavigate } from "react-router-dom";
 
 import { DropdownItem } from "../profile/DropdownItem";
-import { NavLinksContainer } from "./MobileNavLinks";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
-import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
+// import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
 import logout_black_24dp from "../assets/images/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/person_black_24dp.svg"
 
@@ -40,7 +39,10 @@ export function Accessibility() {
     return (
         <NavLinksContainer>
             <MenuTrigger onClick={handleClick}>
-              <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg>
+              <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
+                <FirstLetter>{user.username[0]}</FirstLetter>
+              </ProfileAvatar>
+              {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
 
             {isOpen && (
@@ -94,20 +96,44 @@ const MenuDropdownList = styled.div`
     width: 20px;
     background: var(--secondary-bg);
     transform: rotate(45deg);
-  }
 `
-const ProfileImg = styled.img`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  transition: transform .2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.5);
-  }
-
+export const FirstLetter = styled.div`
+    margin: auto 6px;
+    font-weight: bold;
+    font-size: 0.825rem;
 `
+export const ProfileAvatar = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: transform .2s;
+    cursor: pointer;
+    color: white;
+    &:hover {
+      transform: scale(1.2);
+    }
+`
+export const NavLinksContainer = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    // z-index: 1;
+`;
+
+// const ProfileImg = styled.img`
+//   width: 24px;
+//   height: 24px;
+//   border-radius: 50%;
+//   transition: transform .2s;
+//   cursor: pointer;
+
+//   &:hover {
+//     transform: scale(1.5);
+//   }
+// `
 const MenuTrigger = styled.div`
   justify-content: center;
   align-items: center;
