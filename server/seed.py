@@ -139,7 +139,6 @@ def make_user(username, password_hash):
     new_user._password_hash = password_hash
     db.session.add(new_user)
     db.session.commit()
-    # print(new_user.id)
 
 def read_user_csv():
     with open("instance-bkp/sql-backup/users.csv", "r") as f:
@@ -157,7 +156,6 @@ def read_articles_csv(file_name):
         for id, uuid, title, text, check_finished, created_at, update_at, user_id, current_page in csv_file:
             if user_id == '5':
                 continue
-            # print(id, user_id, title)
             new_article = Article(
                     user_id=user_id,
                     uuid=uuid,
@@ -179,7 +177,6 @@ def read_dictionary_words_csv(file_name):
     with open(f"instance-bkp/sql-backup/{file_name}", "r") as f:
         csv_file = csv.reader(f, delimiter=",")
         for id, hawaiian, hawaiian_clean, translation, dictionary_id in csv_file:
-            # print(id)
             w_t = DictionaryWord(
                 hawaiian=hawaiian,
                 hawaiian_clean=hawaiian_clean,
