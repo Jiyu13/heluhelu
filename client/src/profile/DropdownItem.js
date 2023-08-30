@@ -19,6 +19,14 @@ const LinkItem = styled.div`
     line-height: 1.5;
     position: relative;
     margin: 0.8rem 0;
+    border-radius: 20px;
+    
+    color: #3e3e3e;
+
+    &:hover {
+        background-color: #f1f2f6;
+        color: black;
+    }
 `;
 
 const Link = styled.a`
@@ -31,4 +39,6 @@ const Link = styled.a`
     justify-content: center;
     white-space: nowrap;
     cursor: pointer;
+    padding: 3px;
+
 `;
