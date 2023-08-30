@@ -108,7 +108,6 @@ class CheckUserInfo(Resource):
                 errors["username"] = "Oops...This name has been taken."
             if email:
                 errors["email"] = "Oops...This email has been taken."
-            # print(errors)
         else:
             try:
                 user = User.query.filter_by(id=id).first()
@@ -146,7 +145,6 @@ class UserById(Resource):
         vocabularies = Vocabulary.query.filter_by(user_id=user_id).delete()
         custom_words = UserWord.query.filter_by(user_id=user_id).delete()
         page_events = PageReadEvent.query.filter_by(user_id=user_id).delete()
-        db.session.delete(current_user)
         db.session.commit()
         return make_response()
 api.add_resource(UserById, '/users/<int:id>')
@@ -455,7 +453,6 @@ class UniqueWordsByArticle(Resource):
                 elif clean_word in ignoreds:
                     continue
                 else:
-                    # print(clean_word)
                     if clean_word not in unknown_unique:
                         unknown_unique[clean_word] = 1
                     else:
