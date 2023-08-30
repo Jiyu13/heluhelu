@@ -24,6 +24,7 @@ export function YourProfile( {setIsChanged} ) {
                 res.json().then(errors => setErrorMessages(errors))
             } else {
                 setIsChanged(true)
+                setErrorMessages(null)
                 res.json().then(updatedUser => setUser(updatedUser))
             }
         })
