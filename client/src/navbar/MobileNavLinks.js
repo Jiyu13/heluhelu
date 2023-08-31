@@ -39,7 +39,7 @@ export function MobileNavLinks() {
       })
       .then(() => {
         setUser(null)
-        redirectHome()
+        // redirectHome()
       })
     }
 
@@ -99,7 +99,7 @@ export function MobileNavLinks() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleMenuItemClick={handleLogout}
-                  goTo="/"
+                  goTo="javascript:void(0)"
                 />
               </MenuDropdownList>
             )}

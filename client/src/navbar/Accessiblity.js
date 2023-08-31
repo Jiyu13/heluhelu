@@ -32,7 +32,7 @@ export function Accessibility() {
       })
       .then(() => {
         setUser(null)
-        redirectHome()
+        // redirectHome()
       })
     }
     return (
