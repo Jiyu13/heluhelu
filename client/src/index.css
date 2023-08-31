@@ -97,3 +97,19 @@ li:hover .recent-reading .last-open-title {
 .styled-table tbody tr:nth-of-type(odd) {
 	background-color:#ecf0f1;
 }
+
+/* theme mode */
+/* .dark {
+  background-color: #474448;
+  color: #eee;
+} */
+
+body .light {
+  background-color: #ffffff;
+  color: #353535;
+}
+
+body .dark {
+  background-color: hsl(210deg, 10.5263157895%, 14.9019607843%);;
+  color: hsl(214.2857142857deg, 9.0909090909%, 84.9019607843%);;
+}

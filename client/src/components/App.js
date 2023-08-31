@@ -27,6 +27,8 @@ function App() {
   const [articles, setArticles] = useState(null)
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
+  const [isDark, setIsDark] = useState(false)
+  const [mode, setMode] = useState("light")
   
   // ========= check session - user remains logged in ========
   useEffect(() => {
@@ -98,12 +100,21 @@ function App() {
       })
   }, [user])
 
+  // ============ mode ===================
+  // useEffect(() => {
+  //   localStorage.setItem("mode", JSON.stringify(mode))
+  // }, [mode])
+
+  // const savedMode = localStorage.getItem("mode")
+  // setMode(savedMode)
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
-                            firstArticle
+                            firstArticle,
+                            isDark, setIsDark,
+                            mode, setMode
                           }
 
   if(user === USER_NOT_SET) return;
@@ -117,7 +128,7 @@ function App() {
             <header>
               <NavBar/>
             </header>
-            <main>
+            <main className={mode}>
               <Routes >
                 <Route
                   exact
