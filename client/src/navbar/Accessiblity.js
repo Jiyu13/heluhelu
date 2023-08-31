@@ -35,7 +35,6 @@ export function Accessibility() {
         redirectHome()
       })
     }
-  
     return (
         <NavLinksContainer>
             <MenuTrigger onClick={handleClick}>
