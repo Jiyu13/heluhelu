@@ -125,6 +125,32 @@ class CheckUserInfo(Resource):
         return make_response(jsonify(errors), 422)
 api.add_resource(CheckUserInfo, '/<int:id>/check_info')
 
+class UserById(Resource):
+    def post(self, id):
+        user = User.query.filter_by(id=id).first()
+        password_input = request.get_json()["password"]
+
+        if not user.authenticate(password_input):
+            response = {"incorrect": "Password is incorrect!"}
+            return make_response(jsonify(response), 422)
+        else:
+            response = {"message": "Password correct!"}
+            return make_response(jsonify(response), 200)
+
+    def delete(self, id):
+        user_id = session["user_id"]
+        current_user = User.query.filter_by(id=id).first()
+        db.session.delete(current_user)
+
+        articles = Article.query.filter_by(user_id=user_id).delete()
+        vocabularies = Vocabulary.query.filter_by(user_id=user_id).delete()
+        custom_words = UserWord.query.filter_by(user_id=user_id).delete()
+        page_events = PageReadEvent.query.filter_by(user_id=user_id).delete()
+        db.session.delete(current_user)
+        db.session.commit()
+        return make_response()
+api.add_resource(UserById, '/users/<int:id>')
+
 class ChangePassword(Resource):
     def patch(self, id):
         user = User.query.filter_by(id=id).first()
@@ -153,6 +179,19 @@ class ChangePassword(Resource):
                             errors[key] = value
         return make_response(jsonify(errors), 422)
 api.add_resource(ChangePassword, '/<int:id>/change_password')
+
+# class DeleteUserById(Resource):
+#     def delete(self, id):
+#         current_user = User.query.filter_by(id=id).first()
+#         password_input = request.get_json()
+#         if current_user:
+
+#         if session.get("user_id"):
+#             session["user_id"] = None
+#             return make_response({'message':'204: No Content'}, 204)
+#         return make_response({'error': '401: Unauthorized'}, 401)
+# api.add_resource(Logout, '/<int: id>/delete_account')
+
 
 # ========================================= Articles ==========================================
 class GetFirstArticle(Resource):

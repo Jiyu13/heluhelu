@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ProfileNavbar } from "./ProfileNavbar"
 import { ChangesSave } from "../components/ChangesSave"
 import { ChangePassword } from "./ChangePassword"
+import { DeleteAccount } from "./DeleteAccount"
 
 export function ProfilePage() {
 
@@ -30,6 +31,10 @@ export function ProfilePage() {
                     {page === "change_password" && (
                         <ChangePassword setIsChanged={setIsChanged}/>
                     )}
+                    {page === "delete_account" && (
+                        <DeleteAccount setIsChanged={setIsChanged}/>
+                    )}
+
                 </ProfileBody>
             </PageWrapper>
 

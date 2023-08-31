@@ -30,7 +30,7 @@ export function ProfileNavbar( {page, setPage, setIsChanged} ) {
             <LinkItem 
                 onClick={handleSwitchPage} 
                 data-value="delete_account" 
-                style={{backgroundColor: page === "delete_account" ? bgColor : ""}}
+                style={{backgroundColor: page === "delete_account" ? "#ff6348" : ""}}
             >
                 <Link href="/profile/#">Delete Account</Link>
             </LinkItem>
