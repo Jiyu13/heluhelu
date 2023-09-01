@@ -47,11 +47,14 @@ export function ArticleUUID() {
 
 const ShareContainer = styled.div`
     text-align: center;
-    margin: 90px auto 0;
+    // margin: 90px auto 0;
     max-width: 800px;
     font-size: 20px;
     line-weight: 1.6;
     display: block;
+    height: 100vh;
+    margin: 0 auto;
+    padding-top: 90px;
 `
 
 const SharePageTitle = styled.h1`

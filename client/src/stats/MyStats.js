@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { ReadingStats } from "./ReadingStats"
 import apiFetch from "../api/ApiFetch"
 import { Link } from "react-router-dom"
-import { SubmitButtons } from "../components/Buttons"
+import { SubmitButtons } from "../styles/Buttons"
 import { useMediaQuery } from "react-responsive"
 import { DeviceSize } from "../responsive"
+import { PageContainer } from "../styles/Container"
 
 export function MyStats() {
     const [readEvents, setReadEvets] = useState(null)
@@ -51,10 +52,12 @@ export function MyStats() {
 
 const VocabStatsPage = styled(SubmitButtons)``
 
-const PageContainer = styled.div`
-    margin: 90px auto 0;
-    text-align: center;
-`
+// const PageContainer = styled.div`
+//     // margin: 90px auto 0;
+//     // margin: auto 0;
+//     padding-top: 90px;
+//     text-align: center;
+// `
 
 export const StatsNavigation = styled.div`
     display: flex;

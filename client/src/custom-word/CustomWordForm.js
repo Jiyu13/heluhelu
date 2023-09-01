@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { ButtonButtons, SubmitButtons } from "../components/Buttons"
+import { ButtonButtons, SubmitButtons } from "../styles/Buttons"
 import apiFetch from "../api/ApiFetch"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"

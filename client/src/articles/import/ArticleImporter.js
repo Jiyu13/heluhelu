@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'; 
 import apiFetch from '../../api/ApiFetch';
-import { ButtonButtons, SubmitButtons } from '../../components/Buttons';
+import { ButtonButtons, SubmitButtons } from '../../styles/Buttons';
 import { useMediaQuery } from 'react-responsive';
 import { DeviceSize } from '../../responsive';
+import { PageContainer } from '../../styles/Container';
 
 
 
@@ -117,12 +118,14 @@ const ImportButton = styled(ButtonButtons)`
 const SubmitButton = styled(SubmitButtons)`
     width: 100px;
 `
-const PasteBox = styled.div`
+const PasteBox = styled(PageContainer)`
     max-width: 800px;
     text-align: center;
     font-size: 20px;
     line-height: 1.6;
-    margin: 90px auto 0;
+    // // margin: 90px auto 0;
+    // margin: 0 auto;
+    // padding-top: 90px;
 `
 
 const FormContainer = styled.form`

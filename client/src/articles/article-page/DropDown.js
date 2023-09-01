@@ -1,5 +1,5 @@
 // import more_icon from "../assets/images/more_horiz_white_48dp.svg"
-import info_white_24dp from "../../assets/images/info_white_24dp.svg"
+import info_white_24dp from "../../assets/images/white/info_white_24dp.svg"
 
 import styled from "styled-components";
 import { useState } from "react";

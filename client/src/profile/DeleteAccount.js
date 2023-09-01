@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
-import { SubmitButtons } from "../components/Buttons"
+import { SubmitButtons } from "../styles/Buttons"
 import { useForm } from "react-hook-form"
 import apiFetch from "../api/ApiFetch"
 import { useState } from "react"

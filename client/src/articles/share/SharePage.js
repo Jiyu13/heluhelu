@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import apiFetch from "../../api/ApiFetch"
+import { PageContainer } from "../../styles/Container"
 
 // import warning_white_24dp from "../../assets/images/warning_white_24dp.svg"
 
@@ -104,12 +105,15 @@ export function SharePage({ articles, setArticles }) {
 //     opacity: 0.8;
 // `
 
-const ShareReciveContainer = styled.div`
-    text-align: center;
-    margin: 90px auto 0;
+const ShareReciveContainer = styled(PageContainer)`
+    // text-align: center;
+    // margin: 90px auto 0;
     max-width: 800px;
     font-size: 20px;
     line-weight: 1.6;
+
+    // margin: 0 auto;
+    // padding-top: 90px;
 `
 
 const ShareArticleTitle = styled.h2`

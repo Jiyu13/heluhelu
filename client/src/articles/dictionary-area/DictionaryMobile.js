@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import add_icon from "../../assets/images/add_icon.svg"
+import add_icon_white from "../../assets/images/white/add_icon_white.svg"
 import { TranslationWord } from "../TranslationWord";
 import {  CustomWordUpdate } from "../CustomWordUpdate"
 import { WordTracker } from "./WordTracker";
@@ -42,7 +42,7 @@ export function DictionaryMobile(props) {
 
             {customWord ? "" :
                 <AddImage 
-                    src={add_icon} 
+                    src={add_icon_white} 
                     alt="add custom word button" 
                     onClick={handleAddBtn} 
                     id={targetWord}

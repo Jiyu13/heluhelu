@@ -1,16 +1,16 @@
 import styled from "styled-components"
 
-import visibility_24 from "../assets/images/visibility_24.svg"
-import visibility_off_24 from "../assets/images/visibility_off_24.svg"
+import visibility_white_24 from "../assets/images/white/visibility_white_24.svg"
+import visibility_off_white_24 from "../assets/images/white/visibility_off_white_24.svg"
 
 export function VisibilityIcon( {ToggleIcon, visible} ) {
     
     return (
         <IconContainer onClick={ToggleIcon}>
             {visible ? 
-                <img src={visibility_24} alt="visibility icon"/>
+                <img src={visibility_white_24} alt="visibility icon"/>
                 :
-                <img src={visibility_off_24} alt="visibility off icon"/>
+                <img src={visibility_off_white_24} alt="visibility off icon"/>
             }
             {/* <img src={visibility_off_24} alt="visibility off icon"/> */}
         </IconContainer>

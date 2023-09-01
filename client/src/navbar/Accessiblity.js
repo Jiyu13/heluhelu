@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
 // import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
-import logout_black_24dp from "../assets/images/logout_black_24dp.svg"
-import person_black_24dp from "../assets/images/person_black_24dp.svg"
+import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
+import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
 import { ThemeMode } from "./ThemeMode";
 
 export function Accessibility() {

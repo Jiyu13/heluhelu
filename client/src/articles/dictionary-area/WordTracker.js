@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { closeMobileDictionary } from "./closeMobileDictionary"
-import g_translate_white_24dp from "../../assets/images/g_translate_white_24dp.svg"
+import g_translate_white_24dp from "../../assets/images/white/g_translate_white_24dp.svg"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,

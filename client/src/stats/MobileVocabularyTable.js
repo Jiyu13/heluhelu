@@ -59,7 +59,7 @@
 // `
 
 import styled from "styled-components"
-import filter_24dp from "../assets/images/filter_24dp.svg"
+import filter_black_24dp from "../assets/images/black/filter_black_24dp.svg"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
 
@@ -80,7 +80,7 @@ export function MobileVocabularyTable( props ) {
     return  (
         <InfoContainer>
             <FilterBy>
-                <img src={filter_24dp} alt="filter icon"/>
+                <img src={filter_black_24dp} alt="filter icon"/>
                 <FilterByText style={{fontSize: "3px"}}>
                     Filter:
                 </FilterByText>

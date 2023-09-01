@@ -7,9 +7,10 @@ import { ArticleVocabsLists } from "./UniqueVocabsLists"
 import { StatsNavigation, StatsTitle } from "../../stats/MyStats"
 import { FilterBy, FilterByText, InfoContainer, WordText } from "../../stats/VocabInfoTable"
 
-import filter_24dp from "../../assets/images/filter_24dp.svg"
+import filter_black_24dp from "../../assets/images/black/filter_black_24dp.svg"
 import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
+import { PageContainer } from "../../styles/Container"
 
 export function ShowArticleUniqueWords() {
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
@@ -53,7 +54,7 @@ export function ShowArticleUniqueWords() {
             </StatsNavigation>
             <NavigationContainer>
                 <FilterBy>
-                    <img src={filter_24dp} alt="filter icon"/>
+                    <img src={filter_black_24dp} alt="filter icon"/>
                     <FilterByText style={{fontSize: "3px"}}>
                         {isMobile ? "Filter" : "Filter By"}
                     </FilterByText>
@@ -131,6 +132,8 @@ const NavigationContainer = styled(InfoContainer)`
 
 const StatsContainer = styled.div``
 
-const PageContainer = styled.div`
-    margin: 90px auto 0;
-`
+// const PageContainer = styled.div`
+//     // margin: 90px auto 0;
+//     margin: 0 auto;
+//     padding-top: 90px;
+// `

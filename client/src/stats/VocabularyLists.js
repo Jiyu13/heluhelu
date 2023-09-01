@@ -6,7 +6,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { Vocabulary } from "./Vocabulary";
 import { StatsNavigation, StatsTitle } from "./MyStats";
-import { SubmitButtons } from "../components/Buttons";
+import { SubmitButtons } from "../styles/Buttons";
 import { VocabInfoTable } from "./VocabInfoTable";
 
 import { DeviceSize } from "../responsive";
@@ -130,7 +130,7 @@ const ReadingStatsPage = styled(SubmitButtons)``
 export const ContainerBody = styled.div`
     box-sizing: border-box;
     width: 90%;
-    margin: 0 auto 30px;
+    margin: 0 auto;
     border-radius: 8px;
     padding-bottom: 1rem;
     background-color: #FDF8E8;

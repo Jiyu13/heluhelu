@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { ArticleList } from "../articles/article-list-page/ArticleList";
 
-import import_icon from "../assets/images/note_add_white_24dp.svg"
+import import_icon from "../assets/images/white/note_add_white_24dp.svg"
 import { Link } from "react-router-dom";
-import { ButtonElements } from "./Buttons";
+import { ButtonElements } from "../styles/Buttons";
 import { DeleteConfirmation } from "../articles/article-list-page/DeleteConfirmation";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ import apiFetch from "../api/ApiFetch";
 
 import { SkeletonHomePage } from "../skeleton-screens/SkeletonHomePage";
 import { UserContext } from "./UserContext";
+import { PageContainer } from "../styles/Container";
 
 
 export function Home({ articles, setArticles, onDeleteArticle}) {
@@ -41,7 +42,7 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
 
     
     return (
-        <>  
+        <PageContainer className="page-container">  
             {user && (
                 <>  
                     {showDeletePopup && ( 
@@ -74,7 +75,7 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
                     )}
                 </>
             )}
-        </>
+        </PageContainer>
     ) 
 }
 
@@ -96,14 +97,11 @@ const ButtonSpan = styled.span`
 `
 
 const HomepageTitle = styled.h1`
-    margin-top: 72px;
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-    margin: 120px auto 0;
-
 `
 
 const HomepageText = styled.div`
@@ -121,3 +119,7 @@ const HomepageButtonContainer = styled.div`
     display: block;
     text-align: center;
 `
+// const PageContainer = styled.div`
+//     padding-top: 90px;
+//     text-align: center;
+// `

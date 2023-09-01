@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import apiFetch from "../../api/ApiFetch";
-import { SubmitButtons } from "../../components/Buttons";
+import { SubmitButtons } from "../../styles/Buttons";
 
 import { useMediaQuery } from "react-responsive";
 import { DeviceSize } from "../../responsive";
 import { ChangesSave } from "../../components/ChangesSave";
+
+import { PageContainer } from "../../styles/Container"
+
 
 export function ArticleEdit( {onUpdatedArticle} ) {
 
@@ -98,12 +101,13 @@ const SubmitButton = styled(SubmitButtons) `
     width: 100px;
 `
 
-const EditContainer = styled.div`
+const EditContainer = styled(PageContainer)`
     text-align: center;
     max-width: 800px;
-    margin: 90px auto 0;
+    // margin: 90px auto 0;
     font-size: 20px;
     line-weight: 1.6;
+    margin: 0 auto;
 `
 
 const EditForm = styled.form`

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 
 import { VocabularyLists } from "./VocabularyLists";
+import { PageContainer } from "../styles/Container";
 
 export function VocabularyStats() {
 
@@ -12,6 +13,8 @@ export function VocabularyStats() {
     )
 }
 
-const StatsContainer = styled.div`
-    margin: 90px auto 0;
+const StatsContainer = styled(PageContainer)`
+    // margin: 90px auto 0;
+    // margin: 0 auto;
+    // padding-top: 90px;
 `

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonElements } from "../components/Buttons";
+import { ButtonElements } from "../styles/Buttons";
 import { useNavigate } from "react-router-dom";
 
 export function ArticleErrorPage( {errorMessage} ) {

@@ -3,10 +3,14 @@ import styled from "styled-components"
 import { useContext } from "react";
 
 
-import edit_icon from "../../assets/images/edit_icon.svg"
+import edit_icon from "../../assets/images/black/edit_black_icon.svg"
+import edit_white_48dp from "../../assets/images/white/edit_white_48dp.svg"
 import delete_icon from "../../assets/images/delete_icon.svg"
+import delete_white_48dp from "../../assets/images/white/delete_white_48dp.svg"
 import share_icon from "../../assets/images/share_icon.svg"
-import info_black_48dp from "../../assets/images/info_black_48dp.svg"
+import share_white_48dp from "../../assets/images/white/share_white_48dp.svg"
+import info_black_48dp from "../../assets/images/black/info_black_48dp.svg"
+import info_white_48dp from "../../assets/images/white/analytics_white_48dp.svg"
 
 import { UserContext } from "../../components/UserContext";
 import { ProgressBar } from "../progress-bar/ProgressBar";
@@ -16,7 +20,7 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
-    const { user, splitText, calculatePages } = useContext(UserContext)
+    const { user, splitText, calculatePages, isDark } = useContext(UserContext)
 
     function handleShowDeletePopup(e) {
         setDeletePopup(true)
@@ -61,7 +65,12 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                         <ArticleTitle>
                             <Link 
                                 to={`/articles/${a.id}`} 
-                                style={{textDecoration: 'none', color: "rgb(41, 42, 46)", fontSize: "1.3rem", fontWeight: "700"}} 
+                                style={{
+                                    textDecoration: 'none',
+                                    color: "inherit",
+                                    fontSize: "1.3rem",
+                                    fontWeight: "700"
+                                }} 
                                 id={a.id}
                             >
                                 {a.title} 
@@ -76,30 +85,39 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
                     <EditCell>
                         <EditContainer>
-                            <Button >
+                            <Button className="article-settings-btn">
                                 <Link to={`/article/edit/${a.id}`} style={{"color": "inherit"}}>
-                                    <ButtonImage src={edit_icon} alt="edit icon"/>
+                                    <ButtonImage 
+                                        src={isDark === true ? edit_white_48dp : edit_icon} 
+                                        alt="edit icon"
+                                    />
                                 </Link>
                             </Button>
 
-                            <Button>
+                            <Button className="article-settings-btn">
                                 <Link to={`/article/word_stats/${a.id}/${a.title}`}>
-                                    <ButtonImage src={info_black_48dp} alt="article info icon"/>
+                                    <ButtonImage 
+                                        src={isDark === true ? info_white_48dp : info_black_48dp} 
+                                        alt="article info icon"
+                                    />
                                 </Link>
                             </Button>
 
-                            <Button >
+                            <Button className="article-settings-btn">
                                 <ButtonImage 
-                                    src={delete_icon} 
+                                    src={isDark === true ? delete_white_48dp : delete_icon} 
                                     alt="delete icon" 
                                     id={a.id} 
                                     onClick={handleShowDeletePopup}
                                 />
                             </Button>
 
-                            <Button>
+                            <Button className="article-settings-btn">
                                 <Link to={`/article/share/${a.id}`}>
-                                    <ButtonImage src={share_icon} alt="share icon"/>
+                                    <ButtonImage 
+                                        src={isDark === true ? share_white_48dp : share_icon} 
+                                        alt="share icon"
+                                    />
                                 </Link>
                                 
                             </Button>
@@ -154,6 +172,7 @@ const ArticleTitle = styled.div`
 `
 
 const EditCell = styled.td`
+
     width: 100px;
     border-radius: 8px;
 `
@@ -166,6 +185,7 @@ const EditContainer = styled.div`
 `
 
 const Button = styled.button`
+    // background-color: inherit;
     background-color: #d1d8e0;
     display: inline-block;
     position: relative;
@@ -182,6 +202,7 @@ const Button = styled.button`
 
     &:hover {
         background: #a5b1c2;
+        // #57606f
     }
 `
 

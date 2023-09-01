@@ -15,12 +15,13 @@ function NavBar() {
 
     // useMediaQuery from react responsive
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
-    const {user, mode} = useContext(UserContext)
+    const {user, isDark} = useContext(UserContext)
     
     return (
         <>
             {user ? 
-                <NavBarContainer className={mode}>
+                <NavBarContainer 
+                >
                     {/* call the Logo component */}
                     <LeftSection>
                         <Logo />
