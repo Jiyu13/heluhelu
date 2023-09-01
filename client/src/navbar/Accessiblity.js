@@ -33,10 +33,9 @@ export function Accessibility() {
       })
       .then(() => {
         setUser(null)
-        redirectHome()
+        // redirectHome()
       })
     }
-  
     return (
         <NavLinksContainer>
             <ThemeMode />
@@ -68,7 +67,7 @@ export function Accessibility() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleMenuItemClick={handleLogout}
-                  goTo="/"
+                  goTo="javascript:void(0)"
                 />
               </MenuDropdownList>
             )}
