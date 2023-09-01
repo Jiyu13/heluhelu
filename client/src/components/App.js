@@ -38,7 +38,7 @@ function App() {
         setUser(null)
       }
     });
-  }, [user]);
+  }, []);
 
   // =========== fetch the first article in articles list =========
   const [firstArticle, setFirstArticle] = useState(null)
