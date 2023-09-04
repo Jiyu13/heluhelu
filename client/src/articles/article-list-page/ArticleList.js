@@ -56,11 +56,11 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
     return (
     <ArticlesListContainer>
         {articles?.length > 0 && (  
-        <ArticlesListTable>
+        <ArticlesListTable className="article-list-table">
             <tbody>
             {articles?.map(a =>
-                <tr key={a.id}>
-                    <ArticleTitleCell>  
+                <tr key={a.id} >
+                    <ArticleTitleCell className={isDark ? "dark" : "light"}>  
 
                         <ArticleTitle>
                             <Link 
@@ -85,7 +85,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
                     <EditCell>
                         <EditContainer>
-                            <Button className="article-settings-btn">
+                            <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
                                 <Link to={`/article/edit/${a.id}`} style={{"color": "inherit"}}>
                                     <ButtonImage 
                                         src={isDark === true ? edit_white_48dp : edit_icon} 
@@ -94,7 +94,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                                 </Link>
                             </Button>
 
-                            <Button className="article-settings-btn">
+                            <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
                                 <Link to={`/article/word_stats/${a.id}/${a.title}`}>
                                     <ButtonImage 
                                         src={isDark === true ? info_white_48dp : info_black_48dp} 
@@ -103,7 +103,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                                 </Link>
                             </Button>
 
-                            <Button className="article-settings-btn">
+                            <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
                                 <ButtonImage 
                                     src={isDark === true ? delete_white_48dp : delete_icon} 
                                     alt="delete icon" 
@@ -112,7 +112,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                                 />
                             </Button>
 
-                            <Button className="article-settings-btn">
+                            <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
                                 <Link to={`/article/share/${a.id}`}>
                                     <ButtonImage 
                                         src={isDark === true ? share_white_48dp : share_icon} 
@@ -155,12 +155,9 @@ const ArticlesListTable = styled.table`
     display: table;
     box-sizing: border-box;
     text-align: center;
-    // margin: 0 auto;
-    // border-color: gray;
 `
 
 const ArticleTitleCell = styled.td`
-    border: 3px solid rgb(227, 231, 239);
     border-radius: 1.25rem;
 `
 const ArticleTitle = styled.div`
@@ -172,7 +169,6 @@ const ArticleTitle = styled.div`
 `
 
 const EditCell = styled.td`
-
     width: 100px;
     border-radius: 8px;
 `
@@ -185,8 +181,6 @@ const EditContainer = styled.div`
 `
 
 const Button = styled.button`
-    // background-color: inherit;
-    background-color: #d1d8e0;
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -199,11 +193,6 @@ const Button = styled.button`
     margin-bottom: 4px;
     margin-right: 4px;
     user-select: none; // Don't allow user to select text in buttons
-
-    &:hover {
-        background: #a5b1c2;
-        // #57606f
-    }
 `
 
 const ButtonImage = styled.img`

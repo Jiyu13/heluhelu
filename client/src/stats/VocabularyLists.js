@@ -134,6 +134,7 @@ export const ContainerBody = styled.div`
     border-radius: 8px;
     padding-bottom: 1rem;
     background-color: #FDF8E8;
+    color: #000;
 `
 
 export const VocabHeader = styled.div`

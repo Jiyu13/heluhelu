@@ -46,7 +46,7 @@ const CompletionBarProgress = styled.div`
 const CompletionText = styled.span`
     font-size: 14px;
     font-weight: bold;
-    color: #aaa!important;
+    color: inherit
     line-weight: 1.6;
     margin: 0 15px;
 `

@@ -76,7 +76,9 @@ const GraphBox = styled.div`
     margin: 0px auto 0px auto
 `
 
-const TRow = styled.tr``
+const TRow = styled.tr`
+    color: #000;
+`
 
 const Table = styled.table`
     border-collapse: collapse;
@@ -86,7 +88,6 @@ const Table = styled.table`
     min-width: 300px;
     width: 99%;
     box-sizing: border-box;
-    box-shadow: 0 0 20px white;
 `
 
 

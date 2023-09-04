@@ -81,7 +81,7 @@ export function MobileVocabularyTable( props ) {
         <InfoContainer>
             <FilterBy>
                 <img src={filter_black_24dp} alt="filter icon"/>
-                <FilterByText style={{fontSize: "3px"}}>
+                <FilterByText >
                     Filter:
                 </FilterByText>
                 
@@ -128,6 +128,7 @@ export const FilterByText = styled.span`
     font-size: .875rem !important;
     font-weight: bold;
     white-space: nowrap; // make "All Words" stay in the same line
+    color: #000;
 `
 
 export const InfoItem = styled.a`
