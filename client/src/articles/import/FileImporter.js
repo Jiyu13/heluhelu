@@ -143,7 +143,7 @@ const FileBox = styled(PageContainer)`
     // padding-top: 90px;
     line-height: 1.6;
     height: 100vh;
-
+    text-align: center;
 `
 
 const FormContainer = styled.form`
