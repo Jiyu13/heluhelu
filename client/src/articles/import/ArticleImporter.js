@@ -101,7 +101,7 @@ function ArticleImporter({ articles, setArticles }) {
 export default ArticleImporter;
 
 const MobileImportButton = styled(ButtonButtons)`
-    width: 49%;
+    width: 48%;
     float: right;
     margin-right: 0px;
 `
@@ -123,6 +123,7 @@ const PasteBox = styled(PageContainer)`
     text-align: center;
     font-size: 20px;
     line-height: 1.6;
+    width: 95%;
     // // margin: 90px auto 0;
     // margin: 0 auto;
     // padding-top: 90px;
