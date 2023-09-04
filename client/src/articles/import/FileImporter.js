@@ -144,6 +144,7 @@ const FileBox = styled(PageContainer)`
     line-height: 1.6;
     height: 100vh;
     text-align: center;
+    width: 95%;
 `
 
 const FormContainer = styled.form`
