@@ -110,6 +110,7 @@ const Title = styled.div`
     font-size: 1.2rem;
     font-weight: bold;
     margin: auto;
+    color: #000;
 `
 const CloseButton = styled.button`
     cursor: pointer;    
