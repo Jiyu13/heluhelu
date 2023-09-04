@@ -1,0 +1,57 @@
+/* Theme color */
+body div.light {
+    background-color: #ffffff;
+    color: #353535;
+  }
+  
+body div.dark {
+    background-color: hsl(210deg, 10.5263157895%, 14.9019607843%);
+    color: hsl(214.2857142857deg, 9.0909090909%, 84.9019607843%);
+}
+
+/* target the immediate child of header */
+header > div.dark {
+    background-color: hsl(214.7368421053deg, 65.5172413793%, 5.6862745098%);
+}
+
+header > div.light {
+    background-color: #ffffff;
+}
+
+h1 .light {
+    color: #353535;
+}
+
+h1 .dark {
+    color: hsl(214.2857142857deg, 9.0909090909%, 84.9019607843%);;
+}
+
+/* Article list in homepage - left */
+.article-list-table td.dark {
+    background-color: hsl(214.7368421053deg, 65.5172413793%, 5.6862745098%);
+}
+.article-list-table td.dark:hover {
+    border: 0.2px solid #d1d8e0;
+}
+
+.article-list-table td.light {
+    background-color: #d1d8e0;
+}
+.article-list-table td.light:hover {
+     background: #a5b1c2;
+}
+
+/* Article list in homepage - right */
+.article-settings-btn-dark {
+    background-color: hsl(214.7368421053deg, 65.5172413793%, 5.6862745098%);
+}
+.article-settings-btn-dark:hover {
+    border: 0.2px solid #d1d8e0;
+}
+
+.article-settings-btn-light {
+    background-color: #d1d8e0;
+}
+.article-settings-btn-light:hover {
+    background: #a5b1c2;
+}
