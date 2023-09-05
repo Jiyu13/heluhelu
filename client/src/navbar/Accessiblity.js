@@ -80,6 +80,7 @@ const UserName = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 0.8rem auto 1.2rem;
+  color: #353535;
 `
 
 const MenuDropdownList = styled.div`

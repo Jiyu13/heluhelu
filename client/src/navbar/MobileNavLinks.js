@@ -15,6 +15,7 @@ import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
 import equalizer_black_24dp from "../assets/images/black/equalizer_black_24dp.svg"
 import book_black_24dp from "../assets/images/black/book_black_24dp.svg"
 import { FirstLetter, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
+import { ThemeMode } from "./ThemeMode";
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
@@ -54,6 +55,7 @@ export function MobileNavLinks() {
     }
     return (
         <NavLinksContainer>
+            <ThemeMode />
             <MenuTrigger onClick={handleClick}>
             <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
                 <FirstLetter>{user.username[0]}</FirstLetter>
