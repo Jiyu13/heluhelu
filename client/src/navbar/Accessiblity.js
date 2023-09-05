@@ -16,6 +16,8 @@ export function Accessibility() {
     const [isOpen, setIsOpen] = useState(false)
     const {setUser, user} = useContext(UserContext)
 
+    const firstLetter = user?.username[0]
+
     function handleClick() {
       setIsOpen(!isOpen)
     }
@@ -34,7 +36,7 @@ export function Accessibility() {
             <ThemeMode />
             <MenuTrigger onClick={handleClick}>
               <ProfileAvatar style={{backgroundColor: `${user?.profile_color}`}}>
-                <FirstLetter>{user.username[0]}</FirstLetter>
+                <FirstLetter>{firstLetter.toUpperCase()}</FirstLetter>
               </ProfileAvatar>
               {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
@@ -98,10 +100,14 @@ const MenuDropdownList = styled.div`
     transform: rotate(45deg);
 `
 export const FirstLetter = styled.div`
+    height: 100%;
     font-weight: bold;
     font-size: 1rem;
-    text-align: center;
-`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+  `
 export const ProfileAvatar = styled.div`
     width: 28px;
     height: 28px;

@@ -21,7 +21,7 @@ export function MobileNavLinks() {
     const {setUser, user, firstArticle, article} = useContext(UserContext)
 
     const currentArticle = article !== null ? article : firstArticle
-
+    const firstLetter = user?.username[0]
 
     function handleClick() {
       setIsOpen(!isOpen)
@@ -51,7 +51,7 @@ export function MobileNavLinks() {
             <ThemeMode />
             <MenuTrigger onClick={handleClick}>
               <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
-                <FirstLetter>{user.username[0]}</FirstLetter>
+                <FirstLetter>{firstLetter.toUpperCase()}</FirstLetter>
               </ProfileAvatar>
               {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
