@@ -98,14 +98,11 @@ const MenuDropdownList = styled.div`
     transform: rotate(45deg);
 `
 export const FirstLetter = styled.div`
-    margin: auto 6px;
     font-weight: bold;
-    font-size: 0.825rem;
+    font-size: 1rem;
+    text-align: center;
 `
 export const ProfileAvatar = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -116,6 +113,8 @@ export const ProfileAvatar = styled.div`
       transform: scale(1.2);
     }
 `
+const MenuTrigger = styled.div``
+
 export const NavLinksContainer = styled.div`
     height: 100%;
     display: flex;
@@ -123,21 +122,5 @@ export const NavLinksContainer = styled.div`
     // z-index: 1;
 `;
 
-// const ProfileImg = styled.img`
-//   width: 24px;
-//   height: 24px;
-//   border-radius: 50%;
-//   transition: transform .2s;
-//   cursor: pointer;
 
-//   &:hover {
-//     transform: scale(1.5);
-//   }
-// `
-const MenuTrigger = styled.div`
-  justify-content: center;
-  align-items: center;
-  display: flex;
-
-`
 
