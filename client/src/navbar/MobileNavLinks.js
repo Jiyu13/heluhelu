@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
-import { useNavigate } from "react-router-dom";
 
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
@@ -24,11 +23,6 @@ export function MobileNavLinks() {
     const currentArticle = article !== null ? article : firstArticle
 
 
-    let navigate = useNavigate()
-    function redirectHome() {
-        navigate('/') 
-    }
-
     function handleClick() {
       setIsOpen(!isOpen)
     }
@@ -40,7 +34,6 @@ export function MobileNavLinks() {
       })
       .then(() => {
         setUser(null)
-        // redirectHome()
       })
     }
 
@@ -114,6 +107,7 @@ const UserName = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 0.8rem auto 1.2rem;
+  color: #353535;
 `
 
 const MenuDropdownList = styled.div`
