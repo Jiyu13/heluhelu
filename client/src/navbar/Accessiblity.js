@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
-import { useNavigate } from "react-router-dom";
 
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
@@ -17,11 +16,6 @@ export function Accessibility() {
     const [isOpen, setIsOpen] = useState(false)
     const {setUser, user} = useContext(UserContext)
 
-    let navigate = useNavigate()
-    function redirectHome() {
-        navigate('/') 
-    }
-
     function handleClick() {
       setIsOpen(!isOpen)
     }
@@ -33,7 +27,6 @@ export function Accessibility() {
       })
       .then(() => {
         setUser(null)
-        // redirectHome()
       })
     }
     return (
