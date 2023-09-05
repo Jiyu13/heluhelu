@@ -2,9 +2,10 @@ import { useState } from "react"
 import styled from "styled-components"
 import { Link, useNavigate } from "react-router-dom"
 import apiFetch from "../../api/ApiFetch"
-import { ButtonButtons, SubmitButtons } from "../../components/Buttons"
+import { ButtonButtons, SubmitButtons } from "../../styles/Buttons"
 import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
+import { PageContainer } from "../../styles/Container"
 
 export function FileImporter( {articles, setArticles} ) {
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
@@ -135,15 +136,15 @@ const SubmitButton = styled(SubmitButtons)`
     width: 100px;
 `
 
-const FileBox = styled.div`
-    // background-color: rgb(204, 204, 204);
-    // padding: 18px;
-    // font-size: 20px;
-    text-align: center;
+const FileBox = styled(PageContainer)`
     max-width: 800px;
-    margin: 90px auto 0;
+    // margin: 90px auto 0;
+    // margin: 0 auto;
+    // padding-top: 90px;
     line-height: 1.6;
-    
+    height: 100vh;
+    text-align: center;
+    width: 95%;
 `
 
 const FormContainer = styled.form`

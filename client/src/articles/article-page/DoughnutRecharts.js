@@ -113,6 +113,7 @@ export function DoughnutRecharts(props) {
             layout="vertical"
             verticalAlign='bottom'
             content={renderLegend}
+            wrapperStyle={{color: "#000"}}
           />
           
         </PieChart>

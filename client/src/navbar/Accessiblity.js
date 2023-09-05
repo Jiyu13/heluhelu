@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
 // import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
-import logout_black_24dp from "../assets/images/logout_black_24dp.svg"
-import person_black_24dp from "../assets/images/person_black_24dp.svg"
+import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
+import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
+import { ThemeMode } from "./ThemeMode";
 
 export function Accessibility() {
     const [isOpen, setIsOpen] = useState(false)
@@ -37,6 +38,7 @@ export function Accessibility() {
     }
     return (
         <NavLinksContainer>
+            <ThemeMode />
             <MenuTrigger onClick={handleClick}>
               <ProfileAvatar style={{backgroundColor: `${user?.profile_color}`}}>
                 <FirstLetter>{user.username[0]}</FirstLetter>
@@ -54,7 +56,12 @@ export function Accessibility() {
                   text="Your Profile" 
                   goTo="/profile"
                 />
-                {/* <DropdownItem icon={settings_black_24dp} icon_info="settings icon" text="Settings" handleMenuItemClick={handleSettings}/> */}
+                {/* <DropdownItem 
+                  icon={settings_black_24dp} 
+                  icon_info="settings icon" 
+                  text="Settings" 
+                  handleMenuItemClick={handleSettings}
+                /> */}
                 <DropdownItem 
                   icon={logout_black_24dp} 
                   icon_info="logout icon" 
@@ -73,6 +80,7 @@ const UserName = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 0.8rem auto 1.2rem;
+  color: #353535;
 `
 
 const MenuDropdownList = styled.div`

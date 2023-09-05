@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import filter_24dp from "../assets/images/filter_24dp.svg"
+import filter_black_24dp from "../assets/images/black/filter_black_24dp.svg"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
 
@@ -21,8 +21,8 @@ export function VocabInfoTable( props ) {
     return  (
         <InfoContainer>
             <FilterBy>
-                <img src={filter_24dp} alt="filter icon"/>
-                <FilterByText style={{fontSize: "3px"}}>
+                <img src={filter_black_24dp} alt="filter icon"/>
+                <FilterByText>
                     Filter By:
                 </FilterByText>
                 
@@ -68,6 +68,7 @@ export const FilterByText = styled.span`
     font-size: .875rem !important;
     font-weight: bold;
     white-space: nowrap; // make "All Words" stay in the same line
+    color: #000;
 `
 
 export const InfoItem = styled.a`

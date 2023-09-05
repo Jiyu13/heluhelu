@@ -1,11 +1,19 @@
-import right_arrow_icon from "../../assets/images/arrowright.svg"
-import finish_reading_icon from "../../assets/images/finish_reading_icon.svg"
+import right_arrow_white_icon from "../../assets/images/white/arrow_forward_ios_white_48dp.svg"
+import right_arrow_black_icon from "../../assets/images/black/arrow_forward_ios_black_48dp.svg"
+import finish_reading_black_icon from "../../assets/images/black/done_black_48dp.svg"
+import finish_reading_white_icon from "../../assets/images/white/done_white_48dp.svg"
+
 
 
 import styled from "styled-components"
+import { UserContext } from "../../components/UserContext"
+import { useContext } from "react"
 
 
 export function RightSidebar( {handleNextPage, currentPage, pages, bgColor, handleFinishReading} ) {
+
+    const {isDark} = useContext(UserContext)
+
     return (
         <>
         
@@ -13,7 +21,7 @@ export function RightSidebar( {handleNextPage, currentPage, pages, bgColor, hand
                 <SideBar onClick={handleFinishReading} >
                     <SideBarImage>
                         <FinishReadingImg 
-                            src={finish_reading_icon} 
+                            src={isDark ? finish_reading_white_icon : finish_reading_black_icon}
                             alt="finish reading icon"
                             style={{backgroundColor: bgColor}}
                         />
@@ -23,7 +31,7 @@ export function RightSidebar( {handleNextPage, currentPage, pages, bgColor, hand
                 <SideBar onClick={handleNextPage} >
                     <SideBarImage>
                         <img 
-                            src={right_arrow_icon} 
+                            src={isDark ? right_arrow_white_icon : right_arrow_black_icon} 
                             alt="right arrow icon"
                         />
                     </SideBarImage>

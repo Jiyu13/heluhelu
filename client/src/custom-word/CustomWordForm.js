@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { ButtonButtons, SubmitButtons } from "../components/Buttons"
+import { ButtonButtons, SubmitButtons } from "../styles/Buttons"
 import apiFetch from "../api/ApiFetch"
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
@@ -120,11 +120,13 @@ const TranslationInput = styled.textarea`
     width: 90%;
     max-width: 235px;
     height: 100px;
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const WordInput = styled.input`
     width: 90%;
-    max-width: 235px;   
+    max-width: 235px;
+    background-color: rgba(255, 255, 255, 0.9); 
 `
 
 const Label = styled.label`

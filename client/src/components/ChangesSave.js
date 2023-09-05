@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import check_white_24dp from "../assets/images/check_white_24dp.svg"
+import check_white_24dp from "../assets/images/white/check_white_24dp.svg"
 
 
 export function ChangesSave( {isChanged} ) {

@@ -4,8 +4,8 @@ import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 import { Link, useNavigate } from "react-router-dom"
 import { IconContainer, VisibilityIcon } from "./VisibilityIcon"
-import email_white_24dp from '../assets/images/email_white_24dp.svg'
-import person_white_24dp from "../assets/images/person_white_24dp.svg"
+import email_white_24dp from '../assets/images/white/email_white_24dp.svg'
+import person_white_24dp from "../assets/images/white/person_white_24dp.svg"
 
 export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     const [usernameError, setUsernameError] = useState(null)

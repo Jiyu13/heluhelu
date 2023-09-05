@@ -5,9 +5,9 @@ import { UserContext } from "../components/UserContext"
 import apiFetch from "../api/ApiFetch"
 
 
-import add_icon from "../assets/images/add_icon.svg"
-import check_circle_icon from "../assets/images/check_circle_icon.svg"
-import { ButtonButtons, SubmitButtons } from "../components/Buttons"
+import add_icon_white from "../assets/images/white/add_icon_white.svg"
+import check_circle_icon_white from "../assets/images/white/check_circle_icon_white.svg"
+import { ButtonButtons, SubmitButtons } from "../styles/Buttons"
 
 
 
@@ -64,10 +64,10 @@ export function CustomWordUpdate({word, setCustomWord, PostAndDelete, checkStatu
     let bgColor
     if (checkStatus(word.word) === 1) {
         bgColor = "#2ecc71"
-        src = check_circle_icon 
+        src = check_circle_icon_white 
     } else {
         bgColor = ""
-        src = add_icon
+        src = add_icon_white
     }
 
 

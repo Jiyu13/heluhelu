@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import add_icon from "../../assets/images/add_icon.svg"
+import add_icon_white from "../../assets/images/white/add_icon_white.svg"
 import { TranslationWord } from "../TranslationWord";
 import {  CustomWordUpdate } from "../CustomWordUpdate"
 import { WordTracker } from "./WordTracker";
@@ -42,7 +42,7 @@ export function DictionaryMobile(props) {
 
             {customWord ? "" :
                 <AddImage 
-                    src={add_icon} 
+                    src={add_icon_white} 
                     alt="add custom word button" 
                     onClick={handleAddBtn} 
                     id={targetWord}
@@ -125,6 +125,7 @@ const DictionaryArea = styled.div`
     color: #ddd;
     padding: 0 12px 0px 12px;
     z-index: 999;
+    overflow: auto;
 `
 
 const NotFound = styled.div`
@@ -150,9 +151,7 @@ const SearchArea = styled.input`
     width: 82%;
     margin-top: 12px;
     margin-bottom: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
 ` 
 
-const TranslationArea = styled.div`
-    overflow-y: scroll;
-    height: 95%;
-`
+const TranslationArea = styled.div``

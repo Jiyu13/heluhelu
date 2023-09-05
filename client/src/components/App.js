@@ -23,11 +23,14 @@ import { ProfilePage } from "../profile/ProfilePage";
 const USER_NOT_SET = -1;
 
 function App() {
+  const storedDarkMode = localStorage.getItem("DARK_MODE")
 
   const [articles, setArticles] = useState(null)
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
-  
+  const [isDark, setIsDark] = useState(storedDarkMode === "true")
+  // const [mode, setMode] = useState("light")
+
   // ========= check session - user remains logged in ========
   useEffect(() => {
     apiFetch("/check_session")
@@ -98,12 +101,23 @@ function App() {
       })
   }, [user])
 
+
+  // ============ mode ===================
+  useEffect(() => {
+    console.log(`Is in dark mode? ${isDark}`);
+    localStorage.setItem("DARK_MODE", isDark)
+  }, [isDark])
+
+  // const savedMode = localStorage.getItem("mode")
+  // setMode(savedMode)
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
-                            firstArticle
+                            firstArticle,
+                            isDark, setIsDark,
+                            // mode, setMode
                           }
 
   if(user === USER_NOT_SET) return;
@@ -113,11 +127,11 @@ function App() {
       {!user ? 
         <AccountBox/>
         :
-        <> 
+        <div className={isDark === true ? "dark" : "light"}> 
             <header>
               <NavBar/>
             </header>
-            <main>
+            <main style={{minHeight: "100vh"}}>
               <Routes >
                 <Route
                   exact
@@ -230,7 +244,7 @@ function App() {
                 </Route>
               </Routes>
             </main>
-        </>
+        </div>
       }
     </UserContext.Provider>
   );

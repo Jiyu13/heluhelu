@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'; 
 import apiFetch from '../../api/ApiFetch';
-import { ButtonButtons, SubmitButtons } from '../../components/Buttons';
+import { ButtonButtons, SubmitButtons } from '../../styles/Buttons';
 import { useMediaQuery } from 'react-responsive';
 import { DeviceSize } from '../../responsive';
+import { PageContainer } from '../../styles/Container';
 
 
 
@@ -100,7 +101,7 @@ function ArticleImporter({ articles, setArticles }) {
 export default ArticleImporter;
 
 const MobileImportButton = styled(ButtonButtons)`
-    width: 49%;
+    width: 48%;
     float: right;
     margin-right: 0px;
 `
@@ -117,12 +118,15 @@ const ImportButton = styled(ButtonButtons)`
 const SubmitButton = styled(SubmitButtons)`
     width: 100px;
 `
-const PasteBox = styled.div`
+const PasteBox = styled(PageContainer)`
     max-width: 800px;
     text-align: center;
     font-size: 20px;
     line-height: 1.6;
-    margin: 90px auto 0;
+    width: 95%;
+    // // margin: 90px auto 0;
+    // margin: 0 auto;
+    // padding-top: 90px;
 `
 
 const FormContainer = styled.form`
@@ -140,6 +144,7 @@ const FormTextarea = styled.textarea`
     height: 450px;
     line-height: 1.6;
     overflow: auto;
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const ArticleTitle = styled.input`

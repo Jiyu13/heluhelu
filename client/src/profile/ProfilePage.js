@@ -5,6 +5,7 @@ import { ProfileNavbar } from "./ProfileNavbar"
 import { ChangesSave } from "../components/ChangesSave"
 import { ChangePassword } from "./ChangePassword"
 import { DeleteAccount } from "./DeleteAccount"
+import { PageContainer } from "../styles/Container"
 
 export function ProfilePage() {
 
@@ -13,7 +14,7 @@ export function ProfilePage() {
 
 
     return (
-        <PageContainer>
+        <ProfilePageContainer>
             <PageWrapper>
                 {isChanged && (
                     <ChangesSave isChanged={isChanged}/>
@@ -38,7 +39,7 @@ export function ProfilePage() {
                 </ProfileBody>
             </PageWrapper>
 
-        </PageContainer>
+        </ProfilePageContainer>
 
     )
 }
@@ -52,9 +53,9 @@ const PageWrapper = styled.div`
     max-width: 600px;
     margin: auto 20px;
 `
-const PageContainer = styled.div`
+const ProfilePageContainer = styled(PageContainer)`
     box-sizing: border-box;
-    margin: 90px auto 0px;
     display:flex;
     justify-content: center;
+    // height: 100vh;
 `

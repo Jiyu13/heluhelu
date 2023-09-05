@@ -1,9 +1,11 @@
 //  render the log
 
-import React from "react";
+import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/logo/logo.png"
+import heluhelulogo_white from "../assets/images/logo/heluhelulogo_white.png"
+import { UserContext } from "../components/UserContext";
 
 
 // Logo Wrapper
@@ -26,17 +28,20 @@ const LogoText = styled.h2`
     font-size: 16px;
     margin: 0;
     margin-left: 4px;
-    color: #222;
+    color: inherit;
     font-weight: 500;
 `
 
 
 export function Logo() {
+
+    const { isDark } = useContext(UserContext)
+
     return (
-        <a href ="/" style={{textDecoration:'none'}}>
+        <a href ="/" style={{textDecoration:'none', color: "inherit"}}>
             <LogoWrapper>
                 <LogoImg>
-                    <img src={logo} alt="Hawaiian Reader Logo"/>
+                    <img src={isDark === true ? heluhelulogo_white : logo} alt="Hawaiian Reader Logo"/>
                 </LogoImg>
 
                 <LogoText>heluhelu</LogoText>

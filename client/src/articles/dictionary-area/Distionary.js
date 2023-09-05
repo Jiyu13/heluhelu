@@ -3,7 +3,7 @@ import { CustomeWordForm } from "../../custom-word/CustomWordForm";
 import { WordTracker } from "./WordTracker";
 import { TranslationWord } from "../TranslationWord";
 import { CustomWordUpdate } from "../CustomWordUpdate";
-import add_icon from "../../assets/images/add_icon.svg"
+import add_icon_white from "../../assets/images/white/add_icon_white.svg"
 import { handleFocus } from "./handleFocus";
 
 
@@ -41,7 +41,7 @@ export function Disctionary(props) {
                 {customWord ? "" :
                     <ImageContainer>
                         <AddImage 
-                            src={add_icon} 
+                            src={add_icon_white} 
                             alt="add custom word button" 
                             onClick={handleAddBtn} 
                             id={targetWord}
@@ -125,6 +125,8 @@ const SearchArea = styled.input`
     height: 25px;
     font-size: 25px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+
 ` 
 
 const ImageContainer = styled.div`

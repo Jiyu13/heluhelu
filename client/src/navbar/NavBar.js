@@ -15,12 +15,12 @@ function NavBar() {
 
     // useMediaQuery from react responsive
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile });
-    const {user} = useContext(UserContext)
+    const {user, isDark} = useContext(UserContext)
     
     return (
         <>
             {user ? 
-                <NavBarContainer>
+                <NavBarContainer className={isDark === true ? "dark" : "light"}>
                     {/* call the Logo component */}
                     <LeftSection>
                         <Logo />
@@ -62,7 +62,6 @@ const NavBarContainer = styled.div`
     position: fixed;
     z-index: 1;   // make navbar on top of articleList when scrolling down
     top: 0;
-    background-color: #fff;
 `;
 
 const LeftSection = styled.div`

@@ -9,12 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { DropdownItem } from "../profile/DropdownItem";
 // import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
 // import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
-import logout_black_24dp from "../assets/images/logout_black_24dp.svg"
-import person_black_24dp from "../assets/images/person_black_24dp.svg"
-import home_black_24dp from "../assets/images/home_black_24dp.svg"
-import equalizer_black_24dp from "../assets/images/equalizer_black_24dp.svg"
-import book_black_24dp from "../assets/images/book_black_24dp.svg"
+import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
+import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
+import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
+import equalizer_black_24dp from "../assets/images/black/equalizer_black_24dp.svg"
+import book_black_24dp from "../assets/images/black/book_black_24dp.svg"
 import { FirstLetter, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
+import { ThemeMode } from "./ThemeMode";
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
@@ -54,6 +55,7 @@ export function MobileNavLinks() {
     }
     return (
         <NavLinksContainer>
+            <ThemeMode />
             <MenuTrigger onClick={handleClick}>
             <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
                 <FirstLetter>{user.username[0]}</FirstLetter>

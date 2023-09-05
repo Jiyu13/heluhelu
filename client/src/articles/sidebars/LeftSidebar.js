@@ -1,12 +1,19 @@
-import left_arrow_icon from "../../assets/images/arrowleft.svg"
+import left_arrow_white_icon from "../../assets/images/white/arrow_back_ios_white_48dp.svg"
+import left_arrow_black_icon from "../../assets/images/black/arrow_back_ios_black_48dp.svg"
+
 
 import styled from "styled-components"
+import { useContext } from "react"
+import { UserContext } from "../../components/UserContext"
 
 export function LeftSidebar( {handlePrevPage, leftArrow} ) {
+
+    const {isDark} = useContext(UserContext)
+
     return (
         <SideBar onClick={handlePrevPage} style={{visibility: leftArrow}}>
             <SideBarImage>
-                <img src={left_arrow_icon} alt="left arrow icon"/>
+                <img src={isDark ? left_arrow_white_icon : left_arrow_black_icon} alt="left arrow icon"/>
             </SideBarImage>
         </SideBar>
     )

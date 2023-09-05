@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import book_material_icon from "../../assets/images/book_material_icon.svg"
+import book_material_icon_white from "../../assets/images/white/book_material_icon_white.svg"
 import { DropDown } from "./DropDown"
 import { ArticleParagraph } from "./ArticleParagraph"
 import { useContext } from "react"
@@ -31,7 +31,7 @@ export function ArticleReadableArea({
                 <>
                     <HeaderContainer>
                         <PagesContainer>
-                            <BookIcon><img src={book_material_icon} alt="book icon"/></BookIcon>
+                            <BookIcon><img src={book_material_icon_white} alt="book icon"/></BookIcon>
                             <PageDisplay>pg: {currentPage+1} / {pages}</PageDisplay>
                         </PagesContainer>
                         <DropDown article={article} showInfo={showInfo} setShowInfo={setShowInfo}/>
