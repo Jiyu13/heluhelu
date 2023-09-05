@@ -13,7 +13,7 @@ import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
 import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
 import equalizer_black_24dp from "../assets/images/black/equalizer_black_24dp.svg"
 import book_black_24dp from "../assets/images/black/book_black_24dp.svg"
-import { FirstLetter, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
+import { FirstLetter, MenuTrigger, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
 import { ThemeMode } from "./ThemeMode";
 
 export function MobileNavLinks() {
@@ -50,7 +50,7 @@ export function MobileNavLinks() {
         <NavLinksContainer>
             <ThemeMode />
             <MenuTrigger onClick={handleClick}>
-            <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
+              <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
                 <FirstLetter>{user.username[0]}</FirstLetter>
               </ProfileAvatar>
               {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
@@ -143,8 +143,3 @@ const MenuDropdownList = styled.div`
 //     transform: scale(1.5);
 //   }
 // `
-const MenuTrigger = styled.div`
-  justify-content: center;
-  align-items: center;
-  display: flex;
-`
