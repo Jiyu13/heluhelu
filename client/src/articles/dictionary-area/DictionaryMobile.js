@@ -125,6 +125,7 @@ const DictionaryArea = styled.div`
     color: #ddd;
     padding: 0 12px 0px 12px;
     z-index: 999;
+    overflow: auto;
 `
 
 const NotFound = styled.div`
@@ -153,7 +154,4 @@ const SearchArea = styled.input`
     background-color: rgba(255, 255, 255, 0.9);
 ` 
 
-const TranslationArea = styled.div`
-    overflow-y: scroll;
-    height: 95%;
-`
+const TranslationArea = styled.div``
