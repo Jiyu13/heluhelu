@@ -102,6 +102,8 @@ const Input = styled.input`
     width: 100%;
     box-sizing: border-box;
     -webkit-text-fill-color: black !important;
+    background-color: rgba(255, 255, 255, 0.9);
+
 `
 
 const Label = styled.div`

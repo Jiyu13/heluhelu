@@ -150,6 +150,7 @@ const SearchArea = styled.input`
     width: 82%;
     margin-top: 12px;
     margin-bottom: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
 ` 
 
 const TranslationArea = styled.div`

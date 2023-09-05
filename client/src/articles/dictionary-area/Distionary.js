@@ -125,6 +125,8 @@ const SearchArea = styled.input`
     height: 25px;
     font-size: 25px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+
 ` 
 
 const ImageContainer = styled.div`

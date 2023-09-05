@@ -144,6 +144,7 @@ const FormTextarea = styled.textarea`
     height: 450px;
     line-height: 1.6;
     overflow: auto;
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const ArticleTitle = styled.input`

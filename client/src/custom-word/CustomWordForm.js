@@ -120,11 +120,13 @@ const TranslationInput = styled.textarea`
     width: 90%;
     max-width: 235px;
     height: 100px;
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const WordInput = styled.input`
     width: 90%;
-    max-width: 235px;   
+    max-width: 235px;
+    background-color: rgba(255, 255, 255, 0.9); 
 `
 
 const Label = styled.label`

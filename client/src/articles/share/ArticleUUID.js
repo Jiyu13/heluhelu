@@ -55,10 +55,11 @@ const ShareContainer = styled.div`
     height: 100vh;
     margin: 0 auto;
     padding-top: 90px;
+    width: 95%;
 `
 
 const SharePageTitle = styled.h1`
-    color: #222;
+    color: inherit;
     margin-top: 36px;
     margin-bottom: 36px;
     font-family: readex pro, arial, sans-serifs;

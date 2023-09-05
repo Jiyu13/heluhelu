@@ -117,6 +117,7 @@ const Input = styled.input`
         -webkit-text-fill-color: black;
         transition: background-color 5000s ease-in-out 0s;  // This is a trick to keep the background color after the autofill is applied
     }
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const Label = styled.div`

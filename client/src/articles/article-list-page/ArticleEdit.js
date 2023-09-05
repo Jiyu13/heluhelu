@@ -108,6 +108,7 @@ const EditContainer = styled(PageContainer)`
     font-size: 20px;
     line-weight: 1.6;
     margin: 0 auto;
+    width: 95%;
 `
 
 const EditForm = styled.form`
@@ -131,6 +132,7 @@ const TitleInput = styled.input`
     padding: 12px 0 12px 5px;
     font-size: 18px;
     margin-bottom: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
 `
 
 const ContentTextarea = styled.textarea`
@@ -143,4 +145,5 @@ const ContentTextarea = styled.textarea`
     height: 450px;
     line-height: 1.6;
     overflow: auto;
+    background-color: rgba(255, 255, 255, 0.9);
 `
