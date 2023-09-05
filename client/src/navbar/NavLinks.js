@@ -29,8 +29,11 @@ export function NavLinks() {
                             <Link 
                                 className="recent-reading"
                                 href={`/articles/${currentArticle?.id}`}
-                            >
-                                Currently Reading
+                                style={{}}
+                            >   
+                                <div>
+                                    Currently Reading
+                                </div>
                                 <HideTitle className="last-open-title">{currentArticle?.title}</HideTitle>
                             </Link>
                             :
@@ -48,8 +51,14 @@ export function NavLinks() {
 }
 
 const HideTitle = styled.div`
+    font-size: 13px;
+    box-sizing: border-box;
     display: none;
     text-align: center;
+    width: 115px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; 
 `
 
 const NavLinksContainer = styled.div`
@@ -69,7 +78,7 @@ const LinksWrapper = styled.ul`
 // render a single link, click and redirect to a specific page
 const LinkItem = styled.li`
     height: 100%;
-    padding: 0 1.1em;
+    margin: 0 1.1em;
     color: # 222;
     font-weight: 500;
     font-size: 14px;
@@ -77,6 +86,7 @@ const LinkItem = styled.li`
     justify-content: center;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 
     // avoid link goes down when hover
     border-top: 2px solid transparent;
