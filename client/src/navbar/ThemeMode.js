@@ -23,9 +23,9 @@ export function ThemeMode() {
                 // handleDiameter={20}
                 onChange={ToggleMode}
                 checked={isDark === true}
-                onColor="#86d3ff"
-                onHandleColor="#2693e6"
-                offColor="#000"
+                onColor="#34495e"
+                onHandleColor="#95a5a6"
+                offColor="#86d3ff"
                 offHandleColor="#2693e6"
                 checkedIcon={
                     <SunIconDiv>
