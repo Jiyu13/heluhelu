@@ -113,7 +113,7 @@ export const ProfileAvatar = styled.div`
       transform: scale(1.2);
     }
 `
-const MenuTrigger = styled.div``
+export const MenuTrigger = styled.div``
 
 export const NavLinksContainer = styled.div`
     height: 100%;
