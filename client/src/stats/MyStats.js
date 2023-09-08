@@ -10,18 +10,22 @@ import { PageContainer } from "../styles/Container"
 
 export function MyStats() {
     const [readEvents, setReadEvets] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
      
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
 
     useEffect(() => {
         apiFetch('/stats')
         .then(res => res.json())
-        .then(data => setReadEvets(data))
+        .then(data => {
+            setReadEvets(data)
+            setIsLoading(false)
+        })
     }, [])
 
 
     return (
-        <PageContainer>
+        <PageContainer style={{textAlign: "center"}}>
             {isMobile && (
                 <Link to="/stats/vocabularies">
                     <VocabStatsPage type="button" value="Vocabulary Stats" />
@@ -42,7 +46,10 @@ export function MyStats() {
             </StatsNavigation>
             
             <StatsContainer>
-                <ReadingStats readEvents={readEvents} setReadEvets={setReadEvets}/>
+                <ReadingStats 
+                    readEvents={readEvents}
+                    isLoading={isLoading}
+                />
             </StatsContainer>
             
         </PageContainer>

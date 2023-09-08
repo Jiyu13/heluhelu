@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { LineGraph } from "./LineGraph"
+import { SkeletonReadingStatTable } from "../skeleton-screens/SkeletonReadingStatTable"
 
-export function ReadingStats( {readEvents} ) {
+export function ReadingStats( {readEvents, isLoading} ) {
 
     return (
         <>  
@@ -24,37 +25,42 @@ export function ReadingStats( {readEvents} ) {
                                 <th>Avg Daily Pgs</th>
                             </TRow>
                         </thead>
-
-                        <tbody>
-                            <TRow>
-                                <td>Today:</td>
-                                <td colSpan="2">{readEvents?.today / 250 } pgs</td>
-                            </TRow>
-                            <TRow>
-                                <td>Yesterday:</td>
-                                <td colSpan="2">{readEvents?.yesterday / 250} pgs</td>
-                            </TRow>
-                            <TRow>
-                                <td>This Week:</td>
-                                <td>{readEvents?.week.total / 250} pgs</td>
-                                <td>{(readEvents?.week.avg / 250).toFixed(2)} pgs/day</td>
-                            </TRow>
-                            <TRow>
-                                <td>This Month:</td>
-                                <td>{readEvents?.month.total / 250} pgs</td>
-                                <td>{(readEvents?.month.avg / 250).toFixed(2)} pgs/day</td>
-                            </TRow>
-                            <TRow>
-                                <td>This Year:</td>
-                                <td>{readEvents?.year.total / 250} pgs</td>
-                                <td>{(readEvents?.year.avg / 250).toFixed(2)} pgs/day</td>
-                            </TRow>
-                            <TRow>
-                                <td>All Time:</td>
-                                <td>{readEvents?.total / 250} pgs</td>
-                                <td> -- </td>
-                            </TRow>
-                        </tbody>
+                        {!isLoading && (
+                            <tbody>
+                                <TRow>
+                                    <td>Today:</td>
+                                    <td colSpan="2">{readEvents?.today / 250 } pgs</td>
+                                </TRow>
+                                <TRow>
+                                    <td>Yesterday:</td>
+                                    <td colSpan="2">{readEvents?.yesterday / 250} pgs</td>
+                                </TRow>
+                                <TRow>
+                                    <td>This Week:</td>
+                                    <td>{readEvents?.week.total / 250} pgs</td>
+                                    <td>{(readEvents?.week.avg / 250).toFixed(2)} pgs/day</td>
+                                </TRow>
+                                <TRow>
+                                    <td>This Month:</td>
+                                    <td>{readEvents?.month.total / 250} pgs</td>
+                                    <td>{(readEvents?.month.avg / 250).toFixed(2)} pgs/day</td>
+                                </TRow>
+                                <TRow>
+                                    <td>This Year:</td>
+                                    <td>{readEvents?.year.total / 250} pgs</td>
+                                    <td>{(readEvents?.year.avg / 250).toFixed(2)} pgs/day</td>
+                                </TRow>
+                                <TRow>
+                                    <td>All Time:</td>
+                                    <td>{readEvents?.total / 250} pgs</td>
+                                    <td> -- </td>
+                                </TRow>
+                            </tbody>
+                        )}
+                        {isLoading && (
+                            <SkeletonReadingStatTable />
+                        )}
+                        
                     </Table>
                     <span style={{fontSize: "1rem"}}>* one page = 250 words of text</span>
                 </TableContainer>
@@ -76,11 +82,11 @@ const GraphBox = styled.div`
     margin: 0px auto 0px auto
 `
 
-const TRow = styled.tr`
+export const TRow = styled.tr`
     color: #000;
 `
 
-const Table = styled.table`
+export const Table = styled.table`
     border-collapse: collapse;
     margin: 25px auto 0;
     font-size: .9em;
@@ -91,7 +97,7 @@ const Table = styled.table`
 `
 
 
-const TableContainer = styled.div`
+export const TableContainer = styled.div`
     width: 99%;
     box-sizing: border-box;
     max-width: 600px;
@@ -100,7 +106,7 @@ const TableContainer = styled.div`
     line-height: 1.6;
 `
 
-const TableBox = styled.div`
+export const TableBox = styled.div`
     text-align: center;
     display: block;
     margin: 0 auto;
