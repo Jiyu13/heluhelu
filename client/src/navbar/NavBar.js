@@ -9,6 +9,7 @@ import { MobileNavLinks } from "./MobileNavLinks";
 import { DeviceSize } from '../responsive';
 import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
+import { ThemeMode } from './ThemeMode';
 
 
 function NavBar() {
@@ -35,6 +36,7 @@ function NavBar() {
                     {/* call Accessibility component */}
                     <RightSection>
                         {/* hide Accessiblity if isMoble isn't mobile */}
+                        <ThemeMode />
                         {!isMobile && <Accessibility/>}
                         
                         {/* show MobileNavLinks if isMoble is mobile */}
