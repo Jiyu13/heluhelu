@@ -48,7 +48,7 @@ export const VocabContainer = styled.div`
     grid-auto-flow: column;  //makes items flow across columns, ie into a single row
     border: 1px solid #bdc3c7;
     border-radius: 8px;
-    grid-gap: 0.25rem;
+    grid-gap: 0.5rem;
     padding: 1.5rem 0.5rem 1rem;
 
     &:hover {
@@ -60,7 +60,7 @@ const IdColumn = styled.div`
 const WordColumn= styled.div`
 `
 const DefinitionColumn = styled.div`
-    padding-right: 2rem;
+    padding-right: 0.8rem;
 `
 const CustomColumn = styled.div`
 `

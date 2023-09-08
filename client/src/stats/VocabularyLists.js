@@ -24,14 +24,14 @@ export function VocabularyLists() {
     const [vocabStats, setVocabStats] = useState(null)
 
     useEffect(() => {
-        setLoading(false)
+        setLoading(true)
         async function fetchData() {
             try {
                 const response = await apiFetch("/vocabularies_translations")
                 const data = await response.json()
                 setVocabStats(data)
                 setFilterResult(data)
-                setLoading(true)
+                setLoading(false)
             } catch(error) {
                 console.log("Error fetching data", error)
             } 
@@ -99,11 +99,11 @@ export function VocabularyLists() {
                     <IdColumn>ID</IdColumn>
                     <WordColumn>Word</WordColumn>
                     <DefinitionColumn>Definition</DefinitionColumn>
-                    <CustomColumn>Custom Definition</CustomColumn>
-                    <MarkTagColumn>Mark Tag</MarkTagColumn>
+                    <CustomColumn>{isMobile ? "Custom" : "Custom Definition"}</CustomColumn>
+                    <MarkTagColumn>{isMobile ? "Mark" : "Mark Tag"}Mark Tag</MarkTagColumn>
                 </VocabHeader>
                 {
-                    isLoading && (
+                    !isLoading && (
                         <>
                             {filterResults?.map((v, index) => {
                                 return <Vocabulary key={index} vocab={v}/>
@@ -111,7 +111,7 @@ export function VocabularyLists() {
                         </>
                     )
                 }
-                { !isLoading && (<SkeletonVocabStatsList />)}
+                { isLoading && (<SkeletonVocabStatsList />)}
                 
             </ContainerBody>        
         </PageContainer>
@@ -144,7 +144,7 @@ export const VocabHeader = styled.div`
     margin: 0 auto;
     grid-template-columns: 0.5fr 1fr 4fr 2fr 0.6fr;
     grid-auto-flow: column;  //makes items flow across columns, into a single row
-    grid-gap: 0.25rem;
+    grid-gap: 0.5rem;
     padding: 1.5rem 0.5rem 1rem;
 `
 

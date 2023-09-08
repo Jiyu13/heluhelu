@@ -88,18 +88,27 @@ export function MobileVocabularyTable( props ) {
             </FilterBy>
             <InfoItem href="#" onClick={handleFilterAll}>
                 <AllWordIndicator/>
-                <WordText>All</WordText>
-                <WordCount>{vocabularies?.length}</WordCount>
+                <div style={{display: "flex", flexDirection:"column"}}>
+                    <WordText>All</WordText>
+                    <WordCount>{vocabularies?.length}</WordCount>
+                </div>
+                
             </InfoItem>
             <InfoItem href="#" onClick={handleFilterKnown}>
                 <KnownWordIndicator/>
-                <WordText>Known</WordText>
-                <WordCount>{knownVocab}</WordCount>
+                <div style={{display: "flex", flexDirection:"column"}}>
+                    <WordText>Known</WordText>
+                    <WordCount>{knownVocab}</WordCount>
+                </div>
+                
             </InfoItem>
             <InfoItem href="#" onClick={handleFilterStudying}>
                 <StudyingdIndicator/>
-                <WordText>Studying</WordText>
-                <WordCount>{studyingvocab}</WordCount>
+                <div style={{display: "flex", flexDirection:"column"}}>
+                    <WordText>Studying</WordText>
+                    <WordCount>{studyingvocab}</WordCount>
+                </div>
+                
             </InfoItem>
         </InfoContainer>
 
@@ -154,11 +163,12 @@ export const InfoItem = styled.a`
 
 export const WordCount = styled.div`
     margin-right: 15px;
+    font-size: .775rem !important;
 `
 
 export const WordText = styled.span`
     justify-content: center;
-    font-size: .875rem !important;
+    font-size: .975rem !important;
     font-weight: bold;
     white-space: nowrap; // make "All Words" stay in the same line
 `
@@ -166,7 +176,7 @@ export const WordText = styled.span`
 export const AllWordIndicator  = styled.div`
     margin-left: 15px;
     width: 8px;
-    height: 1.2rem;
+    height: 2rem;
     background-color: #409078;
     border-color: #338fff;
     border-radius: 10px;
@@ -175,7 +185,7 @@ export const AllWordIndicator  = styled.div`
 export const KnownWordIndicator = styled.div`
     margin-left: 15px;
     width: 8px;
-    height: 1.2rem;
+    height: 2rem;
     background-color: #fff; // rgba(112, 161, 255, 0.5)
     border-color: #338fff;
     border-radius: 10px;
@@ -184,7 +194,7 @@ export const KnownWordIndicator = styled.div`
 export const StudyingdIndicator = styled.div`
     margin-left: 15px;
     width: 8px;
-    height: 1.2rem;
+    height: 2rem;
     background-color: rgba(255, 221, 89, 0.5);
     border-color: #338fff;
     border-radius: 10px;
