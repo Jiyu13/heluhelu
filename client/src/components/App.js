@@ -104,7 +104,6 @@ function App() {
 
   // ============ mode ===================
   useEffect(() => {
-    console.log(`Is in dark mode? ${isDark}`);
     localStorage.setItem("DARK_MODE", isDark)
   }, [isDark])
 
