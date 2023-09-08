@@ -66,7 +66,7 @@ export function Accessibility() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleMenuItemClick={handleLogout}
-                  goTo="javascript:void(0)"
+                  goTo=""
                 />
               </MenuDropdownList>
             )}
