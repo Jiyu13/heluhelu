@@ -7,7 +7,6 @@ import dark_mode_24 from "../assets/images/dark_mode_24.svg"
 
 export function ThemeMode() {
     const { isDark, setIsDark,
-            // mode, setMode 
         } = useContext(UserContext)
 
     function ToggleMode() {
@@ -16,11 +15,7 @@ export function ThemeMode() {
 
     return (
         <ThemeContainer>
-            {/* <ThemeButton onClick={ToggleMode}>
-                {isDark === true ? "Dark" : "light"}
-            </ThemeButton> */}
             <ReactSwitch 
-                // handleDiameter={20}
                 onChange={ToggleMode}
                 checked={isDark === true}
                 onColor="#34495e"
@@ -64,9 +59,4 @@ const ThemeContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 16px;
-`
-const ThemeButton = styled.button`
-    height: 28px;
-    border-radius: 20px;
-    border: none;
 `
