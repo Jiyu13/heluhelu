@@ -14,7 +14,6 @@ import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
 import equalizer_black_24dp from "../assets/images/black/equalizer_black_24dp.svg"
 import book_black_24dp from "../assets/images/black/book_black_24dp.svg"
 import { FirstLetter, MenuTrigger, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
-import { ThemeMode } from "./ThemeMode";
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
@@ -37,23 +36,16 @@ export function MobileNavLinks() {
       })
     }
 
-    // ============ settings ============================
-    // function handleSettings() {
-    //   return
-    // }
-
     // ========== profile ===============================
     function handleProfile() {
       return
     }
     return (
         <NavLinksContainer>
-            <ThemeMode />
             <MenuTrigger onClick={handleClick}>
               <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
                 <FirstLetter>{firstLetter.toUpperCase()}</FirstLetter>
               </ProfileAvatar>
-              {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
 
             {isOpen && (
@@ -88,7 +80,6 @@ export function MobileNavLinks() {
                   handleProfileClick={handleProfile}
                   goTo="/profile"
                 />
-                {/* <DropdownItem icon={settings_black_24dp} icon_info="settings icon" text="Settings" handleMenuItemClick={handleSettings}/> */}
                 <DropdownItem 
                   icon={logout_black_24dp} 
                   icon_info="logout icon" 
