@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { useContext } from 'react';
@@ -6,13 +6,11 @@ import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
 
 import { DropdownItem } from "../profile/DropdownItem";
-// import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
-// import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
 import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
-import { ThemeMode } from "./ThemeMode";
 
 export function Accessibility() {
+
     const [isOpen, setIsOpen] = useState(false)
     const {setUser, user} = useContext(UserContext)
 
@@ -21,6 +19,20 @@ export function Accessibility() {
     function handleClick() {
       setIsOpen(!isOpen)
     }
+
+    let menuRef = useRef()
+    useEffect(() => {
+      let handler = (e) => {
+        if (!menuRef.current.contains(e.target)) {
+          setIsOpen(false)
+        }
+      }
+      document.addEventListener("mousedown", handler)
+
+      return() =>{
+        document.removeEventListener("mousedown", handler);
+      }
+    })
 
     // =========== logout =================================
     function handleLogout() {
@@ -32,13 +44,11 @@ export function Accessibility() {
       })
     }
     return (
-        <NavLinksContainer>
-            <ThemeMode />
-            <MenuTrigger onClick={handleClick}>
+        <NavLinksContainer ref={menuRef}>
+            <MenuTrigger onClick={handleClick} >
               <ProfileAvatar style={{backgroundColor: `${user?.profile_color}`}}>
                 <FirstLetter>{firstLetter.toUpperCase()}</FirstLetter>
               </ProfileAvatar>
-              {/* <ProfileImg src={account_circle_black_24dp} alt="profile image"></ProfileImg> */}
             </MenuTrigger>
 
             {isOpen && (
@@ -51,12 +61,6 @@ export function Accessibility() {
                   text="Your Profile" 
                   goTo="/profile"
                 />
-                {/* <DropdownItem 
-                  icon={settings_black_24dp} 
-                  icon_info="settings icon" 
-                  text="Settings" 
-                  handleMenuItemClick={handleSettings}
-                /> */}
                 <DropdownItem 
                   icon={logout_black_24dp} 
                   icon_info="logout icon" 

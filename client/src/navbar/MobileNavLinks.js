@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { useContext } from 'react';
@@ -6,8 +6,6 @@ import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
 
 import { DropdownItem } from "../profile/DropdownItem";
-// import settings_black_24dp from "../assets/images/settings_black_24dp.svg"
-// import account_circle_black_24dp from "../assets/images/account_circle_black_24dp.svg"
 import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
 import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
@@ -26,6 +24,20 @@ export function MobileNavLinks() {
       setIsOpen(!isOpen)
     }
 
+    let menuRef = useRef()
+    useEffect(() => {
+      let handler = (e) => {
+        if (!menuRef.current.contains(e.target)) {
+          setIsOpen(false)
+        }
+      }
+      document.addEventListener("mousedown", handler)
+
+      return() =>{
+        document.removeEventListener("mousedown", handler);
+      }
+    })
+
     // =========== logout =================================
     function handleLogout() {
       apiFetch('/logout', {
@@ -41,7 +53,7 @@ export function MobileNavLinks() {
       return
     }
     return (
-        <NavLinksContainer>
+        <NavLinksContainer ref={menuRef}>
             <MenuTrigger onClick={handleClick}>
               <ProfileAvatar style={{backgroundColor: `${user.profile_color}`}}>
                 <FirstLetter>{firstLetter.toUpperCase()}</FirstLetter>
