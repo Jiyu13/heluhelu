@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export function DropdownItem(props) {
-    const {icon, icon_info, text, handleMenuItemClick, goTo} = props
+    const {icon, icon_info, text, handleClick, goTo} = props
     return (
         <LinkItem>
-            <Link href={goTo} onClick={handleMenuItemClick}>
+            <Link href={goTo} onClick={handleClick}>
                 <img src={icon} alt={icon_info} style={{width: "16px", height: "16px"}}/>
                 <span>{text}</span>
             </Link>
