@@ -48,7 +48,8 @@ export function Article() {
             article, setArticle, 
             user, 
             setErrors, splitText, calculatePages,
-            vocabularies, setVocabularies
+            vocabularies, setVocabularies,
+            lastClick, setLastClick
         } = useContext(UserContext)
     
     const { id } = useParams()
@@ -62,12 +63,7 @@ export function Article() {
                 setArticle(data.article)
                 setLoading(false)
             } else {
-                
-                // console.log(response)
-                // const status = response.status
-                // const statusText = response.statusText
                 const data = await response.json()
-                // console.log(status, statusText, data)
                 setIsError(true)
                 setErrorMessage(data["message"])
             }
@@ -111,13 +107,22 @@ export function Article() {
         }
         divRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
+    // ============== set lastClick when currentPage is changed =======================
+    useEffect(() => {
+        let timeNow = new Date().getTime()
+        setLastClick(timeNow)
+    }, [currentPage, setLastClick])
+
     function handleNextPage() {
+        let timeNow = new Date().getTime()
         if (currentPage < pages - 1) {
             const nextPage = currentPage + 1
             setCurrentPage(nextPage)
             updatePageInDB(nextPage)
-            handleWordsRead(250)  
+            if (lastClick && timeNow > (lastClick + 25000)) {
+                handleWordsRead(250)
+            }
             setTotalWords(totalWords + 250)
         }
         divRef.current.scrollTo({ top: 0, behavior: 'smooth' });

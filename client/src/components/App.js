@@ -29,7 +29,7 @@ function App() {
   const [article, setArticle] = useState(null)
   const [user, setUser] = useState(USER_NOT_SET);
   const [isDark, setIsDark] = useState(storedDarkMode === "true")
-  // const [mode, setMode] = useState("light")
+  const [lastClick, setLastClick] = useState(null)
 
   // ========= check session - user remains logged in ========
   useEffect(() => {
@@ -107,8 +107,11 @@ function App() {
     localStorage.setItem("DARK_MODE", isDark)
   }, [isDark])
 
-  // const savedMode = localStorage.getItem("mode")
-  // setMode(savedMode)
+  
+  function handleSetLastClick() {
+    setLastClick(new Date().getTime())
+  }
+
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
                             article, setArticle, 
@@ -116,7 +119,7 @@ function App() {
                             vocabularies, setVocabularies,
                             firstArticle,
                             isDark, setIsDark,
-                            // mode, setMode
+                            lastClick, setLastClick, handleSetLastClick
                           }
 
   if(user === USER_NOT_SET) return;
