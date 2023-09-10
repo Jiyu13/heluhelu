@@ -48,10 +48,7 @@ export function MobileNavLinks() {
       })
     }
 
-    // ========== profile ===============================
-    function handleProfile() {
-      return
-    }
+
     return (
         <NavLinksContainer ref={menuRef}>
             <MenuTrigger onClick={handleClick}>
@@ -68,35 +65,31 @@ export function MobileNavLinks() {
                   icon={home_black_24dp} 
                   icon_info="homepage-icon" 
                   text="Home" 
-                  handleProfileClick={handleProfile}
                   goTo="/"
                 />
                 <DropdownItem 
                   icon={equalizer_black_24dp} 
                   icon_info="my stats icon" 
                   text="My Stats" 
-                  handleProfileClick={handleProfile}
                   goTo="/stats"
                 />
                 <DropdownItem 
                   icon={book_black_24dp} 
                   icon_info="currently reading icon" 
                   text="Currently Reading" 
-                  handleProfileClick={handleProfile}
                   goTo={`/articles/${currentArticle?.id}`}
                 />
                 <DropdownItem 
                   icon={person_black_24dp} 
                   icon_info="profile icon" 
                   text="Your Profile" 
-                  handleProfileClick={handleProfile}
                   goTo="/profile"
                 />
                 <DropdownItem 
                   icon={logout_black_24dp} 
                   icon_info="logout icon" 
                   text="Log out" 
-                  handleMenuItemClick={handleLogout}
+                  handleClick={handleLogout}
                   goTo=""
                 />
               </MenuDropdownList>
