@@ -100,7 +100,7 @@ export function VocabularyLists() {
                     <WordColumn>Word</WordColumn>
                     <DefinitionColumn>Definition</DefinitionColumn>
                     <CustomColumn>{isMobile ? "Custom" : "Custom Definition"}</CustomColumn>
-                    <MarkTagColumn>{isMobile ? "Mark" : "Mark Tag"}Mark Tag</MarkTagColumn>
+                    <MarkTagColumn>{isMobile ? "Mark" : "Mark Tag"}</MarkTagColumn>
                 </VocabHeader>
                 {
                     !isLoading && (
