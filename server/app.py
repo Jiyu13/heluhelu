@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime, timedelta
 
 from functions.fetch_profile_color import profile_color
+from functions.text_utils import clean_text
 
 class Dictionaries(Resource):
     def get(self):
