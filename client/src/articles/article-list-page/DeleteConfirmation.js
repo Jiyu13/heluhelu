@@ -98,6 +98,7 @@ const BodyText = styled.p`
   margin-block-start: 1em;
   margin-block-end: 1em;
   font-size: 1em;
+  color: #2c3445;
 `
 
 const ModalBody = styled.div`
