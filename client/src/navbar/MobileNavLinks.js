@@ -5,6 +5,8 @@ import { useContext } from 'react';
 import { UserContext } from '../components/UserContext';
 import apiFetch from "../api/ApiFetch";
 
+import { cleanURL } from "../utils/cleanArticleUrl";
+
 import { DropdownItem } from "../profile/DropdownItem";
 import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
@@ -77,7 +79,7 @@ export function MobileNavLinks() {
                   icon={book_black_24dp} 
                   icon_info="currently reading icon" 
                   text="Currently Reading" 
-                  goTo={`/articles/${currentArticle?.id}`}
+                  goTo={`/articles/${currentArticle?.id}/${cleanURL(currentArticle?.title)}`}
                 />
                 <DropdownItem 
                   icon={person_black_24dp} 

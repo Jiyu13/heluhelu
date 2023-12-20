@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../components/UserContext";
 
+import { cleanURL } from "../utils/cleanArticleUrl";
 
 export function NavLinks() {
     const {article, firstArticle} = useContext(UserContext)
@@ -28,7 +29,7 @@ export function NavLinks() {
                         {currentArticle ? 
                             <Link 
                                 className="recent-reading"
-                                href={`/articles/${currentArticle?.id}`}
+                                href={`/articles/${currentArticle?.id}/${cleanURL(currentArticle?.title)}`}
                                 style={{}}
                             >   
                                 <div>

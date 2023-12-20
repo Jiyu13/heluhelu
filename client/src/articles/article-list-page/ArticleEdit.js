@@ -9,6 +9,7 @@ import { DeviceSize } from "../../responsive";
 import { ChangesSave } from "../../components/ChangesSave";
 
 import { PageContainer } from "../../styles/Container"
+import { cleanURL } from "../../utils/cleanArticleUrl";
 
 
 export function ArticleEdit( {onUpdatedArticle} ) {
@@ -42,7 +43,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
             title: formData.title,
         }
 
-        apiFetch(`/article/edit/${id}`, {
+        apiFetch(`/article/edit/${id}${cleanURL(updated.title)}`, {
             method: "PATCH",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(updated)

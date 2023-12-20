@@ -169,21 +169,21 @@ function App() {
 
                 <Route
                   exact
-                  path='/article/share/:id'
+                  path='/article/share/:id/:article_title/:uuid'
                   element={<ArticleUUID/>}
                 >
                 </Route>
 
                 <Route
                   exact
-                  path='/article/edit/:id'
+                  path='/article/edit/:id/:article_title'
                   element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
                 >
                 </Route>
                 
                 <Route
                   exact
-                  path='/articles/:id'
+                  path='/articles/:id/:article_title'
                   element={<Article/>}
                 >
                 </Route>

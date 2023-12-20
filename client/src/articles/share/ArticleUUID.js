@@ -1,22 +1,16 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
-import apiFetch from "../../api/ApiFetch"
 
 export function ArticleUUID() {
 
     const [copied, setCopied] = useState(false)
 
-    let { id } = useParams()
-    const [sharedArticle, setSharedArticle] = useState("")
+    let { article_title, uuid } = useParams()
 
-    useEffect(() => {
-        apiFetch(`/article/share/${id}`)
-        .then(res => res.json())
-        .then(data => setSharedArticle(data))
-    }, [id])
-
-    const url = window.location.protocol + "//" + window.location.host + `/article/share_receive/${sharedArticle.uuid}`
+    const url = window.location.protocol + "//" + window.location.host + `/article/share_receive/${uuid}`
+    
+    console.log(uuid)
 
     const handleFocus = (e) => {
         e.target.select();
@@ -30,7 +24,7 @@ export function ArticleUUID() {
     return(
         <ShareContainer>
             <SharePageTitle>Share Article</SharePageTitle>
-            <SharedArticleTitle>{sharedArticle.title}</SharedArticleTitle>
+            <SharedArticleTitle>{article_title}</SharedArticleTitle>
             <br/>
             <>Share this article with others!</>
 

@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import styled from "styled-components"
 import { useContext } from "react";
 
+import { cleanURL } from "../../utils/cleanArticleUrl";
+
 
 import edit_icon from "../../assets/images/black/edit_black_icon.svg"
 import edit_white_48dp from "../../assets/images/white/edit_white_48dp.svg"
@@ -19,6 +21,8 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
+
+    console.log(articles)
 
     const { user, splitText, calculatePages, isDark } = useContext(UserContext)
 
@@ -64,7 +68,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
                         <ArticleTitle>
                             <Link 
-                                to={`/articles/${a.id}`} 
+                                to={`/articles/${a.id}/${cleanURL(a.title)}`} 
                                 style={{
                                     textDecoration: 'none',
                                     color: "inherit",
@@ -86,7 +90,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                     <EditCell>
                         <EditContainer>
                             <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
-                                <Link to={`/article/edit/${a.id}`} style={{"color": "inherit"}}>
+                                <Link to={`/article/edit/${a.id}/${cleanURL(a.title)}`} style={{"color": "inherit"}}>
                                     <ButtonImage 
                                         src={isDark === true ? edit_white_48dp : edit_icon} 
                                         alt="edit icon"
@@ -95,7 +99,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                             </Button>
 
                             <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
-                                <Link to={`/article/word_stats/${a.id}/${a.title}`}>
+                                <Link to={`/article/word_stats/${a.id}/${cleanURL(a.title)}`}>
                                     <ButtonImage 
                                         src={isDark === true ? info_white_48dp : info_black_48dp} 
                                         alt="article info icon"
@@ -113,7 +117,7 @@ export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
                             </Button>
 
                             <Button className={isDark? "article-settings-btn-dark" : "article-settings-btn-light"}>
-                                <Link to={`/article/share/${a.id}`}>
+                                <Link to={`/article/share/${a.id}/${cleanURL(a.title)}/${a.uuid}`}>
                                     <ButtonImage 
                                         src={isDark === true ? share_white_48dp : share_icon} 
                                         alt="share icon"

@@ -12,6 +12,8 @@ import { DeviceSize } from "../../responsive"
 import { useMediaQuery } from "react-responsive"
 import { PageContainer } from "../../styles/Container"
 
+import { cleanURL } from "../../utils/cleanArticleUrl"
+
 export function ShowArticleUniqueWords() {
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile})
 
@@ -24,7 +26,7 @@ export function ShowArticleUniqueWords() {
     const [filterResults, setFilterResult] = useState(null)
 
     useEffect(() => {
-        apiFetch(`/article/word_stats/${id}/${article_title}`)
+        apiFetch(`/article/word_stats/${id}/${cleanURL(article_title)}`)
         .then(res => res.json())
         .then(data => {
             setStudyingUnique(data["studying_unique"])
