@@ -1,2 +1,2 @@
 def clean_text(text):
-    return text.replace("‘", "ʻ").replace("'", "ʻ")
+    return text.strip().replace("‘", "ʻ").replace("'", "ʻ")
