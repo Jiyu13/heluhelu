@@ -231,7 +231,7 @@ class Articles(Resource):
         new_article = Article(
             user_id=user_id,
             uuid=str(uuid.uuid4()),
-            text=request.get_json()['text'].replace("‘", "ʻ"),
+            text=clean_text(request.get_json()['text']),
             title=request.get_json()["title"],
             check_finished=False,
         )
@@ -409,6 +409,7 @@ class ArticleEdit(Resource):
             article = Article.query.filter_by(id=id).first() 
             for attr in request.get_json():
                 setattr(article, attr, request.get_json()[attr])
+            article.text = clean_text(article.text)
             article.update_at = datetime.utcnow()
             db.session.add(article)
             db.session.commit()
