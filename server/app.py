@@ -231,7 +231,7 @@ class Articles(Resource):
         new_article = Article(
             user_id=user_id,
             uuid=str(uuid.uuid4()),
-            text=request.get_json()['text'],
+            text=request.get_json()['text'].replace("‘", "ʻ"),
             title=request.get_json()["title"],
             check_finished=False,
         )
