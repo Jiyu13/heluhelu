@@ -422,7 +422,8 @@ api.add_resource(ArticleEdit, '/article/edit/<int:id>')
 
 class UniqueWordsByArticle(Resource):
     def get(self, article_title, article_id):
-        article = Article.query.filter_by(user_id=session["user_id"], id=article_id, title=article_title).first()
+
+        article = Article.query.filter_by(user_id=session["user_id"], id=article_id).first()
         vocabularies = Vocabulary.query.filter_by(user_id=session["user_id"]).all()
 
         studyings = []
@@ -701,7 +702,7 @@ class CheckSession(Resource):
                 user_dict = user.to_dict()
                 user_dict["profile_color"] = colors[user_hash % len(colors)]
                 # user_dict = user.to_dict()
-                print(user_dict)
+                # print(user_dict)
                 return make_response(jsonify(user_dict), 200)
         return make_response({'message': '401: Not Authorized'}, 401)
     
