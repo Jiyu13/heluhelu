@@ -7,6 +7,12 @@ import { IconContainer, VisibilityIcon } from "./VisibilityIcon"
 import email_white_24dp from '../assets/images/white/email_white_24dp.svg'
 import person_white_24dp from "../assets/images/white/person_white_24dp.svg"
 
+import { 
+    BoxContainer, FormContainer, Title, InputBox, Input, SignupButton, Registery, SignUpLinkContainer,
+    ErrorContainer
+} from "./formStyles"
+
+
 export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     const [usernameError, setUsernameError] = useState(null)
     const [lengthError, setLengthError] = useState(null)
@@ -85,7 +91,7 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     }
 
     return (
-        <BoxContainer>
+        <BoxContainer style={{height: "650px"}}>
             <FormContainer onSubmit={handleSubmit}>
                 <Title>Sign Up</Title>
 
@@ -103,11 +109,11 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                     />
                     
                     {usernameError && (
-                        <ErrorContainer>
+                        <SignupErrorContainer>
                             <span>
                                 {usernameError}
                             </span>
-                        </ErrorContainer>
+                        </SignupErrorContainer>
                     )}
                 </InputBox>
                 <InputBox>
@@ -125,18 +131,18 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                     />
                 
                     {emailFormatError && (
-                        <ErrorContainer>
+                        <SignupErrorContainer>
                             <span>
                                 {emailFormatError}
                             </span>
-                        </ErrorContainer>
+                        </SignupErrorContainer>
                     )}
                     {emailExistError && (
-                        <ErrorContainer>
+                        <SignupErrorContainer>
                             <span>
                                 {emailExistError}
                             </span>
-                        </ErrorContainer>
+                        </SignupErrorContainer>
                     )}
                 </InputBox>
 
@@ -152,18 +158,18 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
                     />
                 
                     {lengthError && (
-                        <ErrorContainer>
+                        <SignupErrorContainer>
                             <span>
                                 {lengthError}
                             </span>
-                        </ErrorContainer>
+                        </SignupErrorContainer>
                     )}
                     {capitalLetterError && (
-                        <ErrorContainer>
+                        <SignupErrorContainer>
                             <span>
                                 {capitalLetterError}
                             </span>
-                        </ErrorContainer>
+                        </SignupErrorContainer>
                     )}
                 </InputBox>
 
@@ -198,91 +204,12 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
 
 const UserIconContainer = styled(IconContainer)``
 const EmailIconContainer = styled(IconContainer)``
-const BoxContainer = styled.div`
-    position: relative; // relative to its normal position, which is AppContainer
-    width: 400px;
-    height: 600px;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-`
-
-const FormContainer = styled.form`
-`
-
-const Title = styled.h2`
-    font-size: 2em;
-    color: #fff;
-    text-align: center;
-`
-
-const InputBox = styled.div`
-    position: relative; // absolute to its first parent, which is FormContainer
-    margin: 30px 0;
-    width: 310px;
-    border-bottom: 2px solid #fff;
-`
-const Input = styled.input`
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1.2em;
-    padding: 0 0 0 5px;
-    color: white;
-    &::placeholder {
-        color: #fff;
-    }
-    &:hover, &:focus, &:active, &:-webkit-autofill {
-        -webkit-text-fill-color: white;
-        transition: background-color 5000s ease-in-out 0s;  // This is a trick to keep the background color after the autofill is applied
-    }
-`
 const PasswordSuggestion = styled.div`
     margin: -15px 0px 15px;
-    // font-size: .9em;
     color: #bdc3c7;
-    // display: flex;
     justify-content: center;
 `
 
-const SignupButton = styled.button`
-    margin-top: 15px;
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    color: #fff;
-    background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
-`
-const Registery = styled.div`
-    font-size: .9em;
-    color: #fff;
-    text-align: center;
-    margin: 25px 0 10px;
-`
-const SignUpLinkContainer = styled.div`
-    font-weight: 600;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`
-
-const ErrorContainer = styled.div`
-    text-align: center;
-    padding: 5px;
+const SignupErrorContainer = styled(ErrorContainer)`
     padding-top: 0px;
-    margin: 0;
-    background-color: #FBFFB1;
-    border-top: 2px solid #d13128
 `
