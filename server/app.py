@@ -204,9 +204,13 @@ class ResetPasswordRequest(Resource):
                 return make_response(jsonify(error), 404)
            
             # Create a JWT token with an expiration time
-            reset_token = create_access_token(identity=user.id, expires_delta=timedelta(minutes=30))
+            reset_token = create_access_token(
+                identity=user.id, 
+                expires_delta=timedelta(minutes=120)
+            )
             # Sen reset email
-            reset_url = f"{app.config['SESSION_COOKIE_DOMAIN']}:3000/reset/click?token={reset_token}"
+            reset_url = f"{app.config['RESET_PW_URL']}/reset/click?token={reset_token}"
+            print(reset_url)
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
