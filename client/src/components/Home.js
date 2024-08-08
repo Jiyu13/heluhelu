@@ -12,6 +12,7 @@ import apiFetch from "../api/ApiFetch";
 import { SkeletonHomePage } from "../skeleton-screens/SkeletonHomePage";
 import { UserContext } from "./UserContext";
 import { PageContainer } from "../styles/Container";
+import { LoginPage } from "../account/LoginPage";
 
 
 export function Home({ articles, setArticles, onDeleteArticle}) {
@@ -42,9 +43,9 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
 
     
     return (
-        <PageContainer className="page-container">  
-            {user && (
-                <>  
+        <>
+            {user ? 
+                <PageContainer className="page-container">  
                     {showDeletePopup && ( 
                         <DeleteConfirmation 
                             articleID={articleID}
@@ -72,12 +73,13 @@ export function Home({ articles, setArticles, onDeleteArticle}) {
                         setDeletePopup={setDeletePopup}
                         setArticleID={setArticleID}
                     />
-                    )}
-                </>
-            )}
-        </PageContainer>
-    ) 
-}
+                    )}                    
+                </PageContainer>
+            :
+                <LoginPage />
+            }
+        </>
+)}
 
 // ------------------import btn---------------------------
 const ImportButton = styled(ButtonElements)`
