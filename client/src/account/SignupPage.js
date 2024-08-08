@@ -20,7 +20,7 @@ export function SignupPage() {
     const [capitalLetterError, setCapitalLetterError] = useState(null)
     const [emailExistError, setEmailExistError] = useState(null)
     const [emailFormatError, setEmailFormatError] = useState(null)
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState(false)
     const [visible, setVisible] = useState(false)
 
     function ToggleIcon() {
@@ -65,7 +65,8 @@ export function SignupPage() {
             body: JSON.stringify(loginUser)
         })
         .then(res => {
-            if (res.status === 422) {
+            if (!res.ok) {
+                setErrors(true)
                 res.json().then(error =>{
                     if (error["username"]){
                         setUsernameError(error["username"])
@@ -104,7 +105,7 @@ export function SignupPage() {
             <AppContainer>
                 {
                     errors && (
-                        <EmptyDiv onClick={() => setErrors(null)}/>
+                        <EmptyDiv onClick={() => setErrors(false)}/>
 
                     )
                 }
@@ -125,7 +126,7 @@ export function SignupPage() {
                                 onChange={handleInput}
                             />
                             
-                            {usernameError && (
+                            {usernameError && errors && (
                                 <SignupErrorContainer>
                                     <span>
                                         {usernameError}
@@ -147,14 +148,14 @@ export function SignupPage() {
                                 onChange={handleInput}
                             />
                         
-                            {emailFormatError && (
+                            {emailFormatError && errors && (
                                 <SignupErrorContainer>
                                     <span>
                                         {emailFormatError}
                                     </span>
                                 </SignupErrorContainer>
                             )}
-                            {emailExistError && (
+                            {emailExistError && errors && (
                                 <SignupErrorContainer>
                                     <span>
                                         {emailExistError}
@@ -174,14 +175,14 @@ export function SignupPage() {
                                 onChange={handleInput}
                             />
                         
-                            {lengthError && (
+                            {lengthError && errors && (
                                 <SignupErrorContainer>
                                     <span>
                                         {lengthError}
                                     </span>
                                 </SignupErrorContainer>
                             )}
-                            {capitalLetterError && (
+                            {capitalLetterError && errors && (
                                 <SignupErrorContainer>
                                     <span>
                                         {capitalLetterError}

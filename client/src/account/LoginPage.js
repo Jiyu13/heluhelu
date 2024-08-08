@@ -77,12 +77,12 @@ export function LoginPage() {
             {!user && (
                 <AppContainer>
 
-                    {/* {
+                    {
                         errors && (
                             <EmptyDiv onClick={() => setErrors(null)}/>
 
                         )
-                    } */}
+                    }
                     <BoxContainer>
                         <FormContainer onSubmit={handleSubmit}>
                             <Title>Login</Title>

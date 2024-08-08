@@ -13,7 +13,7 @@ export function ResetPassword() {
     const { user } = useContext(UserContext)
     const [visible, setVisible] = useState(false)
     const [visible2, setVisible2] = useState(false)
-    const [errors, setErrors] = useState(null)
+    const [errors, setErrors] = useState(false)
     const [lengthError, setLengthError] = useState(null)
     const [capitalLetterError, setCapitalLetterError] = useState(null)
     const [passwordNotMatch, setPasswordNotMatch] = useState(null)
@@ -71,6 +71,7 @@ export function ResetPassword() {
         .then(res => {
             if (!res.ok) {
                 res.json().then(error => {
+                    setErrors(true)
                     if (error["length"]) {
                         setLengthError(error["length"])
                     }
@@ -101,7 +102,10 @@ export function ResetPassword() {
 
                 {
                     errors && (
-                        <EmptyDiv onClick={() => setErrors(null)}/>
+                        <EmptyDiv
+                            className='empty-layer'
+                            onClick={() => setErrors(false)}
+                        />
 
                     )
                 }
@@ -109,35 +113,35 @@ export function ResetPassword() {
                     <FormContainer onSubmit={handleSubmit} style={{paddingBottom: "4rem"}}>
                         <Title>Set New Password</Title>
                         
-                        {lengthError && (
+                        {lengthError && errors && (
                             <ErrorContainer>
                                 <span>
                                     {lengthError}
                                 </span>
                             </ErrorContainer>
                         )}
-                        {capitalLetterError && (
+                        {capitalLetterError && errors && (
                             <ErrorContainer>
                                 <span>
                                     {capitalLetterError}
                                 </span>
                             </ErrorContainer>
                         )}
-                        {passwordNotMatch && (
+                        {passwordNotMatch && errors && (
                             <ErrorContainer>
                                 <span>
                                     {passwordNotMatch}
                                 </span>
                             </ErrorContainer>
                         )}
-                        {tokenExpired && (
+                        {tokenExpired && errors && (
                             <ErrorContainer>
                                 <span>
                                     {tokenExpired}
                                 </span>
                             </ErrorContainer>
                         )}
-                        {resetSuccess && (
+                        {resetSuccess && errors && (
                             <ErrorContainer>
                                 <span>
                                     {resetSuccess}
