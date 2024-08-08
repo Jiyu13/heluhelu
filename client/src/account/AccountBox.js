@@ -5,7 +5,7 @@ import { LoginPage } from "./LoginPage";
 import { SignupPage } from "./SignupPage";
 
 import palm_tree from "../assets/images/palm_tree.jpg"
-import { ForgetPassword } from "../components/ForgetPassword";
+import { ForgetPassword } from "../forget-password/ForgetPassword";
 
 
 

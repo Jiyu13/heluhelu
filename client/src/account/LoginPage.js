@@ -9,11 +9,19 @@ import {
     BoxContainer, FormContainer, Title, InputBox, Input, SignupButton, Registery, SignUpLinkContainer,
     ErrorContainer
 } from "./formStyles"
+import { AppContainer, EmptyDiv } from "../components/App"
 
 
-export function LoginPage( {handleToSignup, handleToForgetPw, errors, setErrors, ToggleIcon, visible} ) {
-    const { setUser } = useContext(UserContext)
-    // const [showPassword, setShowPasswprd] = useState("password")
+export function LoginPage() {
+    
+    const { user, setUser } = useContext(UserContext)
+    const [errors, setErrors] = useState(null)
+    const [visible, setVisible] = useState(false)
+
+    function ToggleIcon() {
+        setVisible(!visible)
+    }
+
 
     const inputType = visible ?  "text" : "password"
 
@@ -45,9 +53,10 @@ export function LoginPage( {handleToSignup, handleToForgetPw, errors, setErrors,
         })
         .then(res => {
             if (res.status === 401) {
-                res.json().then(error =>
+                res.json().then(error => {
+                    console.log(error)
                     setErrors(error["message"])
-                )
+                })
             } else {
                 res.json().then(user => {
                     setUser(user)
@@ -64,68 +73,80 @@ export function LoginPage( {handleToSignup, handleToForgetPw, errors, setErrors,
     }
 
     return (
+        <>
+            {!user && (
+                <AppContainer>
 
-        <BoxContainer>
-            <FormContainer onSubmit={handleSubmit}>
-                <Title>Login</Title>
-                
-                {errors && (
-                    <ErrorContainer>
-                        <span>
-                            {errors}
-                        </span>
-                    </ErrorContainer>
-                )}
+                    {/* {
+                        errors && (
+                            <EmptyDiv onClick={() => setErrors(null)}/>
 
-                <InputBox>
-                    <Input 
-                        required 
-                        type="text" 
-                        placeholder="Username or email" 
-                        name="username"
-                        value={formData.username}
-                        onChange={handleInput}
-                    />
-                </InputBox>
-                <InputBox>
-                    <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
-                    <Input 
-                        required 
-                        type={inputType} 
-                        placeholder="Password" 
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInput}
-                    />
-                </InputBox>
-                
-                <ForgetPassword>
-                    <Link 
-                        to="/account/recover" 
-                        onClick={handleToForgetPw}
-                        style={{textDecoration: "none", color: "#fff"}}
-                    >
-                        Forget your password?
-                    </Link>
-                </ForgetPassword>
-                
-                <SignupButton>Login</SignupButton>
-
-                <Registery>
-                    <p>Don't have an account?</p>
-                    <SignUpLinkContainer>
-                        <Link 
-                            to="/signup" 
-                            onClick={handleToSignup}
-                            style={{textDecoration: "none", color: "#fff"}}
-                        >
-                            SignUp
-                        </Link>
-                    </SignUpLinkContainer>
-                </Registery>
-            </FormContainer>
-            
-        </BoxContainer>
+                        )
+                    } */}
+                    <BoxContainer>
+                        <FormContainer onSubmit={handleSubmit}>
+                            <Title>Login</Title>
+                            
+                            {errors && (
+                                <ErrorContainer>
+                                    <span>
+                                        {errors}
+                                    </span>
+                                </ErrorContainer>
+                            )}
+        
+                            <InputBox>
+                                <Input 
+                                    required 
+                                    type="text" 
+                                    placeholder="Username or email" 
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleInput}
+                                />
+                            </InputBox>
+                            <InputBox>
+                                <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
+                                <Input 
+                                    required 
+                                    type={inputType} 
+                                    placeholder="Password" 
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInput}
+                                />
+                            </InputBox>
+                            
+                            <ForgetPassword>
+                                <Link 
+                                    to="/account/recover" 
+                                    style={{textDecoration: "none", color: "#fff"}}
+                                >
+                                    Forget your password?
+                                </Link>
+                            </ForgetPassword>
+                            
+                            <SignupButton>Login</SignupButton>
+        
+                            <Registery>
+                                <p>Don't have an account?</p>
+                                <SignUpLinkContainer>
+                                    <Link 
+                                        to="/signup" 
+                                        style={{textDecoration: "none", color: "#fff"}}
+                                    >
+                                        SignUp
+                                    </Link>
+                                </SignUpLinkContainer>
+                            </Registery>
+                        </FormContainer>
+                        
+                    </BoxContainer>
+                </AppContainer>
+            )}
+        </>
+        
+        
     )
 }
 

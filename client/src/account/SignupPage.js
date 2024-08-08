@@ -11,16 +11,24 @@ import {
     BoxContainer, FormContainer, Title, InputBox, Input, SignupButton, Registery, SignUpLinkContainer,
     ErrorContainer
 } from "./formStyles"
+import { AppContainer, EmptyDiv } from "../components/App"
 
 
-export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
+export function SignupPage() {
     const [usernameError, setUsernameError] = useState(null)
     const [lengthError, setLengthError] = useState(null)
     const [capitalLetterError, setCapitalLetterError] = useState(null)
     const [emailExistError, setEmailExistError] = useState(null)
     const [emailFormatError, setEmailFormatError] = useState(null)
+    const [errors, setErrors] = useState(null)
+    const [visible, setVisible] = useState(false)
 
-    const { setUser } = useContext(UserContext)
+    function ToggleIcon() {
+        setVisible(!visible)
+    }
+
+
+    const { user, setUser } = useContext(UserContext)
     const inputType = visible ?  "text" : "password"
 
     const initialValue = {
@@ -91,114 +99,126 @@ export function SignupPage( {handleToLogin, ToggleIcon, visible} ) {
     }
 
     return (
-        <BoxContainer style={{height: "650px"}}>
-            <FormContainer onSubmit={handleSubmit}>
-                <Title>Sign Up</Title>
+        <>
+        {!user && (
+            <AppContainer>
+                {
+                    errors && (
+                        <EmptyDiv onClick={() => setErrors(null)}/>
 
-                <InputBox>
-                    <UserIconContainer>
-                        <img src={person_white_24dp} alt="user icon"/>
-                    </UserIconContainer>
-                    <Input 
-                        required 
-                        type="text" 
-                        placeholder="Username" 
-                        name="username"
-                        value={formData.username}
-                        onChange={handleInput}
-                    />
-                    
-                    {usernameError && (
-                        <SignupErrorContainer>
-                            <span>
-                                {usernameError}
-                            </span>
-                        </SignupErrorContainer>
-                    )}
-                </InputBox>
-                <InputBox>
-                    <EmailIconContainer>
-                        <img src={email_white_24dp} alt="email icon"/>
-                    </EmailIconContainer>
-                    
-                    <Input 
-                        required 
-                        type="text"
-                        placeholder="Email" 
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInput}
-                    />
-                
-                    {emailFormatError && (
-                        <SignupErrorContainer>
-                            <span>
-                                {emailFormatError}
-                            </span>
-                        </SignupErrorContainer>
-                    )}
-                    {emailExistError && (
-                        <SignupErrorContainer>
-                            <span>
-                                {emailExistError}
-                            </span>
-                        </SignupErrorContainer>
-                    )}
-                </InputBox>
+                    )
+                }
+                <BoxContainer style={{height: "650px"}}>
+                    <FormContainer onSubmit={handleSubmit}>
+                        <Title>Sign Up</Title>
 
-                <InputBox>
-                    <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
-                    <Input 
-                        required 
-                        type={inputType}
-                        placeholder="Password" 
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInput}
-                    />
-                
-                    {lengthError && (
-                        <SignupErrorContainer>
-                            <span>
-                                {lengthError}
-                            </span>
-                        </SignupErrorContainer>
-                    )}
-                    {capitalLetterError && (
-                        <SignupErrorContainer>
-                            <span>
-                                {capitalLetterError}
-                            </span>
-                        </SignupErrorContainer>
-                    )}
-                </InputBox>
-
-                <PasswordSuggestion>
-                    <h4 style={{marginBottom: "7px"}}>Make sure your password:</h4>
-                    <ul style={{marginTop: "0px"}}>
+                        <InputBox>
+                            <UserIconContainer>
+                                <img src={person_white_24dp} alt="user icon"/>
+                            </UserIconContainer>
+                            <Input 
+                                required 
+                                type="text" 
+                                placeholder="Username" 
+                                name="username"
+                                value={formData.username}
+                                onChange={handleInput}
+                            />
+                            
+                            {usernameError && (
+                                <SignupErrorContainer>
+                                    <span>
+                                        {usernameError}
+                                    </span>
+                                </SignupErrorContainer>
+                            )}
+                        </InputBox>
+                        <InputBox>
+                            <EmailIconContainer>
+                                <img src={email_white_24dp} alt="email icon"/>
+                            </EmailIconContainer>
+                            
+                            <Input 
+                                required 
+                                type="text"
+                                placeholder="Email" 
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInput}
+                            />
                         
-                        <li>is 8 characters or longer</li> 
-                        <li>contains at least one capital letter</li>
-                        {/* <li>contain at least one of these: !@#$%^&*</li> */}
-                    </ul>
-                </PasswordSuggestion>
-                <SignupButton>Create Account</SignupButton>
+                            {emailFormatError && (
+                                <SignupErrorContainer>
+                                    <span>
+                                        {emailFormatError}
+                                    </span>
+                                </SignupErrorContainer>
+                            )}
+                            {emailExistError && (
+                                <SignupErrorContainer>
+                                    <span>
+                                        {emailExistError}
+                                    </span>
+                                </SignupErrorContainer>
+                            )}
+                        </InputBox>
 
-                <Registery>
-                    <p>Already have an account?</p>
-                    <SignUpLinkContainer >
-                        <Link 
-                            to="/login" 
-                            onClick={handleToLogin}
-                            style={{textDecoration: "none", color: "#fff"}}
-                        >
-                            Login
-                        </Link>
-                    </SignUpLinkContainer>
-                </Registery>
-            </FormContainer>
-            
-        </BoxContainer>
+                        <InputBox>
+                            <VisibilityIcon ToggleIcon={ToggleIcon} visible={visible}/>
+                            <Input 
+                                required 
+                                type={inputType}
+                                placeholder="Password" 
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInput}
+                            />
+                        
+                            {lengthError && (
+                                <SignupErrorContainer>
+                                    <span>
+                                        {lengthError}
+                                    </span>
+                                </SignupErrorContainer>
+                            )}
+                            {capitalLetterError && (
+                                <SignupErrorContainer>
+                                    <span>
+                                        {capitalLetterError}
+                                    </span>
+                                </SignupErrorContainer>
+                            )}
+                        </InputBox>
+
+                        <PasswordSuggestion>
+                            <h4 style={{marginBottom: "7px"}}>Make sure your password:</h4>
+                            <ul style={{marginTop: "0px"}}>
+                                
+                                <li>is 8 characters or longer</li> 
+                                <li>contains at least one capital letter</li>
+                                {/* <li>contain at least one of these: !@#$%^&*</li> */}
+                            </ul>
+                        </PasswordSuggestion>
+                        <SignupButton>Create Account</SignupButton>
+
+                        <Registery>
+                            <p>Already have an account?</p>
+                            <SignUpLinkContainer >
+                                <Link 
+                                    to="/login" 
+                                    style={{textDecoration: "none", color: "#fff"}}
+                                >
+                                    Login
+                                </Link>
+                            </SignUpLinkContainer>
+                        </Registery>
+                    </FormContainer>
+                    
+                </BoxContainer>
+            </AppContainer>
+)}
+        </>
+        
     )
 }
 
