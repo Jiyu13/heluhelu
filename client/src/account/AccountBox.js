@@ -5,6 +5,7 @@ import { LoginPage } from "./LoginPage";
 import { SignupPage } from "./SignupPage";
 
 import palm_tree from "../assets/images/palm_tree.jpg"
+import { ForgetPassword } from "../components/ForgetPassword";
 
 
 
@@ -26,6 +27,11 @@ export function AccountBox() {
         setLogin("login")
     }
 
+    function handleToForgetPw() {
+        console.log("click forget password")
+        setLogin("forget-password")
+    }
+
     return (
         <AppContainer>
             {
@@ -34,13 +40,32 @@ export function AccountBox() {
 
                 )
             }
-            {
+            {/* {
                 isLogin=== "login" ? 
                 <LoginPage handleToSignup={handleToSignup} errors={errors} setErrors={setErrors} ToggleIcon={ToggleIcon} visible={visible}/>
                 :
                 <SignupPage handleToLogin={handleToLogin} ToggleIcon={ToggleIcon} visible={visible}/>
             
-            }
+            } */}
+
+            {isLogin === "login" && (
+                <LoginPage 
+                    handleToSignup={handleToSignup}
+                    handleToForgetPw={handleToForgetPw}
+                    errors={errors} 
+                    setErrors={setErrors} 
+                    ToggleIcon={ToggleIcon} 
+                    visible={visible}
+                />
+            )} 
+
+            {isLogin === "signup" && (
+                <SignupPage handleToLogin={handleToLogin} ToggleIcon={ToggleIcon} visible={visible}/>
+            )}
+
+            {isLogin === "forget-password" && (
+                <ForgetPassword handleToLogin={handleToLogin} handleToSignup={handleToSignup}/>
+            )}
         </AppContainer>
     )
 }
