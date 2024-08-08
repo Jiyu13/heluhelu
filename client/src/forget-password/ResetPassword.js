@@ -69,9 +69,8 @@ export function ResetPassword() {
             body: JSON.stringify(newPassword)
         })
         .then(res => {
-            if (res.status === 422) {
+            if (!res.ok) {
                 res.json().then(error => {
-                    console.log(error)
                     if (error["length"]) {
                         setLengthError(error["length"])
                     }
@@ -80,21 +79,14 @@ export function ResetPassword() {
                     }
                     if (error["not_match"]) {
                         setPasswordNotMatch(error["not_match"])
-                        // setEmailFormatError(null)
-                        // setEmailNotExistError(error["email_exist"])
                     }
-                    
-                    
-                })
-            } else  if (res.status === 401) {
-                res.json().then(error => {
                     if (error["msg"]) {
                         setTokenExpired('Reset link has expired.')
-                        // setEmailFormatError(null)
-                        // setEmailNotExistError(error["email_exist"])
                     }
                 })
-            } else {
+            } 
+
+            else {
                 res.json().then(data => {
                     setResetSuccess(data['message'])
                 })
