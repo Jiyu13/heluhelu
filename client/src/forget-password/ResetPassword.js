@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { UserContext } from "../components/UserContext";
 import { EmptyDiv } from "../components/App";
 import apiFetch from "../api/ApiFetch";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 export function ResetPassword() {
@@ -22,7 +22,6 @@ export function ResetPassword() {
     
 
 
-    const navigate = useNavigate()
     const location = useLocation();
     const token = location.state?.token;
 
