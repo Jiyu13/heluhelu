@@ -11,7 +11,7 @@ import {
 } from "./formStyles"
 
 
-export function LoginPage( {handleToSignup, errors, setErrors, ToggleIcon, visible} ) {
+export function LoginPage( {handleToSignup, handleToForgetPw, errors, setErrors, ToggleIcon, visible} ) {
     const { setUser } = useContext(UserContext)
     // const [showPassword, setShowPasswprd] = useState("password")
 
@@ -100,8 +100,15 @@ export function LoginPage( {handleToSignup, errors, setErrors, ToggleIcon, visib
                 </InputBox>
                 
                 <ForgetPassword>
-                    <ForgetPasswordLink to="#">Forget your password?</ForgetPasswordLink>
+                    <Link 
+                        to="/account/recover" 
+                        onClick={handleToForgetPw}
+                        style={{textDecoration: "none", color: "#fff"}}
+                    >
+                        Forget your password?
+                    </Link>
                 </ForgetPassword>
+                
                 <SignupButton>Login</SignupButton>
 
                 <Registery>
@@ -128,6 +135,9 @@ const ForgetPassword = styled.div`
     color: #fff;
     display: flex;
     justify-content: center;
+    &:hover {
+        text-decoration: underline;
+    }
 `
 
 const ForgetPasswordLink = styled.a`
