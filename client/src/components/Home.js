@@ -110,7 +110,7 @@ const HomepageText = styled.div`
     max-width: 700px;
     text-align: center;
     margin: 18px auto 18px auto;
-    font-size: 14px;
+    font-size: 16px;
     color: #999!important;
     line-height: 1.6;
     display: block;

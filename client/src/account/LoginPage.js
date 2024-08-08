@@ -152,7 +152,7 @@ export function LoginPage() {
 
 const ForgetPassword = styled.div`
     margin: -15px 0px 15px;
-    font-size: .9em;
+    font-size: .8rem;
     color: #fff;
     display: flex;
     justify-content: center;

@@ -58,7 +58,7 @@ export const SignupButton = styled.button`
     background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
 `
 export const Registery = styled.div`
-    font-size: .9em;
+    font-size: 1rem;
     color: #fff;
     text-align: center;
     margin: 25px 0 10px;
