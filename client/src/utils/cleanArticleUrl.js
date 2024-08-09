@@ -1,3 +1,3 @@
 export function cleanURL(title) {
-    return title.trim().replaceAll(" ", "-")
+    return title?.trim().replaceAll(" ", "-")
 }
