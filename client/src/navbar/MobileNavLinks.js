@@ -14,6 +14,7 @@ import home_black_24dp from "../assets/images/black/home_black_24dp.svg"
 import equalizer_black_24dp from "../assets/images/black/equalizer_black_24dp.svg"
 import book_black_24dp from "../assets/images/black/book_black_24dp.svg"
 import { FirstLetter, MenuTrigger, NavLinksContainer, ProfileAvatar } from "./Accessiblity";
+import { useNavigate } from "react-router-dom";
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
@@ -21,6 +22,8 @@ export function MobileNavLinks() {
 
     const currentArticle = article !== null ? article : firstArticle
     const firstLetter = user?.username[0]
+    const navigate = useNavigate()
+
 
     function handleClick() {
       setIsOpen(!isOpen)
@@ -50,6 +53,7 @@ export function MobileNavLinks() {
           setUser(null);
           setArticles(null);
           setVocabularies(null);
+          navigate('/login')
         }
       })
       .catch((error) => {
@@ -100,7 +104,7 @@ export function MobileNavLinks() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleClick={handleLogout}
-                  goTo="/login"
+                  goTo="javascript:void(0)"
                 />
               </MenuDropdownList>
             )}
