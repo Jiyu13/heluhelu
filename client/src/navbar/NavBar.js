@@ -19,33 +19,29 @@ function NavBar() {
     const {user, isDark} = useContext(UserContext)
     
     return (
-        <>
-            {user ? 
-                <NavBarContainer className={isDark === true ? "dark" : "light"}>
-                    {/* call the Logo component */}
-                    <LeftSection>
-                        <Logo />
-                    </LeftSection>
+        <NavBarContainer className={isDark === true ? "dark" : "light"}>
+            {/* call the Logo component */}
+            <LeftSection>
+                <Logo />
+            </LeftSection>
 
-                    {/* call NavLinks component */}
-                    <MiddleSection>
-                        {/* hide NavLinks if isMoble isn't mobile */}
-                        {!isMobile && <NavLinks/>}
-                    </MiddleSection>
+            {/* call NavLinks component */}
+            <MiddleSection>
+                {/* hide NavLinks if isMoble isn't mobile */}
+                {!isMobile && <NavLinks/>}
+            </MiddleSection>
 
-                    {/* call Accessibility component */}
-                    <RightSection>
-                        {/* hide Accessiblity if isMoble isn't mobile */}
-                        <ThemeMode />
-                        {!isMobile && <Accessibility/>}
-                        
-                        {/* show MobileNavLinks if isMoble is mobile */}
-                        {isMobile && <MobileNavLinks/>}
-                    </RightSection>
-                </NavBarContainer>
-                : ""
-            }
-        </>
+            {/* call Accessibility component */}
+            <RightSection>
+                {/* hide Accessiblity if isMoble isn't mobile */}
+                <ThemeMode />
+                {!isMobile && <Accessibility/>}
+                
+                {/* show MobileNavLinks if isMoble is mobile */}
+                {isMobile && <MobileNavLinks/>}
+            </RightSection>
+        </NavBarContainer>
+
     )
 
 }
