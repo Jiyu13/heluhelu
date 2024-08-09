@@ -160,13 +160,3 @@ const ForgetPassword = styled.div`
         text-decoration: underline;
     }
 `
-
-const ForgetPasswordLink = styled.a`
-    margin-right: 3px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-`
