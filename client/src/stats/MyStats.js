@@ -57,7 +57,9 @@ export function MyStats() {
     )
 }
 
-const VocabStatsPage = styled(SubmitButtons)``
+const VocabStatsPage = styled(SubmitButtons)`
+    font-size: 1rem;
+`
 
 // const PageContainer = styled.div`
 //     // margin: 90px auto 0;
