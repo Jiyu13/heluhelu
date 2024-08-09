@@ -46,6 +46,10 @@ export default function App() {
       } else {
         setUser(null)
       }
+    })
+    .catch((error) => {
+      console.error("Error checking session:", error);
+      setUser(null);
     });
   }, []);
 
@@ -57,7 +61,9 @@ export default function App() {
         if (r.ok) {
           r.json().then((data) => setFirstArticle(data))
         }
-      });
+      })
+      .catch(error => console.error("Error fetching vocabularies:", error));
+      
   }, [])
 
   // ========= update article ===============================
@@ -105,6 +111,7 @@ export default function App() {
       .then(data => {
         setVocabularies(data)
       })
+      .catch(error => console.error("Error fetching vocabularies:", error));
   }, [])
 
 
@@ -122,7 +129,7 @@ export default function App() {
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
-                            article, setArticle, 
+                            article, setArticle, setArticles,
                             splitText, calculatePages,
                             vocabularies, setVocabularies,
                             firstArticle,
