@@ -8,11 +8,13 @@ import apiFetch from "../api/ApiFetch";
 import { DropdownItem } from "../profile/DropdownItem";
 import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
+import { useNavigate } from "react-router-dom";
 
 export function Accessibility() {
 
     const [isOpen, setIsOpen] = useState(false)
     const {setUser, user} = useContext(UserContext)
+    const navigate = useNavigate()
 
     const firstLetter = user?.username[0]
 
@@ -66,7 +68,7 @@ export function Accessibility() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleClick={handleLogout}
-                  goTo="javascript:void(0)"
+                  goTo="/login"
                 />
               </MenuDropdownList>
             )}
