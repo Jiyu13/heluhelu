@@ -5,7 +5,7 @@ export function DropdownItem(props) {
     return (
         <LinkItem>
             <Link href={goTo} onClick={handleClick}>
-                <img src={icon} alt={icon_info} style={{width: "16px", height: "16px"}}/>
+                <img src={icon} alt={icon_info} style={{width: "24px", height: "24px"}}/>
                 <span>{text}</span>
             </Link>
         </LinkItem>
@@ -40,5 +40,5 @@ const Link = styled.a`
     white-space: nowrap;
     cursor: pointer;
     padding: 3px;
-
+    gap: 1rem;
 `;
