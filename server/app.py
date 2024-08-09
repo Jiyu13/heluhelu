@@ -863,7 +863,9 @@ api.add_resource(Login, '/login', endpoint='login')
 class Logout(Resource):
     def delete(self):
         if session.get("user_id"):
+            print("login")
             session["user_id"] = None
+            print(session["user_id"])
             return make_response({'message':'204: No Content'}, 204)
         return make_response({'error': '401: Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')
