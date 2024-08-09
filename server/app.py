@@ -206,18 +206,17 @@ class ResetPasswordRequest(Resource):
             # Create a JWT token with an expiration time
             reset_token = create_access_token(
                 identity=user.id, 
-                expires_delta=timedelta(minutes=120)
+                expires_delta=timedelta(minutes=60)
             )
             # Sen reset email
             reset_url = f"{app.config['RESET_PW_URL']}/reset/click?token={reset_token}"
-            print(reset_url)
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
                 recipients=[email]
             )
             msg.body = f'To reset your password, visit the following link: {reset_url}\n\n'\
-                       f'This link expires in 10 minutes.\n\n'\
+                       f'This link expires in 60 minutes.\n\n'\
                        f'You are receiving this email because you recently started a password reset request. If this wasn\'t you, please ignore this email.\n\n'\
                        f'Regards,\n'\
                        f'Heluhe.lu Support'
