@@ -46,6 +46,7 @@ export function Accessibility() {
           setUser(null);
           setArticles(null);
           setVocabularies(null);
+          navigate('/login')
         }
       })
       .catch((error) => {
@@ -76,7 +77,7 @@ export function Accessibility() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleClick={handleLogout}
-                  goTo="/login"
+                  goTo="javascript:void(0)"
                 />
               </MenuDropdownList>
             )}
