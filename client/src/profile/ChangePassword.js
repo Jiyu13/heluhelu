@@ -9,6 +9,7 @@ import { useState } from "react"
 import { VisibilityIcon } from "./ProfileVisibilityIcon"
 import visibility_black_24dp from "../assets/images/black/visibility_black_24dp.svg"
 import visibility_off_black_24dp from "../assets/images/black/visibility_off_black_24dp.svg"
+import { AccountSettingErrorContainer, AccountSettingItem, AccountSettingLabel, ProfileContainer, ProfileSubmitButtons, ProfileWrapper, SettingInput } from "../styles/AccountSettings"
 
 
 export function ChangePassword( {setIsChanged} ) {
@@ -56,7 +57,7 @@ export function ChangePassword( {setIsChanged} ) {
         <ProfileContainer>
             <ProfileWrapper onSubmit={handleSubmit(onSubmit)}>
                     <Item>
-                        <Label>Old password</Label>
+                        <AccountSettingLabel>Old password</AccountSettingLabel>
                         <VisibilityIconBlack
                             ToggleIcon={ToggleIconOld} 
                             visible={visibleOld} 
@@ -71,14 +72,14 @@ export function ChangePassword( {setIsChanged} ) {
                             })}
                         />
                         {errors.old_password && (
-                            <ErrorContainer>{errors.old_password.message}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errors.old_password.message}</AccountSettingErrorContainer>
                         )}
                         {errorMessages && errorMessages["incorrect"] && (
-                            <ErrorContainer>{errorMessages["incorrect"]}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errorMessages["incorrect"]}</AccountSettingErrorContainer>
                         )}
                     </Item>
                     <Item>
-                        <Label>New password</Label>
+                        <AccountSettingLabel>New password</AccountSettingLabel>
                         <PasswordConstrains >
                             <ConstrainItem style={{color: errorMessages && errorMessages["length"] ? "red": "#747d8c"}}>
                                 is 8 characters or longer.
@@ -101,13 +102,13 @@ export function ChangePassword( {setIsChanged} ) {
                             })}
                         />
                         {errors.new_password && (
-                            <ErrorContainer>{errors.new_password.message}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errors.new_password.message}</AccountSettingErrorContainer>
                         )}
                         
                     </Item>
 
                     <Item>
-                        <Label>Confirm password</Label>
+                        <AccountSettingLabel>Confirm password</AccountSettingLabel>
                         <VisibilityIconBlack 
                             ToggleIcon={ToggleIconConfirm} 
                             visible={visibleConfirm} 
@@ -123,10 +124,10 @@ export function ChangePassword( {setIsChanged} ) {
                             })}
                         />
                         {errors.confirm_password && (
-                            <ErrorContainer>{errors.confirm_password.message}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errors.confirm_password.message}</AccountSettingErrorContainer>
                         )}
                         {errorMessages && errorMessages["not_match"] && (
-                            <ErrorContainer>{errorMessages["not_match"]}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errorMessages["not_match"]}</AccountSettingErrorContainer>
                         )}
                     </Item>
                     <Item>
@@ -140,96 +141,28 @@ export function ChangePassword( {setIsChanged} ) {
 
 const VisibilityIconBlack = styled(VisibilityIcon)``
 
-const ErrorContainer = styled.div`
-    color: red;
-    font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 16px;
-`
-
-const ProfileSubmitButtons = styled(SubmitButtons)`
-    box-sizing: border-box;
-    margin-top: 8px;
-    padding: 8px 0;
-    width: 100%;
-    border-radius: 4px;
-    margin-right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
-`
-
-const Input = styled.input`
-    border-radius: 4px;
-    border: 0.5px solid hsl(212.3076923077deg, 8.4967320261%, 70%);
-    padding: 8px;
-    margin-bottom: 12px;
-    width: 100%;
-    box-sizing: border-box;
+const Input = styled(SettingInput)`
+    // border-radius: 4px;
+    // border: 0.5px solid hsl(212.3076923077deg, 8.4967320261%, 70%);
+    // padding: 8px;
+    // margin-bottom: 12px;
+    // width: 100%;
+    // box-sizing: border-box;
     -webkit-text-fill-color: black !important;
-    background-color: rgba(255, 255, 255, 0.9);
+    // background-color: rgba(255, 255, 255, 0.9);
 `
 
-const Label = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 6px;
-    margin-bottom: 6px;
-`
 
-const Item = styled.div`
+const Item = styled(AccountSettingItem)`
     position: relative;
 `
 
-const ProfileWrapper = styled.form`
-    margin-top: 20px;
-    
-`
-
-const ProfileContainer = styled.div`
-    box-sizing: border-box;
-    width: 80%;
-`
 
 const ConstrainItem = styled.li`
-    font-size: 12px;
+    font-size: 1rem;
 `
 
 const PasswordConstrains =  styled.ul`
     margin-top: 0px;
     margin-bottom: 6px;
 `
-
-// const ChangePhoto = styled.div`
-//     font-size: 12px;
-//     font-weight: bold;
-//     margin-top: 6px;
-//     color: #3498db;
-//     cursor: pointer;
-// `
-
-// const ProfileImage = styled.img`
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-//     background-color: black;
-//     margin-right: 8px;
-// `
-
-// const ImageButton = styled.div`
-//     display: flex;
-//     justify-content: flex-end;
-//     align-items: center;
-//     border: 0;
-//     cursor: pointer;
-//     height: 100%;
-//     padding: 0;
-//     width: 92%;
-//     background-color: none;
-// `
-
-// const PageTitle = styled.h2``
-

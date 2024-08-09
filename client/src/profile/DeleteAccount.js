@@ -2,11 +2,11 @@ import styled from "styled-components"
 
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
-import { SubmitButtons } from "../styles/Buttons"
 import { useForm } from "react-hook-form"
 import apiFetch from "../api/ApiFetch"
 import { useState } from "react"
 import { DeleteAccountConfirmation } from "./DeleteAccountConfirmation"
+import { AccountSettingErrorContainer, AccountSettingItem, AccountSettingLabel, ProfileContainer, ProfileSubmitButtons, ProfileWrapper, SettingInput } from "../styles/AccountSettings"
 
 export function DeleteAccount() {
 
@@ -43,8 +43,8 @@ export function DeleteAccount() {
                         <DeleteAccountConfirmation
                         setDeleteConfirmation={setDeleteConfirmation}
                         />
-                    )} <Item>
-                        <Label>password</Label>
+                    )} <AccountSettingItem>
+                        <AccountSettingLabel>Password</AccountSettingLabel>
                         <Input 
                             type="password"
                             name="password"
@@ -53,86 +53,41 @@ export function DeleteAccount() {
                             })}
                         />
                         {errorMessages && errorMessages["incorrect"] &&(
-                            <ErrorContainer>{errorMessages["incorrect"]}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errorMessages["incorrect"]}</AccountSettingErrorContainer>
                         )}
                         {errors.password && (
-                            <ErrorContainer>{errors.password.message}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errors.password.message}</AccountSettingErrorContainer>
                         )}
                         
-                    </Item>
+                    </AccountSettingItem>
                     <Text>
                         *All the data will be deleted permanently from our server including your profile information and learning data.
                     </Text>
                     <hr/>
-                    <Item>
+                    <AccountSettingItem>
                         <DeleteButtons type="submit" value="Delete Account"/>
-                     </Item> 
+                     </AccountSettingItem> 
 
             </ProfileWrapper>
         </ProfileContainer>
     )
 }
 
-const ErrorContainer = styled.div`
-    color: red;
-    font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 16px;
-`
 
-const DeleteButtons = styled(SubmitButtons)`
-    box-sizing: border-box;
-    margin-top: 8px;
-    padding: 8px 0;
-    width: 100%;
-    border-radius: 4px;
-    margin-right: 0px;
+const DeleteButtons = styled(ProfileSubmitButtons)`
     background-color: #ff6348;
     background-image: none;
-    &:hover {
-        cursor: pointer;
-    }
 `
 
-const Input = styled.input`
-    border-radius: 4px;
-    border: 0.5px solid hsl(212.3076923077deg, 8.4967320261%, 70%);
-    padding: 8px;
-    margin-bottom: 12px;
-    width: 100%;
-    box-sizing: border-box;
+const Input = styled(SettingInput)`
     -webkit-text-fill-color: black !important;
-    background-color: rgba(255, 255, 255, 0.9);
-
-`
-
-const Label = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 6px;
-    margin-bottom: 6px;
-`
-
-const Item = styled.div`
-`
-
-const ProfileWrapper = styled.form`
-    margin-top: 20px;
-    
-`
-
-const ProfileContainer = styled.div`
-    box-sizing: border-box;
-    width: 80%;
 `
 
 const Text = styled.p`
     max-width: 260px;
     margin: 6px auto;
     margin-bottom: 48px;
-    font-size: 12px;
+    font-size: 1rem;
     // color: #ff6348;
     white-space: initial;
 `

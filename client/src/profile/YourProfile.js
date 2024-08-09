@@ -2,10 +2,10 @@ import styled from "styled-components"
 
 import { useContext } from "react"
 import { UserContext } from "../components/UserContext"
-import { SubmitButtons } from "../styles/Buttons"
 import { useForm } from "react-hook-form"
 import apiFetch from "../api/ApiFetch"
 import { useState } from "react"
+import { AccountSettingErrorContainer, AccountSettingItem, AccountSettingLabel, Item, ProfileContainer, ProfileSubmitButtons, ProfileWrapper, SettingInput } from "../styles/AccountSettings"
 
 export function YourProfile( {setIsChanged} ) {
 
@@ -36,8 +36,8 @@ export function YourProfile( {setIsChanged} ) {
                         <ProfileImage src={logo} alt="profile image"></ProfileImage>
                     </ImageButton> */}
                     {/* <ChangePhoto>Change profile photo</ChangePhoto> */}
-                    <Item>
-                        <Label>Username</Label>
+                    <AccountSettingItem>
+                        <AccountSettingLabel>Username</AccountSettingLabel>
                         <Input 
                             type="text"
                             name="username"
@@ -47,15 +47,15 @@ export function YourProfile( {setIsChanged} ) {
                             })}
                         />
                         {errorMessages && errorMessages["username"] && (
-                            <ErrorContainer>{errorMessages["username"]}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errorMessages["username"]}</AccountSettingErrorContainer>
                         )}
                         {errors.username && (
-                            <ErrorContainer>{errors.username.message}</ErrorContainer>
+                            <AccountSettingErrorContainer>{errors.username.message}</AccountSettingErrorContainer>
                         )}
                         
-                    </Item>
-                    <Item>
-                        <Label>Email</Label>
+                    </AccountSettingItem>
+                    <AccountSettingItem>
+                        <AccountSettingLabel>Email</AccountSettingLabel>
                         <Input 
                             type="email"
                             name="email"
@@ -70,105 +70,27 @@ export function YourProfile( {setIsChanged} ) {
                                 } })}
                             />
                             {errors.email && (
-                                <ErrorContainer>{errors.email.message}</ErrorContainer>
+                                <AccountSettingErrorContainer>{errors.email.message}</AccountSettingErrorContainer>
                             )}
                             {errorMessages && errorMessages["email"] && (
-                                <ErrorContainer>{errorMessages["email"]}</ErrorContainer>
+                                <AccountSettingErrorContainer>{errorMessages["email"]}</AccountSettingErrorContainer>
                             )}
                         
-                    </Item>
-                    <Item>
+                    </AccountSettingItem>
+                    <AccountSettingItem>
                         <ProfileSubmitButtons type="submit" value="Save Changes"/>
-                     </Item> 
+                     </AccountSettingItem> 
 
             </ProfileWrapper>
         </ProfileContainer>
     )
 }
 
-const ErrorContainer = styled.div`
-    color: red;
-    font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 16px;
-`
 
-const ProfileSubmitButtons = styled(SubmitButtons)`
-    box-sizing: border-box;
-    margin-top: 8px;
-    padding: 8px 0;
-    width: 100%;
-    border-radius: 4px;
-    margin-right: 0px;
-
-    &:hover {
-        cursor: pointer;
-    }
-`
-
-const Input = styled.input`
-    border-radius: 4px;
-    border: 0.5px solid hsl(212.3076923077deg, 8.4967320261%, 70%);
-    padding: 8px;
-    margin-bottom: 12px;
-    width: 100%;
-    box-sizing: border-box;
+const Input = styled(SettingInput)`
     &:hover, &:focus, &:active, &:-webkit-autofill {
         -webkit-text-fill-color: black;
         transition: background-color 5000s ease-in-out 0s;  // This is a trick to keep the background color after the autofill is applied
     }
-    background-color: rgba(255, 255, 255, 0.9);
 `
-
-const Label = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 6px;
-    margin-bottom: 6px;
-`
-
-const Item = styled.div`
-`
-
-const ProfileWrapper = styled.form`
-    margin-top: 20px;
-    
-`
-
-const ProfileContainer = styled.div`
-    box-sizing: border-box;
-    width: 80%;
-`
-
-// const ChangePhoto = styled.div`
-//     font-size: 12px;
-//     font-weight: bold;
-//     margin-top: 6px;
-//     color: #3498db;
-//     cursor: pointer;
-// `
-
-// const ProfileImage = styled.img`
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-//     background-color: black;
-//     margin-right: 8px;
-// `
-
-// const ImageButton = styled.div`
-//     display: flex;
-//     justify-content: flex-end;
-//     align-items: center;
-//     border: 0;
-//     cursor: pointer;
-//     height: 100%;
-//     padding: 0;
-//     width: 92%;
-//     background-color: none;
-// `
-
-// const PageTitle = styled.h2``
 

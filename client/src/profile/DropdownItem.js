@@ -15,7 +15,7 @@ export function DropdownItem(props) {
 const LinkItem = styled.div`
     box-sizing: border-box;
     display: block;
-    font-size: 0.775rem;
+    font-size: 1rem;
     line-height: 1.5;
     position: relative;
     margin: 0.8rem 0;

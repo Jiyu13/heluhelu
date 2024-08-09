@@ -20,8 +20,8 @@ export function ProfilePage() {
                     <ChangesSave isChanged={isChanged}/>
                 )}
                 <ProfileHeader>
-                    <h3>Account</h3>
-                    <p>Set your account settings down below</p>
+                    <h2>Account</h2>
+                    <p style={{fontSize: "1rem"}}>Set your account settings down below</p>
                     
                     <ProfileNavbar page={page} setPage={setPage} setIsChanged={setIsChanged}/>
                 </ProfileHeader>
