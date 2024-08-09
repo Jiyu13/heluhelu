@@ -45,7 +45,7 @@ export function Accessibility() {
         setUser(null)
       })
     }
-    console.log("navbar",user)
+
     return (
         <NavLinksContainer ref={menuRef}>
             <MenuTrigger onClick={handleClick} >
