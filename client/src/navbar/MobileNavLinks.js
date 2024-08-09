@@ -92,7 +92,7 @@ export function MobileNavLinks() {
                   icon_info="logout icon" 
                   text="Log out" 
                   handleClick={handleLogout}
-                  goTo="javascript:void(0)"
+                  goTo="/login"
                 />
               </MenuDropdownList>
             )}
