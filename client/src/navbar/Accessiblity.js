@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 export function Accessibility() {
 
     const [isOpen, setIsOpen] = useState(false)
-    const {setUser, user} = useContext(UserContext)
+    const {setUser, user, setArticles, setVocabularies} = useContext(UserContext)
     const navigate = useNavigate()
 
     const firstLetter = user?.username[0]
@@ -41,9 +41,16 @@ export function Accessibility() {
       apiFetch('/logout', {
         method: "DELETE"
       })
-      .then(() => {
-        setUser(null)
+      .then((r) => {
+        if (r.ok) {
+          setUser(null);
+          setArticles(null);
+          setVocabularies(null);
+        }
       })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
     }
 
     return (

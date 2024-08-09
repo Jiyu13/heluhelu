@@ -17,7 +17,7 @@ import { FirstLetter, MenuTrigger, NavLinksContainer, ProfileAvatar } from "./Ac
 
 export function MobileNavLinks() {
     const [isOpen, setIsOpen] = useState(false)
-    const {setUser, user, firstArticle, article} = useContext(UserContext)
+    const {setUser, user, firstArticle, article, setArticles, setVocabularies} = useContext(UserContext)
 
     const currentArticle = article !== null ? article : firstArticle
     const firstLetter = user?.username[0]
@@ -45,9 +45,16 @@ export function MobileNavLinks() {
       apiFetch('/logout', {
         method: "DELETE"
       })
-      .then(() => {
-        setUser(null)
+      .then((r) => {
+        if (r.ok) {
+          setUser(null);
+          setArticles(null);
+          setVocabularies(null);
+        }
       })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
     }
 
     console.log("navbar",user)
