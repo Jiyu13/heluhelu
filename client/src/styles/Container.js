@@ -5,3 +5,7 @@ export const PageContainer = styled.div`
     // text-align: center;
     margin: 0 auto;
 `
+
+export const MainContainer = styled.main`
+    min-height: 100vh;
+`
