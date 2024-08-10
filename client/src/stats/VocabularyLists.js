@@ -124,7 +124,9 @@ const PageContainer = styled.div`
 
 const VocabStatsNavigation = styled(StatsNavigation)``
 const VocabStatsTitle = styled(StatsTitle)``
-const ReadingStatsPage = styled(SubmitButtons)``
+const ReadingStatsPage = styled(SubmitButtons)`
+    font-size: 1rem
+`
 
 
 export const ContainerBody = styled.div`

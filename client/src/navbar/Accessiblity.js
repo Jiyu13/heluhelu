@@ -75,7 +75,7 @@ export function Accessibility() {
 }
 
 const UserName = styled.div`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
   margin: 0.8rem auto 1.2rem;

@@ -50,7 +50,7 @@ const LinkItem = styled.li`
     display: flex;
     border-radius: 20px;
     line-height: 1.5em;
-    font-size: 0.775rem;
+    font-size: 1rem;
     color: #3e3e3e;
     &:hover {
         background-color: #f1f2f6;

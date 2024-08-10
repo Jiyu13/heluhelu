@@ -96,10 +96,12 @@ export function ArticleEdit( {onUpdatedArticle} ) {
 
 const MobileSubmitButton = styled(SubmitButtons) `
     width: 100%;
+    font-size: 1rem;
 `
 
 const SubmitButton = styled(SubmitButtons) `
-    width: 100px;
+    width: 100%;
+    font-size: 1.2rem;
 `
 
 const EditContainer = styled(PageContainer)`

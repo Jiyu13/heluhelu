@@ -63,7 +63,7 @@ export function CustomeWordForm({
         <CustomForm onSubmit={handleCustomSubmit}>
             <Label>Hawaiian:
                 <br/>
-                <WordInput
+                <AddWordInputText
                     required
                     disabled
                     type="text"
@@ -86,7 +86,6 @@ export function CustomeWordForm({
 
             {wordExistError ? <ExistWarning>{wordExistError.message}</ExistWarning> : ""}
 
-            <br/>
             <SaveButton type="submit" value="Save" style={{backgroundColor: "rgb(8, 61, 116)", "color": "white"}}/>
             <CancelButton type="button" value="Cancel" onClick={handleCancel}/>
         </CustomForm>
@@ -101,6 +100,7 @@ const CancelButton = styled(ButtonButtons)`
     width: 0.1em; 
     margin-top: 0px;
     padding: 6px 4px;
+    font-size: 1rem;
 `
 
 const SaveButton = styled(SubmitButtons)`
@@ -109,6 +109,7 @@ const SaveButton = styled(SubmitButtons)`
     width: 0.1em; 
     margin-top: 0px;
     padding: 6px 4px;
+    font-size: 1rem;
 `
 
 const ExistWarning = styled.span`
@@ -116,21 +117,23 @@ const ExistWarning = styled.span`
     font-size: 12px;
 `
 
-const TranslationInput = styled.textarea`
+const TranslationInput= styled.textarea`
+    font-size: 1.2rem;
     width: 90%;
     max-width: 235px;
     height: 100px;
     background-color: rgba(255, 255, 255, 0.9);
 `
 
-const WordInput = styled.input`
+const AddWordInputText = styled.input`
+    font-size: 1.2rem;
     width: 90%;
     max-width: 235px;
     background-color: rgba(255, 255, 255, 0.9); 
 `
 
 const Label = styled.label`
-    font-size: 15px;
+    font-size: 1.2rem;
     font-weight: bold;
 `
 

@@ -2,7 +2,7 @@
 from flask import Flask, make_response, jsonify, request, session
 from sqlalchemy.sql.expression import func
 
-from config import app, db, api 
+from config import app, db, api, mail, jwt
 from flask_restful import Resource
 
 from models import db, Dictionary, DictionaryWord, Article, User, UserWord, PageReadEvent, Vocabulary
@@ -12,6 +12,11 @@ from datetime import datetime, timedelta
 
 from functions.fetch_profile_color import profile_color
 from functions.text_utils import clean_text
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from jwt.exceptions import ExpiredSignatureError
+from flask_mail import Message
+
+
 
 class Dictionaries(Resource):
     def get(self):
@@ -180,6 +185,91 @@ class ChangePassword(Resource):
                             errors[key] = value
         return make_response(jsonify(errors), 422)
 api.add_resource(ChangePassword, '/<int:id>/change_password')
+
+
+# ======================= Reset Password =============================================
+class ResetPasswordRequest(Resource):
+    def post(self):
+        email = request.get_json()["email"]
+        error = {}
+        email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        if not re.match(email_pattern, email):
+            error["email_format"] = "Invalid email format."
+            return make_response(jsonify(error), 404)
+
+        else:
+            user = User.query.filter_by(email=email).first()
+            if user is None:
+                error["email_exist"] = "Email does not exists."
+                return make_response(jsonify(error), 404)
+           
+            # Create a JWT token with an expiration time
+            reset_token = create_access_token(
+                identity=user.id, 
+                expires_delta=timedelta(minutes=60)
+            )
+            # Sen reset email
+            reset_url = f"{app.config['RESET_PW_URL']}/reset/click?token={reset_token}"
+            msg = Message(
+                "Password Reset Request", 
+                sender="ziru.fish@gmail.com", 
+                recipients=[email]
+            )
+            msg.body = f'To reset your password, visit the following link: {reset_url}\n\n'\
+                       f'This link expires in 60 minutes.\n\n'\
+                       f'You are receiving this email because you recently started a password reset request. If this wasn\'t you, please ignore this email.\n\n'\
+                       f'Regards,\n'\
+                       f'Heluhe.lu Support'
+
+
+            mail.send(msg)
+            return make_response(jsonify({"msg": "Password reset email sent"}), 200)
+api.add_resource(ResetPasswordRequest, '/reset_request')
+
+
+class ResetPassword(Resource):
+    @jwt_required()
+    def post(self):
+        new_password = request.get_json()["password"]
+        confirm_password = request.get_json()["confirm_password"]
+        if new_password != confirm_password:
+            return make_response(jsonify({"not_match": "Passwords do not match."}), 422)
+        try:
+            errors = {}
+            user_id = get_jwt_identity()
+            user = User.query.filter_by(id=user_id).first()
+            user.validate_password(key="_password_hash", _password_hash=new_password)
+            user.after_validate()
+            user.password_hash = new_password
+            db.session.add(user)
+            session.modified = True  # manually inform Flask that the session has been modified
+            db.session.commit()
+            response = {"message": "Password reset successfully!"}
+            return make_response(jsonify(response), 200)
+    
+        except ExpiredSignatureError:
+            return make_response(jsonify({"token_expired": "Token has expired"}), 401)
+            
+        except ValueError as e:
+            for error_dict in e.args:
+                for key, value in error_dict.items():
+                    errors[key] = value
+            return make_response(jsonify(errors), 422)
+api.add_resource(ResetPassword, '/reset_password')
+
+
+class TestToken(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            user_id = get_jwt_identity()
+            return make_response(jsonify({"msg": "Token is valid", "user_id": user_id}), 200)
+        except ExpiredSignatureError:
+            return make_response(jsonify({"msg": "Token has expired"}), 401)
+        except Exception as e:
+            return make_response(jsonify({"msg": str(e)}), 400)
+api.add_resource(TestToken, '/test-token')
+
 
 # class DeleteUserById(Resource):
 #     def delete(self, id):

@@ -22,8 +22,6 @@ import { ProgressBar } from "../progress-bar/ProgressBar";
 
 export function ArticleList( {articles, setDeletePopup, setArticleID} ) {
 
-    console.log(articles)
-
     const { user, splitText, calculatePages, isDark } = useContext(UserContext)
 
     function handleShowDeletePopup(e) {
