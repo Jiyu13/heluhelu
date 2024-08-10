@@ -8,5 +8,5 @@ config.json
 .idea
 instance-bkp/
 .env
-.sql
+heluhelu.sql
 local_config.py
