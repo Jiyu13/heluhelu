@@ -61,7 +61,6 @@ export function MobileNavLinks() {
       });
     }
 
-    console.log("navbar",user)
 
     return (
         <NavLinksContainer ref={menuRef}>

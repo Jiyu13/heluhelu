@@ -191,14 +191,17 @@ api.add_resource(ChangePassword, '/<int:id>/change_password')
 class ResetPasswordRequest(Resource):
     def post(self):
         email = request.get_json()["email"]
+        print(email)
         error = {}
         email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         if not re.match(email_pattern, email):
+            print("not match")
             error["email_format"] = "Invalid email format."
             return make_response(jsonify(error), 404)
 
         else:
             user = User.query.filter_by(email=email).first()
+            print("user", user)
             if user is None:
                 error["email_exist"] = "Email does not exists."
                 return make_response(jsonify(error), 404)
@@ -223,6 +226,7 @@ class ResetPasswordRequest(Resource):
 
 
             mail.send(msg)
+            print("sent")
             return make_response(jsonify({"msg": "Password reset email sent"}), 200)
 api.add_resource(ResetPasswordRequest, '/reset_request')
 

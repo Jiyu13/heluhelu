@@ -39,6 +39,7 @@ export function ForgetPassword() {
             body: JSON.stringify(resetEmail)
         })
         .then(res => {
+            console.log(res)
             if (res.status === 404) {
                 res.json().then(error => {
                     if (error["email_exist"]) {
