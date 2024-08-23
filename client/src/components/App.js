@@ -148,8 +148,6 @@ export default function App() {
             </header>
           )}
           <main style={{minHeight: "100vh"}}>
-
-          
             <Routes >
                 <Route
                   exact
