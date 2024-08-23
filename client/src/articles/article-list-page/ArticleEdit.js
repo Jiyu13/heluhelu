@@ -43,7 +43,7 @@ export function ArticleEdit( {onUpdatedArticle} ) {
             title: formData.title,
         }
 
-        apiFetch(`/article/edit/${id}${cleanURL(updated.title)}`, {
+        apiFetch(`/article/edit/${id}`, {
             method: "PATCH",
             headers: {"Content-Type": 'application/json'},
             body: JSON.stringify(updated)
