@@ -147,137 +147,141 @@ export default function App() {
               <NavBar/>
             </header>
           )}
-          <Routes >
-              <Route
-                exact
-                path="/stats/vocabularies"
-                element={<VocabularyStats/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/stats'
-                element={<MyStats/>}
-              >
-              </Route>
+          <main style={{minHeight: "100vh"}}>
 
-              <Route
-                exact
-                path='/article/word_stats/:id/:article_title'
-                element={<ShowArticleUniqueWords/>}
-              >
-              </Route>
+          
+            <Routes >
+                <Route
+                  exact
+                  path="/stats/vocabularies"
+                  element={<VocabularyStats/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/stats'
+                  element={<MyStats/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/article/share_receive/:uuid'
-                element={
-                  <SharePage
-                    articles={articles}
-                    setArticles={setArticles}
-                  />
-                }
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/word_stats/:id/:article_title'
+                  element={<ShowArticleUniqueWords/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/article/share/:id/:article_title/:uuid'
-                element={<ArticleUUID/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/share_receive/:uuid'
+                  element={
+                    <SharePage
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/article/edit/:id/:article_title'
-                element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
-              >
-              </Route>
-              
-              <Route
-                exact
-                path='/articles/:id/:article_title'
-                element={<Article/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/share/:id/:article_title/:uuid'
+                  element={<ArticleUUID/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/import/text'
-                element={
-                  <ArticleImporter
-                    articles={articles}
-                    setArticles={setArticles}
-                  />
-                }
-              >
-              </Route>
-              <Route
-                exact
-                path='/import/file'
-                element={
-                  <FileImporter
-                    articles={articles}
-                    setArticles={setArticles}
-                  />
-                }
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/article/edit/:id/:article_title'
+                  element={<ArticleEdit onUpdatedArticle={onUpdatedArticle}/>}
+                >
+                </Route>
+                
+                <Route
+                  exact
+                  path='/articles/:id/:article_title'
+                  element={<Article/>}
+                >
+                </Route>
+
+                <Route
+                  exact
+                  path='/import/text'
+                  element={
+                    <ArticleImporter
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/import/file'
+                  element={
+                    <FileImporter
+                      articles={articles}
+                      setArticles={setArticles}
+                    />
+                  }
+                >
+                </Route>
 
 
-              <Route
-                exact
-                path='/reset/click'
-                element={<ResetRedirect/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/reset_password'
-                element={<ResetPassword/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/account/recover'
-                element={<ForgetPassword/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/reset/click'
+                  element={<ResetRedirect/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/reset_password'
+                  element={<ResetPassword/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/account/recover'
+                  element={<ForgetPassword/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/login'
-                element={<LoginPage/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/login'
+                  element={<LoginPage/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/signup'
-                element={<SignupPage/>}
-              >
-              </Route>
-              <Route
-                exact
-                path='/profile'
-                element={<ProfilePage/>}
-              >
-              </Route>
+                <Route
+                  exact
+                  path='/signup'
+                  element={<SignupPage/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/profile'
+                  element={<ProfilePage/>}
+                >
+                </Route>
 
-              <Route
-                exact
-                path='/'
-                element={
-                  <Home 
-                    user={user}
-                    articles={articles}
-                    setArticles={setArticles}
-                    onDeleteArticle={onDeleteArticle}
-                  />
-                }
-              >
-              </Route>
-          </Routes>
+                <Route
+                  exact
+                  path='/'
+                  element={
+                    <Home 
+                      user={user}
+                      articles={articles}
+                      setArticles={setArticles}
+                      onDeleteArticle={onDeleteArticle}
+                    />
+                  }
+                >
+                </Route>
+            </Routes>
+          </main>
         </div>
     </UserContext.Provider>
   );
