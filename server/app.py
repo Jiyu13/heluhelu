@@ -191,17 +191,15 @@ api.add_resource(ChangePassword, '/<int:id>/change_password')
 class ResetPasswordRequest(Resource):
     def post(self):
         email = request.get_json()["email"]
-        print(email)
+        clean_email = email.strip().replace("\u200b", "").replace("\u00a0", "")
         error = {}
         email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-        if not re.match(email_pattern, email):
-            print("not match")
+        if not re.fullmatch(email_pattern, clean_email):
             error["email_format"] = "Invalid email format."
             return make_response(jsonify(error), 404)
 
         else:
-            user = User.query.filter_by(email=email).first()
-            print("user", user)
+            user = User.query.filter_by(email=clean_email).first()
             if user is None:
                 error["email_exist"] = "Email does not exists."
                 return make_response(jsonify(error), 404)
@@ -211,8 +209,8 @@ class ResetPasswordRequest(Resource):
                 identity=user.id, 
                 expires_delta=timedelta(minutes=60)
             )
-            # Sen reset email
-            reset_url = f"{app.config['RESET_PW_URL']}/reset/click?token={reset_token}"
+            # Send reset email
+            reset_url = f"{app.config['RESET_PW_URL']}/reset?token={reset_token}"
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
