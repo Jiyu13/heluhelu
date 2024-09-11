@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { UserContext } from "../components/UserContext";
 import { EmptyDiv } from "../components/App";
 import apiFetch from "../api/ApiFetch";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 
 export function ResetPasswordForm() {
@@ -21,9 +21,7 @@ export function ResetPasswordForm() {
     const [resetSuccess, setResetSuccess] = useState(null)
     
 
-
-    const location = useLocation();
-    const token = location.state?.token;
+    const {token} = useParams()
 
     const inputType = visible ?  "text" : "password"
     const inputType2 = visible2 ?  "text" : "password"
