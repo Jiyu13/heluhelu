@@ -48,7 +48,6 @@ export default function App() {
       }
     })
     .catch((error) => {
-      console.error("Error checking session:", error);
       setUser(null);
     });
   }, []);
@@ -125,7 +124,6 @@ export default function App() {
     setLastClick(new Date().getTime())
   }
 
-  console.log(user)
 
   // ========= user context value ============================
   const userContextValue = {user, setUser, 
