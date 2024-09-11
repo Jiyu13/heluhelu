@@ -224,15 +224,15 @@ export default function App() {
                 </Route>
 
 
-                <Route
+                {/* <Route
                   exact
                   path='/reset'
                   element={<ResetRedirect/>}
                 >
-                </Route>
+                </Route> */}
                 <Route
                   exact
-                  path='/reset_password'
+                  path='/reset_password/:token'
                   element={<ResetPasswordForm/>}
                 >
                 </Route>
