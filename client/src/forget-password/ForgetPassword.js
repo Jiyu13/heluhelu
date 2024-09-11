@@ -15,7 +15,7 @@ export function ForgetPassword() {
 
     const {user} = useContext(UserContext)
 
-    const initialEmail = {email: "ziru.fish@gmail.com"}
+    const initialEmail = {email: ""}
 
     const [formData, setFormData] = useState(initialEmail)
     const [emailNotExistError, setEmailNotExistError] = useState(null)
