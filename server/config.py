@@ -23,10 +23,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 if app.debug:
     app.config['SESSION_COOKIE_SECURE'] = False
     app.config['SESSION_COOKIE_DOMAIN'] =  "127.0.0.1"
-    app.config['RESET_PW_URL'] = database_uri.get('DEBUG_RESET_PW_URL')
+    # app.config['RESET_PW_URL'] = database_uri.get('DEBUG_RESET_PW_URL')
 else:
     app.config['SESSION_COOKIE_DOMAIN'] = ".heluhe.lu"
-    app.config['RESET_PW_URL'] = database_uri.get('PRODUCTION_RESET_PW_URL')
+    # app.config['RESET_PW_URL'] = database_uri.get('PRODUCTION_RESET_PW_URL')
 app.config['CORS_ALLOW_HEADERS'] = ['Content-Type']
 app.config['CORS_ORIGINS'] = ["https://heluhe.lu"]
 
