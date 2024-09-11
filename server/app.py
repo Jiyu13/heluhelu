@@ -210,6 +210,7 @@ class ResetPasswordRequest(Resource):
                 expires_delta=timedelta(minutes=60)
             )
             # Send reset email
+            print(app.config['RESET_PW_URL'])
             reset_url = f"{app.config['RESET_PW_URL']}/reset_password/{reset_token}"
             msg = Message(
                 "Password Reset Request", 
@@ -261,7 +262,7 @@ class ResetPassword(Resource):
                 for key, value in error_dict.items():
                     errors[key] = value
             return make_response(jsonify(errors), 422)
-api.add_resource(ResetPassword, '/reset_password')
+api.add_resource(ResetPassword, '/password_reset')
 
 
 class TestToken(Resource):
@@ -869,10 +870,8 @@ api.add_resource(Login, '/login', endpoint='login')
 class Logout(Resource):
     def delete(self):
         if session.get("user_id"):
-            print("login", session["user_id"])
             session["user_id"] = None
             session.modified = True
-            print(session["user_id"])
             return make_response({'message':'204: No Content'}, 204)
         return make_response({'error': '401: Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')

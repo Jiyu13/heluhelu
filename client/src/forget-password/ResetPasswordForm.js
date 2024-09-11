@@ -58,7 +58,7 @@ export function ResetPasswordForm() {
             confirm_password: formData.confirm_password
 
         }
-        apiFetch('/reset_password', {
+        apiFetch('/password_reset', {
             method: "POST",
             mode: 'cors',
             headers: {
