@@ -227,9 +227,9 @@ class ResetPasswordRequest(Resource):
             print("sent")
 
             response = jsonify({"msg": "Password reset email sent"})
-            response.headers.add("Access-Control-Allow-Origin", "https://heluhe.lu")
+            response.headers.add("Access-Control-Allow-Origin", reset_url)
             response.headers.add("Access-Control-Allow-Credentials", "true")
-            return make_response(jsonify({"msg": "Password reset email sent"}), 200)
+            return make_response(response, 200)
 api.add_resource(ResetPasswordRequest, '/reset_request')
 
 
