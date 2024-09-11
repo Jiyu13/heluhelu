@@ -19,7 +19,7 @@ import ArticleImporter from "../articles/import/ArticleImporter";
 import { VocabularyStats } from "../stats/VocabularyStats";
 import { ShowArticleUniqueWords } from "../articles/article-unique-words-page/ShowArticleUniqueWords";
 import { ProfilePage } from "../profile/ProfilePage";
-import { ResetPassword } from "../forget-password/ResetPassword";
+import { ResetPasswordForm } from "../forget-password/ResetPasswordForm";
 import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
 import styled from "styled-components";
@@ -226,14 +226,14 @@ export default function App() {
 
                 <Route
                   exact
-                  path='/reset/click'
+                  path='/reset'
                   element={<ResetRedirect/>}
                 >
                 </Route>
                 <Route
                   exact
                   path='/reset_password'
-                  element={<ResetPassword/>}
+                  element={<ResetPasswordForm/>}
                 >
                 </Route>
                 <Route
