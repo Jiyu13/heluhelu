@@ -36,7 +36,10 @@ export function ForgetPassword() {
         apiFetch(`/reset_request`, {
             method: "POST",
             mode: "cors",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify(resetEmail)
         })
         .then(res => {
