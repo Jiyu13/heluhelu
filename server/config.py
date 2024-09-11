@@ -47,7 +47,7 @@ metadata = MetaData(naming_convention={
 })
 db = SQLAlchemy(metadata=metadata)
 
-CORS(app, resources={r"/*": {"origins": ["https://heluhe.lu"]}}, supports_credentials=True)
+CORS(app, supports_credentials=True)
 migrate = Migrate(app, db)
 db.init_app(app)
 
