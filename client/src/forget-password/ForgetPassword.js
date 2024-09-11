@@ -35,7 +35,7 @@ export function ForgetPassword() {
         const resetEmail = {email: formData.email}
         apiFetch(`/reset_request`, {
             method: "POST",
-            mode: "cors",
+            // mode: "cors",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
