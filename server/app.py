@@ -210,7 +210,7 @@ class ResetPasswordRequest(Resource):
                 expires_delta=timedelta(minutes=60)
             )
             # Send reset email
-            reset_url = f"{app.config['RESET_PW_URL']}/reset?token={reset_token}"
+            reset_url = f"{app.config['RESET_PW_URL']}/reset_password/{reset_token}"
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
