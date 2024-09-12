@@ -50,7 +50,7 @@ db = SQLAlchemy(metadata=metadata)
 
 CORS(
     app, 
-    resources={r"/*": {"origins": ["https://heluhe.lu", "http://127.0.0.1:3000"]}}, 
+    resources={r"/*": {"origins": "*"}}, 
     supports_credentials=True
 )
 migrate = Migrate(app, db)
