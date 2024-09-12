@@ -20,7 +20,7 @@ export function ForgetPassword() {
     const [formData, setFormData] = useState(initialEmail)
     const [emailNotExistError, setEmailNotExistError] = useState(null)
     const [emailFormatError, setEmailFormatError] = useState(null)
-    const [emailSent, setEmailSent] = useState(false)
+    const [emailSent, setEmailSent] = useState(null)
 
 
     function handleInput(e) {
@@ -58,7 +58,7 @@ export function ForgetPassword() {
                 })
             } else {
                 res.json().then(data => {
-                    setEmailSent(true)
+                    setEmailSent(data['msg'])
                 })
             }
         })
@@ -72,7 +72,7 @@ export function ForgetPassword() {
                     <BoxContainer>
                         {emailSent ? 
 
-                            <ResetEmailSent /> 
+                            <ResetEmailSent emailSent={emailSent}/> 
                             :
                             <FormContainer onSubmit={handleSubmit} style={{paddingBottom: "8rem"}}>
                             
