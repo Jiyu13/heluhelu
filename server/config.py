@@ -29,7 +29,7 @@ else:
     # app.config['RESET_PW_URL'] = database_uri.get('PRODUCTION_RESET_PW_URL')
 app.config['RESET_PW_URL'] = database_uri.get('RESET_PW_URL')
 app.config['CORS_ALLOW_HEADERS'] = ['Content-Type']
-app.config['CORS_ORIGINS'] = ["https://heluhe.lu"]
+app.config['CORS_ORIGINS'] = ["*"]
 
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
