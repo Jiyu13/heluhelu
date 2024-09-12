@@ -252,7 +252,7 @@ class ResetPassword(Resource):
             session.modified = True  # manually inform Flask that the session has been modified
             db.session.commit()
             response = jsonify({"message": "Password reset successfully!"})
-            response.headers.add('Access-Control-Allow-Headers', "*")
+            # response.headers.add('Access-Control-Allow-Headers', "*")
             return make_response(response, 200)
     
         except ExpiredSignatureError:
