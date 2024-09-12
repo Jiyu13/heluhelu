@@ -189,6 +189,7 @@ api.add_resource(ChangePassword, '/<int:id>/change_password')
 
 # ======================= Reset Password =============================================
 class ResetPasswordRequest(Resource):
+    @cross_origin(origins=[app.config['RESET_PW_URL']])
     def post(self):
         email = request.get_json()["email"]
         clean_email = email.strip().replace("\u200b", "").replace("\u00a0", "")
