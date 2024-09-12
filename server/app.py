@@ -211,6 +211,7 @@ class ResetPasswordRequest(Resource):
             )
             # Send reset email
             reset_url = f"{app.config['RESET_PW_URL']}/reset_password/{reset_token}"
+            print("=================================", reset_url)
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
@@ -233,7 +234,7 @@ class ResetPasswordRequest(Resource):
             try:
                 mail.send(msg)
                 print("Email sent")
-                response = jsonify({"msg": "Password reset email sent"})
+                response = jsonify({"msg": f"Password reset email sent, {app.config['RESET_PW_URL']}"})
                 return make_response(response, 200)
             except SMTPException as e:
                 print(f"Failed to send email: {e}")
