@@ -211,7 +211,6 @@ class ResetPasswordRequest(Resource):
             )
             # Send reset email
             reset_url = f"{app.config['RESET_PW_URL']}/reset_password/{reset_token}"
-            print("=================================", reset_url)
             msg = Message(
                 "Password Reset Request", 
                 sender="ziru.fish@gmail.com", 
@@ -224,24 +223,14 @@ class ResetPasswordRequest(Resource):
                        f'Heluhe.lu Support'
 
 
-            # mail.send(msg)
-            # print("sent")
+            mail.send(msg)
+            print("sent")
 
-            # response = jsonify({"msg": "Password reset email sent"})
-            # # response.headers.add("Access-Control-Allow-Origin", reset_url)
-            # # response.headers.add("Access-Control-Allow-Credentials", "true")
-            # return make_response(response, 200)
-            try:
-                mail.send(msg)
-                print("Email sent")
-                response = jsonify({"msg": f"Password reset email sent, {app.config['RESET_PW_URL']}"})
-                return make_response(response, 200)
-            except SMTPException as e:
-                print(f"Failed to send email: {e}")
-                return make_response(jsonify({"error": "Failed to send email"}), 500)
-            except Exception as e:
-                print(f"Unexpected error: {e}")
-                return make_response(jsonify({"error": "An unexpected error occurred"}), 500)
+            response = jsonify({"msg": "Password reset email sent"})
+            # response.headers.add("Access-Control-Allow-Origin", reset_url)
+            # response.headers.add("Access-Control-Allow-Credentials", "true")
+            return make_response(response, 200)
+            
 api.add_resource(ResetPasswordRequest, '/reset_request')
 
 
