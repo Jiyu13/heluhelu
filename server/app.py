@@ -878,11 +878,13 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 class Admin(Resource):
     def get(self):
         user_id = session["user_id"]
-        all_users = User.query.all()
-        sorted_users = sorted(all_users, key=lambda x:x.id)
-        users_dict = [user.to_dict() for user in sorted_users]
-        response = make_response(jsonify(users_dict), 200)
-        return response
+        if user_id == 1 or user_id == 33:
+            all_users = User.query.all()
+            sorted_users = sorted(all_users, key=lambda x:x.id)
+            users_dict = [user.to_dict() for user in sorted_users]
+            response = make_response(jsonify(users_dict), 200)
+            return response
+        return
 api.add_resource(Admin, '/admin', endpoint='admin')
 
 
