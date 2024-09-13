@@ -12,9 +12,10 @@ import { truncateString } from "../utils/truncateString"
 import X from "../assets/images/cancel_red.svg"
 import Tick from "../assets/images/check_circle_green.svg"
 import searchIcon from "../assets/images/black/search.svg"
+import { PageNotFound } from "../components/PageNotFound"
 
 export function Admin() {
-
+    const {user} = useContext(UserContext)
     const isMobile = useMediaQuery({ maxWidth: DeviceSize.mobile })
 
     const [users, setUsers] = useState(null)
@@ -42,49 +43,56 @@ export function Admin() {
 
     return (
         <PageContainer>
-            <PageTitle>Admin Dashboard</PageTitle>
-            <ContainerBody style={{paddingBottom: "0"}}>
+            {
+                user?.id === 33 || user?.id === 1 ? 
 
-                <SearchUserContainer>
-                    <div style={{width: "2rem", display: "flex", gap: "1rem"}}>
-                        <img src={searchIcon} alt='search icon' style={{width: "2rem"}}/>
-                    </div>
-                    
-                    <SearchInput
-                        type='text'
-                        name='username'
-                        onChange={handleOnChange}
-                    />
-                </SearchUserContainer>
+                    <>
+                        <PageTitle>Admin Dashboard</PageTitle>
+                        <ContainerBody style={{paddingBottom: "0"}}>
 
-                <AdminContainer>
-                    <Column>ID</Column>
-                    <Column>NAME</Column>
-                    <Column>EMAIL</Column>
-                    <Column>ADMIN</Column>
-                </AdminContainer>
+                            <SearchUserContainer>
+                                <div style={{width: "2rem", display: "flex", gap: "1rem"}}>
+                                    <img src={searchIcon} alt='search icon' style={{width: "2rem"}}/>
+                                </div>
+                                
+                                <SearchInput
+                                    type='text'
+                                    name='username'
+                                    onChange={handleOnChange}
+                                />
+                            </SearchUserContainer>
 
-                {users && (
-                    results.map((user, index) => {
-                        return (
-                    <AdmindDataContainer key={user.id}>
-                        <div>{user.id}</div>
-                        <div>{isMobile ? truncateString(user.username, 7) : user.username}</div>
-                        <div>{isMobile ? truncateString(user.email, 18) : user.email}</div>
-                        <div>
-                            <img 
-                                src={user.id === 1 || user.id === 33 ? Tick : X}
-                                alt="staff status"
-                            />
-                            
-                        </div>
-                    </AdmindDataContainer>
-                        )
-                    })
-                )}
-                
+                            <AdminContainer>
+                                <Column>ID</Column>
+                                <Column>NAME</Column>
+                                <Column>EMAIL</Column>
+                                <Column>ADMIN</Column>
+                            </AdminContainer>
 
-            </ContainerBody>
+                            {users && (
+                                results.map((user, index) => {
+                                    return (
+                                <AdmindDataContainer key={user.id}>
+                                    <div>{user.id}</div>
+                                    <div>{isMobile ? truncateString(user.username, 7) : user.username}</div>
+                                    <div>{isMobile ? truncateString(user.email, 18) : user.email}</div>
+                                    <div>
+                                        <img 
+                                            src={user.id === 1 || user.id === 33 ? Tick : X}
+                                            alt="staff status"
+                                        />
+                                        
+                                    </div>
+                                </AdmindDataContainer>
+                                    )
+                                })
+                            )}
+                        </ContainerBody>
+                    </>
+                :
+                <PageNotFound />
+            }
+            
         </PageContainer>
           
     )
