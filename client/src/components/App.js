@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
-import { AccountBox } from "../account/AccountBox";
 import { UserContext } from "./UserContext";
 
 import {Home} from "./Home";
@@ -24,7 +23,6 @@ import { LoginPage } from "../account/LoginPage";
 import { SignupPage } from "../account/SignupPage";
 import styled from "styled-components";
 import { ForgetPassword } from "../forget-password/ForgetPassword";
-import { ResetRedirect } from "../forget-password/ResetRedirect";
 import { Admin } from "../admin/Admin";
 
 const USER_NOT_SET = -1;
