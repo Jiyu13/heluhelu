@@ -111,22 +111,14 @@ const SearchUserContainer = styled.div`
     display: flex;
     justify-content: end;
     gap: 1rem;
+    box-sizing: border-box;
 `
 const SearchInput = styled.input`
-    height: 40px;
+    height: 36px;
     font-size: 1rem;
     margin-right: 12px;
     border: none;
     &:focus {
         border: none;
     }
-`
-const SearchButton = styled.button`
-    color: #fff;
-    background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
-    border : none;
-    border-radius: 8px;
-    height: 40px;
-    font-size: 1rem;
-    font-weight: 600;
 `

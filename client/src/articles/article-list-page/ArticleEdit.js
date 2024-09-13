@@ -9,7 +9,6 @@ import { DeviceSize } from "../../responsive";
 import { ChangesSave } from "../../components/ChangesSave";
 
 import { PageContainer } from "../../styles/Container"
-import { cleanURL } from "../../utils/cleanArticleUrl";
 
 
 export function ArticleEdit( {onUpdatedArticle} ) {
