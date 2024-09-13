@@ -75,7 +75,7 @@ export function Accessibility() {
                 />
 
                 {
-                  user.id === 33 && (
+                  (user.id === 33 || user.id === 1) && (
                     <DropdownItem 
                       icon={supervisor_account} 
                       icon_info="admin icon" 
