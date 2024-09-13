@@ -73,13 +73,6 @@ export function Accessibility() {
                   text="Your Profile" 
                   goTo="/profile"
                 />
-                <DropdownItem 
-                  icon={logout_black_24dp} 
-                  icon_info="logout icon" 
-                  text="Log out" 
-                  handleClick={handleLogout}
-                  goTo="javascript:void(0)"
-                />
 
                 {
                   user.id === 33 && (
@@ -92,6 +85,16 @@ export function Accessibility() {
                     />
                   )
                 }
+
+                <DropdownItem 
+                  icon={logout_black_24dp} 
+                  icon_info="logout icon" 
+                  text="Log out" 
+                  handleClick={handleLogout}
+                  goTo="javascript:void(0)"
+                />
+
+                
                 
               </MenuDropdownList>
             )}
