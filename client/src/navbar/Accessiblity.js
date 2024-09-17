@@ -8,6 +8,7 @@ import apiFetch from "../api/ApiFetch";
 import { DropdownItem } from "../profile/DropdownItem";
 import logout_black_24dp from "../assets/images/black/logout_black_24dp.svg"
 import person_black_24dp from "../assets/images/black/person_black_24dp.svg"
+import supervisor_account from "../assets/images/black/supervisor_account.svg"
 import { useNavigate } from "react-router-dom";
 
 export function Accessibility() {
@@ -72,6 +73,19 @@ export function Accessibility() {
                   text="Your Profile" 
                   goTo="/profile"
                 />
+
+                {
+                  user.id === 33 && (
+                    <DropdownItem 
+                      icon={supervisor_account} 
+                      icon_info="admin icon" 
+                      text="Admin" 
+                      // handleClick={handleLogout}
+                      goTo="/admin"
+                    />
+                  )
+                }
+
                 <DropdownItem 
                   icon={logout_black_24dp} 
                   icon_info="logout icon" 
@@ -79,6 +93,9 @@ export function Accessibility() {
                   handleClick={handleLogout}
                   goTo="javascript:void(0)"
                 />
+
+                
+                
               </MenuDropdownList>
             )}
         </NavLinksContainer>
