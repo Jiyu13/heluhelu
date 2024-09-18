@@ -874,6 +874,26 @@ class Logout(Resource):
         return make_response({'error': '401: Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+class AdminUserByID(Resource):
+    def get(self, id):
+        user_id = session["user_id"]
+        if user_id == 1 or user_id == 33:
+            user = User.query.filter_by(id=id).first()
+            user_dict = user.to_dict()
+
+            articles = Article.query.filter_by(user_id=id).all()
+            articles = sorted(articles, key=lambda x: x.created_at)
+            articles_dict = [article.to_dict(rules=("-user",)) for article in articles]
+
+            result = {
+                "user": user_dict,
+                "articles": articles_dict
+            }
+
+            response = make_response(jsonify(result), 200)
+            return response
+        return
+api.add_resource(AdminUserByID, '/admin/user/<int:id>')
 
 class Admin(Resource):
     def get(self):
