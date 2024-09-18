@@ -8,7 +8,7 @@ import apiFetch from "../api/ApiFetch";
 import { PageNotFound } from "../components/PageNotFound";
 import { useContext } from "react";
 import { UserContext } from "../components/UserContext";
-import { AdminUserBookList } from "./AdminUserBookList";
+import { AdminUserBookList } from "./AdminUserInfoPage";
 
 export function AdminUser(){
 
