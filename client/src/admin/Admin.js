@@ -12,6 +12,9 @@ import { truncateString } from "../utils/truncateString"
 import X from "../assets/images/cancel_red.svg"
 import Tick from "../assets/images/check_circle_green.svg"
 import searchIcon from "../assets/images/black/search.svg"
+import arrowUp from "../assets/images/black/arrow_up.svg"
+import arrowDown from "../assets/images/black/arrow_down.svg"
+
 import { PageNotFound } from "../components/PageNotFound"
 
 export function Admin() {
@@ -20,9 +23,10 @@ export function Admin() {
 
     const [users, setUsers] = useState(null)
     const [searchInput, setSearchInput] = useState("")
+    const [isSortArticles, setIsSortArticles] = useState(false)
 
     useEffect(() => {
-        apiFetch('/admin')
+        apiFetch('/admin/users')
         .then(res => res.json())
         .then(data => {
             setUsers(data)
@@ -39,6 +43,18 @@ export function Admin() {
         const resultEmails = u.email?.toLowerCase().includes(searchInput.toLowerCase())  
         return resultEmails + resultUsernames
     }))
+
+    function handleSortArticles() {
+        setIsSortArticles(!isSortArticles)
+    }
+
+
+    const sortedUsers = isSortArticles && results ? 
+                    [...results].sort((a,b) => b.article_counts - a.article_counts) 
+                    :
+                    results
+
+    const gridTemplateColumns = isMobile ? "0.5fr 1.5fr 1fr 0.5fr": "0.5fr 1.5fr 4fr 0.5fr 0.5fr" 
 
 
     return (
@@ -62,28 +78,58 @@ export function Admin() {
                                 />
                             </SearchUserContainer>
 
-                            <AdminContainer>
+                            <TableHeaderContainer 
+                                style={{
+                                    gridTemplateColumns: gridTemplateColumns,
+                                    alignItems: "center"
+                                }}
+                            >
                                 <Column>ID</Column>
                                 <Column>NAME</Column>
-                                <Column>EMAIL</Column>
+                                {!isMobile && (
+                                    <Column>EMAIL</Column>
+                                )}
+                                
+                                <Column style={{display: "flex", alignItems: "center"}}>
+                                    <div>ARTICLES</div>
+                                    <button 
+                                        style={{border: "none", background: "none", width: "24px", padding: "0", cursor: "pointer"}}
+                                        onClick={handleSortArticles}
+                                    >
+                                        <img src={arrowDown} alt="arrow down"/>
+                                    </button>
+                                    {/* <img src={arrowUp} alt="arrow up"/> */}
+                                    
+                                </Column>
                                 <Column>ADMIN</Column>
-                            </AdminContainer>
+                            </TableHeaderContainer>
 
                             {users && (
-                                results.map((user, index) => {
+                                sortedUsers.map((user, index) => {
                                     return (
-                                <AdmindDataContainer key={user.id}>
-                                    <div>{user.id}</div>
-                                    <div>{isMobile ? truncateString(user.username, 7) : user.username}</div>
-                                    <div>{isMobile ? truncateString(user.email, 18) : user.email}</div>
-                                    <div>
-                                        <img 
-                                            src={user.id === 1 || user.id === 33 ? Tick : X}
-                                            alt="staff status"
-                                        />
-                                        
-                                    </div>
-                                </AdmindDataContainer>
+                                        <a 
+                                            href={`/admin/user/${user.id}`} 
+                                            style={{textDecoration: "none", color: "#000", fontSize: "1rem"}}
+                                            key={user.id}
+                                        >
+                                            <TableDataContainer style={{gridTemplateColumns: gridTemplateColumns}}>
+                                                <div>{user.id}</div>
+                                                <div>{isMobile ? truncateString(user.username, 18) : user.username}</div>
+                                                {!isMobile && (
+                                                    <div>{user.email}</div>
+                                                )}
+                                                {/* <div>{isMobile ? truncateString(user.email, 18) : user.email}</div> */}
+                                                <div>{user.article_counts}</div>
+                                                <div>
+                                                    <img 
+                                                        src={user.id === 1 || user.id === 33 ? Tick : X}
+                                                        alt="staff status"
+                                                    />
+                                                    
+                                                </div>
+                                            </TableDataContainer>
+                                        </a>
+                                
                                     )
                                 })
                             )}
@@ -102,13 +148,11 @@ const Column = styled.div`
     font-weight: bold;
 `
 
-const AdminContainer = styled(VocabHeader)`
-    grid-template-columns: 0.5fr 1.5fr 4fr 0.5fr;
-    padding: 1rem 0.5rem;
+const TableHeaderContainer = styled(VocabHeader)`
+    padding: 1rem 0.5rem 0.5rem;
 `
 
-const AdmindDataContainer = styled(VocabContainer)`
-    grid-template-columns: 0.5fr 1.5fr 4fr 0.5fr;
+const TableDataContainer = styled(VocabContainer)`
     padding: 1rem 0.5rem;
 `
 
