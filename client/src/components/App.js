@@ -24,6 +24,7 @@ import { SignupPage } from "../account/SignupPage";
 import styled from "styled-components";
 import { ForgetPassword } from "../forget-password/ForgetPassword";
 import { Admin } from "../admin/Admin";
+import { AdminUser } from "../admin/AdminUser.js";
 
 const USER_NOT_SET = -1;
 
@@ -232,8 +233,14 @@ export default function App() {
 
                 <Route
                   exact
-                  path='/admin'
+                  path='/admin/users'
                   element={<Admin/>}
+                >
+                </Route>
+                <Route
+                  exact
+                  path='/admin/user/:id'
+                  element={<AdminUser/>}
                 >
                 </Route>
 
