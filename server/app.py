@@ -881,11 +881,15 @@ class Admin(Resource):
         if user_id == 1 or user_id == 33:
             all_users = User.query.all()
             sorted_users = sorted(all_users, key=lambda x:x.id)
-            users_dict = [user.to_dict() for user in sorted_users]
+            users_dict = []
+            for user in sorted_users: 
+                user_dict = user.to_dict()
+                user_dict['article_counts'] = len(user.articles)
+                users_dict.append(user_dict)
             response = make_response(jsonify(users_dict), 200)
             return response
         return
-api.add_resource(Admin, '/admin', endpoint='admin')
+api.add_resource(Admin, '/admin/users', endpoint='admin')
 
 
 if __name__ == "__main__":
