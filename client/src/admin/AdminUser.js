@@ -21,19 +21,20 @@ export function AdminUser(){
     const [formData, setFormData] = useState(null)
 
     useEffect(() => {
-        apiFetch(`/admin/user/${id}`)
-        .then(res => res.json())
-        .then(data => {
-            setUserAdmin(data.user)
-            setUserAdminArticles(data.articles)
-            setFormData({ 
-                username: data?.user.username,
-                email: data?.user.email,
-                password: ""
+        if (user.id === 1 || user.id === 33) {
+            apiFetch(`/admin/user/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setUserAdmin(data.user)
+                setUserAdminArticles(data.articles)
+                setFormData({ 
+                    username: data.user.username,
+                    email: data.user.email,
+                    password: ""
+                })
             })
-        })
-
-    }, [id])
+        }
+    }, [id, user?.id])
     
 
     return (
@@ -56,6 +57,5 @@ export function AdminUser(){
 
 const AdminUserPageContainer = styled(PageContainer)`
     box-sizing: border-box;
-    display:flex;
     justify-content: center;
 ` 
