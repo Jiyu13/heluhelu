@@ -21,7 +21,7 @@ export function AdminUser(){
     const [formData, setFormData] = useState(null)
 
     useEffect(() => {
-        if (user.id === 1 || user.id === 33) {
+        if (user && (user?.id === 1 || user?.id === 33)) {
             apiFetch(`/admin/user/${id}`)
             .then(res => res.json())
             .then(data => {
