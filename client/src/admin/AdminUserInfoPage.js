@@ -5,17 +5,62 @@ import { AccountSettingLabel, SettingInput } from "../styles/AccountSettings"
 
 import X from "../assets/images/cancel_red.svg"
 import Tick from "../assets/images/check_circle_green.svg"
+import { SignupButton } from "../account/formStyles"
+import { useState } from "react"
+import apiFetch from "../api/ApiFetch"
+import { ChangesSave } from "../components/ChangesSave"
 
 
 export function AdminUserBookList(props) {
 
-    const {userAdmin,userAdminArticles} = props
+    const {userAdmin,userAdminArticles, formData, setFormData} = props
+    
+    const [isChanged, setChanged] = useState(false)
 
+    function handleChange(e) {
+        const name = e.target.name
+        const value = e.target.value
+        setFormData({...formData, [name]: value})
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        const updatedAdminUser = {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password
+        }
+        apiFetch(`/admin/user/${userAdmin.id}`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(updatedAdminUser)
+        })
+        .then(res => {
+            if (!res.ok) {
+                return
+
+            } else {
+                res.json().then(data => {
+                    setChanged(true)
+                    setTimeout(function() {
+                        setChanged(false)
+                    }, 2000)
+                    
+                }
+                    
+                )
+            }
+        })
+        .then(data => console.log(data))
+
+    }
     
 
     return (
         <ContainerBody style={{background: "none"}}>
                 
+            <ChangesSave isChanged={isChanged}/>
+
             <div style={{backgroundColor: '#FDF8E8'}}>
                 <TitleWrapper>
                     <FormTitle>User Info</FormTitle>
@@ -23,28 +68,42 @@ export function AdminUserBookList(props) {
                 
                 <AdminForm 
                 // style={{maxWidth: "350px"}}
+                onSubmit={handleSubmit}
                 >
                     <FormItem style={{flexDirection: ""}}>
                         <FormLabel>Username</FormLabel>
                         <FormInput
+                            required
                             type="text"
                             name="username"
-                            defaultValue={userAdmin?.username}
+                            value={formData?.username || ""}
+                            onChange={handleChange}
                         />
                     </FormItem>
                     <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormInput
+                            required
                             type="text"
                             name="email"
-                            defaultValue={userAdmin?.email}
+                            value={formData?.email || ""}
+                            onChange={handleChange}
                         />
                     </FormItem>
                     
                     <FormItem>
                         <FormLabel>Password</FormLabel>
-                        <FormInput/>
+                        <FormInput
+                            type="text"
+                            name="password"
+                            value={formData?.password || ""}
+                            onChange={handleChange}
+                        />
                     </FormItem>
+                    
+                    <SignupButton style={{width: "120px"}}>
+                        Save Changes
+                    </SignupButton>
 
                 </AdminForm>
             </div>
