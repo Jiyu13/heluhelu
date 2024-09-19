@@ -50,6 +50,12 @@ export function AdminUserBookList(props) {
                     setTimeout(function() {
                         setChanged(false)
                     }, 2000)
+
+                    setFormData({ 
+                        username: data.username,
+                        email: data.email,
+                        password: ""
+                    })
                 })
             }
         })
