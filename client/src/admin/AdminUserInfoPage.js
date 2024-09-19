@@ -146,7 +146,7 @@ export function AdminUserBookList(props) {
                         
                     </FormItem>
                     
-                    <SignupButton style={{width: "120px"}}>
+                    <SignupButton style={{width: "120px", marginTop: "0", marginBottom: "15px"}}>
                         Save Changes
                     </SignupButton>
 
