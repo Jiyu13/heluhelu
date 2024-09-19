@@ -16,23 +16,21 @@ export function AdminUserBookList(props) {
     const {userAdmin,userAdminArticles, formData, setFormData} = props
     
     const [isChanged, setChanged] = useState(false)
-    const [passwordErrors, setPasswordErrors] = useState(null)
+    const [errors, setErrors] = useState(null)
+    const [updatedAdminUser, setUpdatedAdminUser] = useState(null)
 
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
         setFormData({...formData, [name]: value})
+        setUpdatedAdminUser({...updatedAdminUser, [name]: value})
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-        setPasswordErrors(null)
+        setErrors(null)
 
-        const updatedAdminUser = {
-            username: formData.username,
-            email: formData.email,
-            password: formData.password
-        }
+        console.log(updatedAdminUser)
         apiFetch(`/admin/user/${userAdmin.id}`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -42,7 +40,7 @@ export function AdminUserBookList(props) {
             if (!res.ok) {
                 res.json().then(error =>{
                     console.log(error)
-                    setPasswordErrors(error)
+                    setErrors(error)
                 })
                 
 
@@ -52,9 +50,7 @@ export function AdminUserBookList(props) {
                     setTimeout(function() {
                         setChanged(false)
                     }, 2000)
-                }
-                    
-                )
+                })
             }
         })
         .then(data => console.log(data))
@@ -85,6 +81,15 @@ export function AdminUserBookList(props) {
                             value={formData?.username || ""}
                             onChange={handleChange}
                         />
+                        <ul style={{margin: "0", color: "red"}}>
+                            {errors && errors["username"] && (
+                                <li>
+                                    <AdminUserInfoError>
+                                        <span>{errors["username"]}</span>
+                                    </AdminUserInfoError>
+                                </li>
+                            )}
+                        </ul>
                     </FormItem>
                     <FormItem>
                         <FormLabel>Email</FormLabel>
@@ -95,6 +100,15 @@ export function AdminUserBookList(props) {
                             value={formData?.email || ""}
                             onChange={handleChange}
                         />
+                        <ul style={{margin: "0", color: "red"}}>
+                            {errors && errors["email_exist"] && (
+                                <li>
+                                    <AdminUserInfoError>
+                                        <span>{errors["email_exist"]}</span>
+                                    </AdminUserInfoError>
+                                </li>
+                            )}
+                        </ul>
                     </FormItem>
                     
                     <FormItem>
@@ -106,20 +120,20 @@ export function AdminUserBookList(props) {
                             onChange={handleChange}
                         />
                         <ul style={{margin: "0", color: "red"}}>
-                            {passwordErrors && passwordErrors["capital_letter"] && (
+                            {errors && errors["capital_letter"] && (
                                 <li>
-                                    <ErrorContainer>
-                                        <span>{passwordErrors["capital_letter"]}</span>
-                                    </ErrorContainer>
+                                    <AdminUserInfoError>
+                                        <span>{errors["capital_letter"]}</span>
+                                    </AdminUserInfoError>
                                 </li>
                             )}
                         
                         
-                            {passwordErrors && passwordErrors["length"] && (
+                            {errors && errors["length"] && (
                                 <li>
-                                    <ErrorContainer>
+                                    <AdminUserInfoError>
                                         <span>At least 8 characters.</span>
-                                    </ErrorContainer>
+                                    </AdminUserInfoError>
                                 </li>
                             )}
                         </ul>
@@ -135,7 +149,7 @@ export function AdminUserBookList(props) {
 
             <div style={{backgroundColor: '#FDF8E8'}}>
                 <TitleWrapper>
-                    <FormTitle>User Book list</FormTitle>
+                    <FormTitle>User Book List</FormTitle>
                 </TitleWrapper>
                 <BookListContainer>
                     <Column>ID</Column>
@@ -209,4 +223,8 @@ const BookListItem = styled(VocabContainer)`
     grid-template-columns: 0.5fr 4fr 0.5fr;
     padding: 1rem 0.5rem;
     gap: 0;
+`
+
+const AdminUserInfoError = styled.div`
+    margin: 0;
 `
