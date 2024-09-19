@@ -5,7 +5,7 @@ import { AccountSettingLabel, SettingInput } from "../styles/AccountSettings"
 
 import X from "../assets/images/cancel_red.svg"
 import Tick from "../assets/images/check_circle_green.svg"
-import { SignupButton } from "../account/formStyles"
+import { ErrorContainer, SignupButton } from "../account/formStyles"
 import { useState } from "react"
 import apiFetch from "../api/ApiFetch"
 import { ChangesSave } from "../components/ChangesSave"
@@ -16,6 +16,7 @@ export function AdminUserBookList(props) {
     const {userAdmin,userAdminArticles, formData, setFormData} = props
     
     const [isChanged, setChanged] = useState(false)
+    const [passwordErrors, setPasswordErrors] = useState(null)
 
     function handleChange(e) {
         const name = e.target.name
@@ -25,6 +26,8 @@ export function AdminUserBookList(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
+        setPasswordErrors(null)
+
         const updatedAdminUser = {
             username: formData.username,
             email: formData.email,
@@ -37,7 +40,11 @@ export function AdminUserBookList(props) {
         })
         .then(res => {
             if (!res.ok) {
-                return
+                res.json().then(error =>{
+                    console.log(error)
+                    setPasswordErrors(error)
+                })
+                
 
             } else {
                 res.json().then(data => {
@@ -45,7 +52,6 @@ export function AdminUserBookList(props) {
                     setTimeout(function() {
                         setChanged(false)
                     }, 2000)
-                    
                 }
                     
                 )
@@ -99,6 +105,25 @@ export function AdminUserBookList(props) {
                             value={formData?.password || ""}
                             onChange={handleChange}
                         />
+                        <ul style={{margin: "0", color: "red"}}>
+                            {passwordErrors && passwordErrors["capital_letter"] && (
+                                <li>
+                                    <ErrorContainer>
+                                        <span>{passwordErrors["capital_letter"]}</span>
+                                    </ErrorContainer>
+                                </li>
+                            )}
+                        
+                        
+                            {passwordErrors && passwordErrors["length"] && (
+                                <li>
+                                    <ErrorContainer>
+                                        <span>At least 8 characters.</span>
+                                    </ErrorContainer>
+                                </li>
+                            )}
+                        </ul>
+                        
                     </FormItem>
                     
                     <SignupButton style={{width: "120px"}}>
