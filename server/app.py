@@ -896,19 +896,57 @@ class AdminUserByID(Resource):
     
     def post(self, id):
         current_user = session["user_id"] 
-        if current_user == 1 or current_user == 33:
-            username_input = request.get_json()["username"]
-            email_input = request.get_json()["email"]
-            password_input = request.get_json()["password"]
+        user = User.query.filter_by(id=id).first()
 
-            user = User.query.filter_by(id=id).first()
-            user.username = username_input
-            user.email = email_input
-            user.password = password_input
-            db.session.add(user)
-            db.session.commit()
-            response = make_response(jsonify(user.to_dict()), 200)
+        if current_user == 1 or current_user == 33:
+            
+            errors = {}
+            request_json = request.get_json()
+
+            # check if username already exists
+            if "username" in request_json:
+                username_input = request.get_json()["username"]
+                check_username = User.query.filter_by(username=username_input).first()
+                if check_username and check_username.id != user.id:
+                    return make_response(jsonify({"username": "Username already exists."}), 422)
+                else:
+                    user.username = username_input
+            
+            # check if email already exists
+            if "email" in request_json:
+                email_input = request.get_json()["email"]
+                check_email = User.query.filter_by(email=email_input).first()
+                if check_email and check_email.id != user.id:
+                    return make_response(jsonify({"email_exist": "Email already exists."}), 422)
+                else:
+                    user.email = email_input
+
+            # check if password is validated
+            if "password" not in request_json:
+                # ========================= if not password, commit username / email changes =========================
+                db.session.add(user)
+                session.modified = True
+                db.session.commit()
+                response = make_response(jsonify(user.to_dict()), 200)
+            else:
+                # ========================= if password in request json, update password =========================
+                password_input = request.get_json()["password"]
+                try: 
+                    user.validate_password(key="_password_hash", _password_hash=password_input)
+                    user.after_validate()
+                    user.password_hash = password_input
+                    
+                    db.session.add(user)
+                    session.modified = True  # manually inform Flask that the session has been modified
+                    db.session.commit()
+                    response = make_response(jsonify(user.to_dict()), 200)
+                except ValueError as e:
+                    for error_dict in e.args:
+                        for key, value in error_dict.items():
+                            errors[key] = value
+                    response = make_response(jsonify(errors), 422)
             return response
+            
         return
 
 api.add_resource(AdminUserByID, '/admin/user/<int:id>')
