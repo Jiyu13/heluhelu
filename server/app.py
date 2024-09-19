@@ -893,6 +893,24 @@ class AdminUserByID(Resource):
             response = make_response(jsonify(result), 200)
             return response
         return
+    
+    def post(self, id):
+        current_user = session["user_id"] 
+        if current_user == 1 or current_user == 33:
+            username_input = request.get_json()["username"]
+            email_input = request.get_json()["email"]
+            password_input = request.get_json()["password"]
+
+            user = User.query.filter_by(id=id).first()
+            user.username = username_input
+            user.email = email_input
+            user.password = password_input
+            db.session.add(user)
+            db.session.commit()
+            response = make_response(jsonify(user.to_dict()), 200)
+            return response
+        return
+
 api.add_resource(AdminUserByID, '/admin/user/<int:id>')
 
 class Admin(Resource):
