@@ -18,6 +18,7 @@ export function AdminUser(){
 
     const [userAdmin, setUserAdmin] = useState(null)
     const [userAdminArticles, setUserAdminArticles] = useState(null)
+    const [formData, setFormData] = useState(null)
 
     useEffect(() => {
         apiFetch(`/admin/user/${id}`)
@@ -25,6 +26,11 @@ export function AdminUser(){
         .then(data => {
             setUserAdmin(data.user)
             setUserAdminArticles(data.articles)
+            setFormData({ 
+                username: data?.user.username,
+                email: data?.user.email,
+                password: ""
+            })
         })
 
     }, [id])
@@ -37,6 +43,8 @@ export function AdminUser(){
                 <AdminUserBookList 
                     userAdmin={userAdmin}
                     userAdminArticles={userAdminArticles}
+                    formData={formData}
+                    setFormData={setFormData}
                 /> 
                 : 
                 <PageNotFound />
