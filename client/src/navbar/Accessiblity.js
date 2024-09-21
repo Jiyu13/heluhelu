@@ -81,7 +81,7 @@ export function Accessibility() {
                       icon_info="admin icon" 
                       text="Admin" 
                       // handleClick={handleLogout}
-                      goTo="/admin"
+                      goTo="/admin/users"
                     />
                   )
                 }

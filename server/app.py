@@ -874,6 +874,82 @@ class Logout(Resource):
         return make_response({'error': '401: Unauthorized'}, 401)
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+class AdminUserByID(Resource):
+    def get(self, id):
+        user_id = session["user_id"]
+        if user_id == 1 or user_id == 33:
+            user = User.query.filter_by(id=id).first()
+            user_dict = user.to_dict()
+
+            articles = Article.query.filter_by(user_id=id).all()
+            articles = sorted(articles, key=lambda x: x.created_at)
+            articles_dict = [article.to_dict(rules=("-user",)) for article in articles]
+
+            result = {
+                "user": user_dict,
+                "articles": articles_dict
+            }
+
+            response = make_response(jsonify(result), 200)
+            return response
+        return
+    
+    def post(self, id):
+        current_user = session["user_id"] 
+        user = User.query.filter_by(id=id).first()
+
+        if current_user == 1 or current_user == 33:
+            
+            errors = {}
+            request_json = request.get_json()
+
+            # check if username already exists
+            if "username" in request_json:
+                username_input = request.get_json()["username"]
+                check_username = User.query.filter_by(username=username_input).first()
+                if check_username and check_username.id != user.id:
+                    return make_response(jsonify({"username": "Username already exists."}), 422)
+                else:
+                    user.username = username_input
+            
+            # check if email already exists
+            if "email" in request_json:
+                email_input = request.get_json()["email"]
+                check_email = User.query.filter_by(email=email_input).first()
+                if check_email and check_email.id != user.id:
+                    return make_response(jsonify({"email_exist": "Email already exists."}), 422)
+                else:
+                    user.email = email_input
+
+            # check if password is validated
+            if "password" not in request_json:
+                # ========================= if not password, commit username / email changes =========================
+                db.session.add(user)
+                session.modified = True
+                db.session.commit()
+                response = make_response(jsonify(user.to_dict()), 200)
+            else:
+                # ========================= if password in request json, update password =========================
+                password_input = request.get_json()["password"]
+                try: 
+                    user.validate_password(key="_password_hash", _password_hash=password_input)
+                    user.after_validate()
+                    user.password_hash = password_input
+                    
+                    db.session.add(user)
+                    session.modified = True  # manually inform Flask that the session has been modified
+                    db.session.commit()
+                    response = make_response(jsonify(user.to_dict()), 200)
+                except ValueError as e:
+                    for error_dict in e.args:
+                        for key, value in error_dict.items():
+                            errors[key] = value
+                    response = make_response(jsonify(errors), 422)
+            return response
+            
+        return
+
+api.add_resource(AdminUserByID, '/admin/user/<int:id>')
 
 class Admin(Resource):
     def get(self):
@@ -881,11 +957,15 @@ class Admin(Resource):
         if user_id == 1 or user_id == 33:
             all_users = User.query.all()
             sorted_users = sorted(all_users, key=lambda x:x.id)
-            users_dict = [user.to_dict() for user in sorted_users]
+            users_dict = []
+            for user in sorted_users: 
+                user_dict = user.to_dict()
+                user_dict['article_counts'] = len(user.articles)
+                users_dict.append(user_dict)
             response = make_response(jsonify(users_dict), 200)
             return response
         return
-api.add_resource(Admin, '/admin', endpoint='admin')
+api.add_resource(Admin, '/admin/users', endpoint='admin')
 
 
 if __name__ == "__main__":
