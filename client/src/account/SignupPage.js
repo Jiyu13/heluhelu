@@ -12,6 +12,7 @@ import {
     ErrorContainer
 } from "./formStyles"
 import { AppContainer, EmptyDiv } from "../components/App"
+import { LoginPageLogo } from "../components/LoginPageLogo"
 
 
 export function SignupPage() {
@@ -102,16 +103,22 @@ export function SignupPage() {
     return (
         <>
         {!user && (
-            <AppContainer>
+            <AppContainer className="app-container">
                 {
                     errors && (
                         <EmptyDiv onClick={() => setErrors(false)}/>
 
                     )
                 }
-                <BoxContainer style={{height: "650px"}}>
+                <BoxContainer 
+                    className="box-container" 
+                    // style={{height: "650px"}}
+                >
                     <FormContainer onSubmit={handleSubmit}>
-                        <Title>Sign Up</Title>
+                        
+                        <LoginPageLogo />
+
+                        {/* <Title>Sign up</Title> */}
 
                         <InputBox>
                             <UserIconContainer>
@@ -217,9 +224,8 @@ export function SignupPage() {
                     
                 </BoxContainer>
             </AppContainer>
-)}
+        )}
         </>
-        
     )
 }
 

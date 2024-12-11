@@ -10,6 +10,10 @@ import {
     ErrorContainer
 } from "./formStyles"
 import { AppContainer, EmptyDiv } from "../components/App"
+import { LoginPageLogo } from "../components/LoginPageLogo"
+
+
+import logo_white from "../assets/images/logo/heluhelulogo_white.png"
 
 
 export function LoginPage() {
@@ -75,7 +79,7 @@ export function LoginPage() {
     return (
         <>
             {!user && (
-                <AppContainer>
+                <AppContainer className="app-container">
 
                     {
                         errors && (
@@ -83,9 +87,12 @@ export function LoginPage() {
 
                         )
                     }
-                    <BoxContainer>
+                    <BoxContainer className="box-container">
                         <FormContainer onSubmit={handleSubmit}>
-                            <Title>Login</Title>
+
+                            <LoginPageLogo />
+
+                            {/* <Title>Login</Title> */}
                             
                             {errors && (
                                 <ErrorContainer>
