@@ -2,7 +2,7 @@ import styled from "styled-components"
 export const BoxContainer = styled.div`
     position: relative; // relative to its normal position, which is AppContainer
     width: 400px;
-    height: 450px;
+    // height: 450px;
     background: transparent;
     display: flex;
     justify-content: center;
@@ -12,7 +12,9 @@ export const BoxContainer = styled.div`
     backdrop-filter: blur(15px);
 `
 
-export const FormContainer = styled.form``
+export const FormContainer = styled.form`
+    padding: 20px 10px 24px;
+`
 
 export const Title = styled.h2`
     font-size: 2em;
@@ -58,6 +60,11 @@ export const SignupButton = styled.button`
     background-image: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
 `
 export const Registery = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
     font-size: 1rem;
     color: #fff;
     text-align: center;
