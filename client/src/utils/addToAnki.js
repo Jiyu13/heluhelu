@@ -1,5 +1,5 @@
 export default async function addToAnki(
-    words, trackWord, sentence, setAnkiError, setAddToAnkiPrompt
+    words, trackWord, sentence, setAnkiError, setAddToAnkiPrompt, setIsSucceed
 ) {
     const ankiUrl = "http://127.0.0.1:8765"
     const deckName = "Heluhelu"
@@ -29,6 +29,7 @@ export default async function addToAnki(
 
             if (createDeckData.error) {
                 // console.error("Error creating deck:", createDeckData.error);
+                setAddToAnkiPrompt(false)
                 setAnkiError(createDeckData.error)
                 return; // Stop execution if deck creation fails
             }
@@ -73,12 +74,14 @@ export default async function addToAnki(
         } else {
             setAnkiError("")
             setAddToAnkiPrompt(false)
+            setIsSucceed(true)
             // alert(`Successfully added ${addCardData.result.length} notes!`);
         }
 
 
     } catch(error) {
         console.error("Error checking/creating deck:", error);
+        setAddToAnkiPrompt(false)
         setAnkiError(error)
     }
 }
