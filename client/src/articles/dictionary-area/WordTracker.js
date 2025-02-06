@@ -3,7 +3,8 @@ import { closeMobileDictionary } from "./closeMobileDictionary"
 import g_translate_white_24dp from "../../assets/images/white/g_translate_white_24dp.svg"
 import anki_logo from "../../assets/images/logo/anki.svg"
 import { useState } from "react"
-import addToAnki from "../../utils/addToAnki"
+import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
+import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -11,6 +12,8 @@ export function WordTracker( {
     sentence
     } 
 ) {
+    const [ankiError, setAnkiError] = useState("")
+
     const [addToAnkiPrompt, setAddToAnkiPrompt] = useState(false)
     // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
@@ -54,11 +57,13 @@ export function WordTracker( {
     }
 
     function handleAnkiClick() {
+        console.log("clicked")
         setAddToAnkiPrompt(true)
     }
 
     
-    const vocabStatus = Object.keys(vocabStatusType).find(key => vocabStatusType[key] === checkStatus(trackWord))
+    const vocabStatus = Object.keys(vocabStatusType)
+                              .find(key => vocabStatusType[key] === checkStatus(trackWord))
 
     let styling
     switch(vocabStatus) {
@@ -76,46 +81,67 @@ export function WordTracker( {
     }
     
     return (
-        <WordTrackerBox>
-            <TrackerContainer>
-                Word Status: 
-                <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
-                <br/>
-                <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
-                <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignored": "Mark Ignore"}</Mark>        
-                <a 
-                    href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
-                    target="_blank" 
-                    rel='noreferrer noopener'
-                >
-                    <WeheSearch>Wehe²Wiki²</WeheSearch>
-                </a>
-
-                <a 
-                    href={`https://translate.google.com/?sl=haw&tl=en&text=${sentence}&op=translate`} 
-                    target="_blank" 
-                    rel='noreferrer noopener'
-                    style={{ textDecoration: "none" }}
-                >
-                    <GoogleSearch>
-                        <GTranslateImg src={g_translate_white_24dp} alt="google translate"/>
-                    </GoogleSearch>
-                </a>
-
-                <br></br>
-                {checkStatus(trackWord) === 2 && (
-                    <AnkiButton
-                        onClick={() => handleAnkiClick}
-                        
+        <>
+            <WordTrackerBox>
+                <TrackerContainer>
+                    Word Status: 
+                    <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
+                    <br/>
+                    <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
+                    <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignored": "Mark Ignore"}</Mark>        
+                    <a 
+                        href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
+                        target="_blank" 
+                        rel='noreferrer noopener'
                     >
-                        <Anki className="anki-container">
-                            <AnkiImg src={anki_logo} alt="open anki"/>
-                        </Anki>
-                    </AnkiButton>
-                )}
-                
-            </TrackerContainer>
-        </WordTrackerBox>
+                        <WeheSearch>Wehe²Wiki²</WeheSearch>
+                    </a>
+
+                    <a 
+                        href={`https://translate.google.com/?sl=haw&tl=en&text=${sentence}&op=translate`} 
+                        target="_blank" 
+                        rel='noreferrer noopener'
+                        style={{ textDecoration: "none" }}
+                    >
+                        <GoogleSearch>
+                            <GTranslateImg src={g_translate_white_24dp} alt="google translate"/>
+                        </GoogleSearch>
+                    </a>
+
+                    <br></br>
+                    {checkStatus(trackWord) === 2 && (
+                        <AnkiButton
+                            onClick={handleAnkiClick}
+                            
+                        >
+                            <Anki className="anki-container">
+                                <AnkiImg src={anki_logo} alt="open anki"/>
+                            </Anki>
+                        </AnkiButton>
+                    )}
+                    
+                </TrackerContainer>
+            </WordTrackerBox>
+
+            {addToAnkiPrompt && (
+                <AddAnkiPrompt 
+                    words={word}
+                    trackWord={trackWord}
+                    sentence={sentence}
+                    setAddToAnkiPrompt={setAddToAnkiPrompt} 
+                    setAnkiError={setAnkiError}
+                    ankiError={ankiError}
+                /> 
+            )}
+
+            {ankiError && (
+                <AnkiErrorPrompt 
+                    ankiError={ankiError}
+                    setAnkiError={setAnkiError}
+                    setAddToAnkiPrompt={setAddToAnkiPrompt}
+                />
+            )}
+        </>
     )
 }
 
