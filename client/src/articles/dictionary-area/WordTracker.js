@@ -5,6 +5,7 @@ import anki_logo from "../../assets/images/logo/anki.svg"
 import { useState } from "react"
 import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
 import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
+import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -13,7 +14,7 @@ export function WordTracker( {
     } 
 ) {
     const [ankiError, setAnkiError] = useState("")
-
+    const [isSucceed, setIsSucceed] = useState(false)
     const [addToAnkiPrompt, setAddToAnkiPrompt] = useState(false)
     // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
@@ -130,15 +131,22 @@ export function WordTracker( {
                     sentence={sentence}
                     setAddToAnkiPrompt={setAddToAnkiPrompt} 
                     setAnkiError={setAnkiError}
-                    ankiError={ankiError}
+                    setIsSucceed={setIsSucceed}
                 /> 
+            )}
+
+            {isSucceed && (
+                <AddAnkiSuccessPrompt 
+                    trackWord={trackWord}
+                    setIsSucceed={setIsSucceed}
+
+                />
             )}
 
             {ankiError && (
                 <AnkiErrorPrompt 
                     ankiError={ankiError}
                     setAnkiError={setAnkiError}
-                    setAddToAnkiPrompt={setAddToAnkiPrompt}
                 />
             )}
         </>

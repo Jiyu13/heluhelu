@@ -1,10 +1,10 @@
 import close_btn from "../assets/images/close_btn.svg"
-import { BodyText, ButtonContainer, ButtonImage, CancelButton, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
+import { ButtonContainer, ButtonImage, CancelButton, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
 
 
-export default function AnkiErrorPrompt({ankiError, setAnkiError, setAddToAnkiPrompt}) {
-    console.log("AnkiErrorPrompt", ankiError)
+export default function AnkiErrorPrompt({ankiError, setAnkiError}) {
 
+    
     return (
         <PopupContainer>
             <ContainerHeader>
