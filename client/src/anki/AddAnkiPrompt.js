@@ -5,10 +5,10 @@ import { BodyText, ButtonContainer, ButtonImage, CancelButton, CloseButton, Cont
 
 
 export default function AddAnkiPrompt({
-    words, sentence, setAddToAnkiPrompt, trackWord, setAnkiError, ankiError
+    words, sentence, trackWord, setAddToAnkiPrompt, setAnkiError, setIsSucceed
 }) {
     function handleYesClick() {
-        addToAnki(words, trackWord, sentence, setAnkiError, setAddToAnkiPrompt)
+        addToAnki(words, trackWord, sentence, setAnkiError, setAddToAnkiPrompt, setIsSucceed)
     }
     return (
         <PopupContainer>
