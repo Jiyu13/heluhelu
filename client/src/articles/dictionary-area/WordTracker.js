@@ -1,6 +1,11 @@
 import styled from "styled-components"
 import { closeMobileDictionary } from "./closeMobileDictionary"
 import g_translate_white_24dp from "../../assets/images/white/g_translate_white_24dp.svg"
+import anki_logo from "../../assets/images/logo/anki.svg"
+import { useState } from "react"
+import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
+import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
+import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -8,6 +13,9 @@ export function WordTracker( {
     sentence
     } 
 ) {
+    const [ankiError, setAnkiError] = useState("")
+    const [isSucceed, setIsSucceed] = useState(false)
+    const [addToAnkiPrompt, setAddToAnkiPrompt] = useState(false)
     // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
         Unknown: 0, 
@@ -49,8 +57,14 @@ export function WordTracker( {
         )
     }
 
+    function handleAnkiClick() {
+        console.log("clicked")
+        setAddToAnkiPrompt(true)
+    }
 
-    const vocabStatus = Object.keys(vocabStatusType).find(key => vocabStatusType[key] === checkStatus(trackWord))
+    
+    const vocabStatus = Object.keys(vocabStatusType)
+                              .find(key => vocabStatusType[key] === checkStatus(trackWord))
 
     let styling
     switch(vocabStatus) {
@@ -68,43 +82,83 @@ export function WordTracker( {
     }
     
     return (
-        <WordTrackerBox>
-            <TrackerContainer>
-                Word Status: 
-                <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
-                <br/>
-                <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
-                <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignored": "Mark Ignore"}</Mark>        
-                <a 
-                    href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
-                    target="_blank" 
-                    rel='noreferrer noopener'
-                >
-                    <WeheSearch>Wehe²Wiki²</WeheSearch>
-                </a>
+        <>
+            <WordTrackerBox>
+                <TrackerContainer>
+                    Word Status: 
+                    <ShowStatus style={{backgroundColor: styling}}>{vocabStatus}</ShowStatus>
+                    <br/>
+                    <Mark onClick={handleChangeToKnown}>{checkStatus(trackWord) === 2 ? "Mark Not-Known" : "Mark Known"}</Mark>
+                    <Mark onClick={handleIgnoredWord}>{checkStatus(trackWord) === 3 ? "Undo Ignored": "Mark Ignore"}</Mark>        
+                    <a 
+                        href={`https://hilo.hawaii.edu/wehe/?q=${trackWord}`} 
+                        target="_blank" 
+                        rel='noreferrer noopener'
+                    >
+                        <WeheSearch>Wehe²Wiki²</WeheSearch>
+                    </a>
 
-                <a 
-                    href={`https://translate.google.com/?sl=haw&tl=en&text=${sentence}&op=translate`} 
-                    target="_blank" 
-                    rel='noreferrer noopener'
-                    style={{ textDecoration: "none" }}
-                >
-                    <GoogleSearch>
-                        <GTranslateImg src={g_translate_white_24dp} alt="google translate"/>
-                    </GoogleSearch>
-                </a>
-                
-            </TrackerContainer>
-        </WordTrackerBox>
+                    <a 
+                        href={`https://translate.google.com/?sl=haw&tl=en&text=${sentence}&op=translate`} 
+                        target="_blank" 
+                        rel='noreferrer noopener'
+                        style={{ textDecoration: "none" }}
+                    >
+                        <GoogleSearch>
+                            <GTranslateImg src={g_translate_white_24dp} alt="google translate"/>
+                        </GoogleSearch>
+                    </a>
+
+                    <br></br>
+                    {checkStatus(trackWord) === 2 && (
+                        <AnkiButton
+                            onClick={handleAnkiClick}
+                            
+                        >
+                            <Anki className="anki-container">
+                                <AnkiImg src={anki_logo} alt="open anki"/>
+                            </Anki>
+                        </AnkiButton>
+                    )}
+                    
+                </TrackerContainer>
+            </WordTrackerBox>
+
+            {addToAnkiPrompt && (
+                <AddAnkiPrompt 
+                    words={word}
+                    trackWord={trackWord}
+                    sentence={sentence}
+                    setAddToAnkiPrompt={setAddToAnkiPrompt} 
+                    setAnkiError={setAnkiError}
+                    setIsSucceed={setIsSucceed}
+                /> 
+            )}
+
+            {isSucceed && (
+                <AddAnkiSuccessPrompt 
+                    trackWord={trackWord}
+                    setIsSucceed={setIsSucceed}
+
+                />
+            )}
+
+            {ankiError && (
+                <AnkiErrorPrompt 
+                    ankiError={ankiError}
+                    setAnkiError={setAnkiError}
+                />
+            )}
+        </>
     )
 }
 
 
 const Mark = styled.span`
-    font-size: 14px;
+    font-size: 16px;
     display: inline-block;
     color: inherit;
-    margin-top: 3px;
+    margin: 3px;
     margin-right: 4px;
     padding: 8px 6px;
     box-sizing: border-box;
@@ -130,10 +184,27 @@ const WeheSearch = styled(Mark)`
 const GoogleSearch = styled(WeheSearch)`
     padding: 0;
 `
-
 const GTranslateImg = styled.img`
     width: 39px;
 
+    display: inline-block;
+    vertical-align: middle;
+`
+
+const AnkiButton = styled.button`
+    border: none;
+    padding: 0px;
+    background: none;
+    // width: 39px;
+`
+const Anki = styled(WeheSearch)`
+    padding: 0px;
+    background:none;
+    border: none;
+    margin: 0px;
+`
+const AnkiImg = styled.img`
+    // width: 39px;
     display: inline-block;
     vertical-align: middle;
 `
