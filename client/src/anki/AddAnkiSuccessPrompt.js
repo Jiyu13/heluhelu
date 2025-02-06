@@ -1,7 +1,6 @@
 import close_btn from "../assets/images/close_btn.svg"
 import { SignupButton } from "../account/formStyles"
-import addToAnki from "../utils/addToAnki"
-import { BodyText, ButtonContainer, ButtonImage, CancelButton, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
+import { BodyText, ButtonContainer, ButtonImage, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
 
 
 export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
@@ -10,8 +9,7 @@ export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
         <PopupContainer>
             <ContainerHeader>
                 <Title>
-                    Add to Anki
-                    {/* <div>(Please make sure Anki is running!)</div> */}
+                    Added to Anki
                 </Title>
                 <CloseButton onClick={() => setIsSucceed(false)}>
                     <ButtonImage src={close_btn} alt="close icon"/>
@@ -31,12 +29,6 @@ export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
             </ContainerBody>
 
             <ButtonContainer className="button-container">
-                {/* <CancelButton 
-                    type="button" 
-                    value="Cancel" 
-                    onClick={() => setIsSucceed(false)}
-                /> */}
-
                 <SignupButton 
                     onClick={() => setIsSucceed()}
                     style={{width: "120px", marginTop: "0", marginBottom: "0px"}}
