@@ -5,10 +5,12 @@ export const AnkiButton = styled.button`
 border: none;
 padding: 0px;
 background: none;
+margin-right: 8px;
 `
 export const AnkiImg = styled.img`
 display: inline-block;
 vertical-align: middle;
+width: 30px;
 `
 
 export const PopupContainer = styled.div`
