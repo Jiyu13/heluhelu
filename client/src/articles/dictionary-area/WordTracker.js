@@ -6,6 +6,7 @@ import { useState } from "react"
 import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
 import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
 import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
+import { AnkiButton } from "../../anki/promptStyles"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -110,7 +111,7 @@ export function WordTracker( {
                     </a>
 
                     <br></br>
-                    {checkStatus(trackWord) === 2 && (
+                    {/* {checkStatus(trackWord) === 2 && ( */}
                         <AnkiButton
                             onClick={handleAnkiClick}
                             
@@ -119,7 +120,7 @@ export function WordTracker( {
                                 <AnkiImg src={anki_logo} alt="open anki"/>
                             </Anki>
                         </AnkiButton>
-                    )}
+                    {/* )} */}
                     
                 </TrackerContainer>
             </WordTrackerBox>
@@ -191,12 +192,6 @@ const GTranslateImg = styled.img`
     vertical-align: middle;
 `
 
-const AnkiButton = styled.button`
-    border: none;
-    padding: 0px;
-    background: none;
-    // width: 39px;
-`
 const Anki = styled(WeheSearch)`
     padding: 0px;
     background:none;

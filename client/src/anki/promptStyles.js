@@ -1,6 +1,12 @@
 import styled from "styled-components"
 import { ButtonButtons } from "../styles/Buttons"
 
+export const AnkiButton = styled.button`
+border: none;
+padding: 0px;
+background: none;
+`
+
 export const PopupContainer = styled.div`
     position: fixed;
     top: 50%;
