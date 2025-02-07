@@ -6,7 +6,7 @@ import { useState } from "react"
 import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
 import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
 import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
-import { AnkiButton } from "../../anki/promptStyles"
+import { AnkiButton, AnkiImg } from "../../anki/promptStyles"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -198,11 +198,11 @@ const Anki = styled(WeheSearch)`
     border: none;
     margin: 0px;
 `
-const AnkiImg = styled.img`
-    // width: 39px;
-    display: inline-block;
-    vertical-align: middle;
-`
+// const AnkiImg = styled.img`
+//     // width: 39px;
+//     display: inline-block;
+//     vertical-align: middle;
+// `
 
 const ShowStatus = styled.span`
     display: inline-block;

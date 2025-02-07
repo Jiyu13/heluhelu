@@ -6,6 +6,10 @@ border: none;
 padding: 0px;
 background: none;
 `
+export const AnkiImg = styled.img`
+display: inline-block;
+vertical-align: middle;
+`
 
 export const PopupContainer = styled.div`
     position: fixed;
