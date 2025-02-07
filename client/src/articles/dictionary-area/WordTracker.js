@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { closeMobileDictionary } from "./closeMobileDictionary"
 import g_translate_white_24dp from "../../assets/images/white/g_translate_white_24dp.svg"
-import anki_logo from "../../assets/images/logo/anki.svg"
-import { useState } from "react"
-import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
-import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
-import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
-import { AnkiButton, AnkiImg } from "../../anki/promptStyles"
+// import anki_logo from "../../assets/images/logo/anki.svg"
+// import { useState } from "react"
+// import AddAnkiPrompt from "../../anki/AddAnkiPrompt"
+// import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt"
+// import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt"
+// import { AnkiButton, AnkiImg } from "../../anki/promptStyles"
 
 export function WordTracker( {
     target, word, PostAndDelete, checkStatus,
@@ -14,9 +14,9 @@ export function WordTracker( {
     sentence
     } 
 ) {
-    const [ankiError, setAnkiError] = useState("")
-    const [isSucceed, setIsSucceed] = useState(false)
-    const [addToAnkiPrompt, setAddToAnkiPrompt] = useState(false)
+    // const [ankiError, setAnkiError] = useState("")
+    // const [isSucceed, setIsSucceed] = useState(false)
+    // const [addToAnkiPrompt, setAddToAnkiPrompt] = useState(false)
     // word is an array (empty array/object/function is truthy in js)
     const vocabStatusType = {
         Unknown: 0, 
@@ -58,10 +58,10 @@ export function WordTracker( {
         )
     }
 
-    function handleAnkiClick() {
-        console.log("clicked")
-        setAddToAnkiPrompt(true)
-    }
+    // function handleAnkiClick() {
+    //     console.log("clicked")
+    //     setAddToAnkiPrompt(true)
+    // }
 
     
     const vocabStatus = Object.keys(vocabStatusType)
@@ -110,22 +110,22 @@ export function WordTracker( {
                         </GoogleSearch>
                     </a>
 
-                    <br></br>
+                    {/* <br></br> */}
                     {/* {checkStatus(trackWord) === 2 && ( */}
-                        <AnkiButton
+                        {/* <AnkiButton
                             onClick={handleAnkiClick}
                             
                         >
                             <Anki className="anki-container">
                                 <AnkiImg src={anki_logo} alt="open anki"/>
                             </Anki>
-                        </AnkiButton>
+                        </AnkiButton> */}
                     {/* )} */}
                     
                 </TrackerContainer>
             </WordTrackerBox>
 
-            {addToAnkiPrompt && (
+            {/* {addToAnkiPrompt && (
                 <AddAnkiPrompt 
                     words={word}
                     trackWord={trackWord}
@@ -134,9 +134,9 @@ export function WordTracker( {
                     setAnkiError={setAnkiError}
                     setIsSucceed={setIsSucceed}
                 /> 
-            )}
+            )} */}
 
-            {isSucceed && (
+            {/* {isSucceed && (
                 <AddAnkiSuccessPrompt 
                     trackWord={trackWord}
                     setIsSucceed={setIsSucceed}
@@ -149,7 +149,7 @@ export function WordTracker( {
                     ankiError={ankiError}
                     setAnkiError={setAnkiError}
                 />
-            )}
+            )} */}
         </>
     )
 }
