@@ -12,6 +12,7 @@ export const AnkiImg = styled.img`
 display: inline-block;
 vertical-align: middle;
 width: 30px;
+cursor: pointer;
 `
 
 export const PopupContainer = styled.div`
