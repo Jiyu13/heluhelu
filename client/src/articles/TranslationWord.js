@@ -13,7 +13,7 @@ import addToAnki from "../utils/addToAnki"
 
 export function TranslationWord( {
     word, translation, hawaiian_clean, PostAndDelete, checkStatus,
-    isMobile, isDictionaryOpen, setDictionaryOpen, 
+    isMobile, isDictionaryOpen, setDictionaryOpen,  // for mobile version
     addAnkiSucceed, setAddAnkiSucceed, ankiError, setAnkiError
 } ) {
 
