@@ -29,7 +29,7 @@ export const PopupContainer = styled.div`
     padding: 8px;
 `
 export const ContainerHeader = styled.div`
-    padding: 20px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-item: center;
@@ -53,7 +53,7 @@ export const ButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 20px;
+    padding: 0 20px 15px 20px;
 `
 export const CancelButton = styled(ButtonButtons)`
     min-width: 120px !important;
