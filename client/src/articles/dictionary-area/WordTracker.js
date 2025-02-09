@@ -192,12 +192,12 @@ const GTranslateImg = styled.img`
     vertical-align: middle;
 `
 
-const Anki = styled(WeheSearch)`
-    padding: 0px;
-    background:none;
-    border: none;
-    margin: 0px;
-`
+// const Anki = styled(WeheSearch)`
+//     padding: 0px;
+//     background:none;
+//     border: none;
+//     margin: 0px;
+// `
 // const AnkiImg = styled.img`
 //     // width: 39px;
 //     display: inline-block;
