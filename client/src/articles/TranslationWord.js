@@ -5,9 +5,9 @@ import add_icon_white from "../assets/images/white/add_icon_white.svg"
 import check_circle_icon_white from "../assets/images/white/check_circle_icon_white.svg"
 import { closeMobileDictionary } from "./dictionary-area/closeMobileDictionary"
 import { AnkiImg } from "../anki/promptStyles"
-// import AddAnkiSuccessPrompt from "../anki/AddAnkiSuccessPrompt"
 import AnkiErrorPrompt from "../anki/AnkiErrorPrompt"
 import addToAnki from "../utils/addToAnki"
+import AddAnkiSuccessPrompt from "../anki/AddAnkiSuccessPrompt"
 
 
 
@@ -31,7 +31,6 @@ export function TranslationWord( {
 
     function handleAnkiClick() {
         addToAnki( hawaiian_clean, translation, setAnkiError, setAddAnkiSucceed, addAnkiSucceed)
-        // console.log(word, hawaiian_clean, translation)
     }
 
     
@@ -81,20 +80,20 @@ export function TranslationWord( {
             </WordItem>
 
 
-        {/* {addAnkiSucceed && (
-            <AddAnkiSuccessPrompt 
-                word={hawaiian_clean}
-                setAddAnkiSucceed={setAddAnkiSucceed}
+            {addAnkiSucceed && (
+                <AddAnkiSuccessPrompt 
+                    word={hawaiian_clean}
+                    setAddAnkiSucceed={setAddAnkiSucceed}
 
-            />
-        )} */}
+                />
+            )}
 
-        {ankiError && (
-            <AnkiErrorPrompt 
-                ankiError={ankiError}
-                setAnkiError={setAnkiError}
-            />
-        )}
+            {ankiError && (
+                <AnkiErrorPrompt 
+                    ankiError={ankiError}
+                    setAnkiError={setAnkiError}
+                />
+            )}
         </>
 
     )
