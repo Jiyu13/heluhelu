@@ -5,6 +5,10 @@ import { TranslationWord } from "../TranslationWord";
 import { CustomWordUpdate } from "../CustomWordUpdate";
 import add_icon_white from "../../assets/images/white/add_icon_white.svg"
 import { handleFocus } from "./handleFocus";
+import { useState } from "react";
+import addToAnki from "../../utils/addToAnki";
+import AnkiErrorPrompt from "../../anki/AnkiErrorPrompt";
+import AddAnkiSuccessPrompt from "../../anki/AddAnkiSuccessPrompt";
 
 
 export function Disctionary(props) {
@@ -25,7 +29,7 @@ export function Disctionary(props) {
         setFormData,
         setCustomForm,
         setWordExistError,
-        sentence
+        sentence, ankiError, setAnkiError, addAnkiSucceed, setAddAnkiSucceed
      } = props
 
     return (
@@ -106,6 +110,10 @@ export function Disctionary(props) {
                         hawaiian_clean={word.hawaiian_clean}
                         PostAndDelete={PostAndDelete}
                         checkStatus={checkStatus}
+                        addAnkiSucceed={addAnkiSucceed}
+                        setAddAnkiSucceed={setAddAnkiSucceed}
+                        ankiError={ankiError}
+                        setAnkiError={setAnkiError}
                     />
                 )}
                 
