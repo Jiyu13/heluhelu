@@ -50,7 +50,7 @@ export function TranslationWord( {
             <WordItem key={word.id}>
                 <Word>
                     <div>{word}:</div>
-                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "6px"}}>
                     
                         <AnkiImg src={anki_logo} alt="open anki" onClick={handleAnkiClick}/>
 
