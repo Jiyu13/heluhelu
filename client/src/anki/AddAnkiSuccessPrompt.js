@@ -3,15 +3,15 @@ import { SignupButton } from "../account/formStyles"
 import { BodyText, ButtonContainer, ButtonImage, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
 
 
-export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
-
+export default function AddAnkiSuccessPrompt({setAddAnkiSucceed, word}) {
+    
     return (
         <PopupContainer>
             <ContainerHeader>
                 <Title>
                     Added to Anki
                 </Title>
-                <CloseButton onClick={() => setIsSucceed(false)}>
+                <CloseButton onClick={() => setAddAnkiSucceed(false)}>
                     <ButtonImage src={close_btn} alt="close icon"/>
                 </CloseButton>
             </ContainerHeader>
@@ -21,7 +21,7 @@ export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
                 <BodyText>
                     Successfully added &nbsp;
                     <span style={{fontSize: "1.5rem", fontWeight: "bold", textDecoration: "underline"}}> 
-                        {trackWord}
+                        {word}
                     </span> 
                     &nbsp; to Anki!
                 </BodyText>
@@ -30,7 +30,7 @@ export default function AddAnkiSuccessPrompt({setIsSucceed, trackWord}) {
 
             <ButtonContainer className="button-container">
                 <SignupButton 
-                    onClick={() => setIsSucceed()}
+                    onClick={() => setAddAnkiSucceed(false)}
                     style={{width: "120px", marginTop: "0", marginBottom: "0px"}}
                 >
                     OK
