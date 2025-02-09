@@ -344,6 +344,11 @@ export function Article() {
                                 setCustomForm={setCustomForm}
                                 setWordExistError={setWordExistError}
                                 sentence={sentence}
+
+                                ankiError={ankiError} 
+                                setAnkiError={setAnkiError}
+                                addAnkiSucceed={addAnkiSucceed}
+                                setAddAnkiSucceed={setAddAnkiSucceed}
                             />
                         )}
 
