@@ -1,25 +1,25 @@
 import close_btn from "../assets/images/close_btn.svg"
 import { SignupButton } from "../account/formStyles"
-import { BodyText, ButtonContainer, ButtonImage, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
+import { BodyText, ButtonContainer, ContainerBody, PopupContainer } from "./promptStyles"
 
 
 export default function AddAnkiSuccessPrompt({setAddAnkiSucceed, word}) {
     
     return (
         <PopupContainer>
-            <ContainerHeader>
-                <Title>
+            {/* <ContainerHeader> */}
+                {/* <Title>
                     Added to Anki
-                </Title>
-                <CloseButton onClick={() => setAddAnkiSucceed(false)}>
+                </Title> */}
+                {/* <CloseButton onClick={() => setAddAnkiSucceed(false)}>
                     <ButtonImage src={close_btn} alt="close icon"/>
-                </CloseButton>
-            </ContainerHeader>
-            <Divider/>
+                </CloseButton> */}
+            {/* </ContainerHeader> */}
+            {/* <Divider/> */}
             <ContainerBody>
 
                 <BodyText>
-                    Successfully added &nbsp;
+                    Added &nbsp;
                     <span style={{fontSize: "1.5rem", fontWeight: "bold", textDecoration: "underline"}}> 
                         {word}
                     </span> 
