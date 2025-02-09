@@ -6,6 +6,7 @@ border: none;
 padding: 0px;
 background: none;
 margin-right: 8px;
+cursor: pointer;
 `
 export const AnkiImg = styled.img`
 display: inline-block;
