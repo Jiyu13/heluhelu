@@ -27,7 +27,8 @@ export function DictionaryMobile(props) {
            setFormData,
            setCustomForm,
            setWordExistError,
-           sentence
+           sentence, ankiError, setAnkiError, addAnkiSucceed, setAddAnkiSucceed
+
         } = props
 
     
@@ -104,6 +105,11 @@ export function DictionaryMobile(props) {
                         isMobile={isMobile}
                         isDictionaryOpen={isDictionaryOpen}
                         setDictionaryOpen={setDictionaryOpen}
+
+                        addAnkiSucceed={addAnkiSucceed}
+                        setAddAnkiSucceed={setAddAnkiSucceed}
+                        ankiError={ankiError}
+                        setAnkiError={setAnkiError}
                     />
                 )}
                 

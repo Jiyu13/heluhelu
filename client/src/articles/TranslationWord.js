@@ -1,15 +1,20 @@
 import { useState } from "react"
 import styled from "styled-components"
-
+import anki_logo from "../assets/images/logo/anki.svg"
 import add_icon_white from "../assets/images/white/add_icon_white.svg"
 import check_circle_icon_white from "../assets/images/white/check_circle_icon_white.svg"
 import { closeMobileDictionary } from "./dictionary-area/closeMobileDictionary"
+import { AnkiImg } from "../anki/promptStyles"
+// import AddAnkiSuccessPrompt from "../anki/AddAnkiSuccessPrompt"
+import AnkiErrorPrompt from "../anki/AnkiErrorPrompt"
+import addToAnki from "../utils/addToAnki"
 
 
 
 export function TranslationWord( {
     word, translation, hawaiian_clean, PostAndDelete, checkStatus,
-    isMobile, isDictionaryOpen, setDictionaryOpen
+    isMobile, isDictionaryOpen, setDictionaryOpen,  // for mobile version
+    addAnkiSucceed, setAddAnkiSucceed, ankiError, setAnkiError
 } ) {
 
     const [isReadMore, setReadMore] = useState(false)
@@ -24,6 +29,11 @@ export function TranslationWord( {
         )
     }
 
+    function handleAnkiClick() {
+        addToAnki( hawaiian_clean, translation, setAnkiError, setAddAnkiSucceed, addAnkiSucceed)
+        // console.log(word, hawaiian_clean, translation)
+    }
+
     
     let src
     let bgColor
@@ -36,32 +46,57 @@ export function TranslationWord( {
     }
     
     return (
-        <WordItem key={word.id}>
-            <Word>
-                {word}:
-                <MarkStudyingImg 
-                    src={src} 
-                    alt="mark studying button"
-                    onClick={handleMarkStudying}
-                    style={{backgroundColor: bgColor}}
-                />
-            </Word>
-            
-            <Translation>
+        <>
+            <WordItem key={word.id}>
+                <Word>
+                    <div>{word}:</div>
+                    <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "6px"}}>
+                    
+                        <AnkiImg src={anki_logo} alt="open anki" onClick={handleAnkiClick}/>
 
-                {isReadMore ?  translation : translation?.substring(0, 50)}
+                        <MarkStudyingImg 
+                            src={src} 
+                            alt="mark studying button"
+                            onClick={handleMarkStudying}
+                            style={{backgroundColor: bgColor}}
+                        />
+                    </div>
+                    
+                </Word>
+                
+                <Translation>
 
-                {translation?.length > 50 ? 
-                
-                    <ReadOrHidebutton onClick={() => setReadMore(!isReadMore)}>
-                        {isReadMore ? "Show Less" : "...Show More"}
-                    </ReadOrHidebutton> 
-                    : null
-                }
-                
-            </Translation>
-            <hr/>
-        </WordItem>
+                    {isReadMore ?  translation : translation?.substring(0, 50)}
+
+                    {translation?.length > 50 ? 
+                    
+                        <ReadOrHidebutton onClick={() => setReadMore(!isReadMore)}>
+                            {isReadMore ? "Show Less" : "...Show More"}
+                        </ReadOrHidebutton> 
+                        : null
+                    }
+                    
+                </Translation>
+                <hr/>
+            </WordItem>
+
+
+        {/* {addAnkiSucceed && (
+            <AddAnkiSuccessPrompt 
+                word={hawaiian_clean}
+                setAddAnkiSucceed={setAddAnkiSucceed}
+
+            />
+        )} */}
+
+        {ankiError && (
+            <AnkiErrorPrompt 
+                ankiError={ankiError}
+                setAnkiError={setAnkiError}
+            />
+        )}
+        </>
+
     )
 }
 
@@ -85,6 +120,8 @@ const ReadOrHidebutton = styled.button`
 const WordItem = styled.div``
 
 const Word = styled.div`
+    display: flex;
+    justify-content: space-between;
     font-weight: bold;
     color: rgb(255, 255, 255);
 `
