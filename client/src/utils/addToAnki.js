@@ -72,7 +72,7 @@ export default async function addToAnki(
             setAddAnkiSucceed(true)
             setTimeout(() => {
                 setAddAnkiSucceed(false);
-            }, 2000);
+            }, 1000);
             // alert(`Successfully added ${addCardData.result.length} notes!`);
         }
 
