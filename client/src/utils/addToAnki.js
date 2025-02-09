@@ -1,11 +1,14 @@
 export default async function addToAnki(
-    words, trackWord, sentence, setAnkiError, setAddAnkiSucceed, addAnkiSucceed
-    // setAddToAnkiPrompt, setIsSucceed
+    word, translation, setAnkiError, 
+    setAddAnkiSucceed, 
+    // addAnkiSucceed, setAddToAnkiPrompt, setIsSucceed
 ) {
     const ankiUrl = "http://127.0.0.1:8765"
     const deckName = "Heluhelu"
 
     try {
+        setAnkiError("")
+
         // ------------------------------check if deck exists------------------------------
         const checkDeckResponse = await fetch(ankiUrl, {
             method: "POST",
@@ -38,11 +41,11 @@ export default async function addToAnki(
             
         } 
         // ------------------------------Add new card to anki------------------------------
-        const wordToAdd = words.filter(w => w.hawaiian_clean === trackWord) // might not exists
+        // const wordToAdd = chosenWords.filter(w => w.hawaiian_clean === word) // might not exists
 
         const card = {
-            front: `${trackWord} \n ${sentence}`, 
-            back: wordToAdd[0]?.translation || "", 
+            front: word, 
+            back: translation || "", 
         }
         const note = {
             deckName: "Heluhelu",
@@ -52,7 +55,7 @@ export default async function addToAnki(
             tags: ["auto-added"]
         }
         
-        console.log("note", note)
+        // console.log("note", note)
         
         const payload = {
             action: "addNotes", 
