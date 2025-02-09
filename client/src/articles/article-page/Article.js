@@ -44,6 +44,9 @@ export function Article() {
     const [isError, setIsError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
+    const [ankiError, setAnkiError] = useState("")
+    const [addAnkiSucceed, setAddAnkiSucceed] = useState(false)
+
     const {
             article, setArticle, 
             user, 
@@ -312,6 +315,11 @@ export function Article() {
                                 setCustomForm={setCustomForm}
                                 setWordExistError={setWordExistError}
                                 sentence={sentence}
+
+                                ankiError={ankiError} 
+                                setAnkiError={setAnkiError}
+                                addAnkiSucceed={addAnkiSucceed}
+                                setAddAnkiSucceed={setAddAnkiSucceed}
                             />
                         )}
                         
