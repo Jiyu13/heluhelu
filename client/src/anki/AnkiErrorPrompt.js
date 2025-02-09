@@ -18,9 +18,9 @@ export default function AnkiErrorPrompt({ankiError, setAnkiError}) {
             <Divider/>
             <ContainerBody>
                 {ankiError.includes('duplicate') ? 
-                    <span style={{color: "red", textAlign: "center", fontWeight: "bold"}}>This word already exists.</span>
+                    <span style={{color: "red", textAlign: "center", fontWeight: "bold", paddingBottom: "10px"}}>This word already exists.</span>
                     :
-                    <span style={{color: "red", textAlign: "center", fontWeight: "bold"}}>{ankiError}</span>
+                    <span style={{color: "red", textAlign: "center", fontWeight: "bold", paddingBottom: "10px"}}>{ankiError}</span>
                 }
             </ContainerBody>
 
