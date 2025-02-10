@@ -18,6 +18,7 @@ export function TranslationWord( {
 } ) {
 
     const [isReadMore, setReadMore] = useState(false)
+    const [ankiSuccessWord, setAnkiSuccessWord] = useState(null)
 
 
     function handleMarkStudying() {
@@ -31,7 +32,9 @@ export function TranslationWord( {
 
     function handleAnkiClick() {
         addToAnki( 
-            hawaiian_clean, translation, setAnkiError, setAddAnkiSucceed, sentence, targetWord) 
+            hawaiian_clean, translation, setAnkiError, 
+            setAddAnkiSucceed, sentence, targetWord, setAnkiSuccessWord
+        ) 
     }
 
     
@@ -81,7 +84,7 @@ export function TranslationWord( {
             </WordItem>
 
 
-            {addAnkiSucceed && (
+            {addAnkiSucceed && ankiSuccessWord === hawaiian_clean && (
                 <AddAnkiSuccessPrompt 
                     word={hawaiian_clean}
                     setAddAnkiSucceed={setAddAnkiSucceed}

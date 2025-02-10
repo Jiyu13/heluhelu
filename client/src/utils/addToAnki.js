@@ -1,6 +1,6 @@
 export default async function addToAnki(
     word, translation, setAnkiError, 
-    setAddAnkiSucceed, sentence, targetWord
+    setAddAnkiSucceed, sentence, targetWord, setAnkiSuccessWord
 ) {
     const ankiUrl = "http://127.0.0.1:8765"
     const deckName = "Heluhelu"
@@ -68,6 +68,7 @@ export default async function addToAnki(
             console.error("Error adding notes:", addCardData.error);
             setAnkiError(addCardData.error)
         } else {
+            setAnkiSuccessWord(word)
             setAnkiError("")
             setAddAnkiSucceed(true)
             setTimeout(() => {
