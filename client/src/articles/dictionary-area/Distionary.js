@@ -114,6 +114,8 @@ export function Disctionary(props) {
                         setAddAnkiSucceed={setAddAnkiSucceed}
                         ankiError={ankiError}
                         setAnkiError={setAnkiError}
+                        sentence={sentence}
+                        targetWord={targetWord}
                     />
                 )}
                 
