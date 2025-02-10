@@ -1,6 +1,6 @@
 export default async function addToAnki(
     word, translation, setAnkiError, 
-    setAddAnkiSucceed, 
+    setAddAnkiSucceed, sentence, targetWord
 ) {
     const ankiUrl = "http://127.0.0.1:8765"
     const deckName = "Heluhelu"
@@ -39,7 +39,7 @@ export default async function addToAnki(
         } 
         // ------------------------------Add new card to anki------------------------------
         const card = {
-            front: word, 
+            front: word.toLowerCase() === targetWord.toLowerCase() ? `${word}<br><br>${sentence}` : word, 
             back: translation || "", 
         }
         const note = {
