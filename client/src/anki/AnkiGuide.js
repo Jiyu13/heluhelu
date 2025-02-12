@@ -161,7 +161,7 @@ const StepNumber = styled.div`
 `
 
 const StepsTable = styled.div`
-    margin: 0 auto 150px;
+    padding-bottom: 150px;
     max-width: 750px;
     font-size: 20px;
     line-height: 1.6;
