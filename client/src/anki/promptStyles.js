@@ -1,6 +1,13 @@
 import styled from "styled-components"
 import { ButtonButtons } from "../styles/Buttons"
 
+export const AnkiError = styled.span`
+    color: #000;
+    text-align: center; 
+    font-weight: bold; 
+    padding-bottom: 10px'
+`
+
 export const AnkiButton = styled.button`
 border: none;
 padding: 0px;
