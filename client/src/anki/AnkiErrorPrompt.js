@@ -1,5 +1,7 @@
 import close_btn from "../assets/images/close_btn.svg"
-import { ButtonContainer, ButtonImage, CancelButton, CloseButton, ContainerBody, ContainerHeader, Divider, PopupContainer, Title } from "./promptStyles"
+import { AnkiError, ButtonContainer, ButtonImage, CancelButton, CloseButton, 
+    ContainerBody, ContainerHeader, Divider, PopupContainer, Title 
+} from "./promptStyles"
 
 
 export default function AnkiErrorPrompt({ankiError, setAnkiError}) {
@@ -8,7 +10,7 @@ export default function AnkiErrorPrompt({ankiError, setAnkiError}) {
     return (
         <PopupContainer>
             <ContainerHeader>
-                <Title>
+                <Title style={{color: "red"}}>
                     Error
                 </Title>
                 <CloseButton onClick={() => setAnkiError("")}>
@@ -17,11 +19,24 @@ export default function AnkiErrorPrompt({ankiError, setAnkiError}) {
             </ContainerHeader>
             <Divider/>
             <ContainerBody>
-                {ankiError.includes('duplicate') ? 
-                    <span style={{color: "red", textAlign: "center", fontWeight: "bold", paddingBottom: "10px"}}>This word already exists.</span>
-                    :
-                    <span style={{color: "red", textAlign: "center", fontWeight: "bold", paddingBottom: "10px"}}>{ankiError}</span>
+                {typeof ankiError === "string" && ankiError.includes('duplicate') && 
+                    <AnkiError>This word already exists.</AnkiError>
                 }
+
+                {typeof ankiError === "string" && ankiError.includes('Failed to fetch') && 
+                    <AnkiError>
+                        An unexpected error occurred.
+                        <br></br> 
+
+                        <div style={{textAlign: "center", color: "#000", padding: "8px", }}>
+                            See more&nbsp; 
+                            <a href="/anki-guide" style={{color:"rgb(41, 128, 185)", cursor: "pointer"}}>
+                                here
+                            </a>
+                        </div>
+                    </AnkiError>
+                }
+                
             </ContainerBody>
 
             <ButtonContainer>
