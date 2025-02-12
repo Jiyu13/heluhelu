@@ -79,7 +79,10 @@ export default async function addToAnki(
 
 
     } catch(error) {
-        console.error("Error checking/creating deck:", error);
-        setAnkiError(error)
+        const { message, stack, name } = error;
+        // console.log("Error Message:", message);
+        // console.log("Error Name:", name);
+        // console.log("Error Stack:", stack);
+        setAnkiError(message)
     }
 }
