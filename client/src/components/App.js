@@ -25,6 +25,7 @@ import styled from "styled-components";
 import { ForgetPassword } from "../forget-password/ForgetPassword";
 import { Admin } from "../admin/Admin";
 import { AdminUser } from "../admin/AdminUser.js";
+import AnkiGuide from "../anki/AnkiGuide.js";
 
 const USER_NOT_SET = -1;
 
@@ -147,6 +148,12 @@ export default function App() {
           )}
           <main style={{minHeight: "100vh"}}>
             <Routes >
+                <Route
+                  exact
+                  path="/anki-guide"
+                  element={<AnkiGuide/>}
+                >
+                </Route>
                 <Route
                   exact
                   path="/stats/vocabularies"
