@@ -1,16 +1,16 @@
-import { Title } from "../account/formStyles";
+import { FormContainer, Title } from "../account/formStyles";
 
 import styled from "styled-components";
  
 
 export function ResetEmailSent({emailSent}) {
     return (
-        <div style={{display: "flex", flexDirection: "column", gap: "2rem"}}>
+        <FormContainer style={{paddingBottom: "6rem", gap: "2rem", display: "flex", flexDirection: "column"}}>
             <Title>Reset Request Sent</Title>
             <Text>
                 {emailSent}
             </Text>
-        </div>
+        </FormContainer>
     )
 }
 
