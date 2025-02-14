@@ -10,3 +10,4 @@ instance-bkp/
 .env
 heluhelu.sql
 local_config.py
+backup.dump
